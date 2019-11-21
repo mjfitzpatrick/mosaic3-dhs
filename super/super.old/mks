@@ -1,0 +1,1 @@
+gcc -g -m32 -o super super.c superHandleClient.c -I../inc ../lib/dcalib/dcalib.a  ../lib/socket/socket.a -I/MNSN/soft_dev/inc

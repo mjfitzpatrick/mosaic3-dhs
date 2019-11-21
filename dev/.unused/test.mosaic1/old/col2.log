@@ -1,0 +1,118 @@
+Mon Mar 2 11:33:56 EST 2015 Starting
+Collector ID:  'PanA'....
+smUtilAttach:  id=0x13565962 key=0xc000010 size=3196060
+Attached to SMC....
+Opened socket on port 4576, fd=4
+Adding mbus input handler....
+Adding console input handler....
+Adding socket input handler....
+Waiting for PAN to connect, id='PanA'...
+mbusSend READY COLLECTOR
+Done mbusSend READY COLLECTOR
+mbusAppMainLoop
+Connecting client on 4...
+Client ready on 6...
+Waiting for message: socket=6
+	*DBG* *** DCA_OPEN EXPOSURE.
+	*DBG* DCA_SET | DCA_FP_CONFIG received: 44 bytes
+	*DBG* fpCfg.(x,y)Start: (-1077897760,11037360)
+	*DBG* fpCfg.(x,y)Size: (0,11034564)
+	*DBG* ExpID: 2450000.100000
+	*DBG* DCA_EXP_OBSID received
+	*DBG* ExpID: 2450000.100000
+	*DBG* ObsSetID: TestIDf
+	*DBG* DCA_DIRECTORY: ''
+	*DBG* DCA_FNAME: ''
+	*DBG* Handling DCA_META 
+	*DBG*    DCA_META msg size: 120
+	*DBG*    DCA_META blk size: 256256
+	*DBG* DCA_META read 256256 bytes
+	*DBG*    DCA_META mdCfg size: 32776
+	*DBG* DCA_META read 32776 bytes
+smUtilAttach:  id=0x13598731 key=0xe000076 size=290816
+size=256256  p->size=290816  segSize=33564  [289820] 
+	*DBG* DCA_PIXEL: DCA_FP_CONFIG received
+	*DBG* DCA_PIXEL:  2148 x 4096   xs=0 ys=0
+	*DBG* DCA_PIXEL: totRowsPDet: 4096, totColsPDet: 2148, imsize: 35192832
+	*DBG* DCA_PIXEL: xStart: 0, yStart: 0
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x13631500 key=0xe000077 size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+	*DBG* Read 35192832 bytes
+	*DBG* *** DONE DCA_PIXEL.
+	*DBG* DCA_PIXEL: DCA_FP_CONFIG received
+	*DBG* DCA_PIXEL:  2148 x 4096   xs=2148 ys=0
+	*DBG* DCA_PIXEL: totRowsPDet: 4096, totColsPDet: 2148, imsize: 35192832
+	*DBG* DCA_PIXEL: xStart: 2148, yStart: 0
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x13664269 key=0xe00007f size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+	*DBG* Read 35192832 bytes
+	*DBG* *** DONE DCA_PIXEL.
+	*DBG* DCA_PIXEL: DCA_FP_CONFIG received
+	*DBG* DCA_PIXEL:  2148 x 4096   xs=4296 ys=0
+	*DBG* DCA_PIXEL: totRowsPDet: 4096, totColsPDet: 2148, imsize: 35192832
+	*DBG* DCA_PIXEL: xStart: 4296, yStart: 0
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x13697038 key=0xe000080 size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+	*DBG* Read 35192832 bytes
+	*DBG* *** DONE DCA_PIXEL.
+	*DBG* DCA_PIXEL: DCA_FP_CONFIG received
+	*DBG* DCA_PIXEL:  2148 x 4096   xs=6444 ys=0
+	*DBG* DCA_PIXEL: totRowsPDet: 4096, totColsPDet: 2148, imsize: 35192832
+	*DBG* DCA_PIXEL: xStart: 6444, yStart: 0
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x13729807 key=0xe000081 size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+	*DBG* Read 35192832 bytes
+	*DBG* *** DONE DCA_PIXEL.
+	*DBG* DCA_PIXEL: DCA_FP_CONFIG received
+	*DBG* DCA_PIXEL:  2148 x 4096   xs=0 ys=8192
+	*DBG* DCA_PIXEL: totRowsPDet: 4096, totColsPDet: 2148, imsize: 35192832
+	*DBG* DCA_PIXEL: xStart: 0, yStart: 8192
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x13762576 key=0xe000082 size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+	*DBG* Read 35192832 bytes
+	*DBG* *** DONE DCA_PIXEL.
+	*DBG* DCA_PIXEL: DCA_FP_CONFIG received
+	*DBG* DCA_PIXEL:  2148 x 4096   xs=2148 ys=8192
+	*DBG* DCA_PIXEL: totRowsPDet: 4096, totColsPDet: 2148, imsize: 35192832
+	*DBG* DCA_PIXEL: xStart: 2148, yStart: 8192
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x13795345 key=0xe000083 size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+	*DBG* Read 35192832 bytes
+	*DBG* *** DONE DCA_PIXEL.
+	*DBG* DCA_PIXEL: DCA_FP_CONFIG received
+	*DBG* DCA_PIXEL:  2148 x 4096   xs=4296 ys=8192
+	*DBG* DCA_PIXEL: totRowsPDet: 4096, totColsPDet: 2148, imsize: 35192832
+	*DBG* DCA_PIXEL: xStart: 4296, yStart: 8192
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x13828114 key=0xe000090 size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+	*DBG* Read 35192832 bytes
+	*DBG* *** DONE DCA_PIXEL.
+	*DBG* DCA_PIXEL: DCA_FP_CONFIG received
+	*DBG* DCA_PIXEL:  2148 x 4096   xs=6444 ys=8192
+	*DBG* DCA_PIXEL: totRowsPDet: 4096, totColsPDet: 2148, imsize: 35192832
+	*DBG* DCA_PIXEL: xStart: 6444, yStart: 8192
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x13860883 key=0xe000091 size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+	*DBG* Read 35192832 bytes
+	*DBG* *** DONE DCA_PIXEL.
+	*DBG* Handling DCA_META 
+	*DBG*    DCA_META msg size: 120
+	*DBG*    DCA_META blk size: 256256
+	*DBG* DCA_META read 256256 bytes
+	*DBG*    DCA_META mdCfg size: 32776
+	*DBG* DCA_META read 32776 bytes
+smUtilAttach:  id=0x13893652 key=0xe000092 size=290816
+size=256256  p->size=290816  segSize=33564  [289820] 
+	*DBG* *** DCA_CLOSE EXPOSURE.
+
+
+libpvm [t40006]: mbDisconnect: Duplicate host
+pvm_delete() failed while disconnecting

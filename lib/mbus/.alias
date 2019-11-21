@@ -1,0 +1,5 @@
+
+alias fp "ps -efw | grep -i pvm"
+alias halt "(echo halt | pvm ; /bin/rm -f /tmp/pvm*359*)"
+alias mk  "make \!* |& egrep -v strerror |& egrep -v pvmlogperror |& egrep -v gets"
+

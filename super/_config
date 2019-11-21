@@ -1,0 +1,85 @@
+#
+#  Configuration file for the NEWFIRM DHS.  
+#
+#  The file format is a simple text table of the form
+#
+#	<task> <host> <name> <command>
+#
+#  where <task> is one of 
+#
+#	Supervisor	The DHS Supervisor process
+#	Collector	A Collector component to accept data from a PAN
+#	PicFeed		A PicFeed component to serialize the data
+#	RTD		Real-Time Display component
+#	DCA		Data Capture Agent which create a FITS file
+#	KTM		Keyword Translation Module
+#
+#  The <host> host is the name of the machine on which the specified task
+#  is to be started ('localhost' implies the current machine).  <name> is a
+#  user-defined name of the task as it will appear in the status readouts,
+#  commands are assumed to accept a "-name" flag to set this properly.
+#  <command> is the path (on the named machine) to the command to execute,
+#  the command may take arguments
+#
+#  Note that multiple instances of a <task> indicate multiple occurrances of
+#  that process are requested.  If the task cannot be started on the
+#  designated machine, another machine specified for that same class of task
+#  will be used before finally falling back to the current machine.
+#
+#  Task names are case-insensitive and may be repeated.  Comments begin with
+#  a '#' and extend to the end-of-line.  Column value may not be ommitted.
+#  Comments and blank lines in this file are ignored, complex lines may be
+#  continued with a backslash escape of the newline.
+#
+
+#--------------------------------
+# Console definiton table.  Note, the '%d' in the geometry specification
+# is replaced automatically when the windows are spawned to tile them
+# "nicely"
+#--------------------------------
+
+console	   display	env
+console    rootcmd	xterm -geometry 80x20+%d+%d -fn fixed 
+console	   debugLevel	120
+console	   winXinit	0
+console	   winYinit	0
+console	   winXstep	0
+console	   winYstep	290
+console	   client_delay	2
+
+trigger	   localhost
+
+
+#----------------------------------------------------------------
+# Client Application table.
+#----------------------------------------------------------------
+
+Supervisor localhost	/ndhs/bin/super -name Super -port 4150
+
+SMCMgr     localhost	/ndhs/bin/smcmgr -console -mbus \
+			    -dev fast:inet:3201:localhost
+Collector  localhost	/ndhs/bin/collector -console -port 4550 -id PanA
+PXF        localhost 	/ndhs/bin/pxf -console -mbus
+
+DCA	   localhost	/ndhs/bin/mosdca -debug 2 \
+					 -reqlevel 2 \
+					 -vminit cachesize=312m \
+					 -imformat %N \
+					 -maxgkw 576 \
+					 -maxikw 100 \
+					 -dir /tmp \
+					 -ktm /ndhs/lib/generic.tcl \
+
+
+#----------------------------------------------------------------
+# Pairing table.
+#
+#       PAN Host			Collector Host
+#----------------------------------------------------------------
+pair	localhost			localhost
+pair	localhost			tucana
+pair	localhost			tucana.tuc.noao.edu
+pair	tucana				tucana
+pair	tucana.tuc.noao.edu		tucana.tuc.noao.edu
+
+# End of Configuration

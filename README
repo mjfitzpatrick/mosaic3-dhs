@@ -1,0 +1,70 @@
+node setup:
+
+The DHS/panSaver opens a socket to a node in nfpan-AFR using port number
+./lib/dcalib/dcaInitChannel.c
+./super/superHandleClient.c
+and talks to the collector and supervisor using ports:
+
+supervisor port: 2005
+collector port: 2001
+
+June 14,06
+
+==========================
+
+
+NEWFIRM DHS Software Release
+
+###############################################################################
+Release History:
+	V1.0 	Fri Mar 21 00:50:14 MST 2006
+
+###############################################################################
+
+Directory Contents:
+-------------------
+
+    README	    - This File
+
+    startdhs	    - Start all client apps needed by the DHS.
+    stopdhs	    - Stop all client apps needed by the DHS.
+    smclean	    - Clean all remnants of the Shared Memory Cache, i.e.
+		      destroy all shm segments owned by the user and remove
+		      the default SMC cache file.
+
+    bin		    - Application bin directory.  Users need not put this
+		      in their path unless they need to start clients directly,
+	 	      the DHS is started/stopped using the 'startdhs' and 
+		      'stopdhs' scripts in this directory.
+    include	    - Include files for interfaces used by the clients.
+    lib		    - DHS Interface libraries
+
+    collector	    - Source directory for the collector component.  The
+		      collector receives pixel/metadata from the PanSaver 
+		      and stores the result in the SMC.
+    pxf		    - Source directory for the PXF component.  The PXF
+		      monitors the SMC for new data and creates a FITS image
+		      on disk.
+    rtdstat	    - Source directory for the RTDSTAT (Real-Time Display
+		      and status monitor).  This is a prototype GUI still
+		      in development, currently used for the RTD functionality.
+    smc		    - Source directory for the Shared Memory Cache (SMC)
+		      interface.  The SMC allows data received by the Collector
+		      to be processed by the PXF and RTDSTAT while still in
+		      memory.  The SMC sources contain a number of test clients
+		      that are installed in the bin directory, these include:
+
+			zzcollector	Collector simulator able to emulate
+					a complete readout of the instrument.
+			zzdca		PXF simulator that simply consumes the
+					data the way the PXF would but produces
+					no output.
+			zzrtd		RTD commandline client
+			zzdebug		Interactive SMX debugging client
+
+		      These tasks are installed in the bin directory and are
+		      meant to be run only by knowledgable developers.
+
+    client	    - PanSaver simulation client source
+    super	    - Collector simulation client source
+    util	    - Utilities source

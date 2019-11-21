@@ -1,0 +1,157 @@
+#!/bin/csh -f 
+
+# Set the location of the system to help in configuring the machine names.
+# The location is simply a 2-character code stored in the '_location' file
+# in the top directory, values may be:
+#
+#	"CR"		=> Tucson Clean Room
+#	"FR"		=> Tucson Flex Rig
+#	"KP"		=> KPNO 4-meter
+#	"CT"		=> CTIO 4-meter
+#
+
+#setenv MONSOON_DHS "127.0.0.1:4150"
+setenv USER_DISPLAY $DISPLAY
+setenv RTD fast:inet:3200
+setenv DISPLAY_PORT 3200
+
+set SUP_LOG = /dhs/test/sup.log
+set PAN_LOG = /dhs/test/pan.log
+set DCA_LOG = /dhs/test/dca.log
+set NOC_LOG = /dhs/test/noc.log
+set COL_LOG1 = /dhs/test/col1.log
+set COL_LOG2 = /dhs/test/col2.log
+set SMC_LOG = /dhs/test/smc.log
+set PXF_LOG = /dhs/test/pxf.log
+if ( 0 ) then
+set DEBUG_60 = "-debug 60"
+set DEBUG_0 = "-debug 0"
+set DEBUG_1 = "-debug 1"
+set DEBUG_2 = "-debug 2"
+else
+set DEBUG_60 = "-debug 0"
+set DEBUG_0 = "-debug 0"
+set DEBUG_1 = "-debug 0"
+set DEBUG_2 = "-debug 0"
+endif
+
+/dhs/util/stopdhs
+rm -rf $SUP_LOG $PAN_LOG $DCA_LOG $NOC_LOG $COL_LOG1 $COL_LOG2 $SMC_LOG $PXF_LOG 
+
+#Pseudo Hosts
+
+
+#-------------------------------------------------------------------------------
+
+
+
+echo "Cleaning up...."
+echo ""
+
+    if (`uname -s` == "Darwin") then
+        set pflags = "-augxww"
+    else
+        set pflags = "-efw"
+    endif
+    set pfiles = "/tmp/pvm*50*"
+
+    echo halt | $PVM_ROOT/lib/pvm 						>& /dev/null
+    /bin/rm -f $pfiles 						>& /dev/null
+
+    echo conf | $PVM_ROOT/lib/pvm 
+    echo ""
+
+    /dhs/smclean
+	  
+
+echo "Re-Starting VNC for DHS...."
+echo ""
+    vncserver -kill :1						>& /dev/null
+    vncserver -geometry 1280x1024 -depth 8 -cc 3		>& /dev/null
+#    vncserver -geometry 1280x1024 -cc 3		>& /dev/null
+
+    echo "Starting VNC viewer...."
+    (vncviewer -passwd ~/.vnc/passwd -display $USER_DISPLAY :1	>& /dev/null &)
+
+echo "Starting DHS...."
+echo ""
+
+setenv DISPLAY :1
+set    XTERM = "xterm -fn fixed"
+set    XTERM1 = "xterm -fn fixed -iconic "
+#
+#set    XTERM1 = "xterm -fn fixed "
+
+
+if ( 0 ) then
+
+##--------------
+## Collectors
+##--------------
+echo "Starting Collectors...."
+echo ""
+
+(sleep  4; $XTERM1 -geometry 80x20+100+350 -e "echo `date` Starting >! $COL_LOG1 ; /dhs/bin/collector -console -mbus -host mosaic1dhs-01 -port 4575 $DEBUG_60 -id NOCS |& tee -a $COL_LOG1 ; echo `date` Exitting >> $COL_LOG1 ; sleep 30 " ) &
+
+
+(sleep  6 ; $XTERM1 -geometry 80x20+200+400 -e "echo `date` Starting >! $COL_LOG2; /dhs/bin/collector -console -mbus -host mosaic1dhs-01 -port 4576 $DEBUG_60 -id PanA |& tee -a $COL_LOG2; echo `date` Exitting >> $COL_LOG2 ; sleep 30 " ) &
+
+##--------------
+## SMC Managers
+##--------------
+echo "Starting Managers...."
+echo ""
+
+(sleep 10; $XTERM1 -geometry 80x20+200+450 -e "/dhs/bin/smcmgr -console -host mosaic1dhs-01 -mbus -dev $RTD $DEBUG_60 |& tee -a $SMC_LOG ; sleep 30 ") &
+
+
+##--------------
+## PXF
+##--------------
+echo "Starting PXF...."
+echo ""
+
+(sleep 14; $XTERM1 -geometry 80x20+200+500 -e "/dhs/bin/pxf -console -host mosaic1dhs-01 -mbus $DEBUG_60  |& tee -a $PXF_LOG ; sleep 30 " ) &
+
+
+##--------------
+## DCA
+##--------------
+echo "Starting DCA...."
+echo ""
+
+(sleep 20; $XTERM -geometry 80x20+645+360 -e "/dhs/mosdca/mosdca -host mosaicdca $DEBUG_60 -reqlevel 2 -vminit cachesize=312m -imformat %N -maxgkw 2048 -maxikw 2048 -dir /home/data -ktm /dhs/lib/mosaic1.tcl |& tee -a $DCA_LOG ; sleep 30 " ) &
+
+##--------------
+## NOCS/Pan Clients
+##--------------
+echo "Starting Pan Client...."
+echo ""
+
+(sleep 10; $XTERM -geometry 80x12+300+720 -e "echo `date` Starting >! $PAN_LOG ; /dhs/test/pan -verbose -sim $DEBUG_0 -host mosaic1pan-a -A  |& tee -a $PAN_LOG ; echo `date` Exitting >> $PAN_LOG ; sleep 30 ") &
+
+
+echo "Starting NOC Clients...."
+echo ""
+
+(sleep 6; $XTERM -geometry 80x12+100+720 -e "echo `date` Starting >! $NOC_LOG ;/dhs/test/nocs -verbose -sim $DEBUG_0 -host mosaic1 -interactive |& tee -a $NOC_LOG ; echo `date` Exitting >> $NOC_LOG ; sleep 30 ")  &
+
+##
+## display
+(sleep 7; /dhs/x11iraf/bin/ximtool -display $DISPLAY -port $DISPLAY_PORT; sleep 10) &
+#(sleep 7; /dhs/bin/ds9 -display $DISPLAY -port $DISPLAY_PORT ; sleep 10) &
+
+endif
+
+##--------------
+## Supervisor
+##--------------
+echo "Starting Supervisor...."
+echo ""
+
+#exec $XTERM -geometry 80x22+645+40 -e "/dhs/dhssup/super -port 4150 -host m1osaic1 -console -config /dhs/test/config-mosaic1.sim -nclients 8 -geometry 640x640+0+40  |& tee -a $SUP_LOG"
+exec $XTERM -geometry 80x22+645+40 -e "/dhs/bin/super -port 4150 -host mosaic1 -console -config /dhs/test/config-mosaic1.sim -nclients 8 -geometry 640x640+0+40  |& tee -a $SUP_LOG"
+
+
+echo "All done"
+echo ""

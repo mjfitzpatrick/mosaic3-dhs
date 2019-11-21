@@ -1,0 +1,21 @@
+gcc -g -c  -D__USE_MISC -m32 \
+    -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio \
+    -DXLONG=int \
+	dhsUtilAux.c  \
+	dhsUtilCloseConnect.c  \
+	dhsUtilCloseExp.c  \
+	dhsUtilFileOpen.c  \
+	dhsUtilInit.c  \
+	dhsUtilIOCtl.c  \
+	dhsUtilOpenConnect.c  \
+	dhsUtilOpenExp.c  \
+	dhsUtilReadImage.c  \
+	dhsUtilSendMetaData.c \
+	dhsUtilSendPixelData.c  \
+	dhsUtilSysClose.c  \
+	dhsUtilSysOpen.c  \
+	dhsUtilUnInit.c  
+
+ar -r dhslib.a *.o
+
+#gcc -g -m32  -c dhsUtilOpenExp.c dhsUtilSysOpen.c dhsUtilOpenConnect.c dhsUtilSendMetaData.c dhsUtilSendPixelData.c -I../dcalib -I/MNSN/soft_dev/inc dhsUtilAux.c 

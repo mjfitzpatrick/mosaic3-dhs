@@ -1,0 +1,1580 @@
+60,61d59
+< 
+< extern int dhsDebug;
+53,59d52
+<  * variable(s):
+<  *******************************************************************************/
+< char __simStr[10] = "";
+< char resp2[MAXMSG] = "";
+< int dhsDebug = 0;
+< 
+< /*******************************************************************************
+170c163
+<  long lstat=0;
+---
+>  XLONG lstat=0;
+191c184
+<   (void) fprintf(stderr,"dhs::ReadImage: lstat=%ld\n",lstat); (void) fflush(stderr);
+---
+>   (void) fprintf(stderr,"dhs::ReadImage: lstat=%d\n",lstat); (void) fflush(stderr);
+194c187
+<  (void) sprintf(result,"%ld",lstat);
+---
+>  (void) sprintf(result,"%d",lstat);
+208c201
+<  long lstat=0;
+---
+>  XLONG lstat=0;
+249c242
+<  dhsIOCtl(&lstat,response,eID,(long)inum,&expID,obsID,NULL);
+---
+>  dhsIOCtl(&lstat,response,eID,(XLONG)inum,&expID,obsID,NULL);
+255c248
+<   (void) fprintf(stderr,"dhs::IOctl: lstat=%ld\n",lstat); (void) fflush(stderr);
+---
+>   (void) fprintf(stderr,"dhs::IOctl: lstat=%d\n",lstat); (void) fflush(stderr);
+258c251
+<  (void) sprintf(result,"%ld",lstat);
+---
+>  (void) sprintf(result,"%d",lstat);
+274c267
+<  long lstat=0;
+---
+>  XLONG lstat=0;
+409c402
+<   (void) fprintf(stderr,"dhs::MetaData: lstat=%ld\n",lstat); (void) fflush(stderr);
+---
+>   (void) fprintf(stderr,"dhs::MetaData: lstat=%d\n",lstat); (void) fflush(stderr);
+412c405
+<  (void) sprintf(result,"%ld",lstat);
+---
+>  (void) sprintf(result,"%d",lstat);
+432c425
+<  long lstat=0;
+---
+>  XLONG lstat=0;
+552c545
+<   (void) fprintf(stderr,"dhs::PixelData: lstat=%ld\n",lstat); (void) fflush(stderr);
+---
+>   (void) fprintf(stderr,"dhs::PixelData: lstat=%d\n",lstat); (void) fflush(stderr);
+555c548
+<  (void) sprintf(result,"%ld",lstat);
+---
+>  (void) sprintf(result,"%d",lstat);
+573c566
+<  long lstat=0;
+---
+>  XLONG lstat=0;
+649c642
+<   (void) fprintf(stderr,"dhs::OpenExp: lstat=%ld\n",lstat); (void) fflush(stderr);
+---
+>   (void) fprintf(stderr,"dhs::OpenExp: lstat=%d\n",lstat); (void) fflush(stderr);
+652c645
+<  (void) sprintf(result,"%ld",lstat);
+---
+>  (void) sprintf(result,"%d",lstat);
+671c664
+<  long lstat=0;
+---
+>  XLONG lstat=0;
+703c696
+<   (void) fprintf(stderr,"dhs::CloseExp>> lstat=%ld\n",lstat); (void) fflush(stderr);
+---
+>   (void) fprintf(stderr,"dhs::CloseExp>> lstat=%d\n",lstat); (void) fflush(stderr);
+706c699
+<  (void) sprintf(result,"%ld",lstat);
+---
+>  (void) sprintf(result,"%d",lstat);
+724c717
+<  long lstat=0;
+---
+>  XLONG lstat=0;
+739c732
+<   (void) fprintf(stderr,"dhs::OpenConnect>> whoami=%d (0x%x)\n",whoami,(unsigned int)whoami); (void) fflush(stderr);
+---
+>   (void) fprintf(stderr,"dhs::OpenConnect>> whoami=%d (0x%x)\n",(XLONG)whoami,(XLONG)whoami); (void) fflush(stderr);
+778c771
+<  dhsOpenConnect(&lstat,response,&cID,(long)whoami,&fpConfigTcl);
+---
+>  dhsOpenConnect(&lstat,response,&cID,(XLONG)whoami,&fpConfigTcl);
+784c777
+<   (void) fprintf(stderr,"dhs::OpenConnect>> lstat=%ld\n",lstat); (void) fflush(stderr);
+---
+>   (void) fprintf(stderr,"dhs::OpenConnect>> lstat=%d\n",lstat); (void) fflush(stderr);
+805c798
+<  long lstat=0;
+---
+>  XLONG lstat=0;
+828c821
+<   (void) fprintf(stderr,"dhs::CloseConnect>> lstat=%ld\n",lstat); (void) fflush(stderr);
+---
+>   (void) fprintf(stderr,"dhs::CloseConnect>> lstat=%d\n",lstat); (void) fflush(stderr);
+831c824
+<  (void) sprintf(result,"%ld",lstat);
+---
+>  (void) sprintf(result,"%d",lstat);
+848c841
+<  long lstat=0;
+---
+>  XLONG lstat=0;
+861c854
+<   (void) fprintf(stderr,"dhs::SysOpen>> whoami=%d (0x%x)\n",(XLONG)whoami,(unsigned XLONG)whoami); (void) fflush(stderr);
+---
+>   (void) fprintf(stderr,"dhs::SysOpen>> whoami=%d (0x%x)\n",(XLONG)whoami,(XLONG)whoami); (void) fflush(stderr);
+864c857
+<  dhsSysOpen(&lstat,response,&sID,(long)whoami);
+---
+>  dhsSysOpen(&lstat,response,&sID,(XLONG)whoami);
+870c863
+<   (void) fprintf(stderr,"dhs::SysOpen>> lstat=%ld, sID=%d\n",lstat,(int)sID); (void) fflush(stderr);
+---
+>   (void) fprintf(stderr,"dhs::SysOpen>> lstat=%d, sID=%d\n",lstat,(int)sID); (void) fflush(stderr);
+890c883
+<  long lstat=0;
+---
+>  XLONG lstat=0;
+911c904
+<   (void) fprintf(stderr,"dhs::SysClose>> lstat=%ld\n",lstat); (void) fflush(stderr);
+---
+>   (void) fprintf(stderr,"dhs::SysClose>> lstat=%d\n",lstat); (void) fflush(stderr);
+914c907
+<  (void) sprintf(result,"%ld",lstat);
+---
+>  (void) sprintf(result,"%d",lstat);
+23a24
+> 
+24a26
+> 
+25a28,31
+> 
+> int procDebug = 60;
+> 
+> char __simStr[10]="";
+9a10
+> 
+15,51c16,55
+< void dhsUtilCloseConnect (
+<   long *istat,    /* inherited status                                         */
+<   char *resp,      /* response message                                         */
+<   dhsHandle dhsID  /* dhs handle                                               */
+< ) {
+< 
+<   /* declare some variables and initialize them */
+<   int stat = 0;
+<   int socket = 0;
+< 
+<   /* check the inherited status */
+<   if ( STATUS_BAD(*istat) ) return;
+<   MNSN_CLEAR_STR(resp,'\0');
+< 
+<   /* if simulating, return */
+<   if ( dcaSimulator() ) return;
+< 
+<   /* check input parameter(s) */
+<   if ( dhsID < (dhsHandle)0 ) {
+<    *istat = DHS_ERROR;
+<    (void) sprintf(resp,"bad parameter dhsID<0");
+<    MNSN_RPT_FAILURE(resp,"dhsUtilCloseConnect: Failed. \\\\");
+<    return;
+<   }
+< 
+<   /* do something for _netw variant */
+<   socket = dhsNW.collector->fd;
+<   stat = dcaSendMsg(socket,dcaFmtMsg(DCA_CLOSE|DCA_CONNECT,(int)NULL));
+<   socket = dhsNW.super->fd;
+<   stat = dcaSendMsg (socket,dcaFmtMsg(DCA_CLOSE|DCA_CONNECT,(int)NULL));
+<   close(dhsNW.collector->fd);
+<   close(dhsNW.super->fd);
+< 
+<   /* return */
+<   *istat = DHS_OK;
+<   MNSN_RET_SUCCESS(resp,"dhsUtilCloseConnect: Success.");
+<   return;
+---
+> void dhsUtilCloseConnect ( XLONG *istat,    /* inherited status                */
+> 			   char *resp,      /* response message                */
+> 			   dhsHandle dhsID  /* dhs handle                      */
+>     ) 
+> {
+>     int stat;
+>     int socket;
+> 
+>     /* check the inherited status */
+>     if ( STATUS_BAD(*istat) ) return;
+>     MNSN_CLEAR_STR(resp,'\0');
+>     
+>     if (dcaSimulator())
+>        return;
+> 
+>     /* check input values */
+>     if ( dhsID < (dhsHandle)0 ) {
+> 	*istat = DHS_ERROR;
+> 	MNSN_RET_FAILURE(resp,"dhsCloseConnect: BadParam: dhsHandle invalid");
+> 	return;
+>     }
+> 
+> 
+>     /* Send message to server to close smc SHM */
+>     socket = dhsNW.collector->fd;
+>     stat = dcaSendMsg (socket, dcaFmtMsg (DCA_CLOSE|DCA_CONNECT, (int )NULL));
+> 
+>     socket = dhsNW.super->fd;
+>     stat = dcaSendMsg (socket, dcaFmtMsg (DCA_CLOSE|DCA_CONNECT, (int )NULL));
+> 
+>     /* Close the File Descriptors. */
+>     close (dhsNW.collector->fd);
+>     close (dhsNW.super->fd);
+> 
+>     /* for this library, this is a no-op */
+>     *istat = DHS_OK;
+>     MNSN_RET_SUCCESS(resp,"dhsCloseConnect:  Success.");
+> 
+>     /* return */
+>     return;
+9a10
+> 
+11a13
+> 
+15,50c17,51
+< void dhsUtilCloseExp (
+<   long *istat,    /* inherited status                                         */
+<   char *resp,      /* response message                                         */
+<   dhsHandle dhsID, /* dhs handle                                               */
+<   double expID     /* exposure identifier                                      */
+< ) {
+< 
+<   /* check the inherited status */
+<   if ( STATUS_BAD(*istat) ) return;
+<   MNSN_CLEAR_STR(resp,'\0');
+< 
+<   /* if simulating, return */
+<   if ( dcaSimulator() ) return;
+< 
+<   /* check input parameter(s) */
+<   if ( dhsID < (dhsHandle)0 ) {
+<    *istat = DHS_ERROR;
+<    (void) sprintf(resp,"bad parameter dhsID<0");
+<    MNSN_RPT_FAILURE(resp,"dhsUtilCloseExp: Failed. \\\\");
+<    return;
+<   }
+<   if ( expID <= (double)0.0 ) {
+<    *istat = DHS_ERROR;
+<    (void) sprintf(resp,"bad parameter expID<=0.0");
+<    MNSN_RPT_FAILURE(resp,"dhsUtilCloseExp: Failed. \\\\");
+<    return;
+<   }
+< 
+<   /* do something for _netw variant */
+<   *istat = dcaSendMsg((int)dhsNW.collector->fd,dcaFmtMsg(DCA_CLOSE|DCA_EXP,DHS_IAMPAN));
+<   *istat = dcaSendMsg((int)dhsNW.super->fd,dcaFmtMsg(DCA_CLOSE|DCA_EXP,DHS_IAMPAN));
+< 
+<   /* return */
+<   *istat = DHS_OK;
+<   MNSN_RET_SUCCESS(resp,"dhsUtilCloseExp: Success.");
+<   return;
+---
+> void dhsUtilCloseExp ( XLONG *istat,    /* inherited status                   */
+> 		       char *resp,      /* response message                   */
+> 		       dhsHandle dhsID, /* dhs handle                         */
+> 		       double expID     /* exposure identifier                */
+>     ) 
+> {
+>     /* check the inherited status */
+>     if ( STATUS_BAD(*istat) ) return;
+>     MNSN_CLEAR_STR(resp,'\0');
+>     
+> 
+>     if (dcaSimulator())
+>        return;
+> 
+>     /* check input values  */
+>     if ( dhsID<(dhsHandle)0 || expID<=(double)0.0 ) 
+>     {
+> 	*istat = DHS_ERROR;
+> 	MNSN_RET_FAILURE(resp,"dhsCloseExp:  bad parameter. dhsHandle invalid.");
+> 	return;
+>     }
+> 
+>     /* Send the CloseExp message to the Collector and Supervisor.
+>      */
+>     *istat = dcaSendMsg ( (int )dhsNW.collector->fd,
+> 	dcaFmtMsg (DCA_CLOSE|DCA_EXP, DHS_IAMPAN) );
+>     *istat = dcaSendMsg ( (int )dhsNW.super->fd,
+> 	dcaFmtMsg (DCA_CLOSE|DCA_EXP, DHS_IAMPAN) );
+> 
+>     /* for this library, this is a no-op */
+>     *istat = DHS_OK;
+>     MNSN_RET_SUCCESS(resp,"dhsCloseExp:  Success.");
+> 
+>     /* return */
+>     return;
+9a10
+> 
+14,31c14,28
+< void dhsUtilIOCtl (
+<   long *istat,        /* inherited status                                     */
+<   char *resp,          /* response message                                     */
+<   dhsHandle dhsID,     /* dhs handle                                           */
+<   long ioctlFunction, /* ioctl function                                       */
+<   double *expID,       /* exposure identifier                                  */
+<   char *obsetID,       /* observation set identifier                           */
+<   ...                  /* variable argument list                               */
+< ) {
+< 
+<   /* declare soime variables and initialize them */
+<   va_list args;
+<   char *fname = (char *)NULL;
+<   char *dirname = (char *)NULL;
+< 
+<   /* check the inherited status */
+<   if ( STATUS_BAD(*istat) ) return;
+<   MNSN_CLEAR_STR(resp,'\0');
+---
+> void dhsUtilIOCtl ( XLONG *istat,        /* inherited status                   */
+> 		    char *resp,          /* response message                   */
+> 		    dhsHandle dhsID,     /* dhs handle                         */
+> 		    XLONG ioctlFunction, /* ioctl function                     */
+> 		    double *expID,       /* exposure identifier                */
+> 		    char *obsetID,       /* observation set identifier         */
+> 		    ...                  /* variable argument list              */
+>     ) 
+> {
+>     va_list args;
+>     char *fname, *dirname;
+>  
+>     /* check the inherited status */
+>     if ( STATUS_BAD(*istat) ) return;
+>     MNSN_CLEAR_STR(resp,'\0');
+33,55c30,36
+<   /* check input parameter(s) */
+<   /* COMMENTED OUT BECAUSE WE DON'T NEED THESE CHECKS!
+<     if ( expID == (double *)NULL ) {
+<      *istat = DHS_ERROR;
+<      (void) sprintf(resp,"bad parameter expID==NULL");
+<      MNSN_RPT_FAILURE(resp,"dhsUtilIOCtl: Failed. \\\\");
+<      return;
+<     }
+<   */
+<   /* COMMENTED OUT BECAUSE WE DON'T NEED THESE CHECKS!
+<     if ( obsetID == (char *)NULL ) {
+<      *istat = DHS_ERROR;
+<      (void) sprintf(resp,"bad parameter obsetID==NULL");
+<      MNSN_RPT_FAILURE(resp,"dhsUtilIOCtl: Failed. \\\\");
+<      return;
+<     }
+<   */
+<   /* COMMENTED OUT BECAUSE WE DON'T NEED THESE CHECKS!
+<     if ( dhsID < (dhsHandle)0 ) {
+<      *istat = DHS_ERROR;
+<      (void) sprintf(resp,"bad parameter dhsID<0");
+<      MNSN_RPT_FAILURE(resp,"dhsUtilIOCtl: Failed. \\\\");
+<      return;
+---
+>     /* check input values   Cannot check for < 0 since it is an structure
+>                             See this later
+>     if ( dhsID < (dhsHandle)0 ) 
+>     {
+> 	*istat = DHS_ERROR;
+> 	MNSN_RET_FAILURE(resp,"dhsUtilIOCtl:  bad parameter dhsHandle invalid.");
+> 	return;
+57c38,39
+<   */
+---
+> */
+>     va_start(args,obsetID); 
+59,98c41,77
+<   /* start va args */
+<   va_start(args,obsetID); 
+< 
+<   /* switch on ioctlFunction */
+<   switch (ioctlFunction) {
+<    case DHS_IOC_SETFILENAME:
+<     fname = va_arg(args,char *);
+<     (void) strncpy(dhsUtilFILENAME,fname,DHS_MAXSTR);
+<     dhsUtilFLAG = (dhsUtilFLAG > 0) ? 3 : 1;
+<     *istat = DHS_OK;
+<     (void) sprintf(resp,"filename set to %s",fname);
+<     MNSN_RET_SUCCESS(resp,"dhsUtilIOCtl: Success. \\\\");
+<     break;
+<    case DHS_IOC_SETDIR:
+<     dirname = va_arg(args,char *);
+<     (void) strncpy(dhsUtilDIR,dirname,DHS_MAXSTR);
+<     dhsUtilFLAG = (dhsUtilFLAG > 0) ? 3 : 2;
+<     *istat = DHS_OK;
+<     (void) sprintf(resp,"directory set to %s",dirname);
+<     MNSN_RET_SUCCESS(resp,"dhsUtilIOCtl: Success. \\\\");
+<     break;
+<    case DHS_IOC_OBSCONFIG:
+<    case DHS_IOC_MDCONFIG:
+<    case DHS_IOC_FPCONFIG:
+<    case DHS_IOC_KEYWORD_TRANS:
+<    case DHS_IOC_DEBUG_LVL:
+<    case DHS_IOC_SIMULATION:
+<     *istat = DHS_OK;
+<     (void) sprintf(resp,"ioctlFunction=%ld not implemented",(long)ioctlFunction);
+<     MNSN_RET_SUCCESS(resp,"dhsUtilIOCtl: Success. \\\\");
+<     break;
+<    default:
+<     *istat = DHS_ERROR;
+<     (void) sprintf(resp,"unknown ioctlFunction=%ld",(long)ioctlFunction);
+<     MNSN_RPT_FAILURE(resp,"dhsUtilIOCtl: Failed. \\\\");
+<     break;
+<   }
+< 
+<   /* end va args */
+<   va_end(args);
+---
+>     /* switch on ioctlFunction */
+>     switch (ioctlFunction) 
+>     {
+>       case DHS_IOC_SETFILENAME:			/* set new base file name */
+> 	  fname = va_arg(args,char *);          /* get the new name from the argument */
+> 	  strncpy(dhsUtilFILENAME,fname, DHS_MAXSTR);
+> 	  dhsUtilFLAG = (dhsUtilFLAG > 0) ? 3 : 1;
+> 	  sprintf(resp,"dhsUtilIOCtl: Success filename set too %s.",fname);
+> 	  MNSN_RET_SUCCESS(resp, "");
+> 	  *istat = DHS_OK;
+> 	  break;
+>       case DHS_IOC_SETDIR:			/* set new directory name */
+> 	  dirname = va_arg(args,char *);
+> 	  strncpy(dhsUtilDIR, dirname, DHS_MAXSTR);
+> 	  dhsUtilFLAG = (dhsUtilFLAG > 0) ? 3 : 2;
+> 	  sprintf(resp,"dhsUtilIOCtl: Success directory set too %s.",dirname);
+> 	  *istat = DHS_OK;
+> 	  MNSN_RET_SUCCESS(resp, "");
+> 	  break;
+> /*       case DHS_LAB_VERSION: */
+> /* 	  dhsLabVersion = va_arg(args,int); */
+> /* 	  break; */
+>       case DHS_IOC_OBSCONFIG:
+>       case DHS_IOC_MDCONFIG:
+>       case DHS_IOC_FPCONFIG:
+>       case DHS_IOC_KEYWORD_TRANS:
+>       case DHS_IOC_DEBUG_LVL:
+>       case DHS_IOC_SIMULATION:
+> 	  *istat = DHS_OK;
+> 	   MNSN_RET_SUCCESS(resp,"dhsUtilIOCtl: function Not Implemented.");
+> 	  break;
+>       default:
+> 	  *istat = DHS_ERROR;
+> 	  sprintf(resp,"dhsUtilIOCtl: Failed, bad ioctl function %d",(int)ioctlFunction);
+> 	  MNSN_RET_FAILURE(resp,"");
+> 	  break;
+>     }
+100,101c79,81
+<   /* return */
+<   return;
+---
+>     va_end(args);
+>     /* return */
+>     return;
+5c5
+<  #include "dhsUtil.h"
+---
+> #include "dhsUtil.h"
+8c8
+<  #include "sockUtil.h"
+---
+> #include "sockUtil.h"
+11,12c11,13
+<  #include "dhsImplementationSpecifics.h"
+< #endif 
+---
+> #include "dhsImplementationSpecifics.h"
+> #endif
+> 
+14d14
+< #define MAXTRYS 10
+16,45c16,17
+< /*******************************************************************************
+<  * dhsConnectCollector ( ... )
+<  *******************************************************************************/ 
+< int dhsConnectCollector (
+<   long *istat, /* inherited status                                            */
+<   char *resp,  /* response buffer                                             */
+<   long whoami  /* Identifier                                                  */
+< ) {
+< 
+<   /* declare some variables and initialize them */
+<   int ic = 0;
+<   int sc = 0;
+<   MNSN_CLEAR_STR(resp,'\0');
+< 
+<   /* loop until we get a valid collector connection */
+<   for ( ic=0; ic<MAXTRYS; ic++ ) {
+<    if ( (sc=dcaInitChannel(&dhsNW,DCA_COLLECTOR)) == DCA_OK ) {
+<        (void) dcaSendMsg((int)dhsNW.collector->fd,dcaFmtMsg(DCA_INIT, (XLONG)whoami));
+<     (void) sprintf(resp,"connected to collector, super->fd=%d collector->fd=%d",(int)dhsNW.super->fd,(int)dhsNW.collector->fd);
+<     MNSN_RPT_SUCCESS(resp,"dhsConnectCollector: Success. \\\\");
+<     return DHS_OK;
+<    }
+<   }
+< 
+<   /* can't get a collector connection, notify the super */
+<   (void) sprintf(resp,"failed to connect to collector, status=%d",sc);
+<   MNSN_RPT_FAILURE(resp,"dhsConnectCollector: Failed. \\\\");
+<   (void) dcaSendMsg((int)dhsNW.super->fd,dcaFmtMsg(DCA_FAIL|DCA_CONNECT,whoami));
+<   return DHS_ERROR;
+< }
+---
+> #define MAXTRYS  10
+> 
+47,49d18
+< /*******************************************************************************
+<  * dhsUtilOpenConnect ( ... )
+<  *******************************************************************************/ 
+51,148c20,99
+<   long *istat,     /* inherited status                                        */
+<   char *resp,       /* response message                                        */
+<   dhsHandle *dhsID, /* returned handle                                         */
+<   long whoami,     /* identifier for mid-level system                         */
+<   fpConfig_t *cfg   /* focal plane configuration                               */
+< ) {
+< 
+<   /* declare some variables and initialize them */
+<   int stat = 0;
+<   int socket_super = 0;
+<   char line[MAXMSG];
+<   (void) memset((void *)line,'\0',MAXMSG);
+< 
+<   /* check the inherited status */
+<   if ( STATUS_BAD(*istat) ) return;
+<   MNSN_CLEAR_STR(resp,'\0');
+< 
+<   /* reset value(s) */
+<   *istat = DHS_OK;
+<   *dhsID = 0;
+< 
+<   /* if simulating, return */
+<   if ( dcaSimulator() ) return;
+<     
+<   /* check input parameter(s) */
+<   /* COMMENT OUT AS WE DON'T NEED THESE CHECKS!
+<     if ( dhsID == (dhsHandle *)NULL ) {
+<      *istat = DHS_ERROR;
+<      (void) sprintf(resp,"bad parameter dhsID==NULL");
+<      MNSN_RPT_FAILURE(resp,"dhsOpenConnect: Failed. \\\\");
+<      return;
+<     }
+<   */
+<   /* COMMENT OUT AS WE DON'T NEED THESE CHECKS!
+<     if ( whoami==DHS_IAMOCS || whoami==DHS_IAMMSL ) {
+<      *istat = DHS_ERROR;
+<      (void) sprintf(resp,"bad parameter whoami=%ld",(long)whoami);
+<      MNSN_RPT_FAILURE(resp,"dhsOpenConnect: Failed. \\\\");
+<      return;
+<     }
+<   */
+< 
+<   /* do something for _netw variant */
+<   (void) sprintf(line,"dhsOpenConnect: validating supervisor channel");
+<   MNSN_REPORT_MSG(resp,line);
+<   if ( dhsNW.super != NULL ) {
+<    if ( (stat=dcaValidateChannel(dhsNW.super)) == DCA_ERR ) {
+<     (void) sprintf(resp,"error validating channel to supervisor, status=%d",stat); 
+<     MNSN_RPT_FAILURE(resp,"dhsOpenConnect: Failed. \\\\");
+<     if ( (stat=dcaInitChannel(&dhsNW, DCA_SUPERVISOR)) == DCA_ERR ) {
+<      *istat = DHS_ERROR;
+<      (void) sprintf(resp,"error initializing channel to supervisor, status=%d",stat); 
+<      MNSN_RPT_FAILURE(resp,"dhsOpenConnect: Failed. \\\\");
+<      return;
+<     }
+<    }
+<   } else if ( (stat=dcaInitChannel(&dhsNW,DCA_SUPERVISOR)) == DCA_ERR ) {
+<    *istat = DHS_ERROR;
+<    (void) sprintf(resp,"error connecting to supervisor, status=%d",stat); 
+<    MNSN_RPT_FAILURE(resp,"dhsOpenConnect: Failed. \\\\");
+<    return;
+<   }
+<   (void) sprintf(line,"dhsOpenConnect: super=%p",(int *)dhsNW.super);
+<   MNSN_REPORT_MSG(resp,line);
+<   (void) sprintf(line,"dhsOpenConnect: super->fd=%d",(int)dhsNW.super->fd);
+<   MNSN_REPORT_MSG(resp,line);
+<   (void) sprintf(line,"dhsOpenConnect: fpConfig size=%d",(int)sizeof(*cfg));
+<   MNSN_REPORT_MSG(resp,line);
+< 
+<   /* send fpConfig to the supervisor */
+<   socket_super = (int)dhsNW.super->fd;
+<   (void) sprintf(line,"dhsOpenConnect: sending fpConfig");
+<   MNSN_REPORT_MSG(resp,line);
+<   if ( (stat=dcaSendfpConfig(socket_super,whoami,(char *)cfg,sizeof(*cfg))) == DCA_ERR ) { 
+<    *istat = DHS_ERROR;
+<    (void) sprintf(resp,"error sending fpConfig to supervisor, status=%d",stat); 
+<    MNSN_RPT_FAILURE(resp,"dhsOpenConnect: Failed. \\\\");
+<    return;
+<   }
+<   (void) sprintf(line,"dhsOpenConnect: sent fpConfig");
+<   MNSN_REPORT_MSG(resp,line);
+< 
+<   /* send the openConnect to the supervisor */
+<   stat = dcaSendMsg(socket_super,dcaFmtMsg(DCA_OPEN|DCA_CONNECT,(int)NULL));
+< 
+<   /* get a valid collector connection */
+<   (void) dhsConnectCollector(istat,resp2,whoami);
+<   if ( STATUS_BAD(*istat) ) MNSN_RPT_FAILURE(resp2,"dhsOpenConnect: Failed. \\\\");
+< 
+<   /* see if we already have a connection made by dhsOpenSys via dcaInitChannel */
+<   if ( dhsNW.collector != (struct dhsChan *)NULL ) {
+<    *istat = DHS_OK;
+<    MNSN_RET_SUCCESS(resp,"dhsOpenConnect: Success.");
+<   } else {
+<    *istat = DHS_ERROR;
+<    (void) sprintf(resp,"cannot connect to collector");
+<    MNSN_RET_FAILURE(resp,"dhsOpenConnect: Failed. \\\\");
+<   }
+---
+>        XLONG *istat,         			/* inherited status           */
+>        char *resp,          			/* response buffer            */
+>        dhsHandle *dhsID,    			/* socket file descriptor     */
+>        XLONG whoAmI,        			/* Identifier                 */
+>        fpConfig_t *pixConfig        		/* fpConfig                   */
+>     )
+> { 
+>      int i, stat, socket_super;
+> 
+> 
+>      *istat = DHS_OK;		/* initialize status		*/
+>      *dhsID = 0;    		/* Reset for next iteration 	*/
+> 
+>      DPRINT(30, procDebug, "**** dhsOpenConnect\n");
+> 
+>      if (dcaSimulator())
+> 	return;
+> 
+>      /* Validate the connection to supervisor.
+>      */
+>      if (dhsNW.super != NULL) {
+>         DPRINT(30, procDebug, "**** dhsOpenConnect validating super chan\n");
+>         if (dcaValidateChannel (dhsNW.super) == DCA_ERR) {
+>             if (dcaInitChannel (&dhsNW, DCA_SUPERVISOR) == DCA_ERR) {
+>                 MNSN_RET_FAILURE(resp,
+> 	          "dhsOpenConnect: Error connecting to Supervisor machine"); 
+> 	        *istat = DHS_ERROR ;
+>                 return;
+>             }
+>         }
+> 
+>      } else if (dcaInitChannel (&dhsNW, DCA_SUPERVISOR) == DCA_ERR) {
+>         printf("dhsOpenConnect: Error connecting to Supervisor machine\n"); 
+> 	*istat = DHS_ERROR ;
+>         return;
+>      }
+> 
+> 
+>       DPRINTF(30, procDebug, "**** dhsOpenConnect super:0x%x\n",
+> 	(int *)dhsNW.super);
+>       DPRINTF(30, procDebug, "**** dhsOpenConnect super->fd:%d\n",
+> 	(int)dhsNW.super->fd);
+>       DPRINTF(30, procDebug, "**** dhsOpenConnect fpConfig size:%d\n",
+> 	(int)sizeof (*pixConfig));
+> 
+>       socket_super = (int )dhsNW.super->fd;
+> 
+>       /* Send a SET_FOCAL_PLANE message to the super.
+>       */
+>       DPRINT(30, procDebug, "**** dhsOpenConnect sending fpCfg\n");
+>       if (dcaSendfpConfig (socket_super, whoAmI, 
+>           (char *)pixConfig, sizeof(*pixConfig)) == DCA_ERR) { 
+>               MNSN_RET_FAILURE(resp, 
+> 	          "dhsOpenConnect: Cannot send fpConfig to Super");
+> 	      *istat = DHS_ERROR ;
+> 	      return;
+>       }
+>       DPRINT(30, procDebug, "**** dhsOpenConnect done sending fpCfg\n");
+> 
+> 
+>       /* Send the openConnect to the Supervisor.
+>       */
+>       stat = dcaSendMsg(socket_super, 
+> 	  dcaFmtMsg(DCA_OPEN|DCA_CONNECT,(int)NULL));
+> 
+>       /* Get a valid collector connection.
+>       */
+>       dhsConnectCollector (istat, resp, whoAmI);
+> 
+>       /* See if we already have a connection made by dhsOpenSys
+>       ** via dcaInitChannel.
+>       */
+>       if (dhsNW.collector != (struct dhsChan *) NULL) {
+>          return;
+>       } else {
+>          MNSN_RET_FAILURE(resp, "dhsOpenConnect: Cannot connect to Collector");
+>          *istat = DHS_ERROR ;
+> 	 return;
+>       }
+> }
+150,151c101,144
+<   /* return */ 
+<   return;
+---
+> int 
+> dhsConnectCollector (
+>     XLONG *istat,         			/* inherited status           */
+>     char *resp,          			/* response buffer            */
+>     XLONG whoAmI        			/* Identifier                 */
+> )
+> {
+>      int  i;
+> 
+> 
+>       /* Loop MAXTRY times until we get a valid collector connection.
+>       */
+>       for (i = 0; i < MAXTRYS; i++) {
+>           DPRINT(30, procDebug, 
+>                 "**** dhsOpenConnect init new collector channel..\n");
+>           if (dcaInitChannel (&dhsNW, DCA_COLLECTOR) == DCA_OK) {
+>               /* Send an INIT to the collector.
+>               DPRINTF(30, procDebug, "**** dhsOpenConnect: coll node='%s'\n",
+>                  dhsNW.collector->node);
+>               DPRINTF(30, procDebug, "**** dhsOpenConnect: coll port=%d\n",
+>                  dhsNW.collector->port);
+>               */
+>               DPRINT(30, procDebug, "**** dhsOpenConnect sending init...\n");
+>               dcaSendMsg ((int)dhsNW.collector->fd, dcaFmtMsg(DCA_INIT,whoAmI));
+> 
+>               DPRINTF(30, procDebug, 
+>                   "**** dhsOpenConnect at dcaInit super fd:%d\n",
+>                   (int)dhsNW.super->fd);
+>               DPRINTF(30, procDebug, 
+>                   "**** dhsOpenConnect at dcaInit collector fd:%d\n",
+>                   (int)dhsNW.collector->fd);
+> 
+> 	      return DHS_OK;
+> 
+>           } else {
+>               /* Can't get a Collector connection, notify the Super.
+>               */
+>               DPRINT(30, procDebug, "**** dhsOpenConnect getCollector FAILS\n");
+>               dcaSendMsg ((int )dhsNW.super->fd, 
+>                   dcaFmtMsg (DCA_FAIL|DCA_CONNECT, whoAmI));
+> 
+> 	      return DHS_ERROR;
+>           }
+>       }
+5c5
+<  #include "dhsUtil.h"
+---
+> #include "dhsUtil.h"
+8c8
+<  #include "sockUtil.h"
+---
+> #include "sockUtil.h"
+11,13c11,12
+<  #include "dhsImplementationSpecifics.h"
+< #endif 
+< #include "dcaDhs.h"
+---
+> #include "dhsImplementationSpecifics.h"
+> #endif
+15c14
+< int dhsConnectCollector ( long *istat, char *resp, long whoami );
+---
+> #include "dcaDhs.h"
+17,92c16,84
+< /*******************************************************************************
+<  * dhsUtilOpenExp ( ... )
+<  *******************************************************************************/ 
+< void dhsUtilOpenExp (
+<   long *istat,    /* inherited status                                         */
+<   char *resp,      /* response message                                         */
+<   dhsHandle dhsID, /* dhs handle                                               */
+<   fpConfig_t *cfg, /* focal plane configuration                                */
+<   double *expID,   /* exposure identifier                                      */
+<   char *obsetID    /* observation set identifier                               */
+< ) {
+< 
+<   /* declare some variables and initialize them */
+<   int socket = 0;
+<   int stat = 0;
+<   int szt = 0;
+<   char line[MAXMSG];
+<   (void) memset((void *)line,'\0',MAXMSG);
+< 
+<   (void) sprintf(line,"dhsOpenExp: ending istat=%ld",*istat);
+<   MNSN_REPORT_MSG(resp,line);
+< 
+<   /* check the inherited status */
+<   if ( STATUS_BAD(*istat) ) return;
+<   MNSN_CLEAR_STR(resp,'\0');
+<     
+<   /* if simulating, return */
+<   if ( dcaSimulator() ) return;
+< 
+<   /* check input parameter(s) */
+<   if ( cfg == (fpConfig_t *)NULL ) {
+<    *istat = DHS_ERROR;
+<    (void) sprintf(resp,"bad parameter cfg==NULL");
+<    MNSN_RPT_FAILURE(resp,"dhsOpenExp: Failed. \\\\");
+<    return;
+<   }
+<   if ( expID == (double *)NULL ) {
+<    *istat = DHS_ERROR;
+<    (void) sprintf(resp,"bad parameter expID==NULL");
+<    MNSN_RPT_FAILURE(resp,"dhsOpenExp: Failed. \\\\");
+<    return;
+<   }
+<   if ( obsetID == (char *)NULL ) {
+<    *istat = DHS_ERROR;
+<    (void) sprintf(resp,"bad parameter obsetID==NULL");
+<    MNSN_RPT_FAILURE(resp,"dhsOpenExp: Failed. \\\\");
+<    return;
+<   }
+<   if ( dhsID < (dhsHandle)0 ) {
+<    *istat = DHS_ERROR;
+<    (void) sprintf(resp,"bad parameter dhsID<0");
+<    MNSN_RPT_FAILURE(resp,"dhsOpenExp: Failed. \\\\");
+<    return;
+<   }
+< 
+<   /* validate the connection to supervisor */
+<   (void) sprintf(line,"dhsOpenExp: dhsNW.super->fd=%d",(int)dhsNW.super->fd);
+<   MNSN_REPORT_MSG(resp,line);
+<   (void) sprintf(line,"dhsOpenExp: dhsNW.collector->fd=%d",(int)dhsNW.collector->fd);
+<   MNSN_REPORT_MSG(resp,line);
+<   if ( (stat=dcaValidateChannel(dhsNW.super)) == DCA_ERR ) {
+<    (void) sprintf(resp,"failed to validate channel to supervisor");
+<    MNSN_RPT_FAILURE(resp,"dhsOpenExp: Failed. \\\\");
+<    if ( (stat=dcaInitChannel(&dhsNW,DCA_SUPERVISOR))==DCA_ERR || (stat=dcaValidateChannel(dhsNW.super))==DCA_ERR ) {
+<     *istat = DHS_ERROR;
+<     (void) sprintf(resp,"failed to initialize channel to supervisor");
+<     MNSN_RPT_FAILURE(resp,"dhsOpenExp: Failed. \\\\");
+<     return;
+<    }
+<   }
+<   (void) sprintf(line,"dhsOpenExp: valid connection to supervisor");
+<   MNSN_REPORT_MSG(resp,line);
+< 
+<   /* set value(s) */
+<   dhs.expID = *expID;
+<   dhs.obsSetID = obsetID;
+---
+> void dhsUtilOpenExp ( XLONG *istat,    		/* inherited status           */
+>                       char *resp,      		/* response message           */
+>                       dhsHandle dhsID, 		/* dhs handle                 */
+>                       fpConfig_t *fpCfg, 	/* focal plane configuration  */
+>                       double *expID,   		/* exposure identifier        */
+>                       char *obsetID    		/* observation set identifier */
+>     )
+> 
+> {
+>         int socket, stat;
+> 	int szt;
+> 
+> 
+> 	/* check the inherited status */
+> 	if ( STATUS_BAD(*istat) ) return;
+> 	    MNSN_CLEAR_STR(resp,'\0');
+> 
+>         if (dcaSimulator())
+>             return;
+> 
+> 	/* check input parameters */
+> 	if ( fpCfg==(fpConfig_t *)NULL || expID==(double *)NULL ||
+> 	     obsetID==(char *)NULL )
+> 	{
+> 	    *istat = DHS_ERROR;
+> 	    sprintf(resp,"dhsOpenExp:  bad parameter, %s ",
+>                     ((fpCfg==(fpConfig_t*)NULL) ? "FP fpCfg pointer==NULL":
+>                     ((expID == (double *)NULL)?"expID==NULL":"obsetID==NULL")));
+> 	    MNSN_RET_FAILURE(resp,"");
+> 	    return;
+> 	}
+> 
+>         /* check input values */
+>         if ( dhsID < (dhsHandle )0 )
+>         {
+>             *istat = DHS_ERROR;
+>             MNSN_RET_FAILURE(resp,
+>                "dhsOpenExp: Bad parameter, dhsHandle invalid.");
+>             return;
+>         }
+>         /* END CHECKING INPUTS */
+> 
+>         DPRINTF(30, procDebug,
+> 	    "**** dhsUtilOpenExp: dhsNW.super->fd: %d\n",dhsNW.super->fd);
+>         DPRINTF(30, procDebug,
+> 	    "**** dhsUtilOpenExp: dhsNW.collector->fd: %d\n",
+> 	    dhsNW.collector->fd);
+> 
+>     	/* Validate the connection to supervisor */
+>     	if (dcaValidateChannel (dhsNW.super) == DCA_ERR) {
+> 
+> 	    /* Try to reconnect to the supervisor before failing.
+> 	    */
+>             if (dcaInitChannel (&dhsNW, DCA_SUPERVISOR) == DCA_ERR ||
+>     	        dcaValidateChannel (dhsNW.super) == DCA_ERR) {
+> 
+>                 *istat = DHS_ERROR;
+>                 MNSN_RET_FAILURE(resp,
+>                     "dhsOpenExp: Cannot validate connection to Supervisor");
+> 	        return;
+>             }
+> 	}
+>         DPRINTF(30, procDebug,
+> 	     "**** dhsUtilOpenExp: valid connection on %s.\n", "super");
+> 
+>         dhs.expID = *expID;    	/*dcaFmtMsg will read these 2 values */
+> 	dhs.obsSetID = obsetID;
+>         DPRINT(30, procDebug,
+> 	     "**** dhsUtilOpenExp: validating connection to collector...\n");
+94,95c86
+<   /* validate channel to collector */
+<   if ( (stat=dcaValidateChannel(dhsNW.collector)) != DCA_ERR ) {
+---
+>     	if (dcaValidateChannel (dhsNW.collector) != DCA_ERR) {
+97,136c88,131
+<    socket = (int)dhsNW.collector->fd;
+<    (void) sprintf(line,"dhsOpenExp: sending fpConfig to fd=%d",socket);
+<    MNSN_REPORT_MSG(resp,line);
+<    /* send an OpenExposure to the collector and supervisor */
+<    stat = dcaSendMsg(dhsNW.collector->fd,dcaFmtMsg(DCA_OPEN|DCA_EXP,DHS_IAMPAN));
+<    stat = dcaSendMsg(dhsNW.super->fd,dcaFmtMsg(DCA_OPEN|DCA_EXP,DHS_IAMPAN));
+<    if ( (stat=dcaSendfpConfig(socket,DHS_IAMPAN,(char *)cfg,sizeof(*cfg))) == DCA_ERR ) {
+<     *istat = DHS_ERROR;
+<     (void) sprintf(resp,"failed to send fpConfig to collector");
+<     MNSN_RPT_FAILURE(resp,"dhsOpenExp: Failed. \\\\");
+<     return;
+<    }
+<    /* send message to collector with expID and obsSetID */
+<    stat = dcaSendMsg(socket,dcaFmtMsg(DCA_EXP_OBSID,(int)NULL));
+<   } else {
+<    if ( (stat=dhsConnectCollector(istat,resp2,DHS_IAMPAN)) == DHS_ERROR ) {
+<     MNSN_RPT_FAILURE(resp2,"dhsOpenExp: Failed. \\\\");
+<     *istat = DHS_ERROR;
+<     (void) sprintf(resp,"failed to validate channel to collector");
+<     MNSN_RPT_FAILURE(resp,"dhsOpenExp: Failed. \\\\");
+<     return;
+<    } else {
+<     goto retry;  /* NASTY!! */
+<    }
+<   }
+< 
+<   /* send message to collector with DIR and FILENAME */
+<   szt = 256;
+<   stat = dcaSendMsg(socket,dcaFmtMsg(DCA_DIRECTORY,(int)NULL));
+<   stat = dcaSend(socket,dhsUtilDIR,szt);
+<   szt = 256;
+<   stat = dcaSendMsg(socket,dcaFmtMsg(DCA_FNAME,(int)NULL));
+<   stat = dcaSend(socket,dhsUtilFILENAME,szt);
+<   (void) sprintf(line,"dhsOpenExp: ending istat=%ld",*istat);
+<   MNSN_REPORT_MSG(resp,line);
+< 
+<   /* return */
+<   *istat = DHS_OK;
+<   MNSN_RET_SUCCESS(resp,"dhsOpenExp: Success.");
+<   return;
+---
+>     	    socket = (int )dhsNW.collector->fd;
+> 
+>             DPRINTF(30, procDebug,
+> 	         "**** dhsUtilOpenExp: sending fpConfig to fd=%d.\n", socket);
+> 
+> 	    /* Send an OpenExposure to the Collector and Supervisor.
+> 	     */
+> 	    stat = dcaSendMsg (dhsNW.collector->fd, dcaFmtMsg (DCA_OPEN|DCA_EXP,
+> 		DHS_IAMPAN));
+> 	    stat = dcaSendMsg (dhsNW.super->fd, dcaFmtMsg (DCA_OPEN|DCA_EXP,
+> 		DHS_IAMPAN));
+> 
+>             if (dcaSendfpConfig 
+>                 (socket, DHS_IAMPAN, (char *)fpCfg,sizeof(*fpCfg)) == DCA_ERR) {
+>                 MNSN_RET_FAILURE(resp,
+>                     "dhsOpenExp: Cannot send fpConfig to Collector");
+>                 *istat = DHS_ERROR ;
+>                  return;
+>             }
+> 	    /* Send message to collector with expID and obsSetID */
+> 	    stat = dcaSendMsg (socket, dcaFmtMsg (DCA_EXP_OBSID, (int )NULL));
+> 
+>         } else {
+> 	    if (dhsConnectCollector (istat, resp, DHS_IAMPAN) == DHS_ERROR) {
+>                 *istat = DHS_ERROR;
+>                 MNSN_RET_FAILURE(resp,
+>                    "dhsOpenExp: Cannot validate connection to Collector");
+>                 return;
+> 	    } else
+> 		goto retry;
+>          }
+> 
+> 	 /* Send message to collector with DIR and FILENAME */
+> 	 szt = 256;
+> 	 stat = dcaSendMsg (socket, dcaFmtMsg (DCA_DIRECTORY, (int )NULL));
+> 	 stat = dcaSend(socket, dhsUtilDIR, szt);
+> 
+> 	 szt = 256;
+> 	 stat = dcaSendMsg (socket, dcaFmtMsg (DCA_FNAME, (int )NULL));
+> 	 stat = dcaSend(socket, dhsUtilFILENAME, szt);
+> 
+>          DPRINTF(30, procDebug, "**** dhsUtilOpenExp: END: istat:%d\n",*istat);
+>          *istat =  DHS_OK;
+> 	 return;
+14,25c14,21
+< void dhsUtilReadImage (
+<   long *istat,    /* inherited status                                         */
+<   char *resp,      /* response message                                         */
+<   dhsHandle dhsID  /* dhs handle                                               */
+< ) {
+< 
+<   /* check the inherited status */
+<   if ( STATUS_BAD(*istat) ) return;
+<   MNSN_CLEAR_STR(resp,'\0');
+< 
+<   /* if simulating, return */
+<   if ( dcaSimulator() ) return;
+---
+> void dhsUtilReadImage ( XLONG *istat,    /* inherited status                   */
+> 			char *resp,      /* response message                   */
+> 			dhsHandle dhsID  /* dhs handle                         */
+>     ) 
+> {
+>     /* check the inherited status */
+>     if ( STATUS_BAD(*istat) ) return;
+>     MNSN_CLEAR_STR(resp,'\0');
+27,33c23,29
+<   /* check input parameter(s) */
+<   if ( dhsID < (dhsHandle)0 ) {
+<    *istat = DHS_ERROR;
+<    (void) sprintf(resp,"bad parameter dhsID<0");
+<    MNSN_RPT_FAILURE(resp,"dhsUtilReadImage: Failed. \\\\");
+<    return;
+<   }
+---
+>     /* check input values */
+>     if ( dhsID < (dhsHandle)0 ) 
+>     {
+> 	*istat = DHS_ERROR;
+> 	MNSN_RET_FAILURE(resp,"dhsReadImage:  bad parameter. dhsHandle invalid");
+> 	return;
+>     }
+35,36c31,33
+<   /* do something for _netw variant */
+<   *istat = DHS_OK;
+---
+>     /* for this library, this is a no-op */
+>     *istat = DHS_OK;
+>     MNSN_RET_SUCCESS(resp,"dhsReadImage:  Success.");
+38,40c35,36
+<   /* return */
+<   MNSN_RET_SUCCESS(resp,"dhsUtilReadImage: Success.");
+<   return;
+---
+>     /* return */
+>     return;
+5c5,8
+<  #include "dhsUtil.h"
+---
+> #include "dhsUtil.h"
+> #endif
+> #if !defined(_sockUtil_H_)
+> #include "sockUtil.h"
+8c11
+<  #include "dhsImplementationSpecifics.h"
+---
+> #include "dhsImplementationSpecifics.h"
+9a13
+> 
+12c16,69
+< #define bzero(b,len) ((void)memset((void *)(b),'\0',(len)),(void)0)
+---
+> void dhsSendMetaData ( 
+>       XLONG *istat,        /* inherited status 		 */
+>       char *resp,          /* response message           */
+>       dhsHandle dhsID,     /* dhs handle                 */
+>       void *blkAddr,       /* address of data block      */
+>       size_t blkSize,      /* size of data block (bytes) */
+>       mdConfig_t *mdCfg,   /* configuration of meta data */
+>       double *expID,       /* exposure identifier        */
+>       char *obsetID        /* observation set identifier */
+> )
+> {
+> 	int socket, szt, stat;
+> 	char buffer[120];
+> 
+> 
+>         if (dcaSimulator())
+>             return;
+> 
+>         *istat = DHS_OK;
+> 	socket = dhsNW.collector->fd;
+> 
+> 
+>         /* Skip if blksize is zero */
+> 	if (blkSize == 0)
+>             return;
+> 
+>         DPRINTF(30, procDebug,
+> 	   "** Starting dhsSendMetaData. obsetID: %s\n",obsetID);
+> 
+>         dcaSendMsg (socket, dcaFmtMsg (DCA_META, (int )NULL));
+> 
+> 	/* Send blkSize 1st*/
+>         szt = sizeof(size_t);
+> 	szt = 120;
+> 	bzero (buffer, szt);
+> 	memmove (buffer, (char *)&blkSize, sizeof(size_t));
+> 	stat = dcaSend(socket, buffer, szt);
+> 
+> 	/* Send data block */
+> 	stat = dcaSend (socket, (char *)blkAddr, blkSize);
+>         DPRINTF(60, procDebug, "Sent MetaData block: %d bytes\n", blkSize);
+> 	if (stat == DCA_ERR)
+> 	   *istat = DHS_ERROR;
+> 
+> 	/* Send md block */
+>         stat =  dcaSend (socket, (char *)mdCfg, sizeof(*mdCfg));
+>         DPRINTF(60, procDebug, "Sent mdCfg: %d bytes\n", sizeof(*mdCfg));
+> 	if (stat == DCA_ERR)
+> 	   *istat = DHS_ERROR;
+> 
+> 	/* Send md block */
+>         
+>         DPRINTF(30, procDebug,
+> 	   "** Ending dhsSendMetaData: %s\n",obsetID);        
+14,93c71
+< /*******************************************************************************
+<  * dhsUtilSendMetaData ( ... )
+<  *******************************************************************************/ 
+< void dhsUtilSendMetaData (
+<   long *istat,    /* inherited status                                         */
+<   char *resp,      /* response message                                         */
+<   dhsHandle dhsID, /* dhs handle                                               */
+<   void *blkAddr,   /* address of data block                                    */
+<   size_t blkSize,  /* size of data block                                       */
+<   mdConfig_t *cfg, /* configuration of meta data                               */
+<   double *expID,   /* exposure identifier                                      */
+<   char *obsetID    /* observation set identifier                               */
+< ) {
+< 
+<   /* declare some variables and initialize them */
+<   int socket = DHS_OK;
+<   int stat = DHS_OK;
+<   int szt = 120;
+<   char buffer[szt];
+<   char line[MAXMSG];
+<   (void) memset((void *)line,'\0',MAXMSG);
+<   (void) memset((void *)buffer,'\0',szt);
+<   (void) memmove(buffer,(char *)&blkSize,sizeof(size_t));
+< 
+<   /* check the inherited status */
+<   if ( STATUS_BAD(*istat) ) return;
+<   MNSN_CLEAR_STR(resp,'\0');
+<     
+<   /* if simulating, return */
+<   if ( dcaSimulator() ) return;
+< 
+<   /* set value(s) */
+<   *istat = DHS_OK;
+<   socket = dhsNW.collector->fd;
+< 
+<   /* skip if blksize is zero */
+<   if ( blkSize == (size_t)0 ) return;
+< 
+<   /* do something for _netw variant */
+<   (void) memset((void *)line,'\0',MAXMSG);
+<   (void) sprintf(line,"dhsSendMetaData: starting \"%s\", expID=%lf, stat=%d, istat=%ld",obsetID,*expID,stat,*istat);
+<   MNSN_REPORT_MSG(resp,line);
+<   (void) dcaSendMsg(socket,dcaFmtMsg(DCA_META,(int)NULL));
+< 
+<   /* send blkSize first */
+<   (void) memset((void *)line,'\0',MAXMSG);
+<   (void) sprintf(line,"dhsSendMetaData: send %p, size=%d, stat=%d, istat=%ld",blkAddr,(int)szt,stat,*istat);
+<   MNSN_REPORT_MSG(resp,line);
+<   if ( (stat=dcaSend(socket,buffer,szt)) == DCA_ERR ) *istat = DHS_ERROR;
+<   (void) memset((void *)line,'\0',MAXMSG);
+<   (void) sprintf(line,"dhsSendMetaData: sent %p, size=%d, stat=%d, istat=%ld",blkAddr,(int)szt,stat,*istat);
+<   MNSN_REPORT_MSG(resp,line);
+< 
+<   /* send data block */
+<   stat = DHS_OK;
+<   (void) memset((void *)line,'\0',MAXMSG);
+<   (void) sprintf(line,"dhsSendMetaData: send metadata size=%d, stat=%d, istat=%ld",(int)blkSize,stat,*istat);
+<   MNSN_REPORT_MSG(resp,line);
+<   if ( (stat=dcaSend(socket,(char *)blkAddr,blkSize)) == DCA_ERR ) *istat = DHS_ERROR;
+<   (void) memset((void *)line,'\0',MAXMSG);
+<   (void) sprintf(line,"dhsSendMetaData: sent metadata size=%d, stat=%d, istat=%ld",(int)blkSize,stat,*istat);
+<   MNSN_REPORT_MSG(resp,line);
+< 
+<   /* send md block */
+<   stat = DHS_OK;
+<   (void) memset((void *)line,'\0',MAXMSG);
+<   (void) sprintf(line,"dhsSendMetaData: send mdConfig %p, size=%d, stat=%d, istat=%ld",cfg,(int)sizeof(*cfg),stat,*istat);
+<   MNSN_REPORT_MSG(resp,line);
+<   if ( (stat=dcaSend(socket,(char *)cfg,sizeof(*cfg))) == DCA_ERR ) *istat = DHS_ERROR;
+<   (void) memset((void *)line,'\0',MAXMSG);
+<   (void) sprintf(line,"dhsSendMetaData: sent mdConfig %p, size=%d, stat=%d, istat=%ld",cfg,(int)sizeof(*cfg),stat,*istat);
+<   MNSN_REPORT_MSG(resp,line);
+< 
+<   /* return */
+<   if ( STATUS_BAD(*istat) ) {
+<    MNSN_RET_FAILURE(resp,"dhsSendMetaData: Failed. \\\\");
+<   } else {
+<    MNSN_RET_SUCCESS(resp,"dhsSendMetaData: Success.");
+<   }
+<   return;
+---
+>         return ;
+5c5
+<  #include "dhsUtil.h"
+---
+> #include "dhsUtil.h"
+8c8
+<  #include "sockUtil.h"
+---
+> #include "sockUtil.h"
+11c11
+<  #include "dhsImplementationSpecifics.h"
+---
+> #include "dhsImplementationSpecifics.h"
+12a13
+> 
+15,40c16,17
+< /*******************************************************************************
+<  * dhsUtilSendPixelData ( ... )
+<  *******************************************************************************/ 
+< void dhsUtilSendPixelData (
+<   long *istat,    /* inherited status                                         */
+<   char *resp,      /* response message                                         */
+<   dhsHandle dhsID, /* dhs handle                                               */
+<   void *pxlAddr,   /* address of data block                                    */
+<   size_t pxlSize,  /* size of data block                                       */
+<   fpConfig_t *cfg, /* configuration of pixel data                              */
+<   double *expID,   /* exposure identifier                                      */
+<   char *obsetID    /* observation set identifier                               */
+< ) {
+< 
+<   /* declare some variables and initialize them */
+<   int sizefp = DHS_OK;
+<   int socket = DHS_OK;
+<   int stat = DHS_OK;
+<   char line[MAXMSG];
+< 
+<   /* check the inherited status */
+<   if ( STATUS_BAD(*istat) ) return;
+<   MNSN_CLEAR_STR(resp,'\0');
+<     
+<   /* if simulating, return */
+<   if ( dcaSimulator() ) return;
+---
+> /**********************************************************************/
+> /* Send pixel data to the server machine */
+42,43c19,44
+<   /* skip if size is zero */
+<   if ( pxlSize == (size_t)0 ) return;
+---
+> void dhsSendPixelData ( 
+>          XLONG *istat,       /* inherited status            */
+>          char *resp,         /* response message            */
+>          dhsHandle dhsID,    /* dhs handle                  */
+>          void *pxlAddr,      /* address of data block       */
+>          size_t frmSize,     /* size of data block          */
+>          fpConfig_t *fpCfg,  /* configuration of pixel data */
+>          double *expID,      /* exposure identifier         */
+>          char *obsetID       /* observation set identifier  */
+> )
+> 
+> {
+>     int sizefp, socket, stat;
+>     char line[180];
+> 
+>     DPRINT(30, procDebug, "***STARTING dhsSendPixelData\n");
+> 
+>     if (dcaSimulator())
+>        return;
+> 
+> 
+>     /* Skip if size is zero */
+>     if (frmSize == 0)  {
+>         DPRINT(40, procDebug, "Size is ZERO. DONE with dhsSendPixelData\n\n");
+>         return;
+>     }
+45,47c46,48
+<   /* do something for _netw variant */
+<   socket = dhsNW.collector->fd;
+<   (void) dcaSendMsg(socket,dcaFmtMsg(DCA_PIXEL,DHS_IAMWHO));
+---
+>     socket = dhsNW.collector->fd;
+> 
+>     dcaSendMsg (socket, dcaFmtMsg (DCA_PIXEL, DHS_IAMWHO));
+49,77c50,74
+<   /* send cfg data to the server */
+<   (void) memset((void *)line,'\0',MAXMSG);
+<   (void) sprintf(line,"dhsSendPixelData: send xstart=%d, ystart=%d, xsize=%d, ysize=%d, stat=%d, istat=%ld",
+<    (int)cfg->xStart,(int)cfg->yStart,(int)cfg->xSize,(int)cfg->ySize,(int)stat,(long)*istat);
+<   MNSN_REPORT_MSG(resp,line);
+<   sizefp = (int)sizeof(*cfg);
+<   if ( (stat=dcaSend(socket,(char *)cfg,sizefp)) == DCA_ERR ) *istat = DHS_ERROR;
+<   (void) memset((void *)line,'\0',MAXMSG);
+<   (void) sprintf(line,"dhsSendPixelData: sent xstart=%d, ystart=%d, xsize=%d, ysize=%d, stat=%d, istat=%ld",
+<    (int)cfg->xStart,(int)cfg->yStart,(int)cfg->xSize,(int)cfg->ySize,(int)stat,(long)*istat);
+<   MNSN_REPORT_MSG(resp,line);
+< 
+<   /* send PAN data to the server */
+<   stat = DHS_OK;
+<   (void) memset((void *)line,'\0',MAXMSG);
+<   (void) sprintf(line,"dhsSendPixelData: send %d bytes, stat=%d, istat=%ld",(int)pxlSize,(int)stat,(long)*istat);
+<   MNSN_REPORT_MSG(resp,line);
+<   if ( (stat=dcaSend(socket,pxlAddr,pxlSize)) == DCA_ERR ) *istat = DHS_ERROR;
+<   (void) memset((void *)line,'\0',MAXMSG);
+<   (void) sprintf(line,"dhsSendPixelData: sent %d bytes, stat=%d, istat=%ld",(int)pxlSize,(int)stat,(long)*istat);
+<   MNSN_REPORT_MSG(resp,line);
+< 
+<   /* return */
+<   if ( STATUS_BAD(*istat) ) {
+<    MNSN_RET_FAILURE(resp,"dhsSendPixelData: Failed. \\\\");
+<   } else {
+<    MNSN_RET_SUCCESS(resp,"dhsSendPixelData: Success.");
+<   }
+<   return;
+---
+>     /* Send fpCfg data to the server */
+>     sprintf (line, "xstart: %d, ystart: %d\n", 
+>         (int )fpCfg->xStart, (int )fpCfg->yStart);
+>     DPRINT(30, procDebug, line);
+>     sprintf(line, "xsize: %d, ysize: %d\n", 
+>         (int )fpCfg->xSize, (int )fpCfg->ySize);
+>     DPRINT(30, procDebug, line);
+> 	
+>     sizefp= sizeof(*fpCfg);
+>     stat = dcaSend (socket, (char *)fpCfg, sizefp);
+>     if (stat == DCA_ERR)
+>        *istat = DHS_ERROR;
+> 
+>     /* Send PAN data to the server
+>     */
+>     DPRINTF(40, procDebug, "Sending frmSize: %d bytes\n",frmSize);
+>     stat = dcaSend (socket, pxlAddr, frmSize);
+>     if (stat == DCA_ERR)
+>        *istat = DHS_ERROR;
+> 
+>     sprintf(line, "Sent: %d bytes, istat=%d \n",(int)frmSize, (int)*istat);
+>     DPRINT(40, procDebug, line);
+>     DPRINT(40, procDebug, "DONE with dhsSendPixelData\n\n");
+> 
+>     return;
+14,25c14,21
+< void dhsUtilSysClose (
+<   long *istat,    /* inherited status                                         */
+<   char *resp,      /* response message                                         */
+<   dhsHandle dhsID  /* dhs handle                                               */
+< ) {
+< 
+<   /* check the inherited status */
+<   if ( STATUS_BAD(*istat) ) return;
+<   MNSN_CLEAR_STR(resp,'\0');
+< 
+<   /* if simulating, return */
+<   if ( dcaSimulator() ) return;
+---
+> void dhsUtilSysClose ( XLONG *istat,    /* inherited status                    */
+> 		       char *resp,      /* response message                    */
+> 		       dhsHandle dhsID  /* dhs handle                          */
+>     ) 
+> {
+>     /* check the inherited status */
+>     if ( STATUS_BAD(*istat) ) return;
+>     MNSN_CLEAR_STR(resp,'\0');
+27,33c23,24
+<   /* check input parameter(s) */
+<   if ( dhsID < (dhsHandle)0 ) {
+<    *istat = DHS_ERROR;
+<    (void) sprintf(resp,"bad parameter dhsID<0");
+<    MNSN_RPT_FAILURE(resp,"dhsUtilSysClose: Failed. \\\\");
+<    return;
+<   }
+---
+>     if (dcaSimulator())
+>        return;
+35,36c26,32
+<   /* do something for _netw variant */
+<   *istat = DHS_OK;
+---
+>     /* check input values */
+>     if ( dhsID < (dhsHandle)0 ) 
+>     {
+> 	*istat = DHS_ERROR;
+> 	MNSN_RET_FAILURE(resp,"dhsSysClose:  bad parameter, dhsHandle invalid");
+> 	return;
+>     }
+38,40c34,38
+<   /* return */
+<   MNSN_RET_SUCCESS(resp,"dhsUtilSysClose: Success.");
+<   return;
+---
+>     /* for this library, this is a no-op */
+>     *istat = DHS_OK;
+>     MNSN_RET_SUCCESS(resp,"dhsSysClose:  Success.");
+>     /* return */
+>     return;
+4,6d3
+< #if !defined(_dhsUtil_H_)
+<  #include "dhsUtil.h"
+< #endif
+9a7,9
+> #if !defined(_dhsUtil_H_)
+> #include "dhsUtil.h"
+> #endif
+11,12c11,13
+<  #include "dhsImplementationSpecifics.h"
+< #endif 
+---
+> #include "dhsImplementationSpecifics.h"
+> #endif
+> 
+15,72c16,81
+< /*******************************************************************************
+<  * dhsUtilSysOpen ( ... )
+<  *******************************************************************************/ 
+< void dhsUtilSysOpen (
+<   long *istat,     /* inherited status                                        */
+<   char *resp,       /* response message                                        */
+<   dhsHandle *dhsID, /* returned handle                                         */
+<   long whoami      /* identifier for top-level system                         */
+< ) {
+< 
+<   /* declare some variables and initialize them */
+<   char *pc = (char *)NULL;
+<   char *p  = (char *)NULL;
+<   int port = 0;
+<   int stat = 0;
+<   *dhsID = 0;
+< 
+<   /* check the inherited status */
+<   if ( STATUS_BAD(*istat) ) return;
+<   MNSN_CLEAR_STR(resp,'\0');
+<     
+<   /* if simulating, return */
+<   if ( dcaSimulator() ) return;
+< 
+<   /* do something for _netw variant */
+<   if ( (p=getenv("MONSOON_DHS")) == (char *)NULL ) {
+<    *istat = DHS_ERROR;
+<    (void) sprintf(resp,"MONSOON_DHS not set");
+<    MNSN_RPT_FAILURE(resp,"dhsUtilSysOpen: Failed. \\\\");
+<    return;
+<   } 
+<   if ( (pc=index(p,':')) == (char *)NULL ) {
+<    *istat = DHS_ERROR;
+<    (void) sprintf(resp,"MONSOON_DHS not machine:port");
+<    MNSN_RPT_FAILURE(resp,"dhsUtilSysOpen: Failed. \\\\");
+<    return;
+<   } 
+< 
+<   /* initialize parameters */
+<   (void) memset((void *)dhs.dhsSuperNode,'\0',SZNODE);
+<   (void) strncpy(dhs.dhsSuperNode, p, pc-p);
+<   port = atoi(pc+1);
+<   dhs.dhsSuperPort = port;
+<   (void) memset((void *)dhs.dhsName,'\0',SZNODE);
+<   (void) sprintf(dhs.dhsName,"PAN");
+<   (void) memset((void *)dhs.dhsCollectorNode,'\0',SZNODE);
+<   dhs.dhsCollectorPort = -1;
+< 
+<   /* establish the connection to supervisor */
+<   if (dhsNW.super != NULL) {
+<    if ( (stat=dcaValidateChannel(dhsNW.super)) == DCA_ERR ) {
+<     (void) sprintf(resp,"failed to validate channel to supervisor");
+<     MNSN_RPT_FAILURE(resp,"dhsUtilSysOpen: Failed. \\\\");
+<     if ( (stat=dcaInitChannel(&dhsNW,DCA_SUPERVISOR)) == DCA_ERR ) {
+<      *istat = DHS_ERROR;
+<      (void) sprintf(resp,"failed to initialize channel to supervisor");
+<      MNSN_RPT_FAILURE(resp,"dhsUtilSysOpen: Failed. \\\\");
+<      return;
+---
+> void dhsUtilSysOpen ( XLONG *istat,     /* inherited status                   */
+>                       char *resp,       /* response message                   */
+>                       dhsHandle *dhsID, /* returned handle                    */
+>                       XLONG whoami      /* identifier for top-level system    */
+>     )
+> {
+> 
+>     char *p, *pc;
+>     int  port;
+> 
+>     *dhsID = 0;
+>     /* check the inherited status */
+>     if ( STATUS_BAD(*istat) ) return;
+>         MNSN_CLEAR_STR(resp,'\0');
+> 
+>     if (dcaSimulator())
+>        return;
+> 
+> 
+>     /* Read environment variable with DHS Supervisor machine name 
+>      * MONSOON_DHS syntax is "machineName:port".
+>      */
+>     p = (char *)getenv ("MONSOON_DHS");
+>     if (p == NULL) {
+>         MNSN_RET_FAILURE(resp,
+> 	  "dhsSysOpen: 'MONSOON_DHS' environment var not set.");
+>         *istat = DHS_ERROR ;
+>         return;
+>     } 
+> 
+>     pc=index(p,':');
+>     if (pc == NULL) {
+>         MNSN_RET_FAILURE(resp,
+> 	 "dhsSysOpen: 'MONSOON_DHS' environment var needs to be: machine:port");
+>         *istat = DHS_ERROR ;
+>         return;
+>     } 
+>    (void) memset(dhs.dhsSuperNode,'\0', SZNODE);
+>     strncpy(dhs.dhsSuperNode, p, pc-p);
+> 
+>     port = atoi(pc+1);
+>     dhs.dhsSuperPort = port;
+> 
+>    (void) memset(dhs.dhsName,'\0', SZNODE);
+>    sprintf (dhs.dhsName, "PAN");
+> 
+> 					/* Initialize the collector params */
+>    (void) memset(dhs.dhsCollectorNode,'\0', SZNODE);
+>     dhs.dhsCollectorPort = -1;
+> 
+> 
+>     /* Establish the connection to supervisor.
+>      */
+>     if (dhsNW.super != NULL) {
+>         if (dcaValidateChannel (dhsNW.super) == DCA_ERR) {
+>             if (dcaInitChannel (&dhsNW, DCA_SUPERVISOR) == DCA_ERR) {
+>                 MNSN_RET_FAILURE(resp,
+>                   "dhsOpenConnect: Error connecting to Supervisor machine"); 
+>                 *istat = DHS_ERROR ;
+>                 return;
+>             }
+>         }
+>     } else if (dcaInitChannel (&dhsNW, DCA_SUPERVISOR) == DCA_ERR) {
+>         printf("dhsSysOpen: Error connecting to Supervisor machine\n"); 
+>         *istat = DHS_ERROR ;
+>         return;
+74,85c83,98
+<    }
+<   } else if ( (stat=dcaInitChannel(&dhsNW,DCA_SUPERVISOR)) == DCA_ERR ) {
+<    *istat = DHS_ERROR;
+<    (void) sprintf(resp,"failed to connect to supervisor");
+<    MNSN_RPT_FAILURE(resp,"dhsUtilSysOpen: Failed. \\\\");
+<    return;
+<   }
+< 
+<   /* return */ 
+<   *istat = DHS_OK;
+<   MNSN_RET_SUCCESS(resp,"dhsUtilSysOpen: Success. \\\\");
+<   return;
+---
+> 
+> 
+>     /*
+>         ...format a SYS_OPEN message
+>         ...send it to the supervisor
+>         ...request state parameters from supervisor
+>         ...read result and update structure
+>     */
+> 
+> 
+>     /*  Standard return.
+>     */
+>     *istat =  DHS_OK;
+>     return;
+> 
+> 
+6a7
+> 

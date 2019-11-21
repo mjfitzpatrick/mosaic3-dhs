@@ -1,0 +1,19 @@
+#!/bin/csh -f 
+
+#exec valgrind --leak-check=full --show-reachable=yes ~/dhs/bin/collector -console -mbus -host nfdhs-02 -port 4577 -debug 60 -id PanB |& tee /tmp/collector.log
+
+if ( $#argv == 3 ) then
+
+  if ( -e $argv[3] ) then
+     cp $argv[3] "$argv[3]".OLD
+     rm $argv[3]
+  endif
+  echo `date` "Starting" >! $argv[3]
+  /dhs/bin/collector -console -mbus  -port $argv[1] -debug 60 -id $argv[2]  |& tee -a $argv[3]
+  echo `date` "Exitting" >> $argv[3]
+
+else if ( $#argv == 2 ) then
+  echo `date` "Starting" 
+  /dhs/bin/collector -console -mbus  -port $argv[1] -debug 60 -id $argv[2]
+  echo `date` "Exitting" 
+endif

@@ -1,0 +1,7 @@
+cd /dhs
+make clean
+make
+make install
+cp /dhs/util/* /dhs/bin
+
+DLR 2015 09 18

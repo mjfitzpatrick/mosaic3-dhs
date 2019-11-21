@@ -1,0 +1,10 @@
+#!/bin/csh -f
+
+set expID	= $1
+set raw		= $2
+set rawDir	= $3
+set procDir	= $4
+
+echo "Sysproc executed on " `date`		      >>& $HOME/sysproc.log
+echo "    expID=$expID  raw=$raw proc=$rawDir"        >>& $HOME/sysproc.log
+

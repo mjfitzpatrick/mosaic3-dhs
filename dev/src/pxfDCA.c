@@ -1,0 +1,869 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <stddef.h>
+#include <time.h>
+#include <errno.h>
+#include <pvm3.h>
+
+#if !defined(_dhsUtil_H_)
+#include "dhsUtil.h"
+#endif
+#if !defined(_FITSIO_H)
+#include "fitsio.h"
+#endif
+
+
+#include "smCache.h"
+#include "mbus.h"
+#include "pxfDCA.h"
+#include "pxf.h"
+#include "imageCfg.h"
+
+
+#define SZ_VALSTR       80
+#define SZ_CMDSTR       512
+#define MAX_KWGROUPS    64
+#define MAX_CARDS       512
+#define MAX_IGNORED     10
+#define MAX_HDRFILES    16
+#define MAX_DIRFILES    512
+#define HDRFILE_WAIT    3               /* wait for hdrfile creation */
+#define MAX_WAIT        15              /* max hdrfile wait, seconds */
+
+#ifdef SZ_FNAME
+#undef SZ_FNAME
+#endif
+#define SZ_FNAME        256
+
+#ifdef SZ_PATHNAME
+#undef SZ_PATHNAME
+#endif
+#define SZ_PATHNAME     512
+
+#define   MB_TIMEOUT    5		/* Message bus timeout (seconds). */
+
+
+extern int console, verbose;
+extern int procDebug;
+extern int noop;
+
+extern char *procPages;
+
+
+
+
+static struct timeval mb_timeout;
+#define SET_TIMEOUT(tm,sec)  ((tm)->tv_sec = (sec), (tm)->tv_usec = 0)
+
+
+static char *procDCAMoveStr (char *instr, int len);
+
+extern int   seqno, dca_tid;
+extern int   errno;
+extern char *getenv();
+
+
+
+/**
+ *  PROCDCAMETADATA -- Process a metadata page for the DCA.
+ */
+void
+procDCAMetaData (smcPage_t *p)
+{
+    int   i, nkw, nsend, nkeyw, data_size, nmatch=0;
+    char *cdata, *ip, *edata;
+    smcSegment_t *seg = (smcSegment_t *) NULL; 
+    mdConfig_t *mdCfg = smcGetMDConfig (p);
+    fpConfig_t *fpCfg = smcGetFPConfig (p);
+    double expID;
+    char obsetID[80], kwdb[80], *keyw, *val, *comment;
+    char *kmonMsg = (char *)NULL;
+
+#ifdef DO_TIMINGS
+    time_t	t1, t2;
+#endif
+
+
+#ifdef FAKE_READOUT
+	return;
+#endif
+
+
+    seg = SEG_ADDR(p);
+    data_size = seg->dsize;
+
+    /* See whether we're supposed to process the page or not.
+    */
+    if ( (procPages && strstr(procPages, seg->colID) == NULL) ||
+	 (p->type != TY_META) )
+	     return;
+
+#ifdef DO_TIMINGS
+    t1 = time ((time_t)NULL);
+#endif
+
+    expID = smcGetExpID(p);
+    strcpy (obsetID,smcGetObsetID(p));
+    cdata = ip = (char *) smcGetPageData (p);
+    edata = cdata + data_size;
+
+    nkeyw = data_size / 128;		/* AV Pairs = 128 bytes/card	*/
+
+    /* Generate the keyword database name.
+    */
+    bzero (kwdb, 80);
+    if (seg->expPageNum == 0)
+	sprintf (kwdb, "%s_Pre", seg->colID);
+    else
+	sprintf (kwdb, "%s_Post", seg->colID);
+
+    if (console) {
+        fprintf (stderr, "Proc META : 0x%x size=%d nkeyw=%d\n",
+		(int) seg, data_size, nkeyw);
+        fprintf (stderr, "          : ExpID=%.6lf ObsID=%s typ=%d\n",
+	    expID, obsetID, p->type);
+        fprintf (stderr, "          : mdCfg: type=%d  nfields=%d\n",
+	    mdCfg->metaType, mdCfg->numFields);
+        fprintf (stderr, "          : fpCfg: Start: %d,%d  Size: %d,%d\n", 
+            fpCfg->xStart, fpCfg->yStart, fpCfg->xSize, fpCfg->ySize);
+        fprintf (stderr, "          : page: colID='%s'  expPageNum=%d\n",
+	    seg->colID, seg->expPageNum);
+        fprintf (stderr, "          : seqno: %d  dca_tid: %d  kwdb: '%s'\n\n",
+	    seg->seqno, dca_tid, kwdb);
+    }
+
+    ip = cdata;                           /* initialize                 */
+    edata = (cdata + data_size);          /* find addr of end of data   */
+
+
+    /* Initialize the keyword monitoring message.
+    */
+    if (NKeywords) {
+        kmonMsg = calloc (1, NKeywords * SZ_LINE);
+        sprintf (kmonMsg, "keywmon %.6lf ", expID);
+	nmatch = 0;
+    }
+
+    for (nkw=0; nkw < nkeyw;) {
+
+        /* Initialize the WriteHeaderData request for the keyword group.
+        */
+	seqno = seg->seqno;
+	nsend = min((nkeyw-nkw), 16);
+        pvm_initsend (PvmDataDefault);
+        pvm_pkint (&seqno, 1, 1);
+        pvm_pkstr (kwdb);
+        pvm_pkint (&nsend, 1, 1);
+
+
+        for (i=0; i < 16 && nkw < nkeyw; i++) {
+	    keyw    = procDCAMoveStr (ip,      32);
+	    val     = procDCAMoveStr (&ip[32], 32);
+	    comment = procDCAMoveStr (&ip[64], 64);
+
+            pvm_pkstr (keyw);		/* pack the strings		*/
+            pvm_pkstr (val);
+            pvm_pkstr ("S");
+            pvm_pkstr (comment);
+
+	    if (procDebug > 100 && nkw < 16)
+    	        fprintf (stderr, "%2d: '%s' '%s' '%s'\n", nkw,keyw,val,comment);
+
+	    free ((void *) keyw);
+	    free ((void *) val);
+	    free ((void *) comment);
+
+	    ip += 128;
+	    nkw++;
+        }
+
+	if (console && verbose)
+	    fprintf (stderr, "Sending WriteHeaderData for %s (%d) (%d) (%d)\n",
+    		kwdb, i, nkw, nsend);
+
+        pvm_send (dca_tid, DCA_WriteHeaderData);
+
+        /* Send Sync.
+        pvm_initsend (PvmDataDefault);
+        pvm_pkint (&seqno, 1, 1);
+        pvm_send (dca_tid, DCA_Synchronize);
+        mb_timeout.tv_sec = MB_TIMEOUT;
+        mb_timeout.tv_usec = 0;
+        if ((s=pvm_trecv (dca_tid, DCA_Synchronize, &mb_timeout)) <= 0) {
+	    if (console) {
+                fprintf (stderr, "pxf: %s", (s == 0) ? 
+                     "timeout waiting for response from DCA\n" :
+                     "failed to synchronize with DCA");
+            }
+        }
+        */
+
+    }
+    if (console) fprintf (stderr, "DONE Processing META : sent=%d\n", nkw);
+
+
+    /* Send the requested keywords to the Supervisor for display.
+    */
+    if (NKeywords && nmatch)
+	mbusSend (SUPERVISOR, ANY, MB_SET, kmonMsg);
+
+    if (kmonMsg) free (kmonMsg);	/* free space			*/
+
+#ifdef DO_TIMINGS
+    t2 = time ((time_t)NULL);
+    fprintf (stderr, "Time [%d] procDCAMetaData()\n", (t2-t1));
+#endif
+}
+
+
+/**
+ *  Copy a string from an AVP buffer to a value, stripping leading and 
+ *  trailing whitespace in the process.  Both 'instr' and 'outstr' are 
+ *  assumed to be at least 'len' chars long.
+ */
+
+#define SZ_AVP_BUF	128
+
+static char *
+procDCAMoveStr (char *instr, int len)
+{
+    char *ip, buf[SZ_AVP_BUF];
+    int i = len;
+
+    
+    bzero (buf, SZ_AVP_BUF);			/* zero buffer		*/
+    bcopy (instr, buf, len);			/* move the string 	*/
+
+						/* trim trailing space	*/
+    for (i=strlen(buf)-1; (buf[i] == '\'' || isspace(buf[i])) && i > 0; )
+	buf[i--] = '\0';					
+    if (buf[i] == '\'' || isspace(buf[i]))
+	buf[i--] = '\0';					
+						/* skip leading space	*/
+    for (ip=&buf[0], i=0; (*ip == '\'' || isspace(*ip)) && i++ < len; ip++)
+	;					
+
+    return (strdup(ip));			/* return final string 	*/
+}
+
+#if  0
+/* allocate a buffer for the data from one of 4 readout amps.
+   Copy lower left, lower right, upper left, or upper right data to the buffer.
+   Location of amplifier is specified by vert_indx and hor_indx:
+   vert_indx 0/1  = lower/upper
+   hor_indx 0/1 = left/right
+*/
+int *
+pxf_amp (int *data, int nx, int ny, int vert_indx, int hor_indx)
+{
+    int  *amp, *ip,  *op, i, j;
+
+    if(vert_indx <0 || vert_indx > 1 || hor_indx < 0 || hor_indx > 1){
+      fprintf(stderr,"pxf_amp: indices out of range : %d %d \n",vert_indx, hor_indx);
+      fflush(stderr);
+      return(NULL);
+    }
+
+    ip = data; /* location of data for whole CCD image (all 4 amps) */
+    op = amp = calloc ((nx * ny), sizeof(int));
+
+    /* advance ip to start of specified amp data */
+    if (vert_indx == 1 ) ip = ip + ny * (2*nx); /* skip lower data */
+    if (hor_indx == 1) ip = ip + nx; /* advance to right data */
+
+    /* copy the amp data to the buffer */
+    for (j=0; j < ny; j++) {
+        for (i=0; i < nx; i++)		/* copy pixels	*/
+	    *op++ = *ip++;
+        ip=ip+nx; /* skip over left or right amp */
+    }
+
+    return (amp);
+}
+#endif
+
+void
+procDCAData (smcPage_t *p)
+{
+    int   *idata = NULL;
+    int   *ip = NULL, swapped = 0, nstreams = 1, s = 0, nbytes = 0;
+    int    i=0, j=0, k=0, data_size=0, nx=0, ny=0, nchunks=128, datalen=0;
+    int	   ccd_w = CCD_W, ccd_h = CCD_H, nbin = 0;
+    int    row_count =0;
+    smcSegment_t *seg = (smcSegment_t *) NULL; 
+    mdConfig_t *mdCfg = smcGetMDConfig (p);
+    fpConfig_t *fpCfg = smcGetFPConfig (p);
+    double expID;
+    char obsetID[80];
+    DCA_Stream st;
+#ifdef DO_TIMINGS
+    time_t  t1, t2;
+#endif
+
+
+#ifdef FAKE_READOUT
+	return;
+#endif
+
+
+    seg = SEG_ADDR(p);
+    data_size = seg->dsize;
+
+    /* See whether we're supposed to process the page or not.
+    */
+    if ( (procPages && strstr (procPages, seg->colID) == NULL) ||
+	 (p->type == TY_META) )
+	     return;
+
+#ifdef DO_TIMINGS
+    t1 = time ((time_t) NULL);
+#endif
+    expID = smcGetExpID (p);
+    strcpy (obsetID, smcGetObsetID (p));
+    idata = ip = (int *) smcGetPageData (p);
+
+    ccd_w = fpCfg->xSize;		      /* use the fpConfig */
+    ccd_h = fpCfg->ySize;
+    nbin  = ccd_ysize / ccd_h;  /* ccd_ysize is CCD size without binning ?*/
+
+    ip 		= idata;                      /* initialize   */
+    ny 		= ccd_h;	              /* rows per CCD amp */
+    nx 		= ccd_w;         	      /* cols per CCD amp */
+    datalen 	= nx * CCD_BPP * CCD_ROWS;    /* CCD_ROWS is 32. Not sure why */
+
+ 
+/* NOT SWAPPED */
+    //swapped 	= 1;
+    swapped 	= 0;
+    nstreams 	= 1;
+
+
+    /* create and fill buffers with data from lower-left, lower-right, upper-left,
+       and upper-right amps */
+
+
+
+    if (console || verbose) {
+        fprintf (stderr, "Proc DATA : 0x%x size=%d\n", 
+		(int) seg, data_size);
+        fprintf (stderr, "          : ExpID=%.6lf ObsID=%s seqno=%d\n",
+	    expID, obsetID, seqno);
+        fprintf (stderr, "          : mdCfg: type=%d  nfields=%d\n",
+	    mdCfg->metaType, mdCfg->numFields);
+        fprintf (stderr, "          : fpCfg: Start: %d,%d  Size: %d,%d\n", 
+            fpCfg->xStart, fpCfg->yStart, fpCfg->xSize, fpCfg->ySize);
+        fprintf (stderr, "          : page: colID='%s'  expPageNum=%d\n",
+	    seg->colID, seg->expPageNum);
+        fprintf (stderr, "          : seqno: %d dca_tid; %d\n", 
+	    seg->seqno, dca_tid);
+	fprintf (stderr, "          : ccd_w: %d ccd_h: %d [%d,%d] nbin: %d\n",
+	    ccd_w, ccd_h, fpCfg->xSize, fpCfg->ySize, nbin);
+	fprintf (stderr, "          : nx:    %d ny:    %d\n",nx,ny);
+	fflush(stderr);
+    }
+
+    /* datalen     = datalen / (nbin); */
+    nchunks 	= nchunks / nbin;
+
+    st.npix 	= datalen / CCD_BPP;
+    st.offset 	= 0;
+    st.stride 	= 1;
+    st.xydir 	= 0;
+    st.x0 	= 0;
+    st.y0 	= 0;
+
+
+    /*  Set up the detector rasters to go into the image extensions using
+    **  the usual convention of numbering from the LLC.  The output image
+    **  will contain:
+    */
+
+    if(verbose){fprintf(stderr,"procDCAData: finding rasInfo for this segment page: %d\n",
+	seg->expPageNum);fflush(stderr);}
+
+    k=-1;
+    for (i=0; i < NCCDS; i++) {
+
+	if (strncmp (seg->colID, rasInfo[i].colID, 4) == 0 &&  /* assume colID = "PanA" */
+	    seg->expPageNum == rasInfo[i].pageNum) { /* pageNum is same as buffer Index + 1 ? */
+		st.destimage = rasInfo[i].destNum;
+		k = i;
+		break;
+	}
+
+    }
+
+    if(k<0){
+	fprintf(stderr,"procDCAData : ERROR : could not rasInfo with matching page number\n");
+	return;
+    }
+
+    if(verbose){
+	fprintf(stderr,
+		"procDCAData: CCD index %d: rasInfo ColID = %s pageNum = %d destNum = %d\n",
+		k,rasInfo[k].colID,rasInfo[k].pageNum, rasInfo[k].destNum);
+	fflush(stderr);
+    }
+
+    /*  Send the data. */
+
+    st.destimage =rasInfo[k].destNum;
+
+    ip=idata;
+    if(verbose)fprintf(stderr,
+		"procDCAData: CCD %d, sending %d rows of length %d cols,  %d at a time to destimage %d\n",
+		k,ny,nx,CCD_ROWS,st.destimage);
+
+    j=0; /* chunk count */
+    for (row_count =0; row_count < ny; row_count = row_count +  CCD_ROWS){
+
+        /* Initialize the WriteHeaderData request for the keyword group.
+        */
+        seqno = seg->seqno;
+	if(verbose){
+	   fprintf(stderr,"procDCAData : calling pvm_initsend, row_count = %d, ny = %d\n",
+		row_count,ny);fflush(stderr);
+        }
+        pvm_initsend (PvmDataDefault);
+	if(verbose){
+	   fprintf(stderr,"procDCAData : calling pvm_pkint seqno\n");fflush(stderr);
+        }
+        pvm_pkint (&seqno, 1, 1);
+	if(verbose){
+	   fprintf(stderr,"procDCAData : calling pvm_pkint datalen\n");fflush(stderr);
+        }
+        pvm_pkint (&datalen, 1, 1);
+	if(verbose){
+	   fprintf(stderr,"procDCAData : calling pvm_pkint swapped\n");fflush(stderr);
+        }
+        pvm_pkint (&swapped, 1, 1);
+	if(verbose){
+	   fprintf(stderr,"procDCAData : calling pvm_pkint nstreams\n");fflush(stderr);
+        }
+        pvm_pkint (&nstreams, 1, 1);
+
+        st.y0 = (j * CCD_ROWS);	 /* destination row */
+	st.xstep = st.ystep = 1;
+
+	if(verbose){
+	   fprintf(stderr,"procDCAData : calling pvm_pkint st\n");fflush(stderr);
+        }
+	pvm_pkint ((int *)&st, sizeof(st)/sizeof(int), 1);
+	if(verbose){
+	   fprintf(stderr,"procDCAData : calling pvm_pkbyte \n");fflush(stderr);
+        }
+	pvm_pkbyte ((char *)ip, datalen, 1);
+	if(verbose){
+	   fprintf(stderr,"procDCAData : calling pvm_send \n");fflush(stderr);
+        }
+	pvm_send (dca_tid, DCA_WritePixelData);
+	if(verbose){
+	   fprintf(stderr,"procDCAData : Done calling pvm_send \n");fflush(stderr);
+        }
+
+#if 1
+	if (console || verbose)
+	    fprintf (stderr, "%d: (x,y) = (%d,%d) len=%d\n", j,
+		st.x0, st.y0, datalen);
+#endif
+	if ((j % 16) == 0) { /* every 16 * CCD_ROWS rows */
+	
+	    if(verbose){
+		fprintf(stderr,"procDCAData : j % 16 = 0\n");
+		fprintf(stderr,"procDCAData : calling pvm_initsend\n");fflush(stderr);
+	    }
+	    pvm_initsend (PvmDataDefault);
+	    if(verbose){
+		fprintf(stderr,"procDCAData :calling pvm_pkinit\n");fflush(stderr);
+	    }
+	    pvm_pkint (&seqno, 1, 1);
+	    if(verbose){
+		fprintf(stderr,"procDCAData :calling pvm_send\n");fflush(stderr);
+	    }
+	    pvm_send (dca_tid, DCA_Synchronize);
+	    if(verbose){
+		fprintf(stderr,"procDCAData :done calling pvm_send\n");fflush(stderr);
+	    }
+
+	    mb_timeout.tv_sec = MB_TIMEOUT;
+	    mb_timeout.tv_usec = 0;
+            if ((s = pvm_trecv (dca_tid, DCA_Synchronize, &mb_timeout)) <= 0) {
+		if (console || verbose){
+                    fprintf (stderr, "pxf: %s", (s == 0) ? 
+                        "timeout waiting for response from DCA\n" :
+                        "failed to synchronize with DCA");
+		    fflush(stderr);
+		}
+            }
+	}
+	j++;
+	ip += st.npix;
+	nbytes += datalen;
+    }
+
+    if(row_count != ny ){
+	fprintf(stderr,"procDCAData: WARNING : only %d of %d rows sent for CCD %d\n",
+		row_count,ny,k);
+	fflush(stderr);
+    }
+
+    if(verbose)fprintf(stderr,
+		"procDCAData: CCD %d, Done sending %d rows of length %d cols,  %d at a time to destimage %d\n",
+		k,ny,nx,CCD_ROWS,st.destimage);
+
+    /* Send final Sync.
+    */
+    if(verbose){fprintf(stderr,"procDCAData: CCD %d, Sending final sync\n",k);fflush(stderr);}
+
+    pvm_initsend (PvmDataDefault);
+    pvm_pkint (&seqno, 1, 1);
+    pvm_send (dca_tid, DCA_Synchronize);
+    if(verbose){fprintf(stderr,"procDCAData: CCD %d, Done sending final sync\n",k);fflush(stderr);}
+    mb_timeout.tv_sec = MB_TIMEOUT;
+    mb_timeout.tv_usec = 0;
+    if(verbose){fprintf(stderr,"procDCAData: CCD %d, Wainting for sync response\n",k);fflush(stderr);}
+    if ((s=pvm_trecv (dca_tid, DCA_Synchronize, &mb_timeout)) <= 0) {
+	if (console) {
+            fprintf (stderr, "pxf: %s", (s == 0) ? 
+                 "timeout waiting for response from DCA\n" :
+                 "failed to synchronize with DCA");
+        }
+    }
+    if(verbose){fprintf(stderr,"procDCAData: CCD %d, Done waiting for sync response\n",k);fflush(stderr);}
+
+    if (console || verbose) {
+	fprintf (stderr, ": nchunks=%d  %d bytes  %d pixels\n",
+		nchunks, nbytes, nbytes / 4);fflush(stderr);
+    }
+
+#ifdef DO_TIMINGS
+    t2 = time ((time_t)NULL);
+    fprintf (stderr, "Time [%d] procDCAData()\n", (t2-t1));
+#endif
+
+}
+
+#if 0
+
+// separate amplifier data
+void
+procDCAData (smcPage_t *p)
+{
+    int   *idata = NULL;
+//  int   *ldata = NULL, *rdata = NULL;
+    int   *lldata = NULL, *lrdata = NULL; /* lower-left and lower-right amp pointers */
+    int   *uldata = NULL, *urdata = NULL; /* upper-left and upper-right amp pointers */
+    int   *ip = NULL, swapped = 0, nstreams = 1, s = 0, nbytes = 0;
+    int    i=0, j=0, k=0, data_size=0, nx=0, ny=0, nchunks=128, datalen=0;
+    int	   ccd_w = CCD_W, ccd_h = CCD_H, nbin = 0;
+    int    row_count =0;
+    smcSegment_t *seg = (smcSegment_t *) NULL; 
+    mdConfig_t *mdCfg = smcGetMDConfig (p);
+    fpConfig_t *fpCfg = smcGetFPConfig (p);
+    double expID;
+    char obsetID[80];
+    DCA_Stream st;
+#ifdef DO_TIMINGS
+    time_t  t1, t2;
+#endif
+
+
+#ifdef FAKE_READOUT
+	return;
+#endif
+
+
+    seg = SEG_ADDR(p);
+    data_size = seg->dsize;
+
+    /* See whether we're supposed to process the page or not.
+    */
+    if ( (procPages && strstr (procPages, seg->colID) == NULL) ||
+	 (p->type == TY_META) )
+	     return;
+
+#ifdef DO_TIMINGS
+    t1 = time ((time_t) NULL);
+#endif
+    expID = smcGetExpID (p);
+    strcpy (obsetID, smcGetObsetID (p));
+    idata = ip = (int *) smcGetPageData (p);
+
+    ccd_w = fpCfg->xSize;		      /* use the fpConfig */
+    ccd_h = fpCfg->ySize;
+    nbin  = ccd_ysize / ccd_h;  /* ccd_ysize is CCD size without binning ?*/
+
+    ip 		= idata;                      /* initialize   */
+    ny 		= ccd_h/NAMPS_H;	      /* rows per CCD amp */
+    nx 		= ccd_w/ NAMPS_W;	      /* cols per CCD amp */
+    datalen 	= nx * CCD_BPP * CCD_ROWS;    /* CCD_ROWS is 32. Not sure why */
+    swapped 	= 1;
+    nstreams 	= 1;
+
+
+    /* create and fill buffers with data from lower-left, lower-right, upper-left,
+       and upper-right amps */
+
+    lldata = pxf_amp (idata,  nx, ny,0,0);
+    lrdata = pxf_amp (idata,  nx, ny,0,1);
+    uldata = pxf_amp (idata,  nx, ny,1,0);
+    urdata = pxf_amp (idata,  nx, ny, 1,1);
+
+    if(lldata == NULL || lrdata == NULL || uldata == NULL || urdata == NULL){
+      fprintf(stderr, "procDCAData : could not initialize amp data buffers\n");
+      return;
+    }
+
+  //  ldata = pxf_ampLeft (idata,  (ccd_w / NAMPS_W), (ccd_h/NAMPS_H));
+  //  rdata = pxf_ampRight (idata, (ccd_w / NAMPS_W), (ccd_h/NAMPS_H));
+
+    if (console) {
+        fprintf (stderr, "Proc DATA : 0x%x size=%d\n", 
+		(int) seg, data_size);
+        fprintf (stderr, "          : ExpID=%.6lf ObsID=%s seqno=%d\n",
+	    expID, obsetID, seqno);
+        fprintf (stderr, "          : mdCfg: type=%d  nfields=%d\n",
+	    mdCfg->metaType, mdCfg->numFields);
+        fprintf (stderr, "          : fpCfg: Start: %d,%d  Size: %d,%d\n", 
+            fpCfg->xStart, fpCfg->yStart, fpCfg->xSize, fpCfg->ySize);
+        fprintf (stderr, "          : page: colID='%s'  expPageNum=%d\n",
+	    seg->colID, seg->expPageNum);
+        fprintf (stderr, "          : seqno: %d dca_tid; %d\n", 
+	    seg->seqno, dca_tid);
+	fprintf (stderr, "          : ccd_w: %d ccd_h: %d [%d,%d] nbin: %d\n",
+	    ccd_w, ccd_h, fpCfg->xSize, fpCfg->ySize, nbin);
+	fprintf (stderr, "          : nx:    %d ny:    %d\n",nx,ny);
+    }
+
+    /* datalen     = datalen / (nbin); */
+    nchunks 	= nchunks / nbin;
+
+    st.npix 	= datalen / CCD_BPP;
+    st.offset 	= 0;
+    st.stride 	= 1;
+    st.xydir 	= 0;
+    st.x0 	= 0;
+    st.y0 	= 0;
+
+
+    /*  Set up the detector rasters to go into the image extensions using
+    **  the usual convention of numbering from the LLC.  The output image
+    **  will contain:
+    */
+
+    if(verbose)fprintf(stderr,"procDCAData: finding rasInfo for this segment page: %d\n",
+	seg->expPageNum);
+
+    k=-1;
+    for (i=0; i < NCCDS; i++) {
+#if 0
+	if (strncmp (seg->colID, rasInfo[i].colID, 4) == 0 &&  /* assume colID = "PanA" */
+	    seg->expPageNum == rasInfo[i].pageNum) { /* pageNum is same as buffer Index + 1 ? */
+		st.destimage = rasInfo[i].destNum;
+		k = i;
+		break;
+	}
+#endif
+        /* if destimage maps to display as follows:   
+           13 14 15 16
+	   9  10 11 12
+           5   6  7  8
+           1   2  3  4 
+
+         then CCD 1 (ll, lr, ul, ur) maps to destimage 3, 4, 7, 8
+              CCD 2 (ll, lr, ul, ur) maps to destimage 1, 2, 5, 6
+              CCD 3 (ll, lr, ul, ur) maps to destimage 11,12,15,16
+              CCD 4 (ll, lr, ul, ur) maps to destimage 9 ,10,13,14
+
+	*/
+
+//        if(verbose)fprintf(stderr,
+//		"procDCAData: CCD index %d: rasInfo ColID = %s pageNum = %d destNum = %d\n",
+//		i,rasInfo[i].colID,rasInfo[i].pageNum, rasInfo[i].destNum);
+
+	if (strncmp (seg->colID, rasInfo[i].colID, 4) == 0 &&  /* assume colID = "PanA" */
+	    seg->expPageNum == rasInfo[i].pageNum) { /* pageNum is same as buffer Index + 1 ? */
+		st.destimage = rasInfo[i].destNum;
+		k = i;
+		break;
+	}
+
+    }
+
+    if(k<0){
+	fprintf(stderr,"procDCAData : ERROR : could not rasInfo with matching page number\n");
+	if(lldata)free(lldata);
+	if(lrdata)free(lrdata);
+	if(uldata)free(uldata);
+	if(urdata)free(urdata);
+	return;
+    }
+
+    if(verbose)fprintf(stderr,
+		"procDCAData: CCD index %d: rasInfo ColID = %s pageNum = %d destNum = %d\n",
+		k,rasInfo[k].colID,rasInfo[k].pageNum, rasInfo[k].destNum);
+
+    /*  Send the data. */
+
+    for (i=0; i < NAMPS_W*NAMPS_H; i++) {
+
+      //st.destimage += (i/NAMPS_W);
+      st.destimage =rasInfo[k].destNum + i;
+
+      if(verbose)fprintf(stderr,"procDCAData: Checking amp index %d\n",i);
+
+      switch (i){
+	  case 0:
+      		if(verbose)fprintf(stderr,"procDCAData: sending ll amp for  CCD %d\n",k);
+       		ip=lldata;
+		break;
+	  case 1:
+      		if(verbose)fprintf(stderr,"procDCAData: sending lr amp for  CCD %d\n",k);
+		ip=lrdata;
+	 	break;
+	  case 2:
+      		if(verbose)fprintf(stderr,"procDCAData: sending ul amp for  CCD %d\n",k);
+		ip=uldata;
+	 	break;
+	  case 3:
+      		if(verbose)fprintf(stderr,"procDCAData: sending ur amp for  CCD %d\n",k);
+		ip=urdata;
+	 	break;
+	  default:
+		if(verbose)fprintf(stderr,"procDCAData: Error : Amp index i exceeds 4\n");
+		if(lldata)free(lldata);
+		if(lrdata)free(lrdata);
+		if(uldata)free(uldata);
+		if(urdata)free(urdata);
+		return;
+      }
+
+      if(verbose)fprintf(stderr,
+		"procDCAData: CCD %d, Amp %d: sending %d rows of length %d cols,  %d at a time to destimage %d\n",
+		k,i,ny,nx,CCD_ROWS,st.destimage);
+
+      j=0; /* chunk count */
+      for (row_count =0; row_count < ny; row_count = row_count +  CCD_ROWS){
+
+        /* Initialize the WriteHeaderData request for the keyword group.
+        */
+        seqno = seg->seqno;
+        pvm_initsend (PvmDataDefault);
+        pvm_pkint (&seqno, 1, 1);
+        pvm_pkint (&datalen, 1, 1);
+        pvm_pkint (&swapped, 1, 1);
+        pvm_pkint (&nstreams, 1, 1);
+
+        st.y0 = (j * CCD_ROWS);	 /* destination row */
+	st.xstep = st.ystep = 1;
+
+	pvm_pkint ((int *)&st, sizeof(st)/sizeof(int), 1);
+	pvm_pkbyte ((char *)ip, datalen, 1);
+	pvm_send (dca_tid, DCA_WritePixelData);
+
+#if 0
+	if (console && verbose)
+	    fprintf (stderr, "%d: (x,y) = (%d,%d) len=%d\n", j,
+		st.x0, st.y0, datalen);
+#endif
+	if ((j % 16) == 0) { /* every 16 * CCD_ROWS rows */
+	    pvm_initsend (PvmDataDefault);
+	    pvm_pkint (&seqno, 1, 1);
+	    pvm_send (dca_tid, DCA_Synchronize);
+
+	    mb_timeout.tv_sec = MB_TIMEOUT;
+	    mb_timeout.tv_usec = 0;
+            if ((s = pvm_trecv (dca_tid, DCA_Synchronize, &mb_timeout)) <= 0) {
+		if (console)
+                    fprintf (stderr, "pxf: %s", (s == 0) ? 
+                        "timeout waiting for response from DCA\n" :
+                        "failed to synchronize with DCA");
+            }
+	}
+	j++;
+	ip += st.npix;
+	nbytes += datalen;
+      }
+
+      if(row_count != ny )
+	fprintf(stderr,"procDCAData: WARNING : only %d of %d rows sent for CCD %d\n",
+		row_count,ny,i);
+
+    }
+
+   
+
+    /* Send final Sync.
+    */
+    pvm_initsend (PvmDataDefault);
+    pvm_pkint (&seqno, 1, 1);
+    pvm_send (dca_tid, DCA_Synchronize);
+    mb_timeout.tv_sec = MB_TIMEOUT;
+    mb_timeout.tv_usec = 0;
+    if ((s=pvm_trecv (dca_tid, DCA_Synchronize, &mb_timeout)) <= 0) {
+	if (console) {
+            fprintf (stderr, "pxf: %s", (s == 0) ? 
+                 "timeout waiting for response from DCA\n" :
+                 "failed to synchronize with DCA");
+        }
+    }
+
+    if (console) {
+	fprintf (stderr, ": nchunks=%d  %d bytes  %d pixels\n",
+		nchunks, nbytes, nbytes / 4);
+    }
+
+#ifdef DO_TIMINGS
+    t2 = time ((time_t)NULL);
+    fprintf (stderr, "Time [%d] procDCAData()\n", (t2-t1));
+#endif
+
+    if(lldata)free(lldata);
+    if(lrdata)free(lrdata);
+    if(uldata)free(uldata);
+    if(urdata)free(urdata);
+
+//  if (ldata)
+//      free (ldata);		/* free amplifier pointers 	*/
+//  if (rdata)
+//      free (rdata);
+}
+
+#endif
+
+/**
+ *  INKEYWLIST -- See whether the given keyword and database are in the 
+ *  monitor list.  The list of keywords isn't expected to be long so we
+ *  skip any optimizations.
+ */
+int
+inKeywList (char *kwdb, char *keyw)
+{
+    int  i;
+    char  kw[SZ_LINE], *k;
+
+
+    for (i=0; i < NKeywords; i++) {
+	if (strncasecmp (keywList[i], "any", 3) == 0) {
+	    /* If the keyword can come from any database, match only on
+	    ** the keyword itself.
+	    */
+            k = keywList[i];
+            if (strcasecmp (&k[4], keyw) == 0)
+	        return (1);
+
+	} else {
+	    /* Otherwise, we were given the keyword list with a specific
+	    ** database name in the form "db.keyw" so construct a string
+	    ** for the match.
+	    */
+ 	    memset (kw, 0, SZ_LINE);
+	    sprintf (kw, "%s.%s", kwdb, keyw);
+            if (strcasecmp (keywList[i], kw) == 0)
+	        return (1);
+	}
+    }
+
+    return (0);
+}

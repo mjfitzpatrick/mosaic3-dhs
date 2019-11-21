@@ -1,0 +1,146 @@
+#
+#  Configuration file for the NEWFIRM DHS.  
+#
+#  The file format is a simple text table of the form
+#
+#	<task> <host> <name> <command>
+#
+#  where <task> is one of 
+#
+#	Supervisor	The DHS Supervisor process
+#	Collector	A Collector component to accept data from a PAN
+#	PicFeed		A PicFeed component to serialize the data
+#	RTD		Real-Time Display component
+#	DCA		Data Capture Agent which create a FITS file
+#	KTM		Keyword Translation Module
+#
+#  The <host> host is the name of the machine on which the specified task
+#  is to be started ('localhost' implies the current machine).  <name> is a
+#  user-defined name of the task as it will appear in the status readouts,
+#  commands are assumed to accept a "-name" flag to set this properly.
+#  <command> is the path (on the named machine) to the command to execute,
+#  the command may take arguments
+#
+#  Note that multiple instances of a <task> indicate multiple occurrances of
+#  that process are requested.  If the task cannot be started on the
+#  designated machine, another machine specified for that same class of task
+#  will be used before finally falling back to the current machine.
+#
+#  Task names are case-insensitive and may be repeated.  Comments begin with
+#  a '#' and extend to the end-of-line.  Column value may not be ommitted.
+#  Comments and blank lines in this file are ignored, complex lines may be
+#  continued with a backslash escape of the newline.
+#
+
+#--------------------------------
+# Console definiton table.  Note, the '%d' in the geometry specification
+# is replaced automatically when the windows are spawned to tile them
+# "nicely"
+#--------------------------------
+
+console	   display	env
+console    rootcmd	xterm -geometry 80x20+%d+%d -fn fixed 
+console	   debugLevel	120
+console	   winXinit	0
+console	   winYinit	0
+console	   winXstep	0
+console	   winYstep	310
+console	   client_delay	2
+
+trigger	   newfirm
+
+
+#----------------------------------------------------------------
+# Pseudo Host Table
+#----------------------------------------------------------------
+
+host    localhost       127.0.0.1       	# Do Not Remove !!!
+
+host    newfirm         192.168.17.30		# internal network
+host    nfpan-a         192.168.17.31
+host    nfpan-b         192.168.17.32
+host    nfdhs-01        192.168.17.207
+host    nfdhs-02        192.168.17.208
+host    nfdca           192.168.17.216
+
+host    newfirm         newfirm-FR.kpno.noao.edu
+host    nfpan-a         nfpan-a-FR.kpno.noao.edu
+host    nfpan-b         nfpan-b-FR.kpno.noao.edu
+host    nfdhs-01        nfdhs-01-FR.kpno.noao.edu
+host    nfdhs-02        nfdhs-02-FR.kpno.noao.edu
+host    nfdca           nfdca-FR.kpno.noao.edu
+
+host    newfirm-FR      newfirm-FR.kpno.noao.edu
+host    nfpan-a-FR      nfpan-a-FR.kpno.noao.edu
+host    nfpan-b-FR      nfpan-b-FR.kpno.noao.edu
+host    nfdhs-01-FR     nfdhs-01-FR.kpno.noao.edu
+host    nfdhs-02-FR     nfdhs-02-FR.kpno.noao.edu
+host    nfdca-FR        nfdca-FR.kpno.noao.edu
+
+host    newfirm-cr      192.168.17.30		# Clean Room
+host    nfpan-a-cr      192.168.17.31
+host    nfpan-b-cr      192.168.17.32
+host    nfdhs-01-cr     192.168.17.207
+host    nfdhs-02-cr     192.168.17.208
+host    nfdca-cr        192.168.17.216
+
+host    newfirm-FR      192.168.17.30		# Flex Rig
+host    nfpan-a-FR      192.168.17.31
+host    nfpan-b-FR      192.168.17.32
+host    nfdhs-01-FR     192.168.17.207
+host    nfdhs-02-FR     192.168.17.208
+host    nfdca-FR        192.168.17.216
+
+
+
+#----------------------------------------------------------------
+# Client Application table.
+#----------------------------------------------------------------
+
+Supervisor newfirm	/ndhs/bin/super -name Super -port 4150
+
+
+
+#----------------------------------------------------------------
+# Pairing table.
+#
+#       PAN Host			Collector Host
+#----------------------------------------------------------------
+
+pair	newfirm-KP.kpno.noao.edu	nfdhs-01-KP.kpno.noao.edu:4575
+pair	nfpan-a-KP.kpno.noao.edu	nfdhs-01-KP.kpno.noao.edu:4576
+pair	nfpan-b-KP.kpno.noao.edu	nfdhs-02-KP.kpno.noao.edu:4577
+
+pair	newfirm-KP			nfdhs-01-KP:4575
+pair	nfpan-a-KP			nfdhs-01-KP:4576
+pair	nfpan-b-KP			nfdhs-02-KP:4577
+
+pair	newfirm-KP			nfdhs-01-KP.kpno.noao.edu:4575
+pair	nfpan-a-KP			nfdhs-01-KP.kpno.noao.edu:4576
+pair	nfpan-b-KP			nfdhs-02-KP.kpno.noao.edu:4577
+
+pair	newfirm-KP.kpno.noao.edu	nfdhs-01-KP:4575
+pair	nfpan-a-KP.kpno.noao.edu	nfdhs-01-KP:4576
+pair	nfpan-b-KP.kpno.noao.edu	nfdhs-02-KP:4577
+
+pair	newfirm.kpno.noao.edu		nfdhs-01.kpno.noao.edu:4575
+pair	nfpan-a.kpno.noao.edu		nfdhs-01.kpno.noao.edu:4576
+pair	nfpan-b.kpno.noao.edu		nfdhs-02.kpno.noao.edu:4577
+
+pair	newfirm				nfdhs-01:4575
+pair	nfpan-a				nfdhs-01:4576
+pair	nfpan-b				nfdhs-02:4577
+
+pair	newfirm				nfdhs-01.kpno.noao.edu:4575
+pair	nfpan-a				nfdhs-01.kpno.noao.edu:4576
+pair	nfpan-b				nfdhs-02.kpno.noao.edu:4577
+
+pair	newfirm.kpno.noao.edu		nfdhs-01:4575
+pair	nfpan-a.kpno.noao.edu		nfdhs-01:4576
+pair	nfpan-b.kpno.noao.edu		nfdhs-02:4577
+
+pair	newfirm				nfdhs-01-KP:4575
+pair	nfpan-a				nfdhs-01-KP:4576
+pair	nfpan-b				nfdhs-02-KP:4577
+
+# End of Configuration

@@ -1,0 +1,24 @@
+#!/bin/csh -f 
+
+#exec valgrind --leak-check=full --show-reachable=yes ~/dhs/bin/smcmgr -console -host nfdhs-01 -mbus -dev $RTD -debug 60 -proc PanA,PanB,NOCS |& tee /tmp/smcmgr.log
+#exec ~/dhs/bin/smcmgr -console -host nfdhs-01 -mbus -dev $RTD -debug 60 -proc PanA,PanB,NOCS |& tee /tmp/smcmgr.log
+
+set RTD = $argv[1]
+
+if ($#argv == 2 ) then
+    set LOG = $argv[2]
+    if ( -e $LOG ) then
+       cp $LOG "$LOG".old
+       rm $LOG
+    endif
+    echo `date` "Starting" >! $LOG
+#    /dhs/bin/smcmgr -verbose -debug -console -trim -mbus -dev $RTD -raw -debug 60  |& tee -a $LOG
+    /dhs/bin/smcmgr -verbose -debug -console -trim -mbus -dev $RTD  -debug 60  |& tee -a $LOG
+    echo `date` "Ending" >> $LOG
+else
+    echo `date` "Starting" 
+#   /dhs/bin/smcmgr -verbose -debug -console -trim -mbus -dev $RTD -raw -debug 60  
+    /dhs/bin/smcmgr -verbose -debug -console -trim -mbus -dev $RTD -debug 60  
+    echo `date` "Ending" 
+endif
+    

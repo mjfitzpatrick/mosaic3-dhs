@@ -1,0 +1,5 @@
+#!/bin/csh -f
+
+exec /dhs/bin/super -port 4150 -console -rawDir ${1} -procDir ${1} -config /dhs/lib/config-mosaic1.sim -nclients ${2} -geometry 640x630+0+40 |& tee /tmp/super.log
+
+

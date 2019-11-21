@@ -1,0 +1,45 @@
+KoalaTalk Interface Summary
+
+                   kt = kt_Init (addInput, data, removeInput, data)
+		      kt_UnInit (kt)
+		kt_LocateServer (&serversFound, &serversFoundCount)
+       kt_AddUserFileDescriptor (kt, fd, fcn, data)
+       kt_SetServerErrorHandler (kt, handler_fcn)
+        kt_OpenServerConnection (kt, serverLocation, serverIdentity)
+          kt_PeerOpenConnection (kt, peerLocation)
+        ptr = kt_ReturnIdentity (kt)
+             kt_CloseConnection (kt)
+
+                 kt_HandleInput (kt, fds)
+		 kt_NextMessage (kt, &msg)
+		    kt_MainLoop (kt)
+
+	       id = kt_KRHandle (kt, krsname, fcn, data)
+	      id = kt_KRObserve (kt, krsname, fcn, data)
+		 kt_KRUnObserve (kt, id)
+		krl = kt_KRLNew (kt, krlname)
+		     kt_KRLFree (krl)
+
+	        kt_MessageReply (kt, query_msg, reply_msg)
+		 kt_MessageSend (kt, krl, msg)
+	   kt_MessageSendToPeer (kt, peername, msg)
+   id = kt_MessageSendWithReply (kt, krl, msg, disposition, fcn, data)
+	   kt_MessageSendOnExit (kt, krl, msg)
+
+	    msg = kt_MessageNew ()
+	   msg = kt_MessageCopy (msg)
+	         kt_MessageFree (msg)
+         kt_MessageOperationGet (msg)
+         kt_MessageOperationSet (msg, operation)
+	     kt_MessageBytesAdd (msg, bytes, len)
+	     kt_MessageBytesGet (msg, argpos, &bytes, &len)
+	    kt_MessageStringAdd (msg, string)
+	    kt_MessageStringGet (msg, argpos, &string)
+      ival = kt_MessageArgCount (msg)
+   bval = kt_MessageArgIsString (msg, argpos)
+
+
+
+
+
+oo

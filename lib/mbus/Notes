@@ -1,0 +1,130 @@
+/*  
+**  
+**  MBUS Messaging Interface
+**  
+**  	The MBUS interface is an abstraction of the message bus (currently
+**  PVM-based) that allows DHS client programs to easily connect to the bus 
+**  and send/get messages.  It is meant to be used by both the DHS Supervisor
+**  in spawning, controlling and monitoring tasks as well as the clients 
+**  themselves for reporting status and activity back to the Supervisor.  
+**  It is *not* meant as a general messaging interface since knowleldge of 
+**  how the interface is used in the system is implicit in some of the 
+**  routines, i.e. clients connecting to the bus must find a valid Supervisor 
+**  running, message targets and formats are peculiar to the DHS, etc.
+**  
+**  	The interface is intended to be common to all components of the DHS,
+**  however the Supervisor and clients may use different parts of the interface
+**  or internal behavior may differ.
+**  
+**  
+**         mbus = mbusInitialize  (hostfile)		// Supervisor-only 
+**                  mbusShutdown  (mbus)
+**
+**             tid = mbusConnect  (whoAmI)		// All applications
+**                     mbusReset  ()
+**                 mbusDisonnect  (tid)
+**  
+**                       mbusSet  (who, what, value, type)
+**                       mbusGet  (who, what, *value, *type)
+**  
+**                      mbusSend  (who, what, where, why)
+**  
+**                   mbusSendHdr  ()
+**                   mbusSendPix  ()
+**                  mbusSyncData  ()
+**  
+**          status mbusGetStatus  (who, tag)
+**    stat = mbusValidateService  (who)
+**  
+**   
+*/
+
+#include "mbus.h"
+
+
+static struct {
+    int   super_tid;
+    int   tid;
+    char  *whoAmI;
+
+    int   initialized
+
+} Client = { 0, 0, NULL, 0};
+
+
+
+/*  MBUSCONNECT -- Connect the client to the message bus.  In the case of
+ *  a client we'll look first for a running Supervisor and notify them we've
+ *  come online.  The Client connection is complete when a MB_READY state
+ *  is sent/
+ */
+int
+mbusConnect (char *whoAmI)
+{
+    int  i, mytid, super, info;
+
+
+    /*  Attach to the message bus. */
+    if ((mytid = pvm_mytid()) < 0) {
+	pvm_perror (whoAmI);
+	return (ERR);
+    }
+
+    /*  If we're a Client look for a Supervisor.  If we can't find a
+     *  Supervisor return an error, each client may handle it differently.
+     */
+    if (strcmp (SUPERVISOR, whoAmI)) {
+	for (i=MB_CONNECT_RETRYS; i; i--) {
+            info = pvm_lookup (SUPERVISOR, 0, &super);
+	    if (info == PvmNoEntry) {
+	        fprintf (stderr, "Can't find Supervisor on msgbus, retrying\n");
+		sleep (1);
+	    } else
+	        dprintf ("Supervisor on msgbus at tid=%d\n", super);
+	}
+	if (i == 0) {
+	    fprintf (stderr, "Supervisor not on msgbus, quitting\n");
+	    return (ERR);
+	}
+    }
+
+    /* Save the Supervisor location and other bits about this client.
+     */
+    Client.mytid      = mytid;
+    Client.super_tid  = super;
+    if (Client.whoAmI == (char *)NULL) Client.whoAmI = calloc (1, 64);
+    strncpy (Client.whoAmI, whoAmI, strlen(whoAmI));
+    Client.initialized++;
+
+
+    /*  Return our tid.
+     */
+    return (mytid);
+}
+
+
+void
+mbusDisconnect (int tid)
+{
+    /* Notify the Supervisor we are leaving.
+    */
+    mbusSend (SUPERVISOR, MB_EXITING, MB_ALL, NULL);
+
+    /* Notify the PVM Daemon we're leaving.
+    */
+    if (pvm_exit() < 0)
+	fprintf (stderr, "mbusDisconnect:  Error in pvm_exit()\n");
+        return (ERR);
+    }
+
+    /* Reset the static state of this client. 
+     */
+    Client.mytid      = 0;
+    Client.super_tid  = 0;
+    if (Client.whoAmI) free ((char *) Client.whoAmI;
+    Client.whoAmI =  (char *)NULL)
+    Client.initialized = 0;
+
+    return (OK);
+}
+

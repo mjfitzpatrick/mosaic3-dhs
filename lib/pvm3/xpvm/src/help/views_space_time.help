@@ -1,0 +1,90 @@
+{ Views Help - Space-Time View }
+{ The Space-Time View shows the status of individual }
+{ tasks as they execute across all hosts.  Each task }
+{ is represented by a horizontal bar along a common time }
+{ axis, where the color of the bar at each time indicates }
+{ the state of the task. }
+{}
+{ The "Computing" color shows those times when the task }
+{ is busy executing useful user computations.  The "Overhead" }
+{ color marks the places where the task executes PVM system }
+{ routines for communication, task control, etc.  The }
+{ "Waiting" color indicates those time periods spent }
+{ waiting for messages from other tasks, i.e. the idle }
+{ time due to synchronization. }
+{}
+{ Communication activity among tasks is also shown, using }
+{ lines drawn between the task bars at the corresponding }
+{ message send and receive times. }
+{}
+{ The default colors for these states are green for }
+{ computing, yellow for overhead, white for waiting, }
+{ and red for messages. }
+{}
+{ A vertical, blue line marks the latest trace event time, }
+{ as shown in the trace control panel "Time" display. }
+{}
+{ Queries }
+{ ------- }
+{}
+{ More detailed information regarding specific task states }
+{ or messages can be extracted from the Space-Time view by }
+{ clicking and holding on the view area with the Left mouse }
+{ button.  When a task bar is clicked on, the information line }
+{ at the bottom of the view changes to display the precise }
+{ times that the task state began and ended, plus info on }
+{ the PVM system routine that was called at the start of }
+{ the state (or in some cases perhaps more appropriately }
+{ the end of the last state).  Double-clicking on an item }
+{ will hold the view information text for full examination. }
+{}
+{ Individual messages can be clicked on as well to determine }
+{ the time when the send was initiated, and the time when the }
+{ message receipt was completed, plus the number of bytes sent }
+{ and the message code. }
+{}
+{ Note also that any time the mouse pointer enters the }
+{ main Space-Time canvas, a blue vertical line appears }
+{ to mark a constant time axis in the view.  The actual }
+{ time represented by the location of this line is }
+{ displayed in the information line at the bottom of }
+{ the view. }
+{}
+{ Also note that the Utilization and Space-Time Views are }
+{ tightly coupled, and whenever a time line is shown in }
+{ one view, the other view will show a similar line at }
+{ the same time instant. }
+{}
+{ Zooming }
+{ ------- }
+{}
+{ The Space-Time View can be "zoomed" in or out to view }
+{ different perspectives on the same trace data.  To zoom }
+{ in on a particular area of the Space-Time, click and hold }
+{ on the main canvas with the Middle mouse button, and sweep }
+{ across the area that is to be blown up.  When the mouse }
+{ button is released, that swept area will be enlarged }
+{ horizontally to fill the canvas area. }
+{}
+{ To "unzoom" back to the previous zoom level, or out to some }
+{ lower magnification level if no zoom had been previously }
+{ applied, simply press the Right mouse button. }
+{}
+{ To summarize: }
+{}
+{	Mouse Left        Mouse Middle        Mouse Right }
+{}
+{	  Query             Zoom IN             Zoom Out }
+{}
+{ Like the time lines above, the Utilization View is }
+{ automagically zoomed in or out to match the Space-Time }
+{ View's time scale. }
+{}
+{ Task Height }
+{ ----------- }
+{}
+{ In cases where large or small numbers of tasks are being }
+{ displayed, the height of the horizontal task bars can shrink }
+{ and grow via two buttons at the bottom of the view.  These }
+{ buttons also affect the spacing on the Call Trace View. }
+{}

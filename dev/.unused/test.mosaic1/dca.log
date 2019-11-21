@@ -1,0 +1,5 @@
+0 dca_main: unrecognized argument -host
+0 dca_main: unrecognized argument mosaicdca
+0 MakeFileName: ctx->fname='cai.'
+0 dsim_Open: [59309] create failed for cai. (errno=13)
+0 ConfigureImage: Bad sequence number 59309

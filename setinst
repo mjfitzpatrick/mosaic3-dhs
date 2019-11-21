@@ -1,0 +1,22 @@
+#!/bin/csh -f
+
+switch ($1) 
+case mosaic3:
+    echo "Setting up for mosaic3"
+    echo  "#define MOSAIC"	> include/instrument.h
+    echo  "#define KPNO"	> include/location.h
+    breaksw
+
+default:
+    echo "No such instrument '"$1"'"
+    echo "Valid instruments:  mosaic3"
+    exit
+endsw
+
+/bin/rm -f ktm test
+
+ln -s dev/test.$1 test
+ln -s dev/ktm.$1  ktm
+ln -s dev/src.$i  dev/src
+
+/bin/rm -f lib/ktm.tcl ; ln -s lib/$1.tcl lib/ktm.tcl

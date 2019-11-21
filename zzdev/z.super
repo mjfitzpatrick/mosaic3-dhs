@@ -1,0 +1,24 @@
+#!/bin/csh -f
+
+set rawDir = "$argv[1]"
+set NCLIENTS = $argv[2]
+
+if ( $#argv == 3 ) then
+   set LOG = $argv[3]
+   if ( -e $$LOG ) then
+     cp $LOG "$LOG".OLD
+     rm $LOG
+   endif
+
+   echo `date` "Starting" >! $LOG
+    /dhs/bin/super  -port 4150 -console -rawDir ${rawDir} -procDir ${rawDir} -config /dhs/lib/config-mosaic3.null -nclients $NCLIENTS -geometry 640x630+0+40 |& tee  -a $LOG
+   echo `date` "Ending" >> $LOG
+
+else
+
+   echo `date` "Starting" 
+   /dhs/bin/super  -port 4150 -console -rawDir ${rawDir} -procDir ${rawDir} -config /dhs/lib/config-mosaic3.null -nclients $NCLIENTS -geometry 640x630+0+40 
+   echo `date` "Ending"
+
+endif
+

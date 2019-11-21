@@ -1,0 +1,17 @@
+{ Tasks Help - Killing Tasks }
+{ XPVM supports the PVM console "kill" command for killing PVM }
+{ tasks. This function is accessed by selecting the "KILL" button }
+{ on the "Tasks" menu, which pops up the kill dialog box. }
+{}
+{ To kill a task, simply click on the desired task in the scrolling }
+{ task list, and the task will be killed via pvm_kill().  Or, all of }
+{ the currently executing tasks can be killed using the genocidal }
+{ "Kill All" button (similar to a manual PVM Reset).  In either case, }
+{ the task(s) are killed as soon as the mouse click occurs. }
+{}
+{ Because XPVM avoids the overhead of continuously polling PVM }
+{ tasks while the kill dialog is up, the tasks listed may not }
+{ completely accurately reflect the existence of all currently }
+{ executing tasks. To update the task list, press the "Refresh }
+{ Tasks" button. }
+{}

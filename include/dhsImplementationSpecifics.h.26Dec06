@@ -1,0 +1,103 @@
+/*******************************************************************************
+ * 
+ * __doc__ \section {The dhsUtil <<VERSION>> Library}
+ * __doc__ \subsection {dhsUtil.h}
+ * __doc__ \begin{description}
+ * __doc__  \item[\sc use:] \emph{\#include ``dhsUtil.h''}
+ * __doc__  \item[\sc description:] this file contains all common code
+ * __doc__    required by the functions needed to build the static
+ * __doc__    and dynamic dhsUtil libraries. These libraries
+ * __doc__    abstract the DHS interface to the system.
+ * __doc__  \item[\sc argument(s):]  not applicable
+ * __doc__  \item[\sc return(s):] not applicable
+ * __doc__  \item[\sc last modified:] Monday, 4 November 2002
+ * __doc__ \end{description} 
+ *
+ ******************************************************************************/
+
+#ifndef _dhsImpl_H_
+ #define _dhsImpl_H_ 1.0.1
+ #define _dhsImpl_S_ "1.0.1"
+ #define _dhsImpl_A_ "P. N. Daly, N. C. Buchholz"
+ #define _dhsImpl_C_ "(c) AURA Inc, 2004. All rights reserved."
+
+/*******************************************************************************
+ * include(s) 
+ ******************************************************************************/
+
+/******************************************************************************
+ * define(s)
+ ******************************************************************************/
+ #define DHS_IMPLEMENTATION	"NETW"
+ #define DHS_IMPL_MAXSTR         128 /* maximum length of an obsetID string  */
+
+/******************************************************************************
+ * typedef(s)
+ ******************************************************************************/
+typedef struct dhsChan {
+    int   fd;           /* socket descriptor for connection       */
+
+    char *device;       /* the 'node:port' string                 */
+    char *node;         /* node where DCA object is running       */
+    char *name;         /* name of client application		  */
+    int   port;         /* port on node for DCA object            */
+
+    int   nerrs;        /* error count on channel                 */
+    int   nresends;     /* packet resend count on channel         */
+    int   retries;      /* needed at all??                        */
+    int   timeout;      /* needed at all??                        */
+    int   initialized;  /* needed at all??                        */
+
+    int   connected;    /* connection status flag                 */
+    int   type;         /* channel type                           */
+} dhsChan;
+
+
+typedef struct dhsNetw {
+   struct dhsChan  *super;       /* Supervisor channel                   */
+   struct dhsChan  *collector;   /* Collector channel                    */
+   int    nopen;                 /* No. of open channels                 */
+} dhsNetw;
+
+extern dhsNetw dhsNW;
+
+/*
+ typedef struct dhsImpl_str {
+    char   filename [DHS_MAXSTR];	
+    char   directory[DHS_MAXSTR];
+ } dhsImpl_t, *dhsImpl_p, **dhsImpl_s;
+
+ typedef struct dhsCtrl_str {	
+    long   	dhsState;
+    long   	simLevel;	
+    long	dhsDebug;
+    double 	expID;	
+    char   	obs_ID  [DHS_MAXSTR];
+    char   	filename[DHS_MAXSTR];
+    fpConfig_t 	focalPlaneCfg;		
+    mdConfig_t 	metaDataCfg;	
+    dhsImpl_p   implStruct;
+ } dhsCtrl_t, *dhsCtrl_p, **dhsCtrl_s;
+ 
+ struct dhsMem {
+    long  processes;	
+    ulong version;    
+    dhsCtrl_t ctrl;
+    long unused;
+ };
+*/
+/*******************************************************************************
+ * prototype(s)
+ ******************************************************************************/
+
+/* int  procDebug=60; */
+
+#ifndef DHSUTILAUX
+extern char dhsUtilDIR[256];
+extern char dhsUtilFILENAME[256];
+extern int dhsUtilFLAG;
+extern int dhsFileCreated;
+extern int dhsExtChar;
+#endif
+
+#endif

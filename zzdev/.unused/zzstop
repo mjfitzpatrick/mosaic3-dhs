@@ -1,0 +1,13 @@
+#!/bin/csh -f
+
+echo "Shutting down PXF...."
+/dhs/bin/dhscmd -group PXF -quit		>& /dev/null
+echo "Shutting down SMC Managers...."
+/dhs/bin/dhscmd -group SMCMgr -quit		>& /dev/null
+echo "Shutting down Collectors...."
+/dhs/bin/dhscmd -group Collector -quit		>& /dev/null
+echo "Shutting down DCA...."
+/dhs/bin/dhscmd -group NF-DCA -quit		>& /dev/null
+echo "Shutting down Supervisor...."
+/dhs/bin/dhscmd -group Super -quit		>& /dev/null
+echo "Done."

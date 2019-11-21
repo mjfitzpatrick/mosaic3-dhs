@@ -1,0 +1,29 @@
+#!/bin/csh -f
+#
+#  SMCSTAT -- Print a continual loop of the shared memory segments in use on
+#  the machine.  Default to a 1-second interval, only argument in an integer
+#  specifying a different interval to use.
+
+set	t   = 1
+set	all = 0
+
+if ($#argv > 0) then
+    set t = $argv[1]
+endif
+
+
+loop:
+
+    clear
+#    if (`uname -m` == "Power Macintosh") then
+#        sudo ipcs -ma | egrep -v root | \
+#	    egrep -v \ 10\  | \
+#	    awk '{ print ($3,$2,$5,$9,$10,$11,$13)}'
+#    else
+#        ipcs -m#u		# uncomment 'u' to get summary status
+#    endif
+    smcop -l
+    date
+    sleep $t
+
+goto loop

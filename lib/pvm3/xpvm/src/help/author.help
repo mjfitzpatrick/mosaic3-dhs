@@ -1,0 +1,46 @@
+{ Author Information }
+{            XPVM 1.1: Graphical Console and Monitor for PVM }
+{              Oak Ridge National Laboratory, Oak Ridge TN. }
+{                                James Arthur Kohl }
+{                      (C) 1995 All Rights Reserved }
+{}
+{                                       NOTICE }
+{}
+{ Permission to use, copy, modify, and distribute this software }
+{ and its documentation for any purpose and without fee is hereby }
+{ granted provided that the above copyright notice appear in all }
+{ copies and that both the copyright notice and this permission }
+{ notice appear in supporting documentation. }
+{}
+{ Neither the Institutions (Emory University, Oak Ridge National }
+{ Laboratory, and University of Tennessee) nor the Authors make }
+{ any representations about the suitability of this software for }
+{ any purpose.  This software is provided ``as is'' without }
+{ express or implied warranty. }
+{}
+{ This tool was developed as part of the joint PVM effort at Oak }
+{ Ridge National Laboratory, University of Tennessee, and Emory }
+{ University.  Specifically, XPVM was constructed at Oak Ridge }
+{ National Laboratory by James Arthur Kohl, under the supervision }
+{ of Al Geist. }
+{}
+{ XPVM is written in C with the X Window System, using the }
+{ TCL / TK application toolkit.  The TCL / TK portions of XPVM }
+{ are interpreted and handle the drawing of graphics and }
+{ interaction with the graphical views.  The C portions are }
+{ primarily concerned with receiving and processing trace }
+{ events to drive the views. }
+{}
+{ Any questions, problems, or suggestions regarding XPVM should }
+{ be directed to: }
+{}
+{	kohl@msr.epm.ornl.gov }
+{}
+{	James Arthur Kohl, Ph.D. }
+{	P.O. Box 2008, Bldg 6012, MS 6367 }
+{	Oak Ridge National Laboratory }
+{	Oak Ridge, TN 37831-6367 }
+{}
+{ I usually provide timely responses unless I'm on travel. }
+{}
+{ Thanks much, and Good Luck!  :-) }

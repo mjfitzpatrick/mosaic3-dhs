@@ -1,0 +1,148 @@
+{ Tasks Help - Spawning Tasks }
+{ The easiest way to monitor PVM tasks using XPVM is to spawn the }
+{ desired tasks directly from XPVM, using the "SPAWN" dialog which }
+{ is selected from the "Tasks" menu.  This dialog provides similar }
+{ functionality to the "spawn" command in the PVM console.  (For }
+{ spawning from a Unix shell, see "Non-XPVM Spawning" below.) }
+{}
+{ There are several fields to set in the spawn dialog box before }
+{ a task or set of tasks is spawned: }
+{}
+{ 	Command }
+{ 	------- }
+{ 	The command field gives the name of the PVM task to }
+{ 	spawn, i.e., the name of the executable file, as well }
+{ 	as any command line arguments for the task. }
+{}
+{ 	Flags }
+{ 	----- }
+{ 	The four flags available for PVM task spawning are all }
+{ 	available for spawning from XPVM.  To set or unset a }
+{ 	desired flag, simply click on it.  The square status }
+{ 	box to the left of each flag indicates whether the flag }
+{ 	is set or not - purple for set, or clear for not.  Note }
+{ 	that because XPVM is intended to monitor PVM programs, }
+{ 	the "PvmTaskTrace" flag defaults to set. }
+{}
+{ 	Trace Mask }
+{ 	---------- }
+{ 	It may not be desirable to trace all of the PVM system }
+{ 	routines in every case, therefore the library has been }
+{ 	instrumented using a trace mask to selectively trace each }
+{ 	PVM system routine.  To set the trace mask, select the }
+{ 	"Trace Mask" button to the right of the "PvmTaskTrace" }
+{ 	flag.  This pops up a hierarchical set of menus for }
+{ 	turning the tracing on or off for individual PVM calls, }
+{ 	or groups of calls.  Currently, XPVM can only set a task's }
+{ 	trace mask once, at spawn time, but extensions to allow }
+{ 	dynamic trace mask manipulation will be added in }
+{ 	upcoming revisions. }
+{}
+{ 	Where }
+{ 	----- }
+{ 	If a task should be spawned on a particular host or type }
+{ 	of architecture, this can be done by selecting the desired }
+{ 	"Where" option.  The choices include "Host", "Architecture", }
+{ 	or "Default".  For Host and Architecture, the dialog will }
+{ 	be modified to provide an appropriate "Host" or "Arch" }
+{ 	prompt, to indicate the desired option.  Otherwise, if }
+{ 	Default is selected, the task will be spawned at a location }
+{ 	at PVM's discretion. }
+{}
+{ 	NTasks }
+{ 	------ }
+{ 	Specifies the number of tasks to spawn.  Defaults to 1 task. }
+{}
+{ 	Close on Start }
+{ 	-------------- }
+{ 	This flag has nothing to do with the spawning of tasks, but }
+{ 	is a convenient feature nonetheless.  When set, this causes }
+{ 	the spawn dialog box to be automagically lowered when the }
+{ 	user spawns any tasks.  This reveals any views that might }
+{ 	be covered by the spawn dialog, in time to see tracing }
+{ 	information from the resulting tasks. }
+{}
+{ Once the above fields have been satisfactorily set, the user }
+{ actually invokes the spawn function by pressing either the }
+{ "Start" or "Start Append" button.  The "Start" button will }
+{ start a new trace by clearing the designated trace file and }
+{ overwriting it, where the "Start Append" button just appends }
+{ any new trace events to the existing trace file.  Before XPVM }
+{ will destroy an existing trace file, it will always prompt }
+{ the user with a small "Overwrite Trace File" dialog box, }
+{ which holds the spawn command until the user confirms the }
+{ overwrite. }
+{}
+{ Task Input & Output: }
+{ -------------------- }
+{ Tasks spawned by XPVM automatically re-direct their "stdout" }
+{ output to XPVM for display.  The XPVM Task Output View collects }
+{ the output and shows it to the user in a scrolling window. }
+{ This view also allows the saving of task output in a file }
+{ (see Task Output help under Views...). }
+{}
+{ Unfortunately, it is not yet possible to pass any user input }
+{ to tasks spawned by XPVM, or even by the regular PVM console. }
+{ Any programs that require interactive input from the user at }
+{ run-time must be spawned outside of XPVM from a Unix shell. }
+{ To capture trace events from tasks spawned in this way, you }
+{ must follow the directions below in "Non-XPVM Spawning". }
+{ In the next release of PVM, version 3.4, a "Tracer" feature }
+{ will circumvent this problem. }
+{}
+{ Non-XPVM Spawning: }
+{ ------------------ }
+{ In the case where a PVM task must be started manually from }
+{ a Unix shell, there is a way to allow trace events to be }
+{ manually re-directed to XPVM for viewing.  XPVM always joins }
+{ a special group "xpvm" on start-up, as group instance number }
+{ "0".  To capture trace events from an independent task, use }
+{ pvm_gettid() to obtain the TID for XPVM, and then set the }
+{ task's tracing options appropriately: }
+{}
+{	#include <pvm3.h> }
+{	#include <pvmtev.h> }
+{}
+{	Pvmtmask trace_mask; }
+{}
+{	int xpvm_tid; }
+{}
+{	/* Get XPVM Task ID */ }
+{}
+{	if ( (xpvm_tid = pvm_gettid( "xpvm", 0 )) > 0 ) }
+{	 }
+{		/* Set Self Trace & Output Dests & Message Tags */ }
+{		pvm_setopt( PvmSelfTraceCode, 666 ); }
+{		pvm_setopt( PvmSelfTraceTid, xpvm_tid ); }
+{		pvm_setopt( PvmSelfOutputCode, 667 ); }
+{		pvm_setopt( PvmSelfOutputTid, xpvm_tid ); }
+{}
+{		/* Set Future Children's Trace & Output Dests & Tags */ }
+{		/* (optional) */ }
+{		pvm_setopt( PvmTraceTid, xpvm_tid ); }
+{		pvm_setopt( PvmTraceCode, 666 ); }
+{		pvm_setopt( PvmOutputTid, xpvm_tid ); }
+{		pvm_setopt( PvmOutputCode, 667 ); }
+{}
+{		/* Generate Default Trace Mask */ }
+{		TEV_INIT_MASK( trace_mask ); }
+{		TEV_SET_MASK( trace_mask, TEV_MCAST0 ); }
+{		TEV_SET_MASK( trace_mask, TEV_SEND0 ); }
+{		TEV_SET_MASK( trace_mask, TEV_RECV0 ); }
+{		TEV_SET_MASK( trace_mask, TEV_NRECV0 ); }
+{		/* Add Other Desired Events Here */ }
+{}
+{		/* Set Self Trace Mask */ }
+{		pvm_settmask( PvmTaskSelf, trace_mask ); }
+{}
+{		/* Set Future Children's Trace Mask */ }
+{		/* (optional) */ }
+{		pvm_settmask( PvmTaskChild, trace_mask ); }
+{	 }
+{}
+{	else }
+{		printf( "XPVM not running, cannot trace\n" ); }
+{}
+{ Any other questions regarding Non-XPVM spawning techniques }
+{ should be directed to the author at kohl@msr.epm.ornl.gov. }
+{}

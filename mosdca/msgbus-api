@@ -1,0 +1,62 @@
+Applications Programming Interface
+
+Core Messaging System
+
+	   mb = mb_Open (bus)
+         mb = mb_OpenIO (bus, addInput, addInputData, rmInput, rmInputData)
+	 mb_HandleInput (mb, fds)
+	    mb_MainLoop (mb)
+	       mb_Close (mb)
+
+	         mb_Set (mb, option, value)
+	  ival = mb_Get (mb, option)
+
+id = mb_RegisterHandler (mb, pattern, hosts, command, flags)
+	 id = mb_Handle (mb, pattern, u_fcn, u_data)
+	    mb_UnHandle (mb, id)
+	id = mb_Observe (mb, pattern, u_fcn, u_data)
+	   mb_UnObserve (mb, id)
+
+       msg = mb_MsgInit (mb, operation, encoding)	# raw, ptr, copy
+     mb_MsgSetOperation (msg, operation)
+	   mb_MsgAddRaw (msg, ptr, nbytes)
+  nbytes = mb_MsgGetRaw (msg, ptr, nbytes)
+  nbytes = mb_MsgRefRaw (msg, &ptr, nbytes)
+  nbytes = mb_MsgLenRaw (msg)
+      ptr = mb_MsgClass (msg)
+  ptr = mb_MsgOperation (msg)
+
+      dest = mb_Resolve (mb, msgclass)
+		mb_Send (mb, dest, msg)
+       msg = mb_Request (mb, dest, msg)
+   id = mb_RequestAsync (mb, dest, msg, u_fcn, u_data)
+
+
+Optional Message Encoding Facility
+
+     mb_MsgAddStringArg (msg, argname, class, string)
+       mb_MsgAddByteArg (msg, argname, class, ptr, nbytes)
+   mb_MsgAddArg[USILRD] (msg, argname, class, ptr, nitems, stride)
+	   mb_MsgPrintf (msg, format, ...)
+
+ nargs = mb_MsgArgCount (msg)
+	  mb_MsgArgType (msg, argno, argname, class, dtype, nitems)
+  ptr = mb_MsgGetArgRef (msg, argno)
+     mb_MsgGetStringArg (msg, argno, ptr)
+       mb_MsgGetByteArg (msg, argno, ptr, start, nbytes)
+   mb_MsgGetArg[USILRD] (msg, ptr, start, nitems, stride)
+   val = MsgGet[USILRD] (msg, argname)
+     nchars = MsgGetStr (msg, argname, string, maxchars)
+
+
+notes
+    message classes can be hierarchical, e.g. class.subclass.
+    the message operation is the method for that class
+    broadcast/multicast and direct routes are handled identically
+    architecture specific encoding is handled internally
+    message tags allow arbitrary message hierarchy
+    tag resolution allows multiple instances of objects (and their handlers)
+    any data after a : in the message class is passed to the object at
+	connect time, e.g.:  ObjectClass:InstanceName,mode=access-mode,...
+	encode data as init msg delivered at startup time?  maybe just string
+

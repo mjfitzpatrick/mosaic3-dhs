@@ -1,0 +1,6 @@
+#!/bin/csh -f
+
+xterm -geometry 80x22+100+350 -e /dhs/test/pan  -host mosaic1pan-a-dtn -A      &
+xterm -geometry 80x22+100+100 -e /dhs/test/nocs -host mosaic1-dtn -interactive &
+
+

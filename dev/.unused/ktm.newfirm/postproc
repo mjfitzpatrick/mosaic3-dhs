@@ -1,0 +1,54 @@
+#!/bin/csh -f
+
+set expID	= $1
+set raw		= $2
+set rawDir	= $3
+set procDir	= $4
+
+setenv arch	.redhat
+
+echo "Postproc executed on " `date`		          >>& $HOME/postproc.log
+echo "  expID=$expID raw=$raw pdir=$procDir rdir=$rawDir" >>& $HOME/postproc.log
+
+set root = $raw:r
+
+if ("`hostname`" == "tucana.tuc.noao.edu") then
+    echo "*********************************************************************"
+    echo "Postproc LOCAL executed on " `date`
+    echo "  expID=$expID raw=$raw pdir=$procDir rdir=$rawDir"
+
+    echo "cp ${raw:r}.\* $procDir"
+    cp ${raw:r}.* $procDir 
+
+    echo "*********************************************************************"
+
+else if ("`cat /ndhs/_location`" == "-KP") then
+
+    echo "Transferring data... "
+    echo  scp nfdca-kp:${root}\* $rawDir
+    scp nfdca-kp:${root}\* $rawDir
+
+    # Run pipeline trigger.
+    echo "Triggering pipeline for: " ${rawDir}/$raw:t
+    setenv irafhnt /ndhs/lib/hosts
+    /ndhs/lib/pltrigger.cl $expID $raw $procDir 	  >>& $HOME/postproc.log
+
+    # Trigger iSTB
+    echo "Triggering iSTB for: " ${rawDir}/$raw:t
+    ssh nfdca-kp /bits/bin/postproc $raw
+
+else 
+    #scp nfdca:${root}\* $rawDir 
+    scp nfdca:${raw:r}.\* $rawDir 
+
+endif
+
+echo "*********************************************************************"
+echo "Postproc DONE:    ExpID: " $expID 
+echo "               Raw File: " nfdca:${raw}
+echo "             Local File: " ${rawDir}/$raw:t
+echo "                   Date: " `date`
+echo "*********************************************************************"
+echo ""
+
+echo "Postproc completed on " `date`		          >>& $HOME/postproc.log

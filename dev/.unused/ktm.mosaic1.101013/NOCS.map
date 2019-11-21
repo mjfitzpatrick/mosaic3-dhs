@@ -1,0 +1,141 @@
+1 ACTPRIM \tcs.telescope.active_primary   \primary mirror mode                                          \off [E]
+0 ADCMODE \mse.arint.adcmode              \ADC Mode                                                     \unknown [S]
+0 AIRMASS \tcs.telescope.airmass          \Airmass                                                      \0 [S]
+1 ALRTDEC \tcs.alert.dec                  \Dec alert                                                    \off [E]
+1 ALRTHA  \tcs.alert.ha                   \HA alert                                                     \off [E]
+1 ALRTSERV\tcs.alert.servo                \Servo alert                                                  \off [E]
+1 ALRTSTOW\tcs.alert.stowed               \Stow alert                                                   \off [E]
+0 ALT     \tcs.telescope.alt              \Telescope altitude                                           \00:00:00 [S]
+0 AZ      \tcs.telescope.az               \Telescope azimuth                                            \00:00:00 [S]
+0 DEC     \tcs.target.dec                 \Declination                                                  \00:00:00.0 [S]
+0 DECDIFF \tcs.telescope.dec_diff         \[arcsec] Dec diff                                            \0 [S]
+0 DECINDEX\tcs.telescope.dec_index        \[arcsec] Dec index                                           \0 [S]
+0 DECINST \tcs.telescope.dec_inst_center  \[arcsec] Dec instrument center                               \0 [S]
+0 DECOFF  \tcs.telescope.dec_offset       \[arcsec] Dec offset                                          \0 [S]
+1 DECPRE  \tcs.target.dec_preset          \declination preset                                           \00:00:00.0 [E]
+1 DECSERVO\tcs.telescope.decservo         \[deg] dec servo position                                     \0 [E]
+0 DECZERO \tcs.telescope.dec_zero         \[arcsec] Dec zero                                            \0 [S]
+0 DOMEAZ  \tcs.dome.az                    \[deg] Dome position                                          \0 [S]
+0 DOMEERR \tcs.dome.error                 \[deg] Dome error as distance from target                     \0 [S]
+1 DOMEMODE\tcs.dome.mode                  \Dome mode                                                    \off [E]
+1 DOMESTAT\tcs.dome.status                \Dome status                                                  \ready [E]
+0 EPOCH   \tcs.target.epoch               \[yr] epoch                                                   \2007 [S]
+1 EPOCHPRE\tcs.target.epoch_preset        \[yr] Epoch preset                                            \2007 [E]
+0 EQUINOX \tcs.telescope.equinox          \[yr] Equinox                                                 \2007 [S]
+1 FIELD   \tcs.telescope.field            \Telescope field                                              \0 [E]
+1 FOCI    \tcs.telescope.fratio           \Telescope foci                                               \0 [E]
+0 FOCUS   \tcs.telescope.focus            \[mm] Telescope focus                                         \0 [E]
+1 HASERVO \tcs.telescope.haservo          \[deg] HA servo position                                      \0 [E]
+1 INSTR   \tcs.instrument.name            \Instrument used to obtain these data                         \Mosaic 1.1 [E]
+0 MSEADCA1\mse.adc1.angle                 \[deg] MSE ADC 1 prism angle                                  \0.0 [S]
+0 MSEADCA2\mse.adc2.angle                 \[deg] MSE ADC 2 prism angle                                  \0.0 [S]
+1 MSEADCZ1\mse.adc1.zero                  \[enc] MSE ADC 1 encoder sero index value                     \0 [S]
+1 MSEADCZ2\mse.adc2.zero                  \[enc] MSE ADC 2 encoder sero index value                     \0 [S]
+0 MSECAMF1\mse.camera1.focus              \[mm] MSE camera 1 focus (value)                              \0.0 [S]
+0 MSECAMF2\mse.camera2.focus              \[mm] MSE camera 2 focus (value)                              \0.0 [S]
+0 MSEFILTR\mse.filter.position            \MSE filter number (0-14)                                     \0 [S]
+0 MSEIDENT\mse.main.ident                 \MSE name and revision date                                   \unknown [E]
+1 MSELINK \mse.main.link                  \MSE serial link status (up|down)                             \unknown [E]
+0 MSEPEDF \mse.pedestal.focus             \[microns] MSE pedestal focus position                        \0 [S]
+0 MSEREADY\mse.shutter.ready              \MSE shutter ready (none|guide|dark|restore)                  \none [S]
+0 MSESHUTR\mse.shutter.position           \MSE shutter position (open|guide|dark|close)                 \dark [S]
+0 MSETEMP1\mse.thermocouple.temp1         \[celsius] MSE temp1 - Dewar tank                             \0.0 [S]
+0 MSETEMP2\mse.thermocouple.temp2         \[celsius] MSE temp2 - CCD Focal Plate                        \0.0 [S]
+0 MSETEMP3\mse.thermocouple.temp3         \[celsius] MSE temp3 - Fill Neck                              \0.0 [S]
+1 MSETEMP4\mse.thermocouple.temp4         \[celsius] MSE temp4 - DHE Chassis                            \0.0 [S]
+1 MSETEMP5\mse.thermocouple.temp5         \[celsius] MSE temp5 - Monsoon Power Supply                   \0.0 [S]
+1 MSETEMP6\mse.thermocouple.temp6         \[celsius] MSE temp6 - LN2 Vent                               \0.0 [S]
+0 MSETEMP7\mse.thermocouple.temp7         \[celsius] MSE temp7 - Ambient                                \0.0 [S]
+1 MSETEMP8\mse.thermocouple.temp8         \[celsius] MSE temp8 - unused                                 \0.0 [S]
+0 NOCCBIN \dummy.nocs.cbin                \CCD column binning                                           \1
+0 NOCDDOF \dummy.nocs.ddof                \[arcsec] Dither Dec offset                                   \0
+0 NOCDHS  \dummy.nocs.dhs                 \DHS script name                                              \DARK
+0 NOCDITER\dummy.nocs.diter               \Dither iteration count                                       \0
+0 NOCDPAT \dummy.nocs.dpat                \Dither pattern                                               \5PX
+0 NOCDPOS \dummy.nocs.dpos                \Dither position                                              \0
+0 NOCDREP \dummy.nocs.drep                \Dither repetition count                                      \0
+0 NOCDROF \dummy.nocs.drof                \[arcsec] Dither RA offset                                    \0
+0 NOCFIL  \dummy.nocs.fil                 \Filter                                                       \Dark
+0 NOCFOCUS\dummy.nocs.focus               \[um] nics_focus value                                        \0
+0 NOCFSN  \dummy.nocs.fsn                 \Filter serial number                                         \none
+0 NOCGAIN \dummy.nocs.gain                \CCD gain                                                     \1
+0 NOCGPXPS\dummy.nocs.gpxps               \Monsoon pixel row/column shift                               \0
+0 NOCID   \dummy.nocs.id                  \Observation ID a.k.a expID                                   \0.0
+0 NOCLAMP \dummy.nocs.lamp                \Dome flat lamp status (on|off|unknown)                       \unknown
+0 NOCMDOF \dummy.nocs.mdof                \[arcsec] Map Dec offset                                      \0
+0 NOCMITER\dummy.nocs.miter               \Map iteration count                                          \0
+0 NOCMPAT \dummy.nocs.mpat                \Map pattern                                                  \4Q
+0 NOCMPOS \dummy.nocs.mpos                \Map position                                                 \0
+0 NOCMREP \dummy.nocs.mrep                \Map repetition count                                         \0
+0 NOCMROF \dummy.nocs.mrof                \[arcsec] Map RA offset                                       \0
+0 NOCNO   \dummy.nocs.no                  \observation number in this sequence                          \1
+0 NOCNPOS \dummy.nocs.npos                \observation number in requested number                       \1
+0 NOCNUM  \dummy.nocs.num                 \observation number request                                   \1
+0 NOCOBJ  \dummy.nocs.obj                 \Observed object                                              \DARK
+0 NOCODEC \dummy.nocs.odec                \[arcsec] Dec offset                                          \0
+0 NOCOFFT \dummy.nocs.telofft             \ntcs_offset RA Dec offset (arcsec)                           \0 0
+0 NOCORA  \dummy.nocs.ora                 \[arcsec] RA offset                                           \0
+0 NOCPOST \dummy.nocs.telpost             \ntcs_moveto ra dec epoch                                     \00:00:00.00 00:00:00.0 2007
+0 NOCRBIN \dummy.nocs.rbin                \CCD row binning                                              \1
+0 NOCSCR  \dummy.nocs.scr                 \NOHS script run                                              \script
+0 NOCSKY  \dummy.nocs.sky                 \sky offset modulus                                           \0
+0 NOCSYS  \dummy.nocs.sys                 \system ID                                                    \kpno_4m
+0 NOCTIM  \dummy.nocs.tim                 \[s] Requested integration time                               \0.7
+0 NOCTOT  \dummy.nocs.tot                 \Total number of observations in set                          \1
+0 NOCTYP  \dummy.nocs.typ                 \Observation type                                             \DARK
+0 NOHS    \dummy.nocs.nohs                \NOHS ID                                                      \Mosaic.1.1
+0 PARALL  \tcs.telescope.parallactic      \[deg] parallactic angle                                      \0 [E]
+1 PMTCTCFR\pmtc.thermocouple.cfr          \[celsius] Reference temp. of cold point                      \0.0 [E]
+1 PMTCTCSB\pmtc.thermocouple.cib          \[celsius] Chimney south inside: bottom                       \0.0 [E]
+1 PMTCTCSM\pmtc.thermocouple.cim          \[celsius] Chimney south inside: middle                       \0.0 [E]
+1 PMTCTCST\pmtc.thermocouple.cit          \[celsius] Chimney south inside: top                          \0.0 [E]
+1 PMTCTCTS\pmtc.thermocouple.cos          \[celsius] Chimney outside top: south                         \0.0 [E]
+1 PMTCTCTW\pmtc.thermocouple.cow          \[celsius] Chimney outside top: west                          \0.0 [E]
+1 PMTCTEIB\pmtc.thermocouple.eib          \[celsius] Mirror inner bottom edge: east                     \0.0 [E]
+1 PMTCTEIT\pmtc.thermocouple.eit          \[celsius] Mirror inner top edge: east                        \0.0 [E]
+1 PMTCTEOB\pmtc.thermocouple.eob          \[celsius] Mirror outer bottom edge: east                     \0.0 [E]
+1 PMTCTEOT\pmtc.thermocouple.eot          \[celsius] Mirror outer top edge: east                        \0.0 [E]
+1 PMTCTHXA\pmtc.thermocouple.hxa          \[celsius] Heat exchanger ambient air: out                    \0.0 [E]
+1 PMTCTHXD\pmtc.thermocouple.hxd          \[celsius] Heat exchanger ambient air: in                     \0.0 [E]
+1 PMTCTHXI\pmtc.thermocouple.hxi          \[celsius] Heat exchanger glycol: in                          \0.0 [E]
+1 PMTCTHXO\pmtc.thermocouple.hxo          \[celsius] Heat exchanger glycol: out                         \0.0 [E]
+1 PMTCTMHS\pmtc.thermocouple.mhs          \[celsius] Mirror cover hinge: south                          \0.0 [E]
+1 PMTCTMHW\pmtc.thermocouple.mhw          \[celsius] Mirror cover hinge: west                           \0.0 [E]
+1 PMTCTNIB\pmtc.thermocouple.nib          \[celsius] Mirror inner bottom edge: north                    \0.0 [E]
+1 PMTCTNIT\pmtc.thermocouple.nit          \[celsius] Mirror inner top edge: north                       \0.0 [E]
+1 PMTCTNOB\pmtc.thermocouple.nob          \[celsius] Mirror outer bottom edge: north                    \0.0 [E]
+1 PMTCTNOT\pmtc.thermocouple.not          \[celsius] Mirror outer top edge: north                       \0.0 [E]
+1 PMTCTSIB\pmtc.thermocouple.sib          \[celsius] Mirror inner bottom edge: south                    \0.0 [E]
+1 PMTCTSIT\pmtc.thermocouple.sit          \[celsius] Mirror inner top edge: south                       \0.0 [E]
+1 PMTCTSOB\pmtc.thermocouple.sob          \[celsius] Mirror outer bottom edge: south                    \0.0 [E]
+1 PMTCTSOT\pmtc.thermocouple.sot          \[celsius] Mirror outer top edge: south                       \0.0 [E]
+1 PMTCTSTB\pmtc.thermocouple.tsb          \[celsius] Truss south: bottom                                \0.0 [E]
+1 PMTCTSTM\pmtc.thermocouple.tsm          \[celsius] Truss south: middle                                \0.0 [E]
+1 PMTCTSTT\pmtc.thermocouple.tst          \[celsius] Truss south: top                                   \0.0 [E]
+1 PMTCTWIB\pmtc.thermocouple.wib          \[celsius] Mirror inner bottom edge: west                     \0.0 [E]
+1 PMTCTWIT\pmtc.thermocouple.wit          \[celsius] Mirror inner top edge: west                        \0.0 [E]
+1 PMTCTWOB\pmtc.thermocouple.wob          \[celsius] Mirror outer bottom edge: west                     \0.0 [E]
+1 PMTCTWOT\pmtc.thermocouple.wot          \[celsius] Mirror outer top edge: west                        \0.0 [E]
+0 RA      \tcs.target.ra                  \Right Ascension                                              \00:00:00.00 [S]
+0 RADIFF  \tcs.telescope.ra_diff          \[arcsec] RA diff                                             \0 [S]
+0 RAINDEX \tcs.telescope.ra_index         \[arcsec] RA index                                            \0 [S]
+0 RAINST  \tcs.telescope.ra_inst_center   \[arcsec] RA instrument center                                \0 [S]
+0 RAOFF   \tcs.telescope.ra_offset        \[arcsec] RA offset                                           \0 [S]
+1 RAPRE   \tcs.target.ra_preset           \right ascension preset (HH:MM:SS.SS)                         \00:00:00.00 [E]
+0 RAZERO  \tcs.telescope.ra_zero          \[arcsec] RA zero                                             \0 [S]
+0 ST      \tcs.time.st                    \Sidereal time                                                \00:00:00 [S]
+0 TCPGDR  \tcs.guider.mode                \Guider status (on|off|lock)                                  \off [S]
+0 TCPHA   \tcs.telescope.ha               \Telescope hour angle                                         \0 [S]
+1 TCPMODE \tcs.telescope.mode             \telescope mode                                               \ready [E]
+1 TCPSLEW \tcs.telescope.slew             \telescope slew status                                        \off [E]
+1 TCPTRACK\tcs.telescope.tracking         \telescope tracking status                                    \off [E]
+1 TCSCOMPU\tcs.main.computer              \name of tcs4m computer                                       \onion [E]
+1 TCSHOST \tcs.main.host                  \host for tcs4m                                               \onion [E]
+1 TCSLINK \tcs.main.link                  \TCS link (up|down)                                           \down [E]
+1 TCSOFST \tcs.telescope.offset           \RA, Dec offset (arcsec)                                      \0 0 [E]
+1 TCSPID  \tcs.main.pid                   \process id of tcs4m                                          \101 [E]
+1 TCSPOS  \tcs.telescope.position         \RA, Dec and epoch of target position                         \00:00:00.00 00:00:00.0 2007 [E]
+1 TCSUPDAT\tcs.main.updates               \tcs4m polling enable (on|off)                                \off [E]
+0 UT      \tcs.time.ut                    \Universal time                                               \00:00:00 [S]
+0 UTDATE  \tcs.time.utdate                \UT date                                                      \01/01/2007 [S]
+0 ZD      \tcs.telescope.zenithdist       \[deg] Zenith distance                                        \0 [S]

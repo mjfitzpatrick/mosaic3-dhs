@@ -1,0 +1,50 @@
+#!/bin/csh -f
+
+echo -n "Compiling lib/smc..."
+(chdir lib/smc   ; make clean ; make ; make install) |& egrep error |& egrep -v libpvm |& egrep -v sys_
+echo "done"
+
+echo -n "Compiling lib/msg..."
+(chdir lib/msg   ; make clean ; make ; make install) |& egrep error |& egrep -v libpvm |& egrep -v sys_
+echo "done"
+
+echo -n "Compiling lib/dhs..."
+#(chdir lib/msg   ; make clean ; make ; make install) |& egrep error |& egrep -v libpvm |& egrep -v sys_
+echo "done"
+
+#echo -n "Compiling lib/dcalib..."
+#(chdir lib/dcalib ; ./mk32) |& egrep error |& egrep -v libpvm |& egrep -v sys_
+#echo "done"
+
+#echo -n "Compiling lib/dhslib..."
+#(chdir lib/dhslib ; ./mk32) |& egrep error |& egrep -v libpvm |& egrep -v sys_
+#echo "done"
+
+echo -n "Compiling collector..."
+(chdir collector ; make clean ; make) |& egrep error |& \
+	egrep -v libpvm |& egrep -v sys_
+echo "done"
+
+echo -n "Compiling smcmgr..."
+(chdir smcmgr    ; make clean ; make) |& egrep error |& \
+	egrep -v libpvm |& egrep -v sys_
+echo "done"
+
+echo -n "Compiling pxf..."
+(chdir pxf       ; make clean ; make) |& egrep error |& \
+	egrep -v libpvm |& egrep -v sys_
+echo "done"
+
+echo -n "Compiling dhssup..."
+(chdir dhssup    ; make clean ; make ; make install) |& egrep error |& \
+	egrep -v libpvm |& egrep -v sys_
+echo "done"
+
+echo -n "Compiling mosdca..."
+(chdir mosdca    ; make clean >& /dev/null; make ; cp mosdca ../bin) |& \
+	egrep error |& egrep -v libpvm |& egrep -v sys_
+echo "done"
+
+echo -n "Compiling test clients..."
+(chdir test    ; make clean >& /dev/null ; make >& /dev/null)
+echo "done"

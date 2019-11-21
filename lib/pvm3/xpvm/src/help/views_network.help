@@ -1,0 +1,41 @@
+{ Views Help - Network View }
+{ The Network View displays high-level activity on the }
+{ hosts in the Virtual Machine.  Each host is represented }
+{ by an icon image which includes the architecture and }
+{ name of the host.  These icons are illuminated in }
+{ different colors to indicate the status of the tasks }
+{ running on each host. }
+{}
+{ The "Active" color implies that at least one task on }
+{ that host is busy executing useful work.  The "System" }
+{ color means that no tasks are busy executing user }
+{ computation, but that at least one task is busy }
+{ executing PVM system routines.  When there are no }
+{ tasks on a given hosts, its icon is left uncolored, }
+{ or white.  The specific colors used in each case }
+{ default to green for active and yellow for system, }
+{ but are user customizable. }
+{}
+{ This view now visualizes the network activity among }
+{ the hosts as well as individual host status.  The }
+{ instantaneous network bandwidth and volume on individual }
+{ network links is animated.  The width of a particular }
+{ link corresponds to the bandwidth most recently realized }
+{ on that link.  Because it is not known in advance how long }
+{ a particular message will take to be transmitted across the }
+{ network, the bandwidth is calculated upon message receipt. }
+{ This bandwidth information can be used to determine the }
+{ load and performance of the network connecting hosts in }
+{ the virtual machine, thereby providing insight into the }
+{ impact the network is having on the performance of the }
+{ application. }
+{}
+{ The message volume is animated by the color of individual }
+{ network links, and represents a wide spectrum of ranges }
+{ from bytes to kilobytes to megabytes.  The volume is }
+{ computed on-the-fly by adding and subtracting the size }
+{ of messages as they enter and leave in transit over the }
+{ network.  This information provides an indication to the }
+{ user about the existence and magnitude of any communication }
+{ bottlenecks in the application. }
+{}

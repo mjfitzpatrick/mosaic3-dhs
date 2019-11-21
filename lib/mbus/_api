@@ -1,0 +1,60 @@
+
+
+
+       mbus = mbusInitialize (whoAmI, hostConfig)
+
+           tid = mbusConnect (whoAmI, group, singleton)
+        stat = mbusJoinGroup (group)
+       stat = mbusLeaveGroup (group)
+       stat = mbusDisconnect (tid)
+
+            stat  = mbusHalt ()
+
+
+         mbusAddInputHandler (fd, handler(), client_data)
+      mbusRemoveInputHandler (fd)
+  ninputs = mbusInputHandler (timeout)
+             mbusAppMainLoop (context)
+
+
+             stat = mbusSend (to, host, subject, msg)
+                 mbusPackMsg (ack, to, host, subject, msg)
+        stat = mbusGetMsgAck (tid, tag)
+
+             stat = mbusRecv (from_tid, to_tid, subject, host, msg)
+
+            stat = mbusBcast (group, msg, msgtag)
+             stat = mbusPing (tid, timeout)
+               ack = mbusAck (tid, tag)
+
+
+            stat = mbusSpawn (task, argv, where, tid)
+
+
+
+                   mbInitApp () 		// Application State
+  
+             ival = mbAppGet (what)
+          str = mbAppGetName ()
+          ptr = mbAppGetMBus ()
+                    mbAppSet (what, val)
+                mbAppSetName (name)
+                mbAppSetMBus (mbus)
+
+
+
+             tid = mbTidCode (appname)		//  Internal procedures
+                 mbErrorExit ()
+                      mbQuit ()
+
+         fd_set = mbInputSet ()
+            fd = mbGetMBusFD ()
+          n = mbGetNHandlers ()
+         fd = mbGetHandlerFD (index)
+        stat = mbCallHandler (index)
+
+          tid = mbusSuperTid ()
+           bool = isSuperTid (tid)
+
+     stat = mbNotifyHandlers ()
+

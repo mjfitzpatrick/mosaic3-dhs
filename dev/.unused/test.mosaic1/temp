@@ -1,0 +1,10 @@
+#Pseudo Host Table
+
+setenv 	newfirm 	127.0.0.1
+setenv  nfpan-a 	127.0.0.1
+setenv  	nfpan-b 	127.0.0.1
+setenv  	nfdhs-01	127.0.0.1
+setenv  	nfdhs-02	127.0.0.1
+setenv  	nfdca	 	127.0.0.1
+
+

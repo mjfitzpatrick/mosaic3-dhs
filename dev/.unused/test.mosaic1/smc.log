@@ -1,0 +1,71 @@
+Attaching to cache at addr=0x4001c000 key=0xc027d4a sz=3196060
+smUtilAttach:  id=0x47316997 key=0xc027d4a size=3196060
+
+   smCache {			0x4001c000
+            memKey = 0xc027d4a
+             shmid = 47316997
+        cache_addr = 0x4001c000
+        cache_size = 3196060
+         vm_locked = 0
+             ctime = Mon May  4 08:05:29 2015
+               new = 1
+            np_max = 4096
+        np_hiwater = 0
+     mem_allocated = 3196060
+         mem_avail = 146580
+            npages = 0
+               top = 0
+             pdata = 0x4001c494
+            pstate = pid:11283  addr:0x4001c000  Mon May  4 08:05:29 2015
+                     pid:11365  addr:0x4001c000  Mon May  4 08:05:31 2015
+                     pid:11448  addr:0x4001c000  Mon May  4 08:05:35 2015
+             debug = 1
+   }
+
+   sysConfig {			(0x4001c184)
+       cache_path = '/tmp/.smc501'
+           config = 'debug=0'
+       cache_size = 3196060
+     cache_memKey = 0xc027d4a
+            nsegs = 4096
+     min_seg_size = 4096 (bytes)
+       lock_cache = 3
+        lock_segs = 3
+	   sys_page_size = 4
+	  sys_phys_pages = 226442
+	sys_avphys_pages = 36645
+	       sys_pmask = 3
+   }
+
+Waiting for input....
+BCAST:  from:262146  subj:8 msg='option dirname /home/data
+'
+    SET on SMCMgr: option dirname /home/data
+BCAST:  from:262146  subj:8 msg='option seqno 59309'
+    SET on SMCMgr: option seqno 59309
+BCAST:  from:262146  subj:4 msg='process 2450000.100000'
+    START on SMCMgr: process 2450000.100000
+Processing ExpID: 2450000.100000
+smUtilAttach:  id=0x47382537 key=0xe027d4f size=61440
+smUtilAttach:  id=0x47415306 key=0xe027d50 size=290816
+smUtilAttach:  id=0x47448075 key=0xe027d51 size=35229696
+Rectifying data page....Displaying pixels....done.
+smUtilAttach:  id=0x47480844 key=0xe027d52 size=35229696
+Rectifying data page....Displaying pixels....done.
+smUtilAttach:  id=0x47513613 key=0xe027d53 size=35229696
+Rectifying data page....Displaying pixels....done.
+smUtilAttach:  id=0x47546382 key=0xe027d54 size=35229696
+Rectifying data page....Displaying pixels....done.
+smUtilAttach:  id=0x47579151 key=0xe027d55 size=35229696
+Rectifying data page....Displaying pixels....done.
+smUtilAttach:  id=0x47611920 key=0xe027d56 size=35229696
+Rectifying data page....Displaying pixels....done.
+smUtilAttach:  id=0x47644689 key=0xe027d57 size=35229696
+Rectifying data page....Displaying pixels....done.
+smUtilAttach:  id=0x47677458 key=0xe027d58 size=35229696
+Rectifying data page....Displaying pixels....done.
+smUtilAttach:  id=0x47710227 key=0xf027d59 size=61440
+smUtilAttach:  id=0x47742996 key=0xf027d5a size=290816
+SMC Processing done ExpID: 2450000.100000
+BCAST:  from:262146  subj:8 msg='imname cai.59309'
+    SET on SMCMgr: imname cai.59309

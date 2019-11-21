@@ -1,0 +1,145 @@
+#!/bin/csh -f 
+
+# Set the location of the system to help in configuring the machine names.
+# The location is simply a 2-character code stored in the '_location' file
+# in the top directory, values may be:
+#
+#	"CR"		=> Tucson Clean Room
+#	"FR"		=> Tucson Flex Rig
+#	"KP"		=> KPNO 4-meter
+#	"CT"		=> CTIO 4-meter
+#
+
+setenv USER_DISPLAY 	$DISPLAY
+setenv RTD		fast:inet:3200
+setenv MONSOON_DHS "127.0.0.1:4150"
+
+set SUP_LOG = /dhs/test//sup.log
+set PAN_LOG = /dhs/test/pan.log
+set DCA_LOG = /dhs/test/dca.log
+set NOC_LOG = /dhs/test/noc.log
+set COL_LOG1 = /dhs/test/col1.log
+set COL_LOG2 = /dhs/test/col2.log
+set SMC_LOG = /dhs/test/smc.log
+set PXF_LOG = /dhs/test/pxf.log
+
+/dhs/util/stopdhs
+rm -rf $SUP_LOG $PAN_LOG $DCA_LOG $NOC_LOG $COL_LOG1 $COL_LOG2 $SMC_LOG $PXF_LOG
+
+#Pseudo Hosts
+
+setenv newfirm 127.0.0.1
+
+setenv nfpan_a 127.0.0.1
+
+setenv nfpan_b 127.0.0.1
+
+setenv nfdhs_01 127.0.0.1
+
+setenv nfdhs_02 127.0.0.1
+
+setenv nfdca 127.0.0.1
+
+
+
+#-------------------------------------------------------------------------------
+
+
+
+echo "Cleaning up...."
+echo ""
+
+    if (`uname -s` == "Darwin") then
+        set pflags = "-augxww"
+    else
+        set pflags = "-efw"
+    endif
+    set pfiles = "/tmp/pvm*50*"
+
+    echo halt | $PVM_ROOT/lib/pvm 						>& /dev/null
+    /bin/rm -f $pfiles 						>& /dev/null
+
+    echo conf | $PVM_ROOT/lib/pvm 
+    echo ""
+
+    /dhs/smclean
+	  
+
+echo "Re-Starting VNC for DHS...."
+echo ""
+    vncserver -kill :1						>& /dev/null
+    vncserver -geometry 1280x1024 -depth 8 -cc 3		>& /dev/null
+
+    echo "Starting VNC viewer...."
+    (vncviewer -passwd ~/.vnc/passwd -display $USER_DISPLAY :1	>& /dev/null &)
+
+
+echo "Starting DHS...."
+echo ""
+
+setenv DISPLAY :1
+set    XTERM	= "xterm -fn fixed"
+
+##--------------
+## Collectors
+##--------------
+echo "Starting Collectors...."
+echo ""
+
+(sleep  4; $XTERM -iconic -geometry 80x20+100+350 -e "/dhs/bin/collector -console -mbus -host $nfdhs_01 -port 4575 -debug 60 -id NOCS |& tee $COL_LOG1 ; sleep 30 &" ) &
+
+(sleep  6; $XTERM -iconic -geometry 80x20+200+400 -e "/dhs/bin/collector -console -mbus -host $nfdhs_01 -port 4576 -debug 60 -id PanA |& tee $COL_LOG2; sleep 30 &" ) &
+
+
+##--------------
+## SMC Managers
+##--------------
+echo "Starting Managers...."
+echo ""
+
+(sleep 10; $XTERM -iconic -geometry 80x20+200+450 -e "/dhs/bin/smcmgr -console -host $nfdhs_01 -mbus -dev $RTD -debug 60 |& tee $SMC_LOG ; sleep 30 & ") &
+
+
+##--------------
+## PXF
+##--------------
+echo "Starting PXF...."
+echo ""
+
+(sleep 14; $XTERM -iconic -geometry 80x20+200+500 -e "/dhs/bin/pxf -console -host $nfdhs_01 -mbus -debug 60  |& tee $PXF_LOG ; sleep 30 &" ) &
+
+
+##--------------
+## DCA
+##--------------
+echo "Starting DCA...."
+echo ""
+
+(sleep 20; $XTERM -geometry 80x20+645+360 -e /"dhs/mosdca/mosdca -host $nfdca -debug 2 -reqlevel 2 -vminit cachesize=312m -imformat %N -maxgkw 2048 -maxikw 2048 -dir /home/data -ktm /dhs/lib/newfirm.tcl |& tee $DCA_LOG ; sleep 30 &" ) &
+
+
+##--------------
+## NOCS/Pan Clients
+##--------------
+echo "Starting Pan Client...."
+echo ""
+
+(sleep 5; $XTERM -geometry 80x12+300+720 -e "/dhs/test/pan  -sim -debug 0 -host $nfpan_a -A  |& tee $PAN_LOG ; sleep 30 &") &
+
+echo "Starting NOC/Pan Clients...."
+echo ""
+
+(sleep 6; $XTERM -geometry 80x12+100+720 -e "/dhs/test/nocs -sim -debug 0 -host $newfirm -interactive |& tee $NOC_LOG ; sleep 30 &")  &
+
+##--------------
+## Supervisor
+##--------------
+echo "Starting Supervisor...."
+echo ""
+
+#exec $XTERM -geometry 80x22+645+40 -e /dhs/dhssup/super -port 4150 -host newfirm -console -config /dhs/lib/config.sim -nclients 8 -geometry 640x640+0+40 
+exec $XTERM -geometry 80x22+645+40 -e "/dhs/dhssup/super -port 4150 -host newfirm -console -config /dhs/test/config-newfirm.sim -nclients 8 -geometry 640x640+0+40  |& tee $SUP_LOG"
+
+
+echo "All done"
+echo ""

@@ -1,0 +1,322 @@
+
+
+		NEWFIRM DHS -- Plans for Final Delivery
+		=======================================
+
+			    March 23, 2007
+
+
+
+    The following text documents the plans for work remaining on the
+NEWFIRM Data Handling System.  The purpose of this document is to get
+general agreement amongst the developers, scientists and engineers involved
+in NEWFIRM on what consitutes a "completed" DHS and to provide those
+people with a last chance to request changes to this plan.  The issues
+of ongoing maintanence and the additions of new features or functionality
+following delivery is not discussed here.
+    Once agreement is reached and all outstanding questions have been
+answered, this list will serve as a checklist for the developers in
+completing the final phase of the project.
+
+
+    Remaining work is broken down into the following categories with the 
+specified delivery dates:
+
+    Revised GUI Elements		Apr T&E
+    Revised Components			   "
+    Simulation Software			   "
+    Testing/Verification		   "
+    Pipeline/Archive Integration	   "
+
+    New GUI Elements			Jun T&E
+    Documentation			   "
+
+    Open Questions			TBD
+
+While the lists appear lengthy, time required for individual changes range
+from a few minutes to a few days.
+
+
+Executive Summary:
+------------------------------------
+
+    The work desribed here can be summarized as:
+
+    1)  Revise DHS Supervisor GUI to remove unneeded elements and finish
+        implementation of existing features
+    2)  Revise DHS components (interfaces, Collector, etc) as needed to
+        implement described fixes and enhancements
+    3)  Complete and verify a working off-line test suite for the DHS
+    4)  Implement any requested addition GUI features
+    5)  Implement final connections to QR pipeline and iSTB systems
+
+    6)  Agree on outstanding questions that may affect or add to the 
+        described work list
+
+
+
+1) Revised GUI Elements:
+------------------------------------
+
+	The following list describes changes planned for the DHS Supervisor
+GUI console.  Changes here are considered minor and not a major effort to
+implement.
+
+
+  Main Menubar:
+
+X      Edit Menubar Button:		    	(Remove?)
+X      Options Menubar Button:	    		(Remove?)
+/     Help Menubar Button:
+        - Need to write online help, 
+X       - incorporate the HTML help browser code.
+
+  SMC Page Usage:
+    Thermometer showing fraction of SMC in use on each DHS machine.  Display
+	is split to show each cache, updates automatically when an exp is
+	removed from the SMC after processing
+
+X  DCA Page Usage:
+X    Thermometer showing fraction of disk used on the DCA machine, i.e. the
+X	space used on the partition currently being written to.
+
+
+  Process Status Panel:
+    - Test/implement:
+	- Kill/Quit/Update buttons
+	- Reset Button 		     (reset display and counters)
+	- Update Button 	     (request update from all procs/counters)
+X	- Clean Button 		     (clean up the proces table)
+X    - Remove Task Button 	     (unused)
+
+
+  SMC Status Panel:
+    - Test 
+	- 'SMC Node' menu to select target machine, update displays
+	- 'Update' to request manual update from target machine
+	- 'Next' to manually trigger processing of next image
+	- 'All' to manually trigger processing of all remaining image
+X   - Increase default Poll interval (5-10 sec?)
+X   - Auto-update when SMC removes an image when done regardless of Poll
+
+
+  RTD Status Panel:
+X   - Display Frame Menu 	     (already implemented?)
+X   - Frame Buffer Menu 	     (already implemented?)
+X   - 'Display Node'		     (should show IMTDEV string)
+	- Value should be changeable (?????)
+    - Test Toggles:
+	- 'Display Enable'
+	- 'Stats Enable'
+	- 'Rotate Enable'
+X   - 'Show Headers'	     (remove option)
+X   - Display Area:
+X	- Remove 'Node' label 
+
+
+  Paths/Ports/Nodes Status Panel:
+    - Copy 'Filename' option to main Process Status panel for easy access
+    - Test:
+	- Image Root name
+	    - Remove use of '%T' unless we can get a type from NOCS/header
+	    - Use of '%N' to seqnum
+	- Directory change propagates to DCA for next readout
+	- SeqNo Init button resets counter, warns of file overwrites
+X   - Remove:
+X	- Supervisor Cmd et al
+X	- Collector Cmd et al
+X	- RTD Cmd et al
+X	- DCA Cmd et al
+X	- Test Cmd et al
+X    - Add:
+X	- KTM file box
+
+
+
+
+2) Revised Components
+------------------------------------
+
+    This list described known issues and plans for each of the each of
+the 'components' in the DHS:
+
+
+/   DHS API 		- possible changes to permit auto restart (i.e. 
+			  auto-reconnect negotiation in case of failed 
+			  Collector)
+
+/   MsgBus Interface 	- Messaging to app on a specific host/reply-to-sender
+			  messages not quite working
+
+    SMC Interface: 	- verify throttling works as designed (untested)
+
+X   Collector: 		No known issues
+
+    SMC Manager: 	- add "OTF Image Buffer" if doing OTF display
+/			- add keyword monitor if doing opt'l status display
+
+X   PXF: 		No known issues
+
+X   DCA: 		- implement sysproc/postproc trigger
+
+
+    / ==> partial implementation
+    X ==> full implementation
+
+
+3) Simulation Software
+------------------------------------
+
+	Simulation software is need to do off-line testing of the DHS
+when neither the instrument nor the main computer rack are available.
+Test components exist individually, but need to be 'scripted' to emulate
+a complete readout sequence and the host machine names.
+
+X    (Finish Development of) Test command to simulate NOCS/PAN readouts
+X	- requires real AVP data for feed
+X	- requires ability to "pretend" to be on a given machine
+X	- must be able to maintain all 3 connections and operate in
+	  sequence
+
+X    Script individual test components to operate as a single readout
+X	sequence, i.e. trigger NOCS-PANs-NOCS actions.  Test task and
+X	simulators are on the msgbus and emulate hosts.
+
+X    Modify components to accept "-host" flag to be used in messages to
+X	Super.  May require a 'simhost' command to mask real host so we
+X	can simulate a network host of machines. (see above)
+
+
+
+
+4) Testing/Verification
+------------------------------------
+
+	Targeted testing of the individual components has been done
+throughout development, however the interaction of all compoments in a 
+specific test case such as a failure still needs to be done.  This has
+implications for the restart policy during an observing session and the
+requirement that data not be lost.  Note some of this is simply verifying
+that tasks act according to current design requirements.
+
+
+    Response to crash of:
+	- Collector
+	- SMC Mgr
+	- PXF
+	- DCA
+	- RTD (XImtool)
+
+    Q: Restart policy:
+	- Restart entire NOCS/DHS?
+	- Automatic clean up or manual restart?
+
+    Load Testing:
+	- use simulator for "burst mode" readout 
+	    - can DHS keep up?
+	    - will it block in the SMC when needed?
+	    - will it block in the SMC when needed?
+	    - how long to "drain" cache, can it be estimated?
+	- fix as needed
+
+
+
+
+5) Pipeline/Archive Integration
+------------------------------------
+
+	The triggering of the QR pipeline and iSTB transport need to be
+clearly defined before implementation.  This is a simple addition but needs
+specific questions to be settled first:
+
+
+X   Define format and requirement for QR pipeline trigger file:
+	- assumed to be 'postproc' action? (means user can edit this
+	  script as needed to include something else)
+	- where is file created?  User-changeable on Supervisor GUI?
+	- where is the image expected to be placed?
+	- what needs to be in the file?
+
+X   'Sysproc' Script:
+	- what is trigger for iSTB
+	- where is the image expected to be placed?
+	- what happens to .dat keyword text file?
+
+
+
+
+6) New GUI Elements
+------------------------------------
+
+	The DHS Supervisor GUI is seen as one of the main user interfaces
+to the data taking.  While primarily a status output screen, it must be able
+to provide more control over the process both for scientists and engineers.
+Suggestions have been made for the following additional features:
+
+
+    RTD image selection:
+	- RTD currently works on every image, or none at all.  Selection
+	  menu to display only some images (e.g. objs but not skys) specified
+	  as 'start' and 'skip' within an obsId sequence.
+
+    OTF Calibration for RTD:
+	- User can specify a operator (sub/div/mul/add) and an 'image'
+	  to be used as an OTF calibration frame for the RTD.  The 'image'
+	  can be a constant, the name of a FITS file, or a selection 
+	  criteria such as 'previous', "previous off", etc
+		- OTF image moved to special buffer that is not released
+		  from SMC
+		- Requires change in SMC handling in Super/SMCMgr
+
+    RTD image stats display:
+	- Strip chart display of mean/sigma/min/max values as option?
+
+    AVP Trend Monitoring:
+	- User can select up to N (N=6?) AVP keywords for stripchart display
+	- Overplot in different colors from each PAN
+	- Display by time or exp number
+	- Goes on 'Paths' panel or separate popup
+
+
+
+
+7) Documentation:
+------------------------------------
+
+	Documentation for the the design and operation of the system is 
+needed.  This documentation must be sufficient for observers and other 
+developers to be comfortable is using and perhaps extending the system 
+without the direct involvement of DPP personnel.
+
+
+    User's Guide
+	- Includes configuration description
+	- Includes technical description/design of system
+    Online documentation for GUI Help button
+
+
+
+
+8) Open Question:
+---------------
+
+    Where does user set the filename to be created?
+	NOCS script config panel?
+	DHS Supervisor panel?
+	NOCSTITLE keyword (in AVP from NOCS)?
+
+    What is acceptable for a crashed DHS component to restart? 
+	Manual restart and recovery of exposure might halt data-taking
+	Auto restart might lose current exposure
+
+    What happens to the text database of keywords not put in the science hdrs?  
+	Observer responsible for saving?
+	Fed to archive as foreign file encapsulation?
+	Do we supply tool to parse/browse this data?
+	Maintain mtn db for trend tracking?
+
+    Any additional status display?
+
+    Any additional engineering tools?
+
+

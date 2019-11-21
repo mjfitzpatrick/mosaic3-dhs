@@ -1,0 +1,38 @@
+{ Views Help - Message Queue View }
+{ The Message Queue View provides a graphical representation }
+{ of the instantaneous message queue pending in each task. }
+{ For each task a stack of rectangles is displayed that shows }
+{ the number and size of messages that are currently waiting }
+{ to be received by that task. }
+{}
+{ This information is especially useful in identifying any }
+{ communication "hot spots" at particular tasks - much like }
+{ the message volume animation in the enhanced Network View, }
+{ but at the higher task resolution rather than the host level. }
+{}
+{ The Message Queue View is "clickable" and the user can obtain }
+{ detailed textual information by clicking on individual message }
+{ rectangles.  This information completely describes the pending }
+{ message, including the source task of the message, the designated }
+{ message code, and the size of the message in bytes (if known, }
+{ see below).  Double-clicking on a message will hold the view }
+{ information text for full examination. }
+{}
+{ The full implementation of the Message Queue View requires the }
+{ flexibility of the new tracing facility to be released in PVM 3.4. }
+{ To correctly depict the size of pending messages their size in }
+{ bytes must be known at send time.  In the current PVM 3.3 tracing }
+{ facility, the need for this information was not anticipated, and }
+{ so none of the PVM message sending routines have been properly }
+{ instrumented.  The new PVM 3.4 tracing facility that will support }
+{ the capability to more easily modify the contents of trace events }
+{ to include the size of the outgoing message in send events. }
+{}
+{ For the current PVM 3.3 tracing with the message size not known, }
+{ a default size is used in its place.  This default size is }
+{ settable using the "-M size" command line option to XPVM.  }
+{ For clarity when viewing the Message Queue View, any messages }
+{ for which the correct size is not known are animated in an }
+{ orange color, and rectangles with a known size are shown in }
+{ purple. }
+{}

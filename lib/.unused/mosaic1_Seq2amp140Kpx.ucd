@@ -1,0 +1,5 @@
+set detval(gain,nocs) logain
+
+set detval(gain,approx) 0.44
+set detval(rdnoise,approx) 3.5
+set detval(saturate,adc) 262143

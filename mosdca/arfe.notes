@@ -1,0 +1,251 @@
+Arcon Front End for the Mosaic
+------------------------------
+
+
+Event driven
+	Program sits in a loop waiting for incoming events, dispatches
+	a handler for each event.
+
+
+Several classes of events:
+
+    o	muxnex/picread
+	    Muxnex communicates with ARFE via a FIFO.  Sends the picstart
+	    event to trigger a readout.  Various other lesser types of
+	    events (commands) are defined.
+
+    o	message bus
+	    ARFE mostly writes to the DCA via the message bus, however it
+	    will also support some requests input via the message bus,
+	    for things like set/show options.
+
+    o	file events
+	    The XPIM files used for the data readout, while they are
+	    physically files, are logically a sequence of CT-packet messages
+	    or events.  These can be read from the files and queued to be
+	    processed as input events like the other classes of events above,
+	    allowing a single event handler to arbitrate all incoming
+	    requests.
+
+	    Unfortunately a write to a disk file cannot be sensed as an event
+	    using select(), it is probably necessary to poll periodically
+	    during readout for file size changes and generate a pseudo-event
+	    if new data is written to one of the files.
+
+    o	timer events
+	    Various routines (such as abort a readout) can be called after
+	    a programmed timeout interval has expired.
+
+Each event is processed in turn.  A separate handler is called for each class
+of event.  The handler determines the event type and calls the corresponding
+callback routine to handle the event.
+
+In the future header data events may be added as well.   Currently there
+appears to be no alternative but to use files for header keyword
+transmission, since this is what the Arcon system supports.
+
+
+Muxnex / Picread Events
+
+    signals
+	START_IMAGE
+
+    ascii commands
+	cd
+	picstart
+	revision
+	set
+	show
+	sync
+	quit
+
+
+Message Bus Events
+
+    incoming
+	SetParam
+	GetParam
+
+    outgoing
+	StartReadout
+	EndReadout
+	ConfigureImage
+	WritePixelData
+	Synchronize
+	GetStatus
+
+
+Raw File Events
+
+    incoming
+	NewData
+
+
+XPIM File Events
+
+    observed sequence
+	100,2,132	StartReadout?	CT_PACKET
+	105,150,6	HeaderData	CT_FITSPACKET index = #keywords
+	105,150,7	HeaderData
+	100,127,139	??
+	105,150,23	HeaderData
+	103,N,0		PixelData	CT_DATAPACKET
+	100,127,123	EndReadout?
+
+    signals
+	100,2,132	StartReadout?
+	100,127,139	??
+	100,127,123	EndReadout?
+
+    incoming data
+	105,150,N	HeaderData
+	103,N,0		PixelData
+
+    keyword groups
+	ACEB		root
+	ACEB000[1234]	four controller groups
+
+    fits card encoding
+	24 chars group header + 80 char fits card image
+	group header = `|' + 15-char-group + 8-char-keymode
+
+
+Muxnex Interface
+	ariraf/lib/cli/zfunc.c -- dispatcher user interface library
+
+	        znxinit (nexfifo)
+		znxopen (nex, nexfifo, mode)
+	       znxclose (nex, index)
+		znxread (nex, buf, maxlen)
+	       znxfread (index, buf, maxlen)
+	       znxwrite (nex, buf, len)
+	      znxfwrite (nex, index, buf, len)
+		 znxout (index, cmd, args)
+		 znxstr (nqstr, ntstr)
+		znxsync (nex, index)
+		znxquit (nex)
+
+
+	ariraf/lib/cli/pkt.c -- ct packet i/o (command/data stream)
+
+	     cli_getpkt (nex, header, &data)
+	     cli_putpkt (nex, header, data)
+
+	       cli_read (nex, buffer, nrequest)
+	  cli_getheader (nex, header)
+	    cli_getdata (nex, header, data)
+
+
+	ariraf/lib/pdi/ctp.c -- ct packet reader/writer (xpim files)
+	reads next ct packet (hdr, data) from any of 4 files
+
+	     pdi_ctopen (fname, fmode, timeout, ct)
+	    pdi_ctclose (ct)
+	     pdi_ctread (ct)
+	    pdi_ctwrite (ct)
+
+
+	ariraf/lib/server -- library code shared picread/fitshdr
+
+	      sh_ioinit (message, error, console)   # message formatting
+	  sh_iopconsole (va_alist)
+	    sh_iopdebug (va_alist)
+	    sh_ioperror (va_alist)
+	  sh_iopmessage (va_alist)
+	  sh_iofmessage (va_alist)
+
+	  sh_env stuff (set/get)
+	  cmdline, ctoi, dump, erract, getargs, getfname, msgio, os
+
+	picread/server
+		cli.c - connect/disconnect getpkt/put{pkt|cmd|msg|done|...}
+	    command.c - main command loop for cli input
+	environment.c - program global variables
+	  picserver.c - pcs_init, pcs_server
+
+
+
+Picread Structure
+	pcs_server - server main
+	    connect to muxnex
+	    init message formatting routines
+	    pcs_init
+	    pcs_picupdate
+	    pcs_command - main command loop
+	    disconnect
+
+	pcs_init
+	    register with muxnex (PicRead_TargetID)
+	    pcs_fitsupdate
+		sends command to fits header server to set fits filename
+	    pcs_picudpate
+		sends command to muxnex to set picture name
+
+	pcs_command
+	    loop until quit
+		pcs_getpkt - get pkt from muxnex
+		if start_image
+		    pcs_picstart
+		else if asciipacket
+		    sh_getargs
+		    switch (command) {
+		    case CD:		change directory
+		    case PICSTART:	pcs_picstart
+		    case SYNC:		pcs_picupdate, pcs_fitsupdate
+		    case QUIT:		quit pcs_command
+		    }
+		    send done to muxnex
+
+	pcs_picstart
+	    get picture filename (root, pid, num)
+	    generate list of fits files
+	    call main picture conversion routine
+	    increment picture number
+
+
+XPIM files
+
+	controller number = src field ((src & 0xf000) >> 12)   0 to 3
+
+	Controller 0  Amp11  [1:511,1:1024]
+	Controller 0  Amp13  [512:1022,1:1024]
+	Controller 1  Amp11  [1057:1567,1:1024]
+	Controller 1  Amp13  [1568:2078,1:1024]
+	Controller 2  Amp22  [1:511,1032:2055]
+	Controller 2  Amp24  [512:1022,1032:2055]
+	Controller 3  Amp22  [1057:1567,1032:2055]
+	Controller 3  Amp24  [1568:2078,1032:2055]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+oo

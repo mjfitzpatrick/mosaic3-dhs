@@ -1,0 +1,32 @@
+
+/*---------------------------------------------------------------------------
+**  MBus Handlers -- These procedures are used to handle notification events
+**  we get from the system.  For the moment we just print a status message,
+**  a more formal method of updating the Supervisor state needs to be done.
+**-------------------------------------------------------------------------*/
+
+int mb_hostAdded (int mid)
+{
+     int n;
+     pvm_unpackf( "%d", &n );
+     printf ("%s: %d new hosts just added ***\n", mbAppGetName(), n);
+}
+
+
+
+int mb_taskExited (int mid)
+{
+     int n;
+     pvm_unpackf( "%d", &n );
+     printf ("*** %s: task %d just exited ***\n", mbAppGetName(), n);
+}
+
+
+
+int mb_hostDeleted (int mid)
+{
+     int n;
+     pvm_unpackf( "%d", &n );
+     printf ("*** %d new hosts just deleted ***\n", mbAppGetName(), n);
+}
+

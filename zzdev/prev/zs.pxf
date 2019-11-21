@@ -1,0 +1,17 @@
+#!/bin/csh -f 
+
+if ( $#argv == 1 ) then
+
+   if ( -e $argv[1] ) then
+     cp $argv[1] "$argv[1]".OLD
+     rm $argv[1]
+   endif
+  
+   echo `date` "Starting " >! $argv[1]
+   /dhs/bin/pxf -verbose -console  -mbus -debug 60  |& tee -a $argv[1]
+   echo `date` "Ending" >> $argv[1]
+else
+   echo `date` "Starting " 
+   /dhs/bin/pxf -verbose -console  -mbus -debug 60  
+   echo `date` "Ending"
+endif

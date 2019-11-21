@@ -1,0 +1,127 @@
+mtype 64: |DCA_NOOP:    (DCA_SET:256, DCA_NOOP:64)
+DCA_NOOP ...Sending ACK
+mtype 131328: |DCA_SET:DCA_FP_CONFIG:    (DCA_SET:256, DCA_NOOP:64)
+DCA_SET received
+DCA_SET FP_CONFIG
+DCA_FP_CONFIG received: 0 bytes 
+fpCfg.(x,y)Size: (0,0)
+fpCfg.(x,y)Start: (0,0)
+fpCfg.dataType: 0
+fpCfg.(x,y)Dir: (0,0)
+fpCfg.(x,y)DetSz: (0,0)
+fpCfg.(x,y)DetCnt: (0,0)
+expID: 0.000000   obsetID: TestID
+mtype 2049: |DCA_OPEN:DCA_CONNECT:DCA_DCADEV:    (DCA_SET:256, DCA_NOOP:64)
+DCA_CONNECT OPEN received
+DCA_OPEN CONNECT: 'mosaic1 1'
+mtype 533: |DCA_GET:DCA_DCADEV:    (DCA_SET:256, DCA_NOOP:64)
+DCA_GET  subtype=21
+ 0:  phost='mosaic1' pair->phost='localhost' pair->chost='localhost'
+ 1:  phost='mosaic1' pair->phost='localhost' pair->chost='mosaic1'
+ 2:  phost='mosaic1' pair->phost='localhost' pair->chost='mosaic1-dtn'
+ 3:  phost='mosaic1' pair->phost='mosaic1' pair->chost='mosaic1dhs-01'
+ 0:  col->host='mosaic1dhs-01' pair->phost='mosaic1' pair->chost='mosaic1dhs-01'
+  :  pair->sock = 4575  col->port = 4575   inUse=0
+DCADEV sending Collector: 127.0.0.1:4575, on socket: 7
+DCADEV sending Collector: 127.0.0.1:4575, on socket: 7
+mtype 64: |DCA_NOOP:    (DCA_SET:256, DCA_NOOP:64)
+DCA_NOOP ...Sending ACK
+mtype 131328: |DCA_SET:DCA_FP_CONFIG:    (DCA_SET:256, DCA_NOOP:64)
+DCA_SET received
+DCA_SET FP_CONFIG
+DCA_FP_CONFIG received: 0 bytes 
+fpCfg.(x,y)Size: (0,0)
+fpCfg.(x,y)Start: (0,0)
+fpCfg.dataType: -1077862652
+fpCfg.(x,y)Dir: (0,0)
+fpCfg.(x,y)DetSz: (0,0)
+fpCfg.(x,y)DetCnt: (0,0)
+expID: 0.000000   obsetID: TestID
+mtype 2049: |DCA_OPEN:DCA_CONNECT:DCA_DCADEV:    (DCA_SET:256, DCA_NOOP:64)
+DCA_CONNECT OPEN received
+DCA_OPEN CONNECT: 'mosaic1pan-a 1'
+mtype 533: |DCA_GET:DCA_DCADEV:    (DCA_SET:256, DCA_NOOP:64)
+DCA_GET  subtype=21
+ 0:  phost='mosaic1pan-a' pair->phost='localhost' pair->chost='localhost'
+ 1:  phost='mosaic1pan-a' pair->phost='localhost' pair->chost='mosaic1'
+ 2:  phost='mosaic1pan-a' pair->phost='localhost' pair->chost='mosaic1-dtn'
+ 3:  phost='mosaic1pan-a' pair->phost='mosaic1' pair->chost='mosaic1dhs-01'
+ 4:  phost='mosaic1pan-a' pair->phost='mosaic1pan-a' pair->chost='mosaic1dhs-01'
+ 0:  col->host='mosaic1dhs-01' pair->phost='mosaic1pan-a' pair->chost='mosaic1dhs-01'
+  :  pair->sock = 4576  col->port = 4575   inUse=0
+ 1:  col->host='mosaic1dhs-01' pair->phost='mosaic1pan-a' pair->chost='mosaic1dhs-01'
+  :  pair->sock = 4576  col->port = 4576   inUse=0
+DCADEV sending Collector: 127.0.0.1:4576, on socket: 9
+DCADEV sending Collector: 127.0.0.1:4576, on socket: 9
+mtype 64: |DCA_NOOP:    (DCA_SET:256, DCA_NOOP:64)
+DCA_NOOP ...Sending ACK
+mtype 8193: |DCA_OPEN:DCA_EXP:DCA_DCADEV:    (DCA_SET:256, DCA_NOOP:64)
+263250452: DCA_EXP OPEN received on sock 7, host=mosaic1
+from clid = 4
+** TriggerHost: 'mosaic1'  curhost: 'mosaic1-dtn'  procHost: 'mosaic1' --> MATCHED
+Adding to QUEUE: 2450000.100000
+mtype 64: |DCA_NOOP:    (DCA_SET:256, DCA_NOOP:64)
+DCA_NOOP ...Sending ACK
+mtype 8193: |DCA_OPEN:DCA_EXP:DCA_DCADEV:    (DCA_SET:256, DCA_NOOP:64)
+263250452: DCA_EXP OPEN received on sock 9, host=mosaic1pan-a
+from clid = 7
+** TriggerHost: 'mosaic1'  curhost: 'mosaic1-dtn'  procHost: 'mosaic1pan-a' --> NO MATCH
+mtype 8194: |DCA_CLOSE:DCA_EXP:    (DCA_SET:256, DCA_NOOP:64)
+263250453: DCA_EXP CLOSE received on sock 9, host=mosaic1pan-a
+** TriggerHost: 'mosaic1'  curhost: 'mosaic1-dtn'  procHost: 'mosaic1pan-a' --> NO MATCH
+DCA_CLOSE EXP: 'mosaic1pan-a 0'
+mtype 8194: |DCA_CLOSE:DCA_EXP:    (DCA_SET:256, DCA_NOOP:64)
+263250453: DCA_EXP CLOSE received on sock 7, host=mosaic1
+** TriggerHost: 'mosaic1'  curhost: 'mosaic1-dtn'  procHost: 'mosaic1' --> MATCHED
+READY in QUEUE: 2450000.100000
+DCA_CLOSE EXP: 'mosaic1 0'
+supProcNext:  expID=2450000.100000, stat=2, count=1, done=-998/1
+STARTING expID = 2450000.100000, seqno=59309 time=1430752053
+****** imagetype: 'image' seqno: 59309 expID: 2450000.100000 root: cai.
+configure image:  seqno: 59309 name='cai.' type='image' ndet=16...
+GetStatus (timeout=30, tag=1108): timeout waiting for response from DCA
+configure image fails, seqno=59309
+mtype 64: |DCA_NOOP:    (DCA_SET:256, DCA_NOOP:64)
+DCA_NOOP ...Sending ACK
+mtype 8193: |DCA_OPEN:DCA_EXP:DCA_DCADEV:    (DCA_SET:256, DCA_NOOP:64)
+263250691: DCA_EXP OPEN received on sock 7, host=mosaic1
+from clid = 4
+** TriggerHost: 'mosaic1'  curhost: 'mosaic1-dtn'  procHost: 'mosaic1' --> MATCHED
+Adding to QUEUE: 2450000.100000
+SMC PROCESS COMPLETE: ExpID 2450000.100000 (npxf=1 of 1)
+
+PXF begin: process 2450000.100000
+mtype 64: |DCA_NOOP:    (DCA_SET:256, DCA_NOOP:64)
+DCA_NOOP ...Sending ACK
+mtype 8193: |DCA_OPEN:DCA_EXP:DCA_DCADEV:    (DCA_SET:256, DCA_NOOP:64)
+263250691: DCA_EXP OPEN received on sock 9, host=mosaic1pan-a
+from clid = 7
+** TriggerHost: 'mosaic1'  curhost: 'mosaic1-dtn'  procHost: 'mosaic1pan-a' --> NO MATCH
+mtype 8194: |DCA_CLOSE:DCA_EXP:    (DCA_SET:256, DCA_NOOP:64)
+263250692: DCA_EXP CLOSE received on sock 9, host=mosaic1pan-a
+** TriggerHost: 'mosaic1'  curhost: 'mosaic1-dtn'  procHost: 'mosaic1pan-a' --> NO MATCH
+DCA_CLOSE EXP: 'mosaic1pan-a 0'
+mtype 8194: |DCA_CLOSE:DCA_EXP:    (DCA_SET:256, DCA_NOOP:64)
+263250692: DCA_EXP CLOSE received on sock 7, host=mosaic1
+** TriggerHost: 'mosaic1'  curhost: 'mosaic1-dtn'  procHost: 'mosaic1' --> MATCHED
+READY in QUEUE: 2450000.100000
+DCA_CLOSE EXP: 'mosaic1 0'
+supProcNext:  expID=2450000.100000, stat=2, count=2, done=1/1
+supProcNext:  expID=2450000.100000, stat=2, count=2, done=1/1
+supProcNext:  expID=2450000.100000, stat=2, count=2, done=1/1
+supProcNext:  expID=2450000.100000, stat=2, count=2, done=1/1
+supProcNext:  expID=2450000.100000, stat=2, count=2, done=1/1
+supProcNext:  expID=2450000.100000, stat=2, count=2, done=1/1
+supProcNext:  expID=2450000.100000, stat=2, count=2, done=1/1
+supProcNext:  expID=2450000.100000, stat=2, count=2, done=1/1
+supProcNext:  expID=2450000.100000, stat=2, count=2, done=1/1
+supProcNext:  expID=2450000.100000, stat=2, count=2, done=1/1
+supProcNext:  expID = 2450000.100000, retry 12 times...
+supProcNext:  expID=2450000.100000, stat=2, count=2, done=1/1
+supProcNext:  expID=2450000.100000, stat=2, count=2, done=1/1
+supProcNext:  expID=2450000.100000, stat=2, count=2, done=1/1
+supProcNext:  expID=2450000.100000, stat=2, count=2, done=1/1
+supProcNext:  expID=2450000.100000, stat=2, count=2, done=1/1
+supProcNext:  expID=2450000.100000, stat=2, count=2, done=1/1
+supProcNext:  expID=2450000.100000, stat=2, count=2, done=1/1
+supProcNext:  expID=2450000.100000, stat=2, count=2, done=1/1

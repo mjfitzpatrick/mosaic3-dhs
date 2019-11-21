@@ -1,0 +1,60 @@
+Processing page 2, calling procDCAData
+procDCAData: finding rasInfo for this segment page: 1
+procDCAData: CCD index 0: rasInfo ColID = PanA pageNum = 1 destNum = 1
+procDCAData: Checking amp index 0
+procDCAData: sending ll amp for  CCD 0
+procDCAData: CCD 0, Amp 0: sending 2048 rows  32 at a time to destimage 1
+procDCAData: Checking amp index 1
+procDCAData: sending lr amp for  CCD 0
+procDCAData: CCD 0, Amp 1: sending 2048 rows  32 at a time to destimage 2
+procDCAData: Checking amp index 2
+procDCAData: sending ul amp for  CCD 0
+procDCAData: CCD 0, Amp 2: sending 2048 rows  32 at a time to destimage 4
+procDCAData: Checking amp index 3
+procDCAData: sending ur amp for  CCD 0
+procDCAData: CCD 0, Amp 3: sending 2048 rows  32 at a time to destimage 7
+Processing page 3, calling procDCAData
+procDCAData: finding rasInfo for this segment page: 2
+procDCAData: CCD index 1: rasInfo ColID = PanA pageNum = 2 destNum = 5
+procDCAData: Checking amp index 0
+procDCAData: sending ll amp for  CCD 1
+procDCAData: CCD 1, Amp 0: sending 2048 rows  32 at a time to destimage 5
+procDCAData: Checking amp index 1
+procDCAData: sending lr amp for  CCD 1
+procDCAData: CCD 1, Amp 1: sending 2048 rows  32 at a time to destimage 6
+procDCAData: Checking amp index 2
+procDCAData: sending ul amp for  CCD 1
+procDCAData: CCD 1, Amp 2: sending 2048 rows  32 at a time to destimage 8
+procDCAData: Checking amp index 3
+procDCAData: sending ur amp for  CCD 1
+procDCAData: CCD 1, Amp 3: sending 2048 rows  32 at a time to destimage 11
+Processing page 4, calling procDCAData
+procDCAData: finding rasInfo for this segment page: 3
+procDCAData: CCD index 2: rasInfo ColID = PanA pageNum = 3 destNum = 9
+procDCAData: Checking amp index 0
+procDCAData: sending ll amp for  CCD 2
+procDCAData: CCD 2, Amp 0: sending 2048 rows  32 at a time to destimage 9
+procDCAData: Checking amp index 1
+procDCAData: sending lr amp for  CCD 2
+procDCAData: CCD 2, Amp 1: sending 2048 rows  32 at a time to destimage 10
+procDCAData: Checking amp index 2
+procDCAData: sending ul amp for  CCD 2
+procDCAData: CCD 2, Amp 2: sending 2048 rows  32 at a time to destimage 12
+procDCAData: Checking amp index 3
+procDCAData: sending ur amp for  CCD 2
+procDCAData: CCD 2, Amp 3: sending 2048 rows  32 at a time to destimage 15
+Processing page 5, calling procDCAData
+procDCAData: finding rasInfo for this segment page: 4
+procDCAData: CCD index 3: rasInfo ColID = PanA pageNum = 4 destNum = 13
+procDCAData: Checking amp index 0
+procDCAData: sending ll amp for  CCD 3
+procDCAData: CCD 3, Amp 0: sending 2048 rows  32 at a time to destimage 13
+procDCAData: Checking amp index 1
+procDCAData: sending lr amp for  CCD 3
+procDCAData: CCD 3, Amp 1: sending 2048 rows  32 at a time to destimage 14
+procDCAData: Checking amp index 2
+procDCAData: sending ul amp for  CCD 3
+procDCAData: CCD 3, Amp 2: sending 2048 rows  32 at a time to destimage 16
+procDCAData: Checking amp index 3
+procDCAData: sending ur amp for  CCD 3
+procDCAData: CCD 3, Amp 3: sending 2048 rows  32 at a time to destimage 19

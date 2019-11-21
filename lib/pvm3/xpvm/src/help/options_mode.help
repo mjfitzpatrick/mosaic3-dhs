@@ -1,0 +1,39 @@
+{ Options Help - Action Modes }
+{ Choosing different "action modes" in XPVM controls what functions }
+{ are executed when the user clicks the Left mouse button in either }
+{ the Space-Time or Utilization View canvas. }
+{}
+{ There are currently two different action modes: }
+{}
+{         "Query"  and  "Correlate" }
+{}
+{ In standard "Query" mode the clicks in the Space-Time View are }
+{ interpreted normally, to query individual task state rectangles }
+{ or message lines (see the online help for "Views/Space-Time"). }
+{}
+{ The "Correlate" mode allows the user to "go back in time" and see }
+{ what the views looked like at any specific moment.  By clicking }
+{ the Left mouse button in either the Space-Time or Utilization }
+{ View canvas, the user selects a "correlate time."  Then the }
+{ Network, Message Queue and Call Trace Views are "correlated" }
+{ to that time and redrawn. }
+{}
+{ The "correlate time" can be moved back and forth by sliding the }
+{ mouse with the Left mouse button held down, and the correlation }
+{ can be temporarily "locked in" by double-clicking.  After this }
+{ double-clicking, the user can use standard queries to explore }
+{ the locked state for each of the correlated views.  The lock }
+{ is released by clicking again with the Left mouse button in }
+{ either the Space-Time or Utilization View canvas. }
+{}
+{ The "Correlate" mode is especially handy for reviewing the }
+{ behavior of the user's application, back and forth over time. }
+{ The information presented while in "Correlate" mode also tends }
+{ to be more accurate than that provided by normal trace play. }
+{ Events often trickle in over networks out of order (from task }
+{ to task) resulting in misleading view information.  But in the }
+{ "Correlate" mode, queries have the benefit of 20/20 hindsight }
+{ to view exactly what the state of the system was at the given }
+{ time, independent of whether the trace events arrived in }
+{ chronological order. }
+{}

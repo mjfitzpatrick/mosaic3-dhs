@@ -1,0 +1,65 @@
+set detval(gain,nocs) normal
+
+set detval(gain,approx) 0.963
+set detval(rdnoise,approx) 5.13
+set detval(saturate,approx) 220000
+
+set detval(gain,ccd1,A) 0.960
+set detval(gain,ccd2,A) 0.942
+set detval(gain,ccd3,A) 0.934
+set detval(gain,ccd4,A) 0.977
+set detval(gain,ccd5,C) 0.961
+set detval(gain,ccd6,C) 0.999
+set detval(gain,ccd7,C) 1.007
+set detval(gain,ccd8,C) 0.910
+set detval(gain,ccd1,B) 0.959
+set detval(gain,ccd2,B) 0.972
+set detval(gain,ccd3,B) 0.946
+set detval(gain,ccd4,B) 0.993
+set detval(gain,ccd5,D) 0.952
+set detval(gain,ccd6,D) 0.958
+set detval(gain,ccd7,D) 0.976
+set detval(gain,ccd8,D) 0.965
+
+set detval(rdnoise,ccd1,A) 5.307
+set detval(rdnoise,ccd2,A) 4.842
+set detval(rdnoise,ccd3,A) 5.032
+set detval(rdnoise,ccd4,A) 5.123
+set detval(rdnoise,ccd5,C) 5.084
+set detval(rdnoise,ccd6,C) 5.503
+set detval(rdnoise,ccd7,C) 4.984
+set detval(rdnoise,ccd8,C) 4.924
+set detval(rdnoise,ccd1,B) 5.505
+set detval(rdnoise,ccd2,B) 4.983
+set detval(rdnoise,ccd3,B) 4.865
+set detval(rdnoise,ccd4,B) 5.149
+set detval(rdnoise,ccd5,D) 5.017
+set detval(rdnoise,ccd6,D) 4.673
+set detval(rdnoise,ccd7,D) 5.258
+set detval(rdnoise,ccd8,D) 5.851
+
+# Determined by Arjun Dey
+# # MOSAIC1.1 Gains - 2010nov06
+# # Measured using 8 boxes per amplifier
+# # Gain is in e-/adu and RN is in e-
+# # Amplifier Gain   rms(Gain)  RN      rms(RN)
+#   [im1]    0.960    0.009    5.307    0.049
+#   [im2]    0.942    0.005    4.842    0.042
+#   [im3]    0.934    0.007    5.032    0.051
+#   [im4]    0.977    0.008    5.123    0.052
+#   [im5]    0.961    0.010    5.084    0.063
+#   [im6]    0.999    0.007    5.503    0.039
+#   [im7]    1.007    0.008    4.984    0.047
+#   [im8]    0.910    0.008    4.924    0.047
+#   [im9]    0.959    0.011    5.505    0.069
+#  [im10]    0.972    0.010    4.983    0.051
+#  [im11]    0.946    0.009    4.865    0.066
+#  [im12]    0.993    0.009    5.149    0.061
+#  [im13]    0.952    0.007    5.017    0.039
+#  [im14]    0.958    0.005    4.673    0.044
+#  [im15]    0.976    0.006    5.258    0.047
+#  [im16]    0.965    0.011    5.851    0.085
+# 
+# Average of all Amplifiers:
+#        Gain = 0.963 +/- 0.025
+#        RN = 5.13 +/- 0.30

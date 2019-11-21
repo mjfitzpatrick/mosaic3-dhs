@@ -1,0 +1,53 @@
+Mon May 4 08:05:31 MST 2015 Starting
+nocs: initializing connection to supervisor
+nocs: simulating SysOpen from the NOCS
+Opening Supervisor: name='PAN' mach='mosaic1-dtn.tuc.noao.edu' port='4150'
+gethostbyname(host_str) = 'mosaic1-dtn.tuc.noao.edu'
+dcaSupOpenSocket: 'mosaic1-dtn.tuc.noao.edu' 4150 -> '140.252.31.61'
+
+
+supOpenConn:  host='mosaic1'  domain=''
+	use_sim: 1  act='mosaic1-dtn'  sim='mosaic1'  dom=''
+
+localhost gethostbyname(host_str) = 'localhost'
+dcaSupOpenSocket: 'mosaic1-dtn:4153' -1 -> '127.0.0.1'
+nocs: Opening connection
+initChannel:  dev='127.0.0.1:4575'  node='127.0.0.1' port=4575
+nocs: Making AV Pair Header
+nocs: Waiting for message on message bus
+nocs: Got a message on message bus
+nocs: MSG subj: 4 '2450000.1000'
+nocs: 20150504T080732- Got a START message
+nocs : Start dhsOpenExp expID = 2450000.100000  obsID = TestID
+nocs : Sending PRE META data
+nocs: MSG Sent 27648 bytes (216/216 keywords)
+nocs : Sending MB_START message to PanA, msg : 2450000.100000
+nocs : Done sending MB_START message to PanA, msg : 2450000.100000
+nocs: Waiting for FINISH
+nocs: Got a message on message bus
+nocs: MSG subj: 32 '2450000.100000'
+nocs: 20150504T080733- Got a FINISH message
+nocs : Sending POST META data
+nocs: MSG Sent 27648 bytes (216/216 keywords)
+nocs : Start dhsCloseExp
+nocs : Sending msg MB_FINISH message to trigger, msg : 0.000000
+nocs : Done ending msg MB_FINISH message to trigger, msg : 0.000000
+nocs: Waiting for MSF commands
+nocs: Got a message on message bus
+nocs: MSG subj: 4 '2450000.1000'
+nocs: 20150504T081131- Got a START message
+nocs : Start dhsOpenExp expID = 2450000.100000  obsID = TestID
+nocs : Sending PRE META data
+nocs: MSG Sent 27648 bytes (216/216 keywords)
+nocs : Sending MB_START message to PanA, msg : 2450000.100000
+nocs : Done sending MB_START message to PanA, msg : 2450000.100000
+nocs: Waiting for FINISH
+nocs: Got a message on message bus
+nocs: MSG subj: 32 '2450000.100000'
+nocs: 20150504T081132- Got a FINISH message
+nocs : Sending POST META data
+nocs: MSG Sent 27648 bytes (216/216 keywords)
+nocs : Start dhsCloseExp
+nocs : Sending msg MB_FINISH message to trigger, msg : 0.000000
+nocs : Done ending msg MB_FINISH message to trigger, msg : 0.000000
+nocs: Waiting for MSF commands

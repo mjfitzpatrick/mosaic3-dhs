@@ -1,0 +1,307 @@
+#
+# $Id: Makefile.aimk,v 4.50 1998/04/09 21:11:22 kohl Exp $
+#
+
+#
+# Enforce Proper Shell Environment
+#
+
+SHELL		=	/bin/sh
+
+
+#
+# Version Compatibility Flags & Compiler Options
+#
+# For PVM 3.4, set PVMVERSION and PVMGLIB to nothing.
+#
+
+# 3.4
+PVMVERSION	=
+PVMGLIB		=
+# 3.3
+#PVMVERSION	=	-DUSE_PVM_33
+#PVMGLIB	=	-lgpvm3
+
+CFLOPTS		=	-O
+#CFLOPTS	=	-g
+
+CC			=	cc
+#CC			=	gcc
+
+CFLAGS		=	$(CFLOPTS) $(PVMVERSION) -DIMA_$(PVM_ARCH) $(ARCHCFLAGS)
+LFLAGS		=	$(ARCHCFLAGS)
+
+AIMK		=	$(PVM_ROOT)/lib/aimk
+
+
+#
+# Tcl / TK Settings
+#
+
+# Personal Installation
+#TCLTKHOME	=	$(HOME)/TCL
+# System Installation
+TCLTKHOME	=	/usr/lib
+
+# Tcl 7.5 / Tk 4.1 and above
+#TCLINCL	=	-I$(TCLTKHOME)/tcl/generic
+#TKINCL		=	-I$(TCLTKHOME)/tk/generic
+# Tcl 7.4 / Tk 4.0 and below
+#TCLINCL	=	-I$(TCLTKHOME)/tcl
+#TKINCL		=	-I$(TCLTKHOME)/tk
+# System Installed Tcl / Tk
+TCLINCL		=	-I$(TCLTKHOME)
+TKINCL		=	-I$(TCLTKHOME)
+
+# Tcl 7.5 / Tk 4.1 and above
+#TCLLIBDIR	=	-L$(TCLTKHOME)/tcl/unix/$(PVM_ARCH)
+#TKLIBDIR	=	-L$(TCLTKHOME)/tk/unix/$(PVM_ARCH)
+# Tcl 7.4 / Tk 4.0 and below
+#TCLLIBDIR	=	-L$(TCLTKHOME)/tcl/$(PVM_ARCH)
+#TKLIBDIR	=	-L$(TCLTKHOME)/tk/$(PVM_ARCH)
+# System Installed Tcl / Tk
+TCLLIBDIR	=	-L$(TCLTKHOME)
+TKLIBDIR	=	-L$(TCLTKHOME)
+
+# Most Tcl / Tk
+TCLLIB		=	-ltcl
+TKLIB		=	-ltk
+# Tcl / Tk 8.1
+#TCLLIB		=	-ltcl8.1
+#TKLIB		=	-ltk8.1
+# Tcl / Tk 8.0
+#TCLLIB		=	-ltcl8.0
+#TKLIB		=	-ltk8.0
+# Tcl 7.6 / Tk 4.2
+#TCLLIB		=	-ltcl7.6
+#TKLIB		=	-ltk4.2
+# Tcl 7.5 / Tk 4.1
+#TCLLIB		=	-ltcl7.5
+#TKLIB		=	-ltk4.1
+# Tcl 7.4 / Tk 4.0, Tcl 7.3 / Tk 3.6
+#TCLLIB		=	-ltcl
+#TKLIB		=	-ltk
+
+# Generic X11 System
+#XINCL		=
+#XLIBDIR		=
+# Default Locations...
+#XINCL		=	-I/usr/include/X11
+#XLIBDIR	=	-L/usr/lib
+# Linux Like Systems
+XINCL		=	-I/usr/X11R6/include
+XLIBDIR		=	-L/usr/X11R6/lib
+
+XLIB		=	-lX11 
+#XLIB		=	-lX11 -lXpm
+
+# Non-Shared Library Systems
+#SHLIB		=
+# Linux, BSD, SunOS Shared Library Systems
+SHLIB		=	-ldl
+# IBM Shared Library Systems
+#SHLIB		=	-lld
+# HP, Some Linux Shared Library Systems
+#SHLIB		=	-ldld
+
+
+#
+# Source Directory
+#
+
+SRCDIR = $(XPVM_ROOT)/src
+
+TRCDIR = $(XPVM_ROOT)/tracer
+
+
+#
+# Libraries
+#
+
+PVMLIBDIR	=	-L$(PVM_ROOT)/lib/$(PVM_ARCH)
+
+TRCLIBDIR	=	-L$(TRCDIR)/$(PVM_ARCH)
+
+LIBDIRS		=	$(TCLLIBDIR) $(TKLIBDIR) $(TRCLIBDIR) $(PVMLIBDIR) \
+				$(XLIBDIR)
+
+PVMLIB		=	-lpvm3
+
+TRCLIB		=	-lpvmtrc
+
+SYSLIBS		=	$(ARCHLIB) $(SHLIB) -lm
+
+LIBS		=	$(LIBDIRS) $(PVMLIB) $(PVMGLIB) $(TRCLIB) \
+				$(TKLIB) $(TCLLIB) $(XLIB) $(SYSLIBS)
+
+
+#
+# Include Directories
+#
+
+PVMINCL		=	-I$(PVM_ROOT)/include
+
+TRCINCL		=	-I$(TRCDIR)
+
+INCL		=	-I$(SRCDIR) $(PVMINCL) $(TRCINCL) \
+				$(TKINCL) $(TCLINCL) $(XINCL)
+
+
+#
+# Object Files
+#
+
+OBJS		=	xpvm.o commands.o pvm.o trace.o compat.trace.o \
+				twin.o util.o network.o task.o message.o ut.o globals.o
+
+TCLS		=	$(XPVM_ROOT)/xpvm.tcl $(XPVM_ROOT)/globs.tcl \
+				$(XPVM_ROOT)/procs.tcl $(XPVM_ROOT)/util.tcl
+
+HEADERS		=	$(SRCDIR)/Makefile.aimk $(SRCDIR)/xpvm.h \
+				$(SRCDIR)/globals.h $(SRCDIR)/const.h \
+				$(SRCDIR)/trace.h $(SRCDIR)/compat.pvmtev.h \
+				$(PVM_ROOT)/include/pvm3.h \
+				$(PVM_ROOT)/include/pvmtev.h \
+				$(TRCDIR)/trcdef.h $(TRCDIR)/trctype.h \
+				$(TRCDIR)/trcproto.h $(TRCDIR)/trccompat.h
+
+
+#
+# Targets
+#
+
+default:  local
+
+install:  trclib xpvm tcls
+	@ cp xpvm $(PVM_ROOT)/bin/$(PVM_ARCH)
+
+winstall:  trclib xpvm.exe tcls
+	@ cp xpvm.exe $(PVM_ROOT)/bin/$(PVM_ARCH)
+
+local:  trclib xpvm checktcl
+
+xpvm:  $(OBJS) $(TRCDIR)/$(PVM_ARCH)/libpvmtrc.a
+	$(CC) $(LFLAGS) -o xpvm $(OBJS) $(LIBS)
+
+xpvm.exe:  winxpvm.o $(OBJS) $(TRCDIR)/$(PVM_ARCH)/libpvmtrc.a
+	$(CC) $(LFLAGS) -o xpvm winxpvm.o $(OBJS) $(LIBS)
+
+objs:  $(OBJS)
+
+tcls:  $(TCLS)
+
+trclib:
+	cd $(TRCDIR) ; $(AIMK) PVMVERSION=$(PVMVERSION) libpvmtrc.a
+
+again:
+	cd $(SRCDIR) ; touch *.c *.h ; make
+
+clean:
+	- rm -f *.o
+
+veryclean:  clean
+	- rm -f xpvm
+
+checktcl:
+	@ $(SRCDIR)/cktcl $(XPVM_ROOT) $(SRCDIR) xpvm.tcl
+	@ $(SRCDIR)/cktcl $(XPVM_ROOT) $(SRCDIR) globs.tcl
+	@ $(SRCDIR)/cktcl $(XPVM_ROOT) $(SRCDIR) procs.tcl
+	@ $(SRCDIR)/cktcl $(XPVM_ROOT) $(SRCDIR) util.tcl
+
+
+#
+# C Dependencies
+#
+
+xpvm.o:  $(SRCDIR)/xpvm.c $(HEADERS)
+	@ touch xpvm.o
+	$(CC) $(CFLAGS) -c $(INCL) $(SRCDIR)/xpvm.c
+
+winxpvm.o:  $(SRCDIR)/winxpvm.c $(HEADERS)
+	@ touch winxpvm.o
+	$(CC) $(CFLAGS) -c $(INCL) $(SRCDIR)/winxpvm.c
+
+commands.o:  $(SRCDIR)/commands.c $(HEADERS)
+	@ touch commands.o
+	$(CC) $(CFLAGS) -c $(INCL) $(SRCDIR)/commands.c
+
+pvm.o:  $(SRCDIR)/pvm.c $(HEADERS)
+	@ touch pvm.o
+	$(CC) $(CFLAGS) -c $(INCL) $(SRCDIR)/pvm.c
+
+tevmess.o:  $(SRCDIR)/tevmess.c $(HEADERS)
+	@ touch tevmess.o
+	$(CC) $(CFLAGS) -c $(INCL) $(SRCDIR)/tevmess.c
+
+twin.o:  $(SRCDIR)/twin.c $(HEADERS)
+	@ touch twin.o
+	$(CC) $(CFLAGS) -c $(INCL) $(SRCDIR)/twin.c
+
+util.o:  $(SRCDIR)/util.c $(HEADERS)
+	@ touch util.o
+	$(CC) $(CFLAGS) -c $(INCL) $(SRCDIR)/util.c
+
+trace.o:  $(SRCDIR)/trace.c $(HEADERS)
+	@ touch trace.o
+	$(CC) $(CFLAGS) -c $(INCL) $(SRCDIR)/trace.c
+
+compat.trace.o:  $(SRCDIR)/compat.trace.c $(HEADERS)
+	@ touch compat.trace.o
+	$(CC) $(CFLAGS) -c $(INCL) $(SRCDIR)/compat.trace.c
+
+network.o:  $(SRCDIR)/network.c $(HEADERS)
+	@ touch network.o
+	$(CC) $(CFLAGS) -c $(INCL) $(SRCDIR)/network.c
+
+task.o:  $(SRCDIR)/task.c $(HEADERS)
+	@ touch task.o
+	$(CC) $(CFLAGS) -c $(INCL) $(SRCDIR)/task.c
+
+message.o:  $(SRCDIR)/message.c $(HEADERS)
+	@ touch message.o
+	$(CC) $(CFLAGS) -c $(INCL) $(SRCDIR)/message.c
+
+ut.o:  $(SRCDIR)/ut.c $(HEADERS)
+	@ touch ut.o
+	$(CC) $(CFLAGS) -c $(INCL) $(SRCDIR)/ut.c
+
+globals.o:  $(SRCDIR)/globals.c $(HEADERS)
+	@ touch globals.o
+	$(CC) $(CFLAGS) -c $(INCL) $(SRCDIR)/globals.c
+
+
+#
+# xpvm.tcl
+#
+
+$(XPVM_ROOT)/xpvm.tcl:  $(SRCDIR)/xpvm.tcl
+	@ echo "Installing xpvm.tcl"
+	@ cp $(SRCDIR)/xpvm.tcl $(XPVM_ROOT)
+
+
+#
+# globs.tcl
+#
+
+$(XPVM_ROOT)/globs.tcl:  $(SRCDIR)/globs.tcl
+	@ echo "Installing globs.tcl"
+	@ cp $(SRCDIR)/globs.tcl $(XPVM_ROOT)
+
+
+#
+# procs.tcl
+#
+
+$(XPVM_ROOT)/procs.tcl:  $(SRCDIR)/procs.tcl
+	@ echo "Installing procs.tcl"
+	@ cp $(SRCDIR)/procs.tcl $(XPVM_ROOT)
+
+
+#
+# util.tcl
+#
+
+$(XPVM_ROOT)/util.tcl:  $(SRCDIR)/util.tcl
+	@ echo "Installing util.tcl"
+	@ cp $(SRCDIR)/util.tcl $(XPVM_ROOT)
+

@@ -1,0 +1,6 @@
+
+alias s "xterm -geometry 80x26+1622+0 -e ./super -port 4150 -config _config -geometry 640x580+2130+0 -console"
+alias sup "./super -port 4150 -config _config.4m -geometry 640x580+230+0 -console"
+alias supc "./super -port 4150 -config _config.4m -geometry 640x580+2130+0 -console"
+alias supn "./super -port 4150 -config _config.null -console"
+alias supd "./super -port 4150 -config _config -debug"

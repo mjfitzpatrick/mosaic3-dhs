@@ -1,0 +1,1551 @@
+#if !defined(_dhsUtil_H_)					#if !defined(_dhsUtil_H_)
+#include "dhsUtil.h"						#include "dhsUtil.h"
+#endif								#endif
+#if !defined(_dhsImpl_H_)					#if !defined(_dhsImpl_H_)
+#include "dhsImplementationSpecifics.h"				#include "dhsImplementationSpecifics.h"
+#endif								#endif
+
+#include <stdio.h>						#include <stdio.h>
+#include <stdlib.h>						#include <stdlib.h>
+
+#include "dcaDhs.h"						#include "dcaDhs.h"
+
+void dcaCloseChannel (struct dhsChan *chan)			void dcaCloseChannel (struct dhsChan *chan)
+
+{								{
+    int istat;							    int istat;
+
+    istat = close (chan->fd);					    istat = close (chan->fd);
+}								}
+#if !defined(_dhsUtil_H_)					#if !defined(_dhsUtil_H_)
+#include "dhsUtil.h"						#include "dhsUtil.h"
+#endif								#endif
+#if !defined(_dhsImpl_H_)					#if !defined(_dhsImpl_H_)
+#include "dhsImplementationSpecifics.h"				#include "dhsImplementationSpecifics.h"
+#endif								#endif
+
+
+#include "dcaDhs.h"						#include "dcaDhs.h"
+
+/* Simply check whether the given channel is alive.  Sending 	/* Simply check whether the given channel is alive.  Sending 
+ * either get an ACK and we return OK, or fail and we return 	 * either get an ACK and we return OK, or fail and we return 
+ * int dcaValidateChannel (dhsChan *chan)			 * int dcaValidateChannel (dhsChan *chan)
+*/								*/
+
+int dcaConnectionACK(int socket)				int dcaConnectionACK(int socket)
+{								{
+       char resp[SZMSG];					       char resp[SZMSG];
+
+       dcaSendMsg (socket, dcaFmtMsg (DCA_NOOP, (int )NULL));	       dcaSendMsg (socket, dcaFmtMsg (DCA_NOOP, (int )NULL));
+       if (dcaRecvMsg (socket, resp, SZMSG) > 0) {		       if (dcaRecvMsg (socket, resp, SZMSG) > 0) {
+          return DCA_ALIVE;					          return DCA_ALIVE;
+       } else							       } else
+          return DCA_ERR;					          return DCA_ERR;
+}								}
+
+#include <stdlib.h>						#include <stdlib.h>
+
+#if !defined(_dhsUtil_H_)					#if !defined(_dhsUtil_H_)
+#include "dhsUtil.h"						#include "dhsUtil.h"
+#endif								#endif
+#if !defined(_dhsImpl_H_)					#if !defined(_dhsImpl_H_)
+#include "dhsImplementationSpecifics.h"				#include "dhsImplementationSpecifics.h"
+#endif								#endif
+
+#include "dcaDhs.h"						#include "dcaDhs.h"
+
+#define SZ_LINE 	80					#define SZ_LINE 	80
+
+
+/* Return a device string for the DHS Supervisor.  Format of 	/* Return a device string for the DHS Supervisor.  Format of 
+ *								 *
+ *      <node_name> ':' <port_num>				 *      <node_name> ':' <port_num>
+ *								 *
+ * If connection defined in environment, use it, otherwise us	 * If connection defined in environment, use it, otherwise us
+ * the node/port specified in the Super struct.  Super is har	 * the node/port specified in the Super struct.  Super is har
+ * least somehow initialized when the library is initialized 	 * least somehow initialized when the library is initialized 
+ * changed with an IOCTL later to request a different supervi	 * changed with an IOCTL later to request a different supervi
+ */								 */
+char *								char *
+dcaGetSuperDev(dhsNetw *dhsID)					dcaGetSuperDev(dhsNetw *dhsID)
+{								{
+    char *dev = NULL;						    char *dev = NULL;
+    dhsChan Super;						    dhsChan Super;
+
+    Super = *dhsID->super;					    Super = *dhsID->super;
+
+    /* Initialize to the default value. */			    /* Initialize to the default value. */
+    sprintf ((dev=calloc(1,SZ_LINE)), "%s:%d", Super.node, Su	    sprintf ((dev=calloc(1,SZ_LINE)), "%s:%d", Super.node, Su
+
+    /* Only look for the environment value the first time we 	    /* Only look for the environment value the first time we 
+    if (!Super.initialized++ && (dev = getenv (DHS_SUPERVISOR	    if (!Super.initialized++ && (dev = getenv (DHS_SUPERVISOR
+      ;								      ;
+
+    return (dev);  /* Simply return device. <validate the for	    return (dev);  /* Simply return device. <validate the for
+}								}
+
+
+/* dcaGetNode -- Pull out the nodename part of a device strin	/* dcaGetNode -- Pull out the nodename part of a device strin
+ */								 */
+char *								char *
+dcaGetNode (char *device)					dcaGetNode (char *device)
+{								{
+    char *node, *ip, *op;				      |	    char *node, *sm, *ip, *op;
+
+    op = node = calloc(1,SZ_LINE);				    op = node = calloc(1,SZ_LINE);
+
+    ip = device;						    ip = device;
+    while (*ip && *ip != ':')					    while (*ip && *ip != ':')
+	*op++ = *ip++;							*op++ = *ip++;
+
+    return (node);						    return (node);
+} 								} 
+
+
+/* dcaGetPort -- Pull out the nodename part of a device strin	/* dcaGetPort -- Pull out the nodename part of a device strin
+ */								 */
+int								int
+dcaGetPort (char *device)					dcaGetPort (char *device)
+{								{
+    char *sm;							    char *sm;
+    int  port;							    int  port;
+
+    sm = strchr (device, ':');					    sm = strchr (device, ':');
+    port = atoi(++sm);						    port = atoi(++sm);
+    return (port);						    return (port);
+}								}
+
+
+/* Simply check whether the given channel is alive.  Sending 	/* Simply check whether the given channel is alive.  Sending 
+ * either get an ACK and we return OK, or fail and we return 	 * either get an ACK and we return OK, or fail and we return 
+ */								 */
+int dcaValidateChannel (dhsChan *chan)				int dcaValidateChannel (dhsChan *chan)
+{								{
+    char resp[SZMSG];						    char resp[SZMSG];
+
+    if (dcaSendMsg (chan->fd, dcaFmtMsg (DCA_NOOP, (int )NULL	    if (dcaSendMsg (chan->fd, dcaFmtMsg (DCA_NOOP, (int )NULL
+	return (DCA_ERR);						return (DCA_ERR);
+    } else {							    } else {
+        return (dcaRecvMsg (chan->fd, resp, SZMSG));		        return (dcaRecvMsg (chan->fd, resp, SZMSG));
+    }								    }
+}								}
+
+
+/* Request a collector from the supervisor. 			/* Request a collector from the supervisor. 
+*/								*/
+char *								char *
+dcaGetDCADev (int socket)					dcaGetDCADev (int socket)
+{								{
+     int istat, size;						     int istat, size;
+     char *dev;							     char *dev;
+
+     /*  Send message to the Supervisor requesting a Collecto	     /*  Send message to the Supervisor requesting a Collecto
+     **  node and port.						     **  node and port.
+     */								     */
+     dev= (char *)calloc(1,SZMSG);				     dev= (char *)calloc(1,SZMSG);
+
+     istat = dcaSendMsg(socket,dcaFmtMsg ((XLONG )DCA_GET|DCA	     istat = dcaSendMsg(socket,dcaFmtMsg ((XLONG )DCA_GET|DCA
+	(XLONG )NULL));							(XLONG )NULL));
+     size = dcaRecvMsg (socket, dev, SZMSG);			     size = dcaRecvMsg (socket, dev, SZMSG);
+
+     return (dev);						     return (dev);
+}								}
+/*								/*
+
+Low-Level Private Procedures					Low-Level Private Procedures
+
+
+      dcaInitChannel  (dhsNW, type)				      dcaInitChannel  (dhsNW, type)
+          dcaConnect  (dhsNW, devstr)				          dcaConnect  (dhsNW, devstr)
+
+      dcaOpenChannel  (chan)					      dcaOpenChannel  (chan)
+  dcaValidateChannel  (chan)					  dcaValidateChannel  (chan)
+     dcaCloseChannel  (chan)					     dcaCloseChannel  (chan)
+
+ dev = dcaGetSuperDev (dhsNW)					 dev = dcaGetSuperDev (dhsNW)
+   dev = dcaGetDCADev (dhsNW)					   dev = dcaGetDCADev (dhsNW)
+    node = dcaDevNode (dev)					    node = dcaDevNode (dev)
+    port = dcaDevPort (dev)					    port = dcaDevPort (dev)
+
+	     dcaSend  (chan, option, value)				     dcaSend  (chan, option, value)
+	      dcaSet  (dhsNW, option, value)				      dcaSet  (dhsNW, option, value)
+      value = dcaGet  (dhsNW, option)				      value = dcaGet  (dhsNW, option)
+
+     msg = dcaFmtMsg  (msgtype, whoami, addr, size)		     msg = dcaFmtMsg  (msgtype, whoami, addr, size)
+     stat =  dcaSendMsg  (dhsNW, msg)				     stat =  dcaSendMsg  (dhsNW, msg)
+	  dcaReadMsg  (dhsNW, client_data)				  dcaReadMsg  (dhsNW, client_data)
+
+	     dcaSend  (dhsNW, buf, size)				     dcaSend  (dhsNW, buf, size)
+	     dcaRecv  (dhsNW, buf, size)				     dcaRecv  (dhsNW, buf, size)
+
+	   connectTo  (chan)						   connectTo  (chan)
+
+Utility Procedures/Macros:					Utility Procedures/Macros:
+
+  	 fd = DCS_FD (dhsNW)		DCS => Data Capture S	  	 fd = DCS_FD (dhsNW)		DCS => Data Capture S
+         fd = DCC_FD (dhsNW)		DCC => Data Capture C	         fd = DCC_FD (dhsNW)		DCC => Data Capture C
+
+*/								*/
+
+extern int procDebug;       /* use in DPRINTs debug macros */	extern int procDebug;       /* use in DPRINTs debug macros */
+
+/*-----------------------------------------------------------	/*-----------------------------------------------------------
+Data Structures:						Data Structures:
+-------------------------------------------------------------	-------------------------------------------------------------
+#ifndef XLONG							#ifndef XLONG
+ #define XLONG int						 #define XLONG int
+#endif								#endif
+
+#ifndef NULL							#ifndef NULL
+ #define NULL 0							 #define NULL 0
+#endif								#endif
+
+#ifndef NO							#ifndef NO
+ #define NO 0							 #define NO 0
+#endif								#endif
+
+#define SZMSG 120						#define SZMSG 120
+#define SZNODE 120						#define SZNODE 120
+
+#define SUPER_PORTNUMBER 4100     	/* default Supervisor	#define SUPER_PORTNUMBER 4100     	/* default Supervisor
+#define SUPER_NODE       localhost     	/* default Supervisor	#define SUPER_NODE       localhost     	/* default Supervisor
+#define COLL_PORTNUMBER  4101      	/* default Collector 	#define COLL_PORTNUMBER  4101      	/* default Collector 
+#define COLL_NODE        localhost     	/* default Supervisor	#define COLL_NODE        localhost     	/* default Supervisor
+
+typedef struct {						typedef struct {
+    double expID;          		/* exposure ID       	    double expID;          		/* exposure ID       
+    char *obsSetID;        		/* observation set ID	    char *obsSetID;        		/* observation set ID
+
+    char dhsName[SZNODE]; 		/* application name 	    char dhsName[SZNODE]; 		/* application name 
+    char dhsSuperNode[SZNODE]; 		/* machine name for S	    char dhsSuperNode[SZNODE]; 		/* machine name for S
+    int  dhsSuperPort;						    int  dhsSuperPort;
+    char dhsCollectorNode[SZNODE];	/* machine name for C	    char dhsCollectorNode[SZNODE];	/* machine name for C
+    int  dhsCollectorPort;					    int  dhsCollectorPort;
+
+} dhsData, *dhsDataPtr;						} dhsData, *dhsDataPtr;
+
+dhsData      dhs;                    	/* global state struc	dhsData      dhs;                    	/* global state struc
+
+typedef struct msgHeader {					typedef struct msgHeader {
+        int type;	/* message type, e.g. DCA_OPEN|DCA_SY	        int type;	/* message type, e.g. DCA_OPEN|DCA_SY
+        uint whoami;	/* sender of data			        uint whoami;	/* sender of data		
+        double expnum;	/* exposure number                   	        double expnum;	/* exposure number                   
+	char obset[80]; /* observation set                   		char obset[80]; /* observation set                   
+        int value;	/* set/get message value		        int value;	/* set/get message value	
+        int retry;	/* retry count for this message	  	        int retry;	/* retry count for this message	  
+        int nbytes;	/* number of bytes of data following 	        int nbytes;	/* number of bytes of data following 
+        int checksum;	/* MD5 sum of data (for meta/pixel on	        int checksum;	/* MD5 sum of data (for meta/pixel on
+	XLONG addr;							XLONG addr;
+	int size;							int size;
+} *msgHdrPtr, msgType, msgHeader;				} *msgHdrPtr, msgType, msgHeader;
+
+struct dcaMessage {						struct dcaMessage {
+    struct msgHeader *mheader;					    struct msgHeader *mheader;
+    void *client_data;	/* data to be sent/read			    void *client_data;	/* data to be sent/read		
+    int  *data_size;	/* size of data to be sent/read		    int  *data_size;	/* size of data to be sent/read	
+};								};
+
+#define DCA_OPEN        000000001  /* Open something         	#define DCA_OPEN        000000001  /* Open something         
+#define DCA_CLOSE       000000002  /* Close something        	#define DCA_CLOSE       000000002  /* Close something        
+#define DCA_READ        000000004  /* Read something         	#define DCA_READ        000000004  /* Read something         
+#define DCA_WRITE       000000010  /* Write something        	#define DCA_WRITE       000000010  /* Write something        
+
+#define DCA_INIT        000000020  /* Initialize something   	#define DCA_INIT        000000020  /* Initialize something   
+#define DCA_FAIL        000000040  /* Write something        	#define DCA_FAIL        000000040  /* Write something        
+#define DCA_NOOP        000000100  /* NO-OP, used to request 	#define DCA_NOOP        000000100  /* NO-OP, used to request 
+#define DCA_ALIVE       000000200  /* Pixel data             	#define DCA_ALIVE       000000200  /* Pixel data             
+
+#define DCA_SET         000000400  /* Set something          	#define DCA_SET         000000400  /* Set something          
+#define DCA_GET         000001000  /* Get something          	#define DCA_GET         000001000  /* Get something          
+
+#define DCA_SYS         000002000  /* DHS System             	#define DCA_SYS         000002000  /* DHS System             
+#define DCA_CONNECT     000004000  /* Connection to DHS colle	#define DCA_CONNECT     000004000  /* Connection to DHS colle
+#define DCA_CON         000010000  /* Connection to DHS colle	#define DCA_CON         000010000  /* Connection to DHS colle
+#define DCA_EXP         000020000  /* Single Exposure        	#define DCA_EXP         000020000  /* Single Exposure        
+#define DCA_META        000040000  /* Meta Data              	#define DCA_META        000040000  /* Meta Data              
+
+#define DCA_STICKY      000100000  /* Message Sticky Bit     	#define DCA_STICKY      000100000  /* Message Sticky Bit     
+
+#define DCA_PIXEL       000100000 /* Pixel data              	#define DCA_PIXEL       000100000 /* Pixel data              
+#define DCA_OBS_CONFIG  000200000 /* observation set config s	#define DCA_OBS_CONFIG  000200000 /* observation set config s
+#define DCA_FP_CONFIG   000400000 /* focal plane config struc	#define DCA_FP_CONFIG   000400000 /* focal plane config struc
+#define DCA_MD_CONFIG   001000000 /* metadata config structur	#define DCA_MD_CONFIG   001000000 /* metadata config structur
+#define DCA_EXPID       002000000 /* exposure ID             	#define DCA_EXPID       002000000 /* exposure ID             
+#define DCA_OBSID       004000000 /* obs set ID              	#define DCA_OBSID       004000000 /* obs set ID              
+#define DCA_EXP_OBSID   010000000 /* obs set ID              	#define DCA_EXP_OBSID   010000000 /* obs set ID              
+#define DCA_DIRECTORY   020000000				#define DCA_DIRECTORY   020000000
+#define DCA_FNAME       040000000				#define DCA_FNAME       040000000
+
+/* Set/Get options. */						/* Set/Get options. */
+#define DCA_ACK		2	/* ACK message             	#define DCA_ACK		2	/* ACK message             
+#define DCA_ERR	        -2	/* Error return             	#define DCA_ERR	        -2	/* Error return             
+#define DCA_OK	        1       /* Okay return             	#define DCA_OK	        1       /* Okay return             
+
+#define DCA_IO_MODE     5       /* operational mode (live, si	#define DCA_IO_MODE     5       /* operational mode (live, si
+#define DCA_IO_METHOD   6       /* communications method     	#define DCA_IO_METHOD   6       /* communications method     
+#define DCA_IO_SIZE     7       /* communications 'packet' si	#define DCA_IO_SIZE     7       /* communications 'packet' si
+
+#define DCA_CHECKSUM    8       /* compute checksum data for 	#define DCA_CHECKSUM    8       /* compute checksum data for 
+#define DCA_SUPDEV      10      /* supervisor "device" name  	#define DCA_SUPDEV      10      /* supervisor "device" name  
+
+#define DCA_NPANS       11      /* no. of PANs in use        	#define DCA_NPANS       11      /* no. of PANs in use        
+#define DCA_NCLIENTS    12      /* no. of clients connected t	#define DCA_NCLIENTS    12      /* no. of clients connected t
+#define DCA_NCOLLECTORS		/* no. of collectors in use b	#define DCA_NCOLLECTORS		/* no. of collectors in use b
+
+#define DCA_SUPERVISOR	000030	/* Supevisor ID			#define DCA_SUPERVISOR	000030	/* Supevisor ID		
+#define DCA_COLLECTOR	000040	/* Collector ID			#define DCA_COLLECTOR	000040	/* Collector ID		
+
+#define	DCA_DCADEV      21      /* Collector device string 	#define	DCA_DCADEV      21      /* Collector device string 
+
+#define DCA_DEBUG_LEVEL		/* debug level 			#define DCA_DEBUG_LEVEL		/* debug level 		
+#define DCA_SIMUL_LEVEL		/* simulation level		#define DCA_SIMUL_LEVEL		/* simulation level	
+
+#define DHS_SUPERVISOR  "DHS_SUPERVISOR" /* env variable for 	#define DHS_SUPERVISOR  "DHS_SUPERVISOR" /* env variable for 
+/* Set/Get values. */						/* Set/Get values. */
+#define DCA_CAPTURE		/* I/O modes */			#define DCA_CAPTURE		/* I/O modes */
+#define DCA_SIMULATION						#define DCA_SIMULATION
+#define DCA_DEBUG						#define DCA_DEBUG
+
+#define DCA_FAST		/* I/O methods */		#define DCA_FAST		/* I/O methods */
+#define DCA_RELIABLE						#define DCA_RELIABLE
+
+#define DCA_NOCS						#define DCA_NOCS
+#define DCA_MSL							#define DCA_MSL
+#define DCA_PAN							#define DCA_PAN
+
+/* Prototype definitions */					/* Prototype definitions */
+char      *dcaActualHost      (void);				char      *dcaActualHost      (void);
+void       dcaCloseChannel    (struct dhsChan *);		void       dcaCloseChannel    (struct dhsChan *);
+int        dcaConnectionACK   (int);				int        dcaConnectionACK   (int);
+char      *dcaDomain          (void);				char      *dcaDomain          (void);
+msgHdrPtr  dcaFmtMsg          (XLONG, XLONG, ...);		msgHdrPtr  dcaFmtMsg          (XLONG, XLONG, ...);
+void       dcaFreeDCAHost     (void);				void       dcaFreeDCAHost     (void);
+char      *dcaGetDCADev       (int);				char      *dcaGetDCADev       (int);
+char      *dcaGetDCAHost      (void);				char      *dcaGetDCAHost      (void);
+char      *dcaGetNode         (char *);				char      *dcaGetNode         (char *);
+int        dcaGetPort         (char *);				int        dcaGetPort         (char *);
+int        dcaGetSimMode      (void);				int        dcaGetSimMode      (void);
+char      *dcaGetSuperDev     (dhsNetw *);			char      *dcaGetSuperDev     (dhsNetw *);
+int        dcaInitChannel     (dhsNetw *, XLONG);		int        dcaInitChannel     (dhsNetw *, XLONG);
+void       dcaInitDCAHost     (void);				void       dcaInitDCAHost     (void);
+void       dcaOpenChannel     (struct dhsChan *, int *);	void       dcaOpenChannel     (struct dhsChan *, int *);
+int        dcaRecv            (int, char *, int);		int        dcaRecv            (int, char *, int);
+int        dcaRecvMsg         (int, char *, int);		int        dcaRecvMsg         (int, char *, int);
+int        dcaSend            (int, char *, int); 		int        dcaSend            (int, char *, int); 
+int        dcaSendMsg         (int, msgHdrPtr);			int        dcaSendMsg         (int, msgHdrPtr);
+int        dcaSendfpConfig    (int, XLONG, char *, int);	int        dcaSendfpConfig    (int, XLONG, char *, int);
+void       dcaSetDCAHost      (void);				void       dcaSetDCAHost      (void);
+void       dcaSetSimHost      (char *, int);			void       dcaSetSimHost      (char *, int);
+int        dcaSetSimMode      (int);				int        dcaSetSimMode      (int);
+char      *dcaSimHost         (void);				char      *dcaSimHost         (void);
+int        dcaSimulator       (void);				int        dcaSimulator       (void);
+void       dcaSockConnect     (int *, int, char *);		void       dcaSockConnect     (int *, int, char *);
+int        dcaSupCloseConn    (int);				int        dcaSupCloseConn    (int);
+int        dcaSupOpenConn     (char *, int, char *);		int        dcaSupOpenConn     (char *, int, char *);
+int        dcaSupOpenSocket   (char *, int);			int        dcaSupOpenSocket   (char *, int);
+int        dcaSupSendStatus   (int, char *);			int        dcaSupSendStatus   (int, char *);
+int        dcaUseSim          (void);				int        dcaUseSim          (void);
+int        dcaValidateChannel (dhsChan *);			int        dcaValidateChannel (dhsChan *);
+/*								/*
+static int chan_read          (int, void *, int);		static int chan_read          (int, void *, int);
+static int chan_write         (int, void *, int);		static int chan_write         (int, void *, int);
+static int dcaSupParseNode    (char *, int, unsigned short *,	static int dcaSupParseNode    (char *, int, unsigned short *,
+static int dcaSupSockRead     (int, void *, int);		static int dcaSupSockRead     (int, void *, int);
+static int dcaSupSockWrite    (int, void *, int);		static int dcaSupSockWrite    (int, void *, int);
+*/								*/
+#include <string.h>						#include <string.h>
+#include <ctype.h>						#include <ctype.h>
+#include <unistd.h>						#include <unistd.h>
+#include <errno.h>						#include <errno.h>
+#include <stdio.h>						#include <stdio.h>
+#include <netdb.h>						#include <netdb.h>
+#include <arpa/inet.h>          /* inet_ntoa() to format IP a	#include <arpa/inet.h>          /* inet_ntoa() to format IP a
+#include <netinet/in.h>         /* in_addr structure */		#include <netinet/in.h>         /* in_addr structure */
+
+/* Function prototypes */					/* Function prototypes */
+#ifdef __STDC__							#ifdef __STDC__
+#include <stddef.h>						#include <stddef.h>
+#include <stdlib.h>						#include <stdlib.h>
+#endif								#endif
+
+
+#define SZ_FNAME	64					#define SZ_FNAME	64
+
+#define bzero(b,len) ((void)memset((void *)(b),'\0',(len)),(v <
+							      <
+typedef struct {						typedef struct {
+    char actual[SZ_FNAME];              /* Actual host name 	    char actual[SZ_FNAME];              /* Actual host name 
+    char simulated[SZ_FNAME];           /* Simulated host nam	    char simulated[SZ_FNAME];           /* Simulated host nam
+    char domain[SZ_FNAME];              /* Domain name 		    char domain[SZ_FNAME];              /* Domain name 	
+    char ip_addr[SZ_FNAME];             /* IP addr of host we	    char ip_addr[SZ_FNAME];             /* IP addr of host we
+    int  use_sim;                       /* Use simulated name	    int  use_sim;                       /* Use simulated name
+} DCAHost, *DCAHostPtr;						} DCAHost, *DCAHostPtr;
+
+
+void	dcaInitDCAHost(void),  dcaSetDCAHost(void), dcaFreeDC	void	dcaInitDCAHost(void),  dcaSetDCAHost(void), dcaFreeDC
+void	dcaSetSimHost(char *simHost, int flag);			void	dcaSetSimHost(char *simHost, int flag);
+char   *dcaGetDCAHost(void);					char   *dcaGetDCAHost(void);
+int	dcaUseSim(void);					int	dcaUseSim(void);
+char   *dcaActualHost(void);					char   *dcaActualHost(void);
+char   *dcaSimHost(void);					char   *dcaSimHost(void);
+char   *dcaDomain(void);					char   *dcaDomain(void);
+
+
+DCAHostPtr	dcaHost;					DCAHostPtr	dcaHost;
+
+
+
+/* Mini-interface for managing the host name of a message sen	/* Mini-interface for managing the host name of a message sen
+** we'll always use the actual host name, however we can set 	** we'll always use the actual host name, however we can set 
+** and deliver that instead.  Note that we can call the routi	** and deliver that instead.  Note that we can call the routi
+** and set the simulated host before connecting.		** and set the simulated host before connecting.
+*/								*/
+
+void 								void 
+dcaInitDCAHost ()						dcaInitDCAHost ()
+{								{
+    static int initialized = 0;					    static int initialized = 0;
+
+    if (initialized)						    if (initialized)
+        return;							        return;
+
+    dcaHost = calloc (1, sizeof (DCAHost));			    dcaHost = calloc (1, sizeof (DCAHost));
+
+    bzero (dcaHost->actual, SZ_FNAME); 				    bzero (dcaHost->actual, SZ_FNAME); 
+    bzero (dcaHost->simulated, SZ_FNAME); 			    bzero (dcaHost->simulated, SZ_FNAME); 
+    dcaHost->use_sim = 0;					    dcaHost->use_sim = 0;
+    initialized++;						    initialized++;
+
+    dcaSetDCAHost ();						    dcaSetDCAHost ();
+}								}
+
+
+void 								void 
+dcaFreeDCAHost ()						dcaFreeDCAHost ()
+{								{
+    free (dcaHost);						    free (dcaHost);
+}								}
+
+
+void								void
+dcaSetDCAHost ()						dcaSetDCAHost ()
+{								{
+    char  hname[SZ_FNAME], *ip;					    char  hname[SZ_FNAME], *ip;
+    struct hostent *host;               /* host information *	    struct hostent *host;               /* host information *
+    struct in_addr h_addr;              /* internet address *	    struct in_addr h_addr;              /* internet address *
+
+
+    if (!dcaHost)						    if (!dcaHost)
+ 	dcaInitDCAHost();					 	dcaInitDCAHost();
+
+    bzero (hname, SZ_FNAME); 					    bzero (hname, SZ_FNAME); 
+    gethostname (hname, SZ_FNAME);				    gethostname (hname, SZ_FNAME);
+
+    for (ip=hname;  *ip; ip++) {        /* truncate the doman	    for (ip=hname;  *ip; ip++) {        /* truncate the doman
+        if (*ip == '.') {					        if (*ip == '.') {
+            *ip = '\0';						            *ip = '\0';
+            break;						            break;
+        }							        }
+    }								    }
+
+    if ((host = gethostbyname(hname)) == (struct hostent *)NU	    if ((host = gethostbyname(hname)) == (struct hostent *)NU
+        printf("dcaSetHost(); nslookup failed on '%s'\n", hna	        printf("dcaSetHost(); nslookup failed on '%s'\n", hna
+        exit(1);						        exit(1);
+    }								    }
+    h_addr.s_addr = *((unsigned long *) host->h_addr_list[0])	    h_addr.s_addr = *((unsigned long *) host->h_addr_list[0])
+    bzero (dcaHost->ip_addr, SZ_FNAME); 		      |	    sprintf (dcaHost->ip_addr, "%s\0", inet_ntoa(h_addr));
+    sprintf (dcaHost->ip_addr, "%s", inet_ntoa(h_addr));      <
+
+    bzero (dcaHost->actual, SZ_FNAME); 				    bzero (dcaHost->actual, SZ_FNAME); 
+    strncpy (dcaHost->actual, hname, strlen(hname));		    strncpy (dcaHost->actual, hname, strlen(hname));
+}								}
+
+
+void								void
+dcaSetSimHost (char *simhost, int flag)				dcaSetSimHost (char *simhost, int flag)
+{								{
+    if (!dcaHost)						    if (!dcaHost)
+ 	dcaInitDCAHost();					 	dcaInitDCAHost();
+
+    bzero (dcaHost->simulated, SZ_FNAME); 			    bzero (dcaHost->simulated, SZ_FNAME); 
+    strncpy (dcaHost->simulated, simhost, strlen(simhost));	    strncpy (dcaHost->simulated, simhost, strlen(simhost));
+
+    bzero (dcaHost->ip_addr, SZ_FNAME); 			    bzero (dcaHost->ip_addr, SZ_FNAME); 
+    strcpy (dcaHost->ip_addr, "127.0.0.1");			    strcpy (dcaHost->ip_addr, "127.0.0.1");
+
+    dcaHost->use_sim = flag;					    dcaHost->use_sim = flag;
+}								}
+
+
+char *								char *
+dcaGetDCAHost ()						dcaGetDCAHost ()
+{								{
+    if (!dcaHost)						    if (!dcaHost)
+ 	dcaInitDCAHost();					 	dcaInitDCAHost();
+
+    return (dcaHost->use_sim ? dcaHost->simulated : dcaHost->	    return (dcaHost->use_sim ? dcaHost->simulated : dcaHost->
+}								}
+
+
+int								int	
+dcaUseSim()  							dcaUseSim()  	
+{ 								{ 
+    if (!dcaHost)						    if (!dcaHost)
+ 	dcaInitDCAHost();					 	dcaInitDCAHost();
+
+    return dcaHost->use_sim; 					    return dcaHost->use_sim; 	
+}								}
+
+char   *							char   *
+dcaActualHost()							dcaActualHost()	
+{ 								{ 
+    if (!dcaHost)						    if (!dcaHost)
+ 	dcaInitDCAHost();					 	dcaInitDCAHost();
+
+    return (dcaHost->actual ? dcaHost->actual : "None"); 	    return (dcaHost->actual ? dcaHost->actual : "None"); 
+}								}
+
+char   *							char   *
+dcaSimHost()							dcaSimHost()	
+{ 								{ 
+    if (!dcaHost)						    if (!dcaHost)
+ 	dcaInitDCAHost();					 	dcaInitDCAHost();
+
+    return (dcaHost->simulated ? dcaHost->simulated : "None")	    return (dcaHost->simulated ? dcaHost->simulated : "None")
+}								}
+
+char   *							char   *
+dcaDomain()							dcaDomain()	
+{ 								{ 
+    if (!dcaHost)						    if (!dcaHost)
+ 	dcaInitDCAHost();					 	dcaInitDCAHost();
+
+    return (dcaHost->domain ? dcaHost->domain : "None"); 	    return (dcaHost->domain ? dcaHost->domain : "None"); 
+}								}
+#if !defined(_dhsUtil_H_)					#if !defined(_dhsUtil_H_)
+#include "dhsUtil.h"						#include "dhsUtil.h"
+#endif								#endif
+#if !defined(_dhsImpl_H_)					#if !defined(_dhsImpl_H_)
+#include "dhsImplementationSpecifics.h"				#include "dhsImplementationSpecifics.h"
+#endif								#endif
+
+
+#include "dcaDhs.h"						#include "dcaDhs.h"
+
+#define DYNAMIC_COLLECTOR					#define DYNAMIC_COLLECTOR
+
+
+
+/* DCAINITCHANNEL -- Initialize a channel to either the super	/* DCAINITCHANNEL -- Initialize a channel to either the super
+ * collector process.  If the requested channel is not alread	 * collector process.  If the requested channel is not alread
+ * or the destination specification has changed since it was 	 * or the destination specification has changed since it was 
+ * open a new connection here.  Otherwise, we verify the conn	 * open a new connection here.  Otherwise, we verify the conn
+ * working and simply reset counters,				 * working and simply reset counters,
+ */								 */
+int dcaInitChannel(dhsNetw * dhsID, XLONG type)			int dcaInitChannel(dhsNetw * dhsID, XLONG type)
+{								{
+    struct dhsChan *chan, *collChan;				    struct dhsChan *chan, *collChan;
+    int status;							    int status;
+    int sock, socket;						    int sock, socket;
+    char line[120];						    char line[120];
+
+
+    if (type == DCA_SUPERVISOR) {				    if (type == DCA_SUPERVISOR) {
+	if (dhsID->super == NULL) {					if (dhsID->super == NULL) {
+	    chan = (struct dhsChan *) malloc(sizeof(struct dh		    chan = (struct dhsChan *) malloc(sizeof(struct dh
+
+	    /*  Defining a default node and port, we do not		    /*  Defining a default node and port, we do not
+	    **  need the node:port definition as well.			    **  need the node:port definition as well.
+	    */								    */
+	    dhsID->super = chan;					    dhsID->super = chan;
+
+	    /* We get the node and and port# from an environm		    /* We get the node and and port# from an environm
+	    ** that the client code (panSaver) reads.			    ** that the client code (panSaver) reads.
+	    */								    */
+	    chan->node = dhs.dhsSuperNode;				    chan->node = dhs.dhsSuperNode;
+	    chan->port = dhs.dhsSuperPort;				    chan->port = dhs.dhsSuperPort;
+	    chan->initialized = 1;					    chan->initialized = 1;
+	    chan->connected = NO;					    chan->connected = NO;
+	    DPRINT(40, dhsDebug,			      |		    DPRINT(40, procDebug,
+		   "dcaInitChannel DCA_SUPERVISOR: Default ch			   "dcaInitChannel DCA_SUPERVISOR: Default ch
+
+	} else {							} else {
+	    chan = dhsID->super;					    chan = dhsID->super;
+	}								}
+
+	if (chan->connected > 0) {					if (chan->connected > 0) {
+
+	    /*  We're already connected to Supervisor, test c		    /*  We're already connected to Supervisor, test c
+	    **  sending a NO-OP to get the ACK.				    **  sending a NO-OP to get the ACK.
+	    */								    */
+	    DPRINT(40, dhsDebug,			      |		    DPRINT(40, procDebug,
+		   "dcaInitChannel DCA_SUPERVISOR: connected\			   "dcaInitChannel DCA_SUPERVISOR: connected\
+	    if (dcaSendMsg(chan->fd,dcaFmtMsg(DCA_NOOP,(XLONG		    if (dcaSendMsg(chan->fd,dcaFmtMsg(DCA_NOOP,(XLONG
+		chan->nerrs = 0; 	/* connection fine, j			chan->nerrs = 0; 	/* connection fine, j
+		chan->nresends = 0;						chan->nresends = 0;
+		chan->connected = DCA_OK;					chan->connected = DCA_OK;
+		return DCA_OK;							return DCA_OK;
+
+	    } else {							    } else {
+		/* Close current connection and try to reopen			/* Close current connection and try to reopen
+		*/								*/
+		DPRINT(40, dhsDebug,			      |			DPRINT(40, procDebug,
+		       "dcaInitChannel DCA_SUPERVISOR: Close 			       "dcaInitChannel DCA_SUPERVISOR: Close 
+		close(chan->fd);						close(chan->fd);
+	    }								    }
+	}								}
+
+	/* Get a connection string for node:port for the chan		/* Get a connection string for node:port for the chan
+	   chan->device  = (char *)dcaGetSuperDev (dhsID);		   chan->device  = (char *)dcaGetSuperDev (dhsID);
+	   chan->node    = dcaGetNode (chan->device);			   chan->node    = dcaGetNode (chan->device);
+	   chan->port    = dcaGetPort (chan->device);			   chan->port    = dcaGetPort (chan->device);
+	 */								 */
+	chan->node = dhs.dhsSuperNode;					chan->node = dhs.dhsSuperNode;
+	chan->port = dhs.dhsSuperPort;					chan->port = dhs.dhsSuperPort;
+	chan->name = dhs.dhsName;					chan->name = dhs.dhsName;
+	chan->nerrs = 0;						chan->nerrs = 0;
+	chan->nresends = 0;						chan->nresends = 0;
+
+	/* Open a channel to the Supervisor.				/* Open a channel to the Supervisor.
+	 */								 */
+	chan->fd = dcaSupOpenConn (chan->node, chan->port, ch		chan->fd = dcaSupOpenConn (chan->node, chan->port, ch
+	if (chan->fd > 0) {						if (chan->fd > 0) {
+	    DPRINT(40, dhsDebug,			      |		    DPRINT(40, procDebug,
+		   "dcaInitChannel DCA_SUPERVISOR: Connected\			   "dcaInitChannel DCA_SUPERVISOR: Connected\
+	    dhsID->nopen++;						    dhsID->nopen++;
+
+	} else {							} else {
+	    fprintf(stderr, "Error connecting to Supervisor m		    fprintf(stderr, "Error connecting to Supervisor m
+		    chan->node);						    chan->node);
+	    return DCA_ERR;						    return DCA_ERR;
+	}								}
+	dhsID->super = chan;						dhsID->super = chan;
+
+	return DCA_OK;							return DCA_OK;
+
+    } else if (type == DCA_COLLECTOR) {				    } else if (type == DCA_COLLECTOR) {
+
+	/* Initialize a channel to the Supervisor if it isn't		/* Initialize a channel to the Supervisor if it isn't
+	*/								*/
+	if (dhsID->super == NULL) {					if (dhsID->super == NULL) {
+	    DPRINT(40, dhsDebug, "Reinitializeing SUPER conne |		    DPRINT(40, procDebug, "Reinitializeing SUPER conn
+	    dcaInitChannel(dhsID, DCA_SUPERVISOR);			    dcaInitChannel(dhsID, DCA_SUPERVISOR);
+	}								}
+
+
+	/* Send a message to supervisor asking for collector 		/* Send a message to supervisor asking for collector 
+	 */								 */
+	if (dhsID->collector == NULL) {					if (dhsID->collector == NULL) {
+
+	    collChan = (struct dhsChan *) malloc(sizeof(struc		    collChan = (struct dhsChan *) malloc(sizeof(struc
+	    dhsID->collector = collChan;				    dhsID->collector = collChan;
+#ifdef DYNAMIC_COLLECTOR					#ifdef DYNAMIC_COLLECTOR
+	    collChan->device  = (char *)dcaGetDCADev (dhsID->		    collChan->device  = (char *)dcaGetDCADev (dhsID->
+	    collChan->node    = dcaGetNode (collChan->device)		    collChan->node    = dcaGetNode (collChan->device)
+	    collChan->port    = dcaGetPort (collChan->device)		    collChan->port    = dcaGetPort (collChan->device)
+#else								#else
+	    collChan->node = dhs.dhsCollectorNode;			    collChan->node = dhs.dhsCollectorNode;
+	    collChan->port = dhs.dhsCollectorPort;			    collChan->port = dhs.dhsCollectorPort;
+	    sprintf (collChan->device, "%s:%d\0",			    sprintf (collChan->device, "%s:%d\0",
+		collChan->node, collChan->port);				collChan->node, collChan->port);
+#endif								#endif
+fprintf (stderr, "initChannel:  dev='%s'  node='%s' port=%d\n	fprintf (stderr, "initChannel:  dev='%s'  node='%s' port=%d\n
+    collChan->device, collChan->node, collChan->port);		    collChan->device, collChan->node, collChan->port);
+	    collChan->name = dhs.dhsName;				    collChan->name = dhs.dhsName;
+	    sprintf(line, "COLLECTOR: node: %s, port: %d\n",		    sprintf(line, "COLLECTOR: node: %s, port: %d\n",
+		    collChan->node, collChan->port);				    collChan->node, collChan->port);
+	    DPRINT(40, dhsDebug, line);			      |		    DPRINT(40, procDebug, line);
+
+	    collChan->initialized = 1;					    collChan->initialized = 1;
+	    collChan->connected = NO;					    collChan->connected = NO;
+
+	} else {							} else {
+	    collChan = dhsID->collector;				    collChan = dhsID->collector;
+	}								}
+
+	if (collChan->connected > 0) {					if (collChan->connected > 0) {
+	    /* We're already connected to a collector.			    /* We're already connected to a collector.
+	     */								     */
+	    DPRINT(40, dhsDebug, "Collector: We are already c |		    DPRINT(40, procDebug, "Collector: We are already 
+	    if ((status = dcaConnectionACK(collChan->fd)) == 		    if ((status = dcaConnectionACK(collChan->fd)) == 
+
+		collChan->nerrs = 0;	/* connection fine, j			collChan->nerrs = 0;	/* connection fine, j
+		collChan->nresends = 0;						collChan->nresends = 0;
+		collChan->connected = DCA_CON;					collChan->connected = DCA_CON;
+		DPRINT(40, dhsDebug, "Collector: connection a |			DPRINT(40, procDebug, "Collector: connection 
+		return DCA_OK;							return DCA_OK;
+
+	    } else {							    } else {
+		/* Close current connection and try to reopen			/* Close current connection and try to reopen
+		 */								 */
+		DPRINT(40, dhsDebug, "Collector: close connec |			DPRINT(40, procDebug, "Collector: close conne
+		socket = collChan->fd;						socket = collChan->fd;
+		collChan->fd = 0;						collChan->fd = 0;
+		close(socket);							close(socket);
+	    }								    }
+	}								}
+
+
+	/* Open a socket to the Collector.				/* Open a socket to the Collector.
+	 */								 */
+	DPRINT(40, dhsDebug, "Collector: Try to open again\n" |		DPRINT(40, procDebug, "Collector: Try to open again\n
+	(void) dcaOpenChannel(collChan, &sock);				(void) dcaOpenChannel(collChan, &sock);
+	if (sock > 0) {							if (sock > 0) {
+	    DPRINT(40, dhsDebug, "Collector: opened successfu |		    DPRINT(40, procDebug, "Collector: opened successf
+	        collChan->connected++;					        collChan->connected++;
+	} else {							} else {
+	    DPRINT(40, dhsDebug, "Collector: open failed\n"); |		    DPRINT(40, procDebug, "Collector: open failed\n")
+	        collChan->connected=0;					        collChan->connected=0;
+	    fprintf(stderr, "Error connecting to Collector ma		    fprintf(stderr, "Error connecting to Collector ma
+		    collChan->node, collChan->port);				    collChan->node, collChan->port);
+	    return DCA_ERR;						    return DCA_ERR;
+	}								}
+	dhsID->collector = collChan;					dhsID->collector = collChan;
+	return DCA_OK;							return DCA_OK;
+
+    } else {							    } else {
+	fprintf(stderr, "ERROR: dcaInitChannel: 'type' not su		fprintf(stderr, "ERROR: dcaInitChannel: 'type' not su
+	return DCA_ERR;							return DCA_ERR;
+    }								    }
+}								}
+#if !defined(_dhsUtil_H_)					#if !defined(_dhsUtil_H_)
+#include "dhsUtil.h"						#include "dhsUtil.h"
+#endif								#endif
+#if !defined(_dhsImpl_H_)					#if !defined(_dhsImpl_H_)
+#include "dhsImplementationSpecifics.h"				#include "dhsImplementationSpecifics.h"
+#endif								#endif
+
+
+#include <stdlib.h>						#include <stdlib.h>
+#include <stdarg.h>						#include <stdarg.h>
+#include "dcaDhs.h"						#include "dcaDhs.h"
+
+
+
+/* dcaFmtMsg -- Format a message for the DCA.  We are called 	/* dcaFmtMsg -- Format a message for the DCA.  We are called 
+ * with a message type and a sender ID.  Optional args includ	 * with a message type and a sender ID.  Optional args includ
+ * and size of a data buffer associated with the message.  Th	 * and size of a data buffer associated with the message.  Th
+ * data buffers are transferred separately during the send, a	 * data buffers are transferred separately during the send, a
+ * allocated for the message is freed.				 * allocated for the message is freed.
+*/								*/
+msgHdrPtr							msgHdrPtr
+dcaFmtMsg (XLONG vtype, XLONG whoami, ...)			dcaFmtMsg (XLONG vtype, XLONG whoami, ...)
+
+{								{
+    va_list ap;  /* pints to each unnamed arg in turn */	    va_list ap;  /* pints to each unnamed arg in turn */
+
+    /* Struct is freed when we send the message. */		    /* Struct is freed when we send the message. */
+    msgHdrPtr mh = calloc (1, sizeof (msgHeader));		    msgHdrPtr mh = calloc (1, sizeof (msgHeader));
+
+    mh->type   = vtype;						    mh->type   = vtype;
+    mh->whoami = whoami;					    mh->whoami = whoami;
+
+    /* from global dhs state struct */				    /* from global dhs state struct */
+
+    mh->expnum = dhs.expID;	     /* from global dhs state	    mh->expnum = dhs.expID;	     /* from global dhs state
+    strncpy(mh->obset, dhs.obsSetID, 80); 			    strncpy(mh->obset, dhs.obsSetID, 80); 
+
+    va_start(ap, whoami);					    va_start(ap, whoami);
+    mh->addr   = (long)va_arg(ap, void *);			    mh->addr   = (long)va_arg(ap, void *);
+    if (mh->addr == (long) NULL) {				    if (mh->addr == (long) NULL) {
+	va_end(ap);							va_end(ap);
+	return mh;							return mh;
+    }								    }
+    mh->size   = va_arg(ap, int);				    mh->size   = va_arg(ap, int);
+    va_end(ap);							    va_end(ap);
+
+    return mh;							    return mh;
+}								}
+
+
+
+/* dcaSendMsg ( dhsChan *chan, msgHdrPtr msg) */		/* dcaSendMsg ( dhsChan *chan, msgHdrPtr msg) */
+int dcaSendMsg (int socket, msgHdrPtr msg)			int dcaSendMsg (int socket, msgHdrPtr msg)
+{								{
+
+    int size;							    int size;
+
+    if (dhsDebug > 100) {				      |	    if (procDebug > 100) {
+	fprintf (stderr, "Header; size=%d  %d\n", (int)sizeof |		fprintf (stderr, "Header; size=%d  %d\n", sizeof(msgT
+	fprintf (stderr, "      ; type=%d  whoami=%d\n", (int |		fprintf (stderr, "      ; type=%d  whoami=%d\n", msg-
+	fprintf (stderr, "      ; expnum=%g  obset=%s\n",		fprintf (stderr, "      ; expnum=%g  obset=%s\n",
+	    msg->expnum, msg->obset);					    msg->expnum, msg->obset);
+    }								    }
+    size = sizeof(msgType);					    size = sizeof(msgType);
+    return(dcaSend (socket, (char *)msg, size));		    return(dcaSend (socket, (char *)msg, size));
+
+}								}
+
+
+int dcaRecvMsg (int socket, char *client_data, int size)	int dcaRecvMsg (int socket, char *client_data, int size)
+{								{
+    int istat;							    int istat;
+
+    istat = dcaRecv (socket, client_data, size);		    istat = dcaRecv (socket, client_data, size);
+    if (istat != size) {					    if (istat != size) {
+	return (DCA_ERR);						return (DCA_ERR);
+    }								    }
+    return istat;						    return istat;
+}								}
+
+
+/* dcaRefreshState -- Tell the supervisor to send us all the 	/* dcaRefreshState -- Tell the supervisor to send us all the 
+ * information we could possbly want.				 * information we could possbly want.
+dcaRefreshState (int chan)					dcaRefreshState (int chan)
+{								{
+}								}
+ */								 */
+
+int dcaSendfpConfig (int socket, XLONG whoAmI, char *buf, int	int dcaSendfpConfig (int socket, XLONG whoAmI, char *buf, int
+{								{
+    msgHdrPtr msg;						    msgHdrPtr msg;
+
+    /* Send the message header. */				    /* Send the message header. */
+    msg=dcaFmtMsg (DCA_SET|DCA_FP_CONFIG, whoAmI);		    msg=dcaFmtMsg (DCA_SET|DCA_FP_CONFIG, whoAmI);
+    if (dcaSendMsg (socket, msg) == DCA_ERR)			    if (dcaSendMsg (socket, msg) == DCA_ERR)
+        return DCA_ERR;						        return DCA_ERR;
+
+    /* Now send the data */					    /* Now send the data */
+    return(dcaSend (socket, buf, size));			    return(dcaSend (socket, buf, size));
+}								}
+#if !defined(_sockUtil_H_)					#if !defined(_sockUtil_H_)
+#include "sockUtil.h"						#include "sockUtil.h"
+#endif								#endif
+#if !defined(_dhsUtil_H_)					#if !defined(_dhsUtil_H_)
+#include "dhsUtil.h"						#include "dhsUtil.h"
+#endif								#endif
+
+#include <stdio.h>						#include <stdio.h>
+#include <stdlib.h>						#include <stdlib.h>
+#include <arpa/inet.h>      	/* inet_ntoa() to format IP a	#include <arpa/inet.h>      	/* inet_ntoa() to format IP a
+#include <netinet/in.h>     	/* in_addr structure 		#include <netinet/in.h>     	/* in_addr structure 	
+#include <netdb.h>          	/* hostent struct, gethostbyn	#include <netdb.h>          	/* hostent struct, gethostbyn
+
+#if !defined(_dhsUtil_H_)					#if !defined(_dhsUtil_H_)
+#include "dhsUtil.h"						#include "dhsUtil.h"
+#endif								#endif
+#if !defined(_sockUtil_H_)					#if !defined(_sockUtil_H_)
+#include "sockUtil.h"						#include "sockUtil.h"
+#endif								#endif
+#if !defined(_dhsImpl_H_)					#if !defined(_dhsImpl_H_)
+#include "dhsImplementationSpecifics.h"				#include "dhsImplementationSpecifics.h"
+#endif								#endif
+
+
+#include "dcaDhs.h"						#include "dcaDhs.h"
+
+void dcaSockConnect(int *sock, int port, char *ssadr);		void dcaSockConnect(int *sock, int port, char *ssadr);
+
+#define MAXPENDING 5    /* Maximum outstanding connection req	#define MAXPENDING 5    /* Maximum outstanding connection req
+
+
+
+void								void
+dcaOpenChannel (struct dhsChan *chan, int *s)			dcaOpenChannel (struct dhsChan *chan, int *s)
+
+{								{
+    int     sock;                     		/* socket to 	    int     sock;                     		/* socket to 
+
+
+    DPRINTF (30, dhsDebug, "Open Channel: port=%d\n", chan->p |	    DPRINTF (30, procDebug, "Open Channel: port=%d\n", chan->
+
+    if (dcaUseSim()) {						    if (dcaUseSim()) {
+	DPRINTF (30, dhsDebug, "            : node='%s(SIM)'\ |		DPRINTF (30, procDebug, "            : node='%s(SIM)'
+        (void )dcaSockConnect (&sock, chan->port, "localhost"	        (void )dcaSockConnect (&sock, chan->port, "localhost"
+
+    } else {							    } else {
+	DPRINTF (30, dhsDebug, "            : node='%s'\n", c |		DPRINTF (30, procDebug, "            : node='%s'\n", 
+        (void )dcaSockConnect (&sock, chan->port, chan->node)	        (void )dcaSockConnect (&sock, chan->port, chan->node)
+    }								    }
+
+    *s = chan->fd = sock;					    *s = chan->fd = sock;
+}								}
+
+
+void								void
+dcaSockConnect(int *sock, int port, char *node)			dcaSockConnect(int *sock, int port, char *node)
+{								{
+    /* declare some variables and initialize them */		    /* declare some variables and initialize them */
+    int istat;						      |	    int istat, reuse = 1;
+    char resp[160];						    char resp[160];
+    								    
+    struct hostent *hp;      			/* host infor	    struct hostent *hp;      			/* host infor
+    struct in_addr inAddress;					    struct in_addr inAddress;
+    struct sockaddr_in sa;					    struct sockaddr_in sa;
+
+
+    (void) memset (&inAddress, 0, sizeof(struct in_addr));	    (void) memset (&inAddress, 0, sizeof(struct in_addr));
+    (void) memset (&sa, 0, sizeof(struct sockaddr_in));		    (void) memset (&sa, 0, sizeof(struct sockaddr_in));
+
+    if (isalpha(node[0])) {					    if (isalpha(node[0])) {
+	/* Using a node name.						/* Using a node name.
+	*/								*/
+
+        /* set up connection data */				        /* set up connection data */
+        hp = gethostbyname (node);				        hp = gethostbyname (node);			
+        inAddress.s_addr = *((unsigned long *) hp->h_addr_lis	        inAddress.s_addr = *((unsigned long *) hp->h_addr_lis
+
+        sa.sin_family      = AF_INET;				        sa.sin_family      = AF_INET;
+        sa.sin_port        = htons(port);			        sa.sin_port        = htons(port);
+        sa.sin_addr.s_addr = inAddress.s_addr;			        sa.sin_addr.s_addr = inAddress.s_addr;
+
+    } else {							    } else {
+	/* Using an IP address.						/* Using an IP address.
+	*/								*/
+        sa.sin_family      = AF_INET;				        sa.sin_family      = AF_INET;
+        sa.sin_port        = htons(port);			        sa.sin_port        = htons(port);
+        sa.sin_addr.s_addr = inet_addr (node);			        sa.sin_addr.s_addr = inet_addr (node);
+    }								    }
+
+
+     /* open socket */						     /* open socket */
+    if ( (*sock = socket (AF_INET, SOCK_STREAM, 0)) == ERROR 	    if ( (*sock = socket (AF_INET, SOCK_STREAM, 0)) == ERROR 
+        sprintf(resp,"dcaSockConnect: socket failed. \\\\%s",	        sprintf(resp,"dcaSockConnect: socket failed. \\\\%s",
+	    strerror(errno));						    strerror(errno));
+        perror(resp);						        perror(resp);
+        return;							        return;
+    }								    }
+
+    if ( (istat = connect (*sock, (struct sockaddr *)&sa,	    if ( (istat = connect (*sock, (struct sockaddr *)&sa,
+	sizeof(struct sockaddr_in))) == ERROR ) {			sizeof(struct sockaddr_in))) == ERROR ) {
+            (void) close(*sock);				            (void) close(*sock);
+            sprintf(resp,"dcaSockConnect: connect failed. \\\	            sprintf(resp,"dcaSockConnect: connect failed. \\\
+	        strerror(errno)); 					        strerror(errno)); 
+            perror(resp);					            perror(resp);
+    }								    }
+
+    return;							    return;
+}								}
+#if !defined(_dhsUtil_H_)					#if !defined(_dhsUtil_H_)
+#include "dhsUtil.h"						#include "dhsUtil.h"
+#endif								#endif
+#if !defined(_dhsImpl_H_)					#if !defined(_dhsImpl_H_)
+#include "dhsImplementationSpecifics.h"				#include "dhsImplementationSpecifics.h"
+#endif								#endif
+
+
+#include <stdio.h>						#include <stdio.h>
+#include <stdlib.h>						#include <stdlib.h>
+#include <sys/select.h>						#include <sys/select.h>
+#include <sys/errno.h>						#include <sys/errno.h>
+
+#include "dcaDhs.h"						#include "dcaDhs.h"
+
+/*								/*
+#define SELWIDTH	32					#define SELWIDTH	32
+*/								*/
+#define SELWIDTH	FD_SETSIZE				#define SELWIDTH	FD_SETSIZE
+
+
+#define SR_DEBUG     (getenv("SR_DEBUG")!=NULL||access("/tmp/	#define SR_DEBUG     (getenv("SR_DEBUG")!=NULL||access("/tmp/
+
+#if 0							      |
+static int chan_read (int fd, void *vptr, int nbytes);		static int chan_read (int fd, void *vptr, int nbytes);
+#endif							      |
+
+int dcaRecv (							int dcaRecv (
+    int socket,    			/* Socket file descri	    int socket,    			/* Socket file descri
+    char *buffer,  			/* Receiving buffer  	    char *buffer,  			/* Receiving buffer  
+    int size       			/* Number of bytes to	    int size       			/* Number of bytes to
+)								)
+{								{
+    int curlen = size, tot = 0, n, debug;			    int curlen = size, tot = 0, n, debug;
+    int recvMsgSize; 						    int recvMsgSize; 
+    fd_set allset;						    fd_set allset;
+
+
+    if ( (debug = SR_DEBUG) ) 					    if ( (debug = SR_DEBUG) ) 
+	fprintf (stderr, "dcaRecv expecting: %d on fd=%d\t", 		fprintf (stderr, "dcaRecv expecting: %d on fd=%d\t", 
+
+    do {							    do {
+	FD_ZERO (&allset);						FD_ZERO (&allset);
+	FD_SET (socket, &allset);					FD_SET (socket, &allset);
+	if ((n = select (SELWIDTH, &allset, NULL, NULL, NULL)		if ((n = select (SELWIDTH, &allset, NULL, NULL, NULL)
+	    continue;							    continue;
+
+	} else if (FD_ISSET(socket, &allset)) {				} else if (FD_ISSET(socket, &allset)) {
+
+            if ((recvMsgSize = read (socket, &buffer[tot], cu	            if ((recvMsgSize = read (socket, &buffer[tot], cu
+		if (errno != EAGAIN) {						if (errno != EAGAIN) {
+		    fprintf (stderr, "dcaRecv read() error: %			    fprintf (stderr, "dcaRecv read() error: %
+		        errno, strerror(errno));				        errno, strerror(errno));
+                    return(DCA_ERR);				                    return(DCA_ERR);
+		}								}
+
+            } else if (recvMsgSize == 0) {			            } else if (recvMsgSize == 0) {
+		if (debug) fprintf (stderr, ": read %d\n", EO			if (debug) fprintf (stderr, ": read %d\n", EO
+		return (EOF);							return (EOF);
+
+            } else {						            } else {
+                curlen = curlen - recvMsgSize;			                curlen = curlen - recvMsgSize;
+                tot = tot + recvMsgSize;			                tot = tot + recvMsgSize;
+            }							            }
+        }							        }
+    } while (curlen > 0) ;					    } while (curlen > 0) ;
+
+    if (debug) fprintf (stderr, ": read %d bytes\n", tot);	    if (debug) fprintf (stderr, ": read %d bytes\n", tot);
+
+    return tot;							    return tot;
+
+/*  return (chan_read (socket, (void *)buffer, size)); */	/*  return (chan_read (socket, (void *)buffer, size)); */
+}								}
+
+
+/* CHAN_READ -- Read exactly "n" bytes from a descriptor. 	/* CHAN_READ -- Read exactly "n" bytes from a descriptor. 
+ */								 */
+#if 0							      |
+static int							static int
+chan_read (fd, vptr, nbytes)					chan_read (fd, vptr, nbytes)
+int     fd; 							int     fd; 
+void    *vptr; 							void    *vptr; 
+int     nbytes;							int     nbytes;
+{								{
+    char    *ptr = vptr;					    char    *ptr = vptr;
+    int     nread = 0, nleft = nbytes, nb = 0, debug;		    int     nread = 0, nleft = nbytes, nb = 0, debug;
+
+
+    if ( (debug = SR_DEBUG) ) 					    if ( (debug = SR_DEBUG) ) 
+	fprintf (stderr, "dcaRecv: expecting %d bytes\t", nby		fprintf (stderr, "dcaRecv: expecting %d bytes\t", nby
+
+    while (nleft > 0) {						    while (nleft > 0) {
+        if ( (nb = read(fd, ptr, nleft)) < 0) {			        if ( (nb = read(fd, ptr, nleft)) < 0) {
+            if (errno == EINTR || errno == EAGAIN)		            if (errno == EINTR || errno == EAGAIN)
+                nb = 0;             /* and call read() again 	                nb = 0;             /* and call read() again 
+            else						            else
+                return(-1);					                return(-1);
+        } else if (nb == 0)					        } else if (nb == 0)
+            break;                  /* EOF */			            break;                  /* EOF */
+        nleft -= nb;						        nleft -= nb;
+        ptr   += nb;						        ptr   += nb;
+        nread += nb;						        nread += nb;
+    }								    }
+
+    if (debug)							    if (debug)
+	fprintf (stderr, ": read %d bytes\n", nread);			fprintf (stderr, ": read %d bytes\n", nread);
+
+    return (nread);                 	/* return no. of byte	    return (nread);                 	/* return no. of byte
+}								}
+#endif							      <
+#if !defined(_dhsUtil_H_)					#if !defined(_dhsUtil_H_)
+#include "dhsUtil.h"						#include "dhsUtil.h"
+#endif								#endif
+#if !defined(_dhsImpl_H_)					#if !defined(_dhsImpl_H_)
+#include "dhsImplementationSpecifics.h"				#include "dhsImplementationSpecifics.h"
+#endif								#endif
+
+
+#include <stdlib.h>						#include <stdlib.h>
+#include <stdio.h>						#include <stdio.h>
+#include <errno.h>						#include <errno.h>
+
+#include "dcaDhs.h"						#include "dcaDhs.h"
+
+#define SR_DEBUG     (getenv("SR_DEBUG")!=NULL||access("/tmp/	#define SR_DEBUG     (getenv("SR_DEBUG")!=NULL||access("/tmp/
+
+static int chan_write (int fd, void *vptr, int nbytes);		static int chan_write (int fd, void *vptr, int nbytes);
+
+
+int dcaSend (int socket, char *buffer, int size) 		int dcaSend (int socket, char *buffer, int size) 
+{								{
+    int istat;							    int istat;
+
+    if (SR_DEBUG)						    if (SR_DEBUG)
+	fprintf (stderr, "dcaSend sending: %d on fd=%d\n", si		fprintf (stderr, "dcaSend sending: %d on fd=%d\n", si
+
+    istat = chan_write (socket, buffer, size);			    istat = chan_write (socket, buffer, size);
+    if (istat < 0 || istat != size )				    if (istat < 0 || istat != size )
+	istat = DCA_ERR;						istat = DCA_ERR;
+
+    return (istat);						    return (istat);
+}								}
+
+
+/* CHAN_WRITE -- Write exactly "n" bytes to a descriptor. 	/* CHAN_WRITE -- Write exactly "n" bytes to a descriptor. 
+ */								 */
+
+static int							static int
+chan_write (fd, vptr, nbytes)					chan_write (fd, vptr, nbytes)
+int     fd; 							int     fd; 
+void    *vptr; 							void    *vptr; 
+int     nbytes;							int     nbytes;
+{								{
+    char    *ptr = vptr;					    char    *ptr = vptr;
+    int     nwritten = 0,  nleft = nbytes, nb = 0;		    int     nwritten = 0,  nleft = nbytes, nb = 0;
+
+
+    /* Send the message. */					    /* Send the message. */
+    while (nleft > 0) {						    while (nleft > 0) {
+        if ( (nb = write(fd, ptr, nleft)) <= 0) {		        if ( (nb = write(fd, ptr, nleft)) <= 0) {
+            if (errno == EINTR) {				            if (errno == EINTR) {
+                nb = 0;						                nb = 0;
+            } else {						            } else {
+		fprintf (stderr, "dcaSend error %d: %s\n",			fprintf (stderr, "dcaSend error %d: %s\n",
+		    errno, strerror (errno));					    errno, strerror (errno));
+                return (-1);					                return (-1);
+	    }								    }
+        }							        }
+        nleft    -= nb;						        nleft    -= nb;
+        ptr      += nb;						        ptr      += nb;
+        nwritten += nb;						        nwritten += nb;
+    }								    }
+
+    return (nwritten);						    return (nwritten);
+}								}
+#include <stdio.h>						#include <stdio.h>
+/* Function prototypes */					/* Function prototypes */
+#ifdef __STDC__							#ifdef __STDC__
+#include <stddef.h>						#include <stddef.h>
+#include <stdlib.h>						#include <stdlib.h>
+#endif								#endif
+
+
+/************************************************************	/************************************************************
+**								**
+**  DCA Supervisor Connection code -- Two simple interface pr	**  DCA Supervisor Connection code -- Two simple interface pr
+**  open and negotiate a connection to the Supervisor, and th	**  open and negotiate a connection to the Supervisor, and th
+**  The Supervisor is located on a 'device' specified as 'hos	**  The Supervisor is located on a 'device' specified as 'hos
+**  where the hostname us can be a simple host name, a fully-	**  where the hostname us can be a simple host name, a fully-
+**  host name, or an IP address.				**  host name, or an IP address.
+**								**
+**	fd = dcaSupOpenConn (host, port, name)	// returns NU	**	fd = dcaSupOpenConn (host, port, name)	// returns NU
+**	   dcaSupSendStatus (fd, msg);		// send statu	**	   dcaSupSendStatus (fd, msg);		// send statu
+**	    dcaSupCloseConn (fd);		// close conn	**	    dcaSupCloseConn (fd);		// close conn
+**								**
+*************************************************************	*************************************************************
+
+#define SIM_DEBUG (getenv("SIM_DEBUG")!=NULL||access("/tmp/SI	#define SIM_DEBUG (getenv("SIM_DEBUG")!=NULL||access("/tmp/SI
+
+
+static int simulator 	= 0;					static int simulator 	= 0;
+static int initialized 	= 0;					static int initialized 	= 0;
+
+
+int dcaSimulator (void);					int dcaSimulator (void);
+int dcaSetSimMode (int mode);					int dcaSetSimMode (int mode);
+int dcaGetSimMode (void);					int dcaGetSimMode (void);
+
+
+int								int
+dcaSimulator () 						dcaSimulator () 
+{								{
+    return (simulator);						    return (simulator);
+}								}
+
+
+
+int								int
+dcaSetSimMode (int mode) 					dcaSetSimMode (int mode) 
+{								{
+    if (initialized++)						    if (initialized++)
+	return 0;					      |		return;
+    else							    else
+	simulator = mode;     						simulator = mode;     
+    return 0;						      <
+}								}
+
+
+int								int
+dcaGetSimMode () 						dcaGetSimMode () 
+{								{
+    return (dcaSimulator());					    return (dcaSimulator());
+}								}
+
+
+#include <string.h>						#include <string.h>
+#include <ctype.h>						#include <ctype.h>
+#include <unistd.h>						#include <unistd.h>
+#include <sys/file.h>						#include <sys/file.h>
+#include <sys/types.h>						#include <sys/types.h>
+#include <sys/socket.h>						#include <sys/socket.h>
+#include <netinet/in.h>						#include <netinet/in.h>
+#include <sys/un.h>						#include <sys/un.h>
+#include <errno.h>						#include <errno.h>
+#include <netdb.h>						#include <netdb.h>
+#include <fcntl.h>						#include <fcntl.h>
+#include <stdio.h>						#include <stdio.h>
+/* Function prototypes */					/* Function prototypes */
+#ifdef __STDC__							#ifdef __STDC__
+#include <stddef.h>						#include <stddef.h>
+#include <stdlib.h>						#include <stdlib.h>
+#endif								#endif
+
+
+#ifdef  SZMSG							#ifdef  SZMSG
+#undef  SZMSG							#undef  SZMSG
+#endif								#endif
+#define SZMSG		120					#define SZMSG		120
+
+in_addr_t inet_addr(const char *cp); 			      |
+#define bzero(b,len) ((void)memset((void *)(b),'\0',(len)),(v <
+
+/************************************************************	/************************************************************
+**								**
+**  DCA Supervisor Connection code -- Two simple interface pr	**  DCA Supervisor Connection code -- Two simple interface pr
+**  open and negotiate a connection to the Supervisor, and th	**  open and negotiate a connection to the Supervisor, and th
+**  The Supervisor is located on a 'device' specified as 'hos	**  The Supervisor is located on a 'device' specified as 'hos
+**  where the hostname us can be a simple host name, a fully-	**  where the hostname us can be a simple host name, a fully-
+**  host name, or an IP address.				**  host name, or an IP address.
+**								**
+**	fd = dcaSupOpenConn (host, port, name)	// returns NU	**	fd = dcaSupOpenConn (host, port, name)	// returns NU
+**	   dcaSupSendStatus (fd, msg);		// send statu	**	   dcaSupSendStatus (fd, msg);		// send statu
+**	    dcaSupCloseConn (fd);		// close conn	**	    dcaSupCloseConn (fd);		// close conn
+**								**
+*************************************************************	*************************************************************
+
+#define SUP_DEBUG (getenv("SUP_DEBUG")!=NULL||access("/tmp/SU	#define SUP_DEBUG (getenv("SUP_DEBUG")!=NULL||access("/tmp/SU
+
+
+int dcaSupOpenConn (char *host, int port, char *name);		int dcaSupOpenConn (char *host, int port, char *name);
+int dcaSupSendStatus (int fd, char *msg);			int dcaSupSendStatus (int fd, char *msg);
+int dcaSupCloseConn (int fd);					int dcaSupCloseConn (int fd);
+int dcaSupOpenSocket (char *host, int port);			int dcaSupOpenSocket (char *host, int port);
+
+static int dcaSupParseNode (char *host, int port, unsigned sh	static int dcaSupParseNode (char *host, int port, unsigned sh
+				unsigned long *host_addr);					unsigned long *host_addr);
+static int dcaSupSockRead (int fd, void *vptr, int nbytes);	static int dcaSupSockRead (int fd, void *vptr, int nbytes);
+static int dcaSupSockWrite (int fd, void *vptr, int nbytes);	static int dcaSupSockWrite (int fd, void *vptr, int nbytes);
+
+extern int dcaUseSim(void);					extern int dcaUseSim(void);
+extern char *dcaActualHost(void), *dcaSimHost(void), *dcaDoma	extern char *dcaActualHost(void), *dcaSimHost(void), *dcaDoma
+
+
+
+/*  DCASUPOPENCONN -- Open a connection to the Supervisor.  T	/*  DCASUPOPENCONN -- Open a connection to the Supervisor.  T
+**  handles the connection negotiation and returns a file des	**  handles the connection negotiation and returns a file des
+**  connection.							**  connection.
+*/								*/
+
+int								int
+dcaSupOpenConn (char *host, int port, char *name)		dcaSupOpenConn (char *host, int port, char *name)
+{								{
+    int	  fd, rfd;					      |	    int	  omain, fd, rfd;
+    pid_t pid = getpid();					    pid_t pid = getpid();
+    char  msg[SZMSG], hostname[SZMSG], domain[SZMSG], dev[SZM	    char  msg[SZMSG], hostname[SZMSG], domain[SZMSG], dev[SZM
+
+
+
+    fprintf (stderr, "Opening Supervisor: name='%s' mach='%s'	    fprintf (stderr, "Opening Supervisor: name='%s' mach='%s'
+	name, host, port);						name, host, port);
+
+    /*  Open the public port to the supervisor.			    /*  Open the public port to the supervisor.
+     */								     */
+    if ((fd = dcaSupOpenSocket (host, port)) < 0) {		    if ((fd = dcaSupOpenSocket (host, port)) < 0) {
+	fprintf (stderr, "Error opening Supervisor on '%s:%d'		fprintf (stderr, "Error opening Supervisor on '%s:%d'
+	return (-1);							return (-1);
+    }								    }
+
+#ifdef USE_LOCAL_HOSTNAME					#ifdef USE_LOCAL_HOSTNAME
+    bzero (domain, SZMSG);		/* get the local host	    bzero (domain, SZMSG);		/* get the local host
+    (void) getdomainname (domain, SZMSG);			    (void) getdomainname (domain, SZMSG);
+    if (strncmp (domain, "(none)", 6) == 0)			    if (strncmp (domain, "(none)", 6) == 0)
+	strcpy (domain, "kpno.noao.edu");				strcpy (domain, "kpno.noao.edu");
+
+    bzero (hostname, SZMSG);		/* get the local host	    bzero (hostname, SZMSG);		/* get the local host
+    if (gethostname (hostname, SZMSG) < 0) 			    if (gethostname (hostname, SZMSG) < 0) 
+	strcpy (hostname, "unknown");					strcpy (hostname, "unknown");
+#else								#else
+    if (dcaUseSim())						    if (dcaUseSim())
+	strcpy (hostname, dcaSimHost());				strcpy (hostname, dcaSimHost());
+    else							    else
+	strcpy (hostname, dcaActualHost());				strcpy (hostname, dcaActualHost());
+    strcpy (domain, dcaDomain());				    strcpy (domain, dcaDomain());
+
+fprintf (stderr, "\n\nsupOpenConn:  host='%s'  domain='%s'\n"	fprintf (stderr, "\n\nsupOpenConn:  host='%s'  domain='%s'\n"
+    hostname, domain);						    hostname, domain);
+fprintf (stderr, "\tuse_sim: %d  act='%s'  sim='%s'  dom='%s'	fprintf (stderr, "\tuse_sim: %d  act='%s'  sim='%s'  dom='%s'
+	dcaUseSim(), dcaActualHost(), dcaSimHost(), dcaDomain		dcaUseSim(), dcaActualHost(), dcaSimHost(), dcaDomain
+#endif								#endif
+
+													
+    /* Send the connect request.				    /* Send the connect request.
+     */								     */
+    bzero (msg, SZMSG);						    bzero (msg, SZMSG);
+    if (index (hostname, (int)'.') == (char *)NULL)		    if (index (hostname, (int)'.') == (char *)NULL)
+        sprintf (msg, "sup_connect %s@%s:%d", name, hostname, |	        sprintf (msg, "sup_connect %s@%s:%d\0", name, hostnam
+    else							    else
+        /* Use FQDF from the hostname. */			        /* Use FQDF from the hostname. */
+        sprintf (msg, "sup_connect %s@%s.%s:%d", name, hostna |	        sprintf (msg, "sup_connect %s@%s.%s:%d\0", name, host
+
+
+    if (SUP_DEBUG)						    if (SUP_DEBUG)
+        fprintf (stderr, "Sending reconnect: '%s'\n", msg);	        fprintf (stderr, "Sending reconnect: '%s'\n", msg);
+    if (dcaSupSockWrite (fd, msg, SZMSG) < 0) {			    if (dcaSupSockWrite (fd, msg, SZMSG) < 0) {
+	fprintf (stderr, "Connect Error %d: %s\n", errno, str		fprintf (stderr, "Connect Error %d: %s\n", errno, str
+	return (-1);			/* ERR return value		return (-1);			/* ERR return value
+    }								    }
+
+
+    bzero (msg, SZMSG);						    bzero (msg, SZMSG);
+    dcaSupSockRead (fd, msg, SZMSG); 	/*  get reconnect add	    dcaSupSockRead (fd, msg, SZMSG); 	/*  get reconnect add
+    close (fd); 			/*  close the origina	    close (fd); 			/*  close the origina
+    if (SUP_DEBUG)						    if (SUP_DEBUG)
+        fprintf (stderr, "Reply to reconnect: '%s'\n", msg);	        fprintf (stderr, "Reply to reconnect: '%s'\n", msg);
+
+    /* Reconnect request.					    /* Reconnect request.
+     */								     */
+    bzero (dev, SZMSG); 		/* tell em we're read	    bzero (dev, SZMSG); 		/* tell em we're read
+    strcpy (dev, &msg[14]);					    strcpy (dev, &msg[14]);
+    if ((rfd = dcaSupOpenSocket (dev, -1)) < 0) { /* open new	    if ((rfd = dcaSupOpenSocket (dev, -1)) < 0) { /* open new
+	fprintf (stderr, "Error reconnecting Supervisor.\n");		fprintf (stderr, "Error reconnecting Supervisor.\n");
+	return (-1);							return (-1);
+    }								    }
+
+    bzero (msg, SZMSG); 		/* tell em we're read	    bzero (msg, SZMSG); 		/* tell em we're read
+    sprintf (msg, "sup_ready rc_%s@%s.%s:%d", name, hostname, |	    sprintf (msg, "sup_ready rc_%s@%s.%s:%d\0", name, hostnam
+    if (SUP_DEBUG)						    if (SUP_DEBUG)
+        fprintf (stderr, "Sending ready: '%s'\n", msg);		        fprintf (stderr, "Sending ready: '%s'\n", msg);
+    if (dcaSupSockWrite (rfd, msg, SZMSG) < 0) {		    if (dcaSupSockWrite (rfd, msg, SZMSG) < 0) {
+	fprintf (stderr, "Connect Error %d: %s\n", errno, str		fprintf (stderr, "Connect Error %d: %s\n", errno, str
+	return (-1);			/* ERR return value		return (-1);			/* ERR return value
+    }								    }
+
+    /*  Set the Supervisor status for this client.		    /*  Set the Supervisor status for this client.
+     */								     */
+    bzero (msg, SZMSG); 					    bzero (msg, SZMSG); 			
+    sprintf (msg, "Client ready ...");			      |	    sprintf (msg, "Client ready ...\0");
+    (void) dcaSupSendStatus (rfd, msg);				    (void) dcaSupSendStatus (rfd, msg);
+
+    return (rfd);						    return (rfd);
+}								}
+
+
+/*  DCASUPSENDSTATUS -- Send a status message to the Supervis	/*  DCASUPSENDSTATUS -- Send a status message to the Supervis
+**  format the message ourselves since we'll be talking to a 	**  format the message ourselves since we'll be talking to a 
+**  socket connection and can't rely on the message bus inter	**  socket connection and can't rely on the message bus inter
+**  it, however we use the same format.  The supervisor shoul	**  it, however we use the same format.  The supervisor shoul
+**  are based on the socket being used, so we only need to de	**  are based on the socket being used, so we only need to de
+**  status string.						**  status string.
+*/								*/
+
+int								int
+dcaSupSendStatus (int fd, char *msg)				dcaSupSendStatus (int fd, char *msg)
+{								{
+    char msg_buf[SZMSG];					    char msg_buf[SZMSG];
+
+
+    if (fd < 0)							    if (fd < 0)
+	return (-1);							return (-1);
+
+    bzero (msg_buf, SZMSG);			/* send the s	    bzero (msg_buf, SZMSG);			/* send the s
+    sprintf (msg_buf, "sup_status %s", msg);		      |	    sprintf (msg_buf, "sup_status %s\0", msg);
+
+    if (dcaSupSockWrite (fd, msg_buf, SZMSG) < 0) {		    if (dcaSupSockWrite (fd, msg_buf, SZMSG) < 0) {
+	fprintf (stderr, "sendStatus Error %d: %s\n", errno, 		fprintf (stderr, "sendStatus Error %d: %s\n", errno, 
+	return (-1);				/* ERR return		return (-1);				/* ERR return
+    }								    }
+
+    return (0);					/* OK return 	    return (0);					/* OK return 
+}								}
+
+
+
+
+/*  DCASUPCLOSECONN -- Close a connection to the Supervisor.	/*  DCASUPCLOSECONN -- Close a connection to the Supervisor.
+*/								*/
+int								int
+dcaSupCloseConn (int fd)					dcaSupCloseConn (int fd)
+{								{
+    char msg[SZMSG];						    char msg[SZMSG];
+
+    bzero (msg, SZMSG);						    bzero (msg, SZMSG);
+    sprintf (msg, "sup_quit");		/* tell em we're leav |	    sprintf (msg, "sup_quit\0");		/* tell em we
+    write (fd, msg, strlen(msg));				    write (fd, msg, strlen(msg));
+    return close (fd);					/* cl |	    close (fd);					/* close the 
+}								}
+
+
+
+/*  DCASUPOPENSOCKET -- Open the client side of a socket.	/*  DCASUPOPENSOCKET -- Open the client side of a socket.
+*/								*/
+int								int
+dcaSupOpenSocket (char *host, int port)				dcaSupOpenSocket (char *host, int port)
+{								{
+    struct sockaddr_in sockaddr;				    struct sockaddr_in sockaddr;
+    unsigned short host_port;					    unsigned short host_port;
+    unsigned long  host_addr;					    unsigned long  host_addr;
+    int    fd, stat;						    int    fd, stat;
+
+
+    if ((stat = dcaSupParseNode (host, port, &host_port, &hos	    if ((stat = dcaSupParseNode (host, port, &host_port, &hos
+	return (-1);							return (-1);
+ 								 
+    /* Get socket. */						    /* Get socket. */
+    if ((fd = socket (AF_INET, SOCK_STREAM, 0)) < 0) {		    if ((fd = socket (AF_INET, SOCK_STREAM, 0)) < 0) {
+	printf ("Error from socket(): %d: %s\n", errno, strer		printf ("Error from socket(): %d: %s\n", errno, strer
+        goto err;						        goto err;
+    }								    }
+
+    /* Compose network address. */				    /* Compose network address. */
+    bzero ((char *)&sockaddr, sizeof(sockaddr));		    bzero ((char *)&sockaddr, sizeof(sockaddr));
+    sockaddr.sin_family = AF_INET;				    sockaddr.sin_family = AF_INET;
+    sockaddr.sin_port = host_port;				    sockaddr.sin_port = host_port;
+    bcopy ((char *)&host_addr, (char *)&sockaddr.sin_addr, si	    bcopy ((char *)&host_addr, (char *)&sockaddr.sin_addr, si
+
+    /* Connect to server. */					    /* Connect to server. */
+    if (connect (fd, (struct sockaddr *)&sockaddr, sizeof(soc	    if (connect (fd, (struct sockaddr *)&sockaddr, sizeof(soc
+	printf ("Error from connect(): %d: %s\n", errno, stre		printf ("Error from connect(): %d: %s\n", errno, stre
+        close (fd);						        close (fd);
+        goto err;						        goto err;
+    }								    }
+
+    if (SUP_DEBUG)						    if (SUP_DEBUG)
+        fprintf (stderr, "Connection established on '%s:%d' f	        fprintf (stderr, "Connection established on '%s:%d' f
+	    host, host_port, fd);					    host, host_port, fd);
+
+    return (fd);						    return (fd);
+
+err:								err:
+    fprintf (stderr, "Cannot open server connection on '%s:%d	    fprintf (stderr, "Cannot open server connection on '%s:%d
+	    host, host_port);						    host, host_port);
+    return (-1);						    return (-1);
+}								}
+
+
+
+/************************************************************	/************************************************************
+**  Private procedures						**  Private procedures
+*************************************************************	*************************************************************
+
+/*  DCASUPPARSENODE -- Parse a device string, returning the d	/*  DCASUPPARSENODE -- Parse a device string, returning the d
+**  function value and loading the path/host information as n	**  function value and loading the path/host information as n
+*/								*/
+static int 							static int 
+dcaSupParseNode (char *host, int port, unsigned short *host_p	dcaSupParseNode (char *host, int port, unsigned short *host_p
+{								{
+    char     *ip=(char *)NULL, lhost[SZMSG], port_str[SZMSG], |	    char     *ip, lhost[SZMSG], port_str[SZMSG], host_str[SZM
+    unsigned short i;						    unsigned short i;
+							      >	    struct   servent *sv;
+    struct   hostent *hp;					    struct   hostent *hp;
+
+
+    if (host == NULL)						    if (host == NULL)
+        return (-1);						        return (-1);
+
+    bzero (lhost, SZMSG);					    bzero (lhost, SZMSG);
+    bzero (host_str, SZMSG);					    bzero (host_str, SZMSG);
+    bzero (port_str, SZMSG);					    bzero (port_str, SZMSG);
+
+    /* Get host name/address.  This may be specified either h	    /* Get host name/address.  This may be specified either h
+     * name or as an Internet address in dot notation.  If no	     * name or as an Internet address in dot notation.  If no
+     * name is specified default to the local host.		     * name is specified default to the local host.
+     */								     */
+    if (gethostname (lhost, SZMSG) < 0) {			    if (gethostname (lhost, SZMSG) < 0) {
+	/* Error getting local host name, fake it.... 			/* Error getting local host name, fake it.... 
+	 */								 */
+        strcpy (host_str, "localhost");				        strcpy (host_str, "localhost");
+        if ((hp = gethostbyname(host_str)))			        if ((hp = gethostbyname(host_str)))
+            bcopy (hp->h_addr, (char *)host_addr, sizeof(*hos	            bcopy (hp->h_addr, (char *)host_addr, sizeof(*hos
+    } else {							    } else {
+
+	/* Pull the host name from the host string.			/* Pull the host name from the host string.
+	*/								*/
+        for (i=0, ip=host; *ip && *ip != ':'; ip++, i++)	        for (i=0, ip=host; *ip && *ip != ':'; ip++, i++)
+	    host_str[i] = *ip;						    host_str[i] = *ip;
+
+/*      if (*ip == '\0' || strcmp (lhost, host_str) == 0) { *	/*      if (*ip == '\0' || strcmp (lhost, host_str) == 0) { *
+        if (strcmp (lhost, host_str) == 0) { 			        if (strcmp (lhost, host_str) == 0) { 
+            strcpy (host_str, "localhost");			            strcpy (host_str, "localhost");
+            if ((hp = gethostbyname(host_str))) {		            if ((hp = gethostbyname(host_str))) {
+                bcopy (hp->h_addr, (char *)host_addr, sizeof(	                bcopy (hp->h_addr, (char *)host_addr, sizeof(
+	    }								    }
+
+        } else if (isdigit (host_str[0])) {			        } else if (isdigit (host_str[0])) {
+            *host_addr = inet_addr (host_str);			            *host_addr = inet_addr (host_str);
+            if ((int)*host_addr == -1) {			            if ((int)*host_addr == -1) {
+                return (-1);					                return (-1);
+	    }								    }
+
+        } else if ((hp = gethostbyname(host_str))) {		        } else if ((hp = gethostbyname(host_str))) {
+            bcopy (hp->h_addr, (char *)host_addr, sizeof(*hos	            bcopy (hp->h_addr, (char *)host_addr, sizeof(*hos
+
+        } else							        } else
+            return (-1);					            return (-1);
+    }								    }
+
+
+    /*  Get port number.  Must be specified as a decimal port	    /*  Get port number.  Must be specified as a decimal port
+    **  can be passed in explicitly (so just use it), or as p	    **  can be passed in explicitly (so just use it), or as p
+    **  specification (so parse it).  When the Super is first	    **  specification (so parse it).  When the Super is first
+    **  have already broken out the node/port, but the reconn	    **  have already broken out the node/port, but the reconn
+    **  be a node:port device spec so parse it here.		    **  be a node:port device spec so parse it here.
+    */								    */
+    if (port > 0) {						    if (port > 0) {
+	*host_port = htons (port);					*host_port = htons (port);
+  								  
+    } else {							    } else {
+	unsigned short nport = 0;					unsigned short nport = 0;
+
+        for (i=0, ip++; *ip && *ip != ':'; ip++, i++)		        for (i=0, ip++; *ip && *ip != ':'; ip++, i++)
+	    port_str[i] = *ip;						    port_str[i] = *ip;
+
+        if (isdigit (port_str[0])) {				        if (isdigit (port_str[0])) {
+            nport = (unsigned short) atoi(port_str);		            nport = (unsigned short) atoi(port_str);
+            *host_port = htons (nport);				            *host_port = htons (nport);
+        } else {						        } else {
+            return (-1);					            return (-1);
+        }							        }
+    }								    }
+
+    return (0);							    return (0);
+}								}
+
+
+
+/*  DCASUPSOCKREAD -- Read exactly "n" bytes from the Supervi	/*  DCASUPSOCKREAD -- Read exactly "n" bytes from the Supervi
+**  descriptor. 						**  descriptor. 
+*/								*/
+
+static int							static int
+dcaSupSockRead (fd, vptr, nbytes)				dcaSupSockRead (fd, vptr, nbytes)
+int     fd; 							int     fd; 
+void    *vptr; 							void    *vptr; 
+int     nbytes;							int     nbytes;
+{								{
+    char    *ptr = vptr;					    char    *ptr = vptr;
+    int     nread = 0, nleft = nbytes, nb = 0;			    int     nread = 0, nleft = nbytes, nb = 0;
+
+    while (nleft > 0) {						    while (nleft > 0) {
+        if ( (nb = read(fd, ptr, nleft)) < 0) {			        if ( (nb = read(fd, ptr, nleft)) < 0) {
+            if (errno == EINTR)					            if (errno == EINTR)
+                nb = 0;             /* and call read() again 	                nb = 0;             /* and call read() again 
+            else						            else
+                return(-1);					                return(-1);
+        } else if (nb == 0)					        } else if (nb == 0)
+            break;                  /* EOF */			            break;                  /* EOF */
+        nleft -= nb;						        nleft -= nb;
+        ptr   += nb;						        ptr   += nb;
+        nread += nb;						        nread += nb;
+    }								    }
+
+    return (nread);                 /* return no. of bytes re	    return (nread);                 /* return no. of bytes re
+}								}
+
+
+/*  DCASUPSOCKWRITE -- Write exactly "n" bytes to the Supervi	/*  DCASUPSOCKWRITE -- Write exactly "n" bytes to the Supervi
+**  descriptor. 						**  descriptor. 
+*/								*/
+static int							static int
+dcaSupSockWrite (fd, vptr, nbytes)				dcaSupSockWrite (fd, vptr, nbytes)
+int     fd; 							int     fd; 
+void    *vptr; 							void    *vptr; 
+int     nbytes;							int     nbytes;
+{								{
+    char    *ptr = vptr;					    char    *ptr = vptr;
+    int     nwritten = 0,  nleft = nbytes, nb = 0;		    int     nwritten = 0,  nleft = nbytes, nb = 0;
+
+
+    /* Send the message. */					    /* Send the message. */
+    while (nleft > 0) {						    while (nleft > 0) {
+        if ( (nb = write(fd, ptr, nleft)) <= 0) {		        if ( (nb = write(fd, ptr, nleft)) <= 0) {
+            if (errno == EINTR)					            if (errno == EINTR)
+                nb = 0;             /* and call write() again	                nb = 0;             /* and call write() again
+            else						            else
+                return (-1);        /* error */			                return (-1);        /* error */
+        }							        }
+        nleft    -= nb;						        nleft    -= nb;
+        ptr      += nb;						        ptr      += nb;
+        nwritten += nb;						        nwritten += nb;
+    }								    }
+
+    return (nwritten);						    return (nwritten);
+}								}

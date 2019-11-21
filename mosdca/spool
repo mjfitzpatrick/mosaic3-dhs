@@ -1,0 +1,67 @@
+cc -c -g -I../include -I/usr/local/include -I../lib/pvm3/include mosdca.c
+mosdca.c:5:17: tcl.h: No such file or directory
+mosdca.c: In function `EndReadout':
+mosdca.c:1161: error: `Tcl_Interp' undeclared (first use in this function)
+mosdca.c:1161: error: (Each undeclared identifier is reported only once
+mosdca.c:1161: error: for each function it appears in.)
+mosdca.c:1161: error: `tcl' undeclared (first use in this function)
+mosdca.c:1200: warning: comparison between pointer and integer
+mosdca.c:1245: warning: comparison between pointer and integer
+mosdca.c:1270: warning: assignment makes pointer from integer without a cast
+mosdca.c: At top level:
+mosdca.c:1348: error: syntax error before "Tcl_Interp"
+mosdca.c:1348: warning: data definition has no type or storage class
+mosdca.c:1350: error: syntax error before '{' token
+mosdca.c:1352: warning: built-in function 'index' declared as non-function
+mosdca.c:1359: error: syntax error before string constant
+mosdca.c:1359: error: conflicting types for 'sprintf'
+mosdca.c:1359: note: a parameter list with an ellipsis can't match an empty parameter name list declaration
+mosdca.c:1359: error: conflicting types for 'sprintf'
+mosdca.c:1359: note: a parameter list with an ellipsis can't match an empty parameter name list declaration
+mosdca.c:1359: warning: data definition has no type or storage class
+mosdca.c:1363: error: syntax error before string constant
+mosdca.c:1363: warning: data definition has no type or storage class
+mosdca.c:1367: error: syntax error before string constant
+mosdca.c:1367: warning: data definition has no type or storage class
+mosdca.c:1371: error: syntax error before string constant
+mosdca.c:1371: warning: data definition has no type or storage class
+mosdca.c:1375: error: syntax error before string constant
+mosdca.c:1375: warning: data definition has no type or storage class
+mosdca.c:1379: error: syntax error before string constant
+mosdca.c:1379: warning: data definition has no type or storage class
+mosdca.c:1399: error: `dsim' undeclared here (not in a function)
+mosdca.c:1399: error: initializer element is not constant
+mosdca.c:1399: warning: data definition has no type or storage class
+mosdca.c:1401: error: syntax error before string constant
+mosdca.c:1401: warning: data definition has no type or storage class
+mosdca.c:1408: error: initializer element is not constant
+mosdca.c:1408: warning: data definition has no type or storage class
+mosdca.c:1409: error: syntax error before "switch"
+mosdca.c:1437: error: syntax error before string constant
+mosdca.c:1441: error: syntax error before string constant
+mosdca.c:1445: error: syntax error before string constant
+mosdca.c:2003: error: syntax error before "Tcl_Interp"
+mosdca.c:2003: warning: data definition has no type or storage class
+mosdca.c:2006: error: syntax error before '{' token
+mosdca.c:2009: error: syntax error before numeric constant
+mosdca.c:2009: error: conflicting types for 'dprintf'
+mosdca.c:124: error: previous declaration of 'dprintf' was here
+mosdca.c:2009: error: conflicting types for 'dprintf'
+mosdca.c:124: error: previous declaration of 'dprintf' was here
+mosdca.c:2009: warning: data definition has no type or storage class
+mosdca.c:2010: error: redefinition of 'status'
+mosdca.c:1353: error: previous definition of 'status' was here
+mosdca.c:2010: error: initializer element is not constant
+mosdca.c:2010: warning: data definition has no type or storage class
+mosdca.c:2012: error: syntax error before "if"
+mosdca.c:2038: error: conflicting types for 'dprintf'
+mosdca.c:2009: error: previous declaration of 'dprintf' was here
+mosdca.c:2038: error: conflicting types for 'dprintf'
+mosdca.c:2009: error: previous declaration of 'dprintf' was here
+mosdca.c: In function `tcl_dprintf':
+mosdca.c:2074: error: syntax error before "Tcl_Interp"
+mosdca.c:2082: error: `TCL_ERROR' undeclared (first use in this function)
+mosdca.c:2114: error: `TCL_OK' undeclared (first use in this function)
+mosdca.c: At top level:
+mosdca.c:1349: error: register name not specified for 'ctx'
+make: *** [mosdca.o] Error 1

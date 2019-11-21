@@ -1,0 +1,33 @@
+#!/bin/csh -f
+
+#if (! (-e $1)) then
+#    echo "Creating directory: ${1} ......"
+#    mkdir ${1}
+#    chmod 777 ${1}
+#else
+#    echo "Directory exists: ${1} ......"
+#endif
+
+set INST = $argv[1]
+set DEBUG_LEVEL = 60
+set REQUEST_LEVEL = 2 
+
+if ( $#argv == 2 ) then
+   set LOG = $argv[2]
+   if ( -e $LOG ) then
+     cp $LOG "$LOG".OLD
+     rm $LOG
+   endif
+   echo `date` "Starting" >! $LOG
+   /dhs/bin/mosdca -verbose -debug $DEBUG_LEVEL -reqlevel $REQUEST_LEVEL -vminit cachesize=312m -imformat %N%05I.fits -maxgkw 150 -maxikw 150 -dir /home/data/observer -ktm /dhs/lib/"$INST".tcl |& tee -a $LOG
+   echo `date` "Ending" >> $LOG
+
+else
+   echo `date` "Starting" 
+   /dhs/bin/mosdca -verbose -debug $DEBUG_LEVEL -reqlevel $REQUEST_LEVEL -vminit cachesize=312m -imformat %N%05I.fits -maxgkw 150 -maxikw 150 -dir /home/data/observer -ktm /dhs/lib/"$INST".tcl 
+   echo `date` "Ending" 
+
+endif
+#  NOTE:  This must be changed once the Mosaic1.1 KTM is in place...
+#exec /dhs/bin/mosdca -debug 2 -reqlevel 2 -vminit cachesize=312m -imformat %N%05I.fits -maxgkw 150 -maxikw 150 -dir ${1} -ktm /dhs/lib/generic.tcl |& tee /tmp/mosdca.log
+

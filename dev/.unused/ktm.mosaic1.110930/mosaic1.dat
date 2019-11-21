@@ -1,0 +1,2561 @@
+# Extensions Names
+
+switch $nimages {
+ 8 { set extname(ccd1,A) im1
+     set extname(ccd2,A) im2
+     set extname(ccd3,A) im3
+     set extname(ccd4,A) im4
+     set extname(ccd5,D) im5
+     set extname(ccd6,D) im6
+     set extname(ccd7,D) im7
+     set extname(ccd8,D) im8 }
+16 { set extname(ccd1,A) im1
+     set extname(ccd1,B) im9
+     set extname(ccd2,A) im2
+     set extname(ccd2,B) im10
+     set extname(ccd3,A) im3
+     set extname(ccd3,B) im11
+     set extname(ccd4,A) im4
+     set extname(ccd4,B) im12
+     set extname(ccd5,C) im5
+     set extname(ccd5,D) im13
+     set extname(ccd6,C) im6
+     set extname(ccd6,D) im14
+     set extname(ccd7,C) im7
+     set extname(ccd7,D) im15
+     set extname(ccd8,C) im8
+     set extname(ccd8,D) im16 }
+}
+
+# Detectors
+
+set detname(mos)  "Mosaic1.1"
+set detname(ccd1) "SN11-02"
+set detname(ccd2) "SN09-01"
+set detname(ccd3) "SN05-01"
+set detname(ccd4) "SN10-02"
+set detname(ccd5) "SN15-01"
+set detname(ccd6) "SN19-02"
+set detname(ccd7) "SN13-01"
+set detname(ccd8) "SN11-01"
+
+# Geometry.
+# This is unbinned.  The KTM will adjust these based only on binning factors.
+
+set detsize(mos,1) 8192; set detsize(mos,2) 8192
+set detsize(ccd,1) 2048; set detsize(ccd,2) 4096
+set detsize(bias,1) 50
+switch $nimages {
+ 8 { set detsize(amp,1) 2048; set detsize(amp,2) 4096 }
+16 { set detsize(amp,1) 1024; set detsize(amp,2) 4096 }
+}
+
+# CCD to Image transformation (IRAF logical).
+set ltv(1) 0; set ltv(2) 0; set ltm(1) 1; set ltm(2) 1
+
+# CCD to Amplifier transformation.
+set atv(A,1)    0; set atv(A,2)    0; set atm(A,1)  1; set atm(A,2)  1
+set atv(B,1) 2049; set atv(B,2)    0; set atm(B,1) -1; set atm(B,2)  1
+set atv(C,1)    0; set atv(C,2) 4097; set atm(C,1)  1; set atm(C,2) -1
+set atv(D,1) 2049; set atv(D,2) 4097; set atm(D,1) -1; set atm(D,2) -1
+
+# CCD to Detector transformation.
+set dtv(ccd1,1)    0; set dtv(ccd1,2)    0; set dtm(ccd1,1) 1; set dtm(ccd1,2) 1
+set dtv(ccd2,1) 2048; set dtv(ccd2,2)    0; set dtm(ccd2,1) 1; set dtm(ccd2,2) 1
+set dtv(ccd3,1) 4096; set dtv(ccd3,2)    0; set dtm(ccd3,1) 1; set dtm(ccd3,2) 1
+set dtv(ccd4,1) 6144; set dtv(ccd4,2)    0; set dtm(ccd4,1) 1; set dtm(ccd4,2) 1
+set dtv(ccd5,1)    0; set dtv(ccd5,2) 4096; set dtm(ccd5,1) 1; set dtm(ccd5,2) 1
+set dtv(ccd6,1) 2048; set dtv(ccd6,2) 4096; set dtm(ccd6,1) 1; set dtm(ccd6,2) 1
+set dtv(ccd7,1) 4096; set dtv(ccd7,2) 4096; set dtm(ccd7,1) 1; set dtm(ccd7,2) 1
+set dtv(ccd8,1) 6144; set dtv(ccd8,2) 4096; set dtm(ccd8,1) 1; set dtm(ccd8,2) 1
+
+# WCS solutions are indexed by serial number.
+# The following defines mappings for filters to WCS solutions.
+# Undefined filters map to V.
+
+set wcsfilter(k1001)		 k1044
+set wcsfilter(k1002)		 k1002
+set wcsfilter(k1003)		 k1003
+set wcsfilter(k1004)		 k1004
+set wcsfilter(k1005)		 k1005
+set wcsfilter(k1006)		 k1005
+set wcsfilter(k1007)		 k1005
+set wcsfilter(k1008)		 k1005
+set wcsfilter(k1009)		 k1009
+set wcsfilter(k1010)		 k1009
+set wcsfilter(k1011)		 k1009
+set wcsfilter(k1012)		 k1009
+set wcsfilter(k1013)		 k1009
+set wcsfilter(k1014)	 	 k1003
+set wcsfilter(k1015)		 k1003
+set wcsfilter(k1016)		 k1003
+set wcsfilter(k1017)		 k1002
+set wcsfilter(k1018)		 k1004
+set wcsfilter(k1019)		 k1005
+set wcsfilter(k1020)		 k1020
+set wcsfilter(k1021)		 k1002
+set wcsfilter(k1022)		 k1002
+set wcsfilter(k1023)		 k1002
+set wcsfilter(k1024)		 k1002
+set wcsfilter(k1025)		 k1001
+set wcsfilter(k1026)		 k1004
+set wcsfilter(k1027)		 k1004
+set wcsfilter(k1029)		 k1001
+set wcsfilter(k1030)		 k1003
+set wcsfilter(k1031)		 k1003
+set wcsfilter(k1040)		 k1003
+set wcsfilter(k1041)		 k1002
+set wcsfilter(k1042)		 k1002
+set wcsfilter(k1043)		 k1004
+set wcsfilter(k1044)		 k1044
+set wcsfilter(k1045)		 k1044
+
+
+# WCS Astrometry.
+# Currently available 4m: k1002, k1003, k1004, k1005, k1009, k1020, k1044
+# Currently available 36inch: V
+
+set WCSASTRM(kp09m,k1003,ccd1) \
+          {kp09m.20110119T041123 (NGC 188 V) by F. Valdes 2011-01-19}
+set CTYPE1(kp09m,k1003,ccd1) RA---TNX
+set CTYPE2(kp09m,k1003,ccd1) DEC--TNX
+set CRPIX1(kp09m,k1003,ccd1) 3953.40493190064
+set CRPIX2(kp09m,k1003,ccd1) 3949.53708631897
+set CD1_1(kp09m,k1003,ccd1) -8.5209873014548E-7
+set CD2_2(kp09m,k1003,ccd1) -3.8145107245618E-7
+set CD1_2(kp09m,k1003,ccd1) 1.17788919893557E-4
+set CD2_1(kp09m,k1003,ccd1) -1.1751941521707E-4
+set WAT01(kp09m,k1003,ccd1) {system=image}
+set WAT11(kp09m,k1003,ccd1) \
+          {wtype=tnx axtype=ra lngcor = "3. 4. 4. 1. -0.4634703254342794 0.0206}
+set WAT12(kp09m,k1003,ccd1) \
+          {1954763044551 0.2238662049131908 0.4659904900042462 0.00149785478614}
+set WAT13(kp09m,k1003,ccd1) \
+          {1687 0.03610550567838189 0.1634004248325837 0.1996004267845002 -0.00}
+set WAT14(kp09m,k1003,ccd1) \
+          {8127597275854089 -0.3019893913395605 -1.539260344199082 -2.031014403}
+set WAT15(kp09m,k1003,ccd1) \
+          {373777 0.01972474813055361 0.8909583543769718 4.621068164112961 6.15}
+set WAT16(kp09m,k1003,ccd1) \
+          {6613163653039 -0.02026022584717541 -0.8687634700738765 -4.4515208395}
+set WAT21(kp09m,k1003,ccd1) \
+          {wtype=tnx axtype=dec latcor = "3. 3. 3. 1. -0.4634703254342794 0.020}
+set WAT22(kp09m,k1003,ccd1) \
+          {61954763044551 0.2238662049131908 0.4659904900042462 -0.002052009992}
+set WAT23(kp09m,k1003,ccd1) \
+          {593515 -0.002129123230653492 6.313227165621939E-4 0.0106193588761676}
+set WAT24(kp09m,k1003,ccd1) \
+          {5 2.487109248786156E-4 -0.01816282154025268 -0.01409915683424592 4.1}
+set WAT25(kp09m,k1003,ccd1) \
+          {78778311727600E-4 0.009069030677163373 "                            }
+
+set WCSASTRM(kp09m,k1003,ccd2) \
+          {kp09m.20110119T041123 (NGC 188 V) by F. Valdes 2011-01-19}
+set CTYPE1(kp09m,k1003,ccd2) RA---TNX
+set CTYPE2(kp09m,k1003,ccd2) DEC--TNX
+set CRPIX1(kp09m,k1003,ccd2) 1815.20781886479
+set CRPIX2(kp09m,k1003,ccd2) 3938.36766335943
+set CD1_1(kp09m,k1003,ccd2) -5.1526554868118E-7
+set CD2_2(kp09m,k1003,ccd2) -4.4866634036298E-7
+set CD1_2(kp09m,k1003,ccd2) 1.17982955871170E-4
+set CD2_1(kp09m,k1003,ccd2) -1.1808800861531E-4
+set WAT01(kp09m,k1003,ccd2) {system=image}
+set WAT11(kp09m,k1003,ccd2) \
+          {wtype=tnx axtype=ra lngcor = "3. 4. 4. 1. -0.4646622250656491 0.0195}
+set WAT12(kp09m,k1003,ccd2) \
+          {3272780494337 -0.02756068941507591 0.2160027528842566 1.783823995622}
+set WAT13(kp09m,k1003,ccd2) \
+          {788E-4 0.002465297669350697 5.481866715954918E-4 -0.0122777509217045}
+set WAT14(kp09m,k1003,ccd2) \
+          {9 -5.341052875337707E-4 -6.477530595919807E-4 -0.003042385413082934 }
+set WAT15(kp09m,k1003,ccd2) \
+          {-0.01329579186973755 0.002225389145350537 -0.05870581804565642 -0.19}
+set WAT16(kp09m,k1003,ccd2) \
+          {07548364584103 -0.1121429984384583 -0.00744438014881747 0.2303740027}
+set WAT21(kp09m,k1003,ccd2) \
+          {wtype=tnx axtype=dec latcor = "3. 3. 3. 1. -0.4646622250656491 0.019}
+set WAT22(kp09m,k1003,ccd2) \
+          {53272780494337 -0.02756068941507591 0.2160027528842566 -7.8507583323}
+set WAT23(kp09m,k1003,ccd2) \
+          {36464E-5 -5.771108585746363E-4 -3.979556465413496E-4 0.0011045079142}
+set WAT24(kp09m,k1003,ccd2) \
+          {44219 -0.002599187684453831 -0.01910294300060228 -0.0029037719770269}
+set WAT25(kp09m,k1003,ccd2) \
+          {36 0.01719071934448111 0.04505966427891064 "                        }
+
+set WCSASTRM(kp09m,k1003,ccd3) \
+          {kp09m.20110119T041123 (NGC 188 V) by F. Valdes 2011-01-19}
+set CTYPE1(kp09m,k1003,ccd3) RA---TNX
+set CTYPE2(kp09m,k1003,ccd3) DEC--TNX
+set CRPIX1(kp09m,k1003,ccd3) -313.567440817148
+set CRPIX2(kp09m,k1003,ccd3) 3939.49793287809
+set CD1_1(kp09m,k1003,ccd3) -4.4062672014060E-7
+set CD2_2(kp09m,k1003,ccd3) -6.0048054325817E-7
+set CD1_2(kp09m,k1003,ccd3) 1.17974488995646E-4
+set CD2_1(kp09m,k1003,ccd3) -1.1810157788807E-4
+set WAT01(kp09m,k1003,ccd3) {system=image}
+set WAT11(kp09m,k1003,ccd3) \
+          {wtype=tnx axtype=ra lngcor = "3. 4. 4. 1. -0.4656828507575381 0.0183}
+set WAT12(kp09m,k1003,ccd3) \
+          {2464457575965 -0.2789988174958792 -0.03478591973436095 1.74443450025}
+set WAT13(kp09m,k1003,ccd3) \
+          {7127E-4 0.001704726734638406 -0.006125728112642184 -0.02280746092931}
+set WAT14(kp09m,k1003,ccd3) \
+          {493 -3.755220994585990E-4 -0.01950517416449324 -0.1577167015867332 -}
+set WAT15(kp09m,k1003,ccd3) \
+          {0.2569956295242783 -0.005564462396440622 -0.1443493325118537 -1.1405}
+set WAT16(kp09m,k1003,ccd3) \
+          {57028148366 -1.912266397684375 -0.01258250238516197 -0.2941080877979}
+set WAT21(kp09m,k1003,ccd3) \
+          {wtype=tnx axtype=dec latcor = "3. 3. 3. 1. -0.4656828507575381 0.018}
+set WAT22(kp09m,k1003,ccd3) \
+          {32464457575965 -0.2789988174958792 -0.03478591973436095 1.6878776383}
+set WAT23(kp09m,k1003,ccd3) \
+          {46303E-4 6.791516421160299E-4 -2.038693910983594E-4 0.00155065961386}
+set WAT24(kp09m,k1003,ccd3) \
+          {8136 -6.660185090085710E-4 -0.01346525646275932 0.00295113606088176 }
+set WAT25(kp09m,k1003,ccd3) \
+          {-0.007442980609175886 -0.01376120621650657 "                        }
+
+set WCSASTRM(kp09m,k1003,ccd4) \
+          {kp09m.20110119T041123 (NGC 188 V) by F. Valdes 2011-01-19}
+set CTYPE1(kp09m,k1003,ccd4) RA---TNX
+set CTYPE2(kp09m,k1003,ccd4) DEC--TNX
+set CRPIX1(kp09m,k1003,ccd4) -2456.93886777201
+set CRPIX2(kp09m,k1003,ccd4) 3946.59514417688
+set CD1_1(kp09m,k1003,ccd4) -2.2024477786402E-7
+set CD2_2(kp09m,k1003,ccd4) -7.8491278703790E-7
+set CD1_2(kp09m,k1003,ccd4) 1.17760963442789E-4
+set CD2_1(kp09m,k1003,ccd4) -1.1753329096931E-4
+set WAT01(kp09m,k1003,ccd4) {system=image}
+set WAT11(kp09m,k1003,ccd4) \
+          {wtype=tnx axtype=ra lngcor = "3. 4. 4. 1. -0.4656292747936835 0.0170}
+set WAT12(kp09m,k1003,ccd4) \
+          {5271156482651 -0.5295975605265947 -0.2857926960494914 0.004084981714}
+set WAT13(kp09m,k1003,ccd4) \
+          {774478 -0.001583081810963373 -0.1064535419618347 -0.1785901989603154}
+set WAT14(kp09m,k1003,ccd4) \
+          { 0.02562662362483096 -0.01206932758730767 -0.6489136829403465 -1.051}
+set WAT15(kp09m,k1003,ccd4) \
+          {690652069392 0.05981386357456596 0.02273494273520566 -1.293787891995}
+set WAT16(kp09m,k1003,ccd4) \
+          {421 -2.193779904294252 0.04894177058003015 0.06494425928571176 -0.85}
+set WAT21(kp09m,k1003,ccd4) \
+          {wtype=tnx axtype=dec latcor = "3. 3. 3. 1. -0.4656292747936835 0.017}
+set WAT22(kp09m,k1003,ccd4) \
+          {05271156482651 -0.5295975605265947 -0.2857926960494914 0.00276388705}
+set WAT23(kp09m,k1003,ccd4) \
+          {5206935 5.478997779776937E-5 -0.004948298585650737 0.012236348831594}
+set WAT24(kp09m,k1003,ccd4) \
+          {15 -0.01052429307373743 -0.03534137574097435 0.01397216123204296 -0.}
+set WAT25(kp09m,k1003,ccd4) \
+          {01298810441917933 -0.02790059548182379 "                            }
+
+set WCSASTRM(kp09m,k1003,ccd5) \
+          {kp09m.20110119T041123 (NGC 188 V) by F. Valdes 2011-01-19}
+set CTYPE1(kp09m,k1003,ccd5) RA---TNX
+set CTYPE2(kp09m,k1003,ccd5) DEC--TNX
+set CRPIX1(kp09m,k1003,ccd5) 3955.75367366191
+set CRPIX2(kp09m,k1003,ccd5) -216.248461178623
+set CD1_1(kp09m,k1003,ccd5) -2.2259041167565E-7
+set CD2_2(kp09m,k1003,ccd5) -7.0319309871939E-7
+set CD1_2(kp09m,k1003,ccd5) 1.17795190216399E-4
+set CD2_1(kp09m,k1003,ccd5) -1.1755768717872E-4
+set WAT01(kp09m,k1003,ccd5) {system=image}
+set WAT11(kp09m,k1003,ccd5) \
+          {wtype=tnx axtype=ra lngcor = "3. 4. 4. 1. 0.02601547148435201 0.5088}
+set WAT12(kp09m,k1003,ccd5) \
+          {424179932063 0.2212387662245449 0.4647589276186488 -0.00205727653628}
+set WAT13(kp09m,k1003,ccd5) \
+          {3569 0.02801405098545391 -0.1119992985599375 0.1491399843058012 0.01}
+set WAT14(kp09m,k1003,ccd5) \
+          {327897536540461 -0.2311400203785599 1.064269585920288 -1.50518103229}
+set WAT15(kp09m,k1003,ccd5) \
+          {3587 -0.03656073548253605 0.6998374829534581 -3.252282133106831 4.57}
+set WAT16(kp09m,k1003,ccd5) \
+          {3821528503482 0.03796604320525537 -0.7175913987127731 3.259559902176}
+set WAT21(kp09m,k1003,ccd5) \
+          {wtype=tnx axtype=dec latcor = "3. 3. 3. 1. 0.02601547148435201 0.508}
+set WAT22(kp09m,k1003,ccd5) \
+          {8424179932063 0.2212387662245449 0.4647589276186488 -0.0020297852757}
+set WAT23(kp09m,k1003,ccd5) \
+          {31672 0.00280483746612438 -0.001615731235094543 0.01044941535922345 }
+set WAT24(kp09m,k1003,ccd5) \
+          {-0.00392881054862497 -0.005189363306435854 -0.01422871025943768 0.00}
+set WAT25(kp09m,k1003,ccd5) \
+          {6369332532798759 -0.009803942805645514 "                            }
+
+set WCSASTRM(kp09m,k1003,ccd6) \
+          {kp09m.20110119T041123 (NGC 188 V) by F. Valdes 2011-01-19}
+set CTYPE1(kp09m,k1003,ccd6) RA---TNX
+set CTYPE2(kp09m,k1003,ccd6) DEC--TNX
+set CRPIX1(kp09m,k1003,ccd6) 1819.53466540756
+set CRPIX2(kp09m,k1003,ccd6) -210.814078596228
+set CD1_1(kp09m,k1003,ccd6) -3.9100292052608E-7
+set CD2_2(kp09m,k1003,ccd6) -5.7354510637417E-7
+set CD1_2(kp09m,k1003,ccd6) 1.17985610732906E-4
+set CD2_1(kp09m,k1003,ccd6) -1.1808958606359E-4
+set WAT01(kp09m,k1003,ccd6) {system=image}
+set WAT11(kp09m,k1003,ccd6) \
+          {wtype=tnx axtype=ra lngcor = "3. 4. 4. 1. 0.0249016828119391 0.50885}
+set WAT12(kp09m,k1003,ccd6) \
+          {31417415054 -0.02944952893074275 0.214628520952022 -2.84175129147717}
+set WAT13(kp09m,k1003,ccd6) \
+          {4E-4 0.002382960197402625 1.850590011988982E-4 -0.01063515328311079 }
+set WAT14(kp09m,k1003,ccd6) \
+          {9.820066778185232E-4 -0.01463450199201991 0.08777300857740765 -0.134}
+set WAT15(kp09m,k1003,ccd6) \
+          {326429281669 -0.00130899170926338 0.146552120913565 -1.1629410195980}
+set WAT16(kp09m,k1003,ccd6) \
+          {39 1.872243877090476 -0.003816350121612133 -0.4776914366914254 3.835}
+set WAT21(kp09m,k1003,ccd6) \
+          {wtype=tnx axtype=dec latcor = "3. 3. 3. 1. 0.0249016828119391 0.5088}
+set WAT22(kp09m,k1003,ccd6) \
+          {531417415054 -0.02944952893074275 0.214628520952022 -1.1580976369656}
+set WAT23(kp09m,k1003,ccd6) \
+          {78E-4 6.079949677350883E-4 -4.525443725199290E-4 0.00142181990308183}
+set WAT24(kp09m,k1003,ccd6) \
+          { 8.598232249750154E-4 -0.01172329812539318 -0.004672720204095154 -0.}
+set WAT25(kp09m,k1003,ccd6) \
+          {001885348712783733 0.005161097804172661 "                           }
+
+set WCSASTRM(kp09m,k1003,ccd7) \
+          {kp09m.20110119T041123 (NGC 188 V) by F. Valdes 2011-01-19}
+set CTYPE1(kp09m,k1003,ccd7) RA---TNX
+set CTYPE2(kp09m,k1003,ccd7) DEC--TNX
+set CRPIX1(kp09m,k1003,ccd7) -310.868702814824
+set CRPIX2(kp09m,k1003,ccd7) -209.566134619355
+set CD1_1(kp09m,k1003,ccd7) -4.8267506038123E-7
+set CD2_2(kp09m,k1003,ccd7) -4.3904042945019E-7
+set CD1_2(kp09m,k1003,ccd7) 1.17983940743762E-4
+set CD2_1(kp09m,k1003,ccd7) -1.1809731823131E-4
+set WAT01(kp09m,k1003,ccd7) {system=image}
+set WAT11(kp09m,k1003,ccd7) \
+          {wtype=tnx axtype=ra lngcor = "3. 4. 4. 1. 0.0237048552560104 0.50783}
+set WAT12(kp09m,k1003,ccd7) \
+          {7128450316 -0.2804663854669588 -0.03692330448887772 -2.5611229725092}
+set WAT13(kp09m,k1003,ccd7) \
+          {13E-4 0.001234755215235104 0.006627444499374308 -0.019372452504796 -}
+set WAT14(kp09m,k1003,ccd7) \
+          {9.246114547850261E-4 -0.0111959945304502 0.07731281263442493 -0.1085}
+set WAT15(kp09m,k1003,ccd7) \
+          {658238124943 -0.006533110424411942 -0.03809898747592077 0.3357260740}
+set WAT16(kp09m,k1003,ccd7) \
+          {328506 -0.4930963556468308 -0.01520953796014237 -0.01596815147295966}
+set WAT21(kp09m,k1003,ccd7) \
+          {wtype=tnx axtype=dec latcor = "3. 3. 3. 1. 0.0237048552560104 0.5078}
+set WAT22(kp09m,k1003,ccd7) \
+          {37128450316 -0.2804663854669588 -0.03692330448887772 2.0128179655673}
+set WAT23(kp09m,k1003,ccd7) \
+          {04E-4 -5.629579417554576E-4 -4.921855292212901E-4 0.0016646746815240}
+set WAT24(kp09m,k1003,ccd7) \
+          {98 0.002540575545253818 -0.01686045846003591 0.003155823567630145 0.}
+set WAT25(kp09m,k1003,ccd7) \
+          {01087635315359847 -0.02443155825342021 "                            }
+
+set WCSASTRM(kp09m,k1003,ccd8) \
+          {kp09m.20110119T041123 (NGC 188 V) by F. Valdes 2011-01-19}
+set CTYPE1(kp09m,k1003,ccd8) RA---TNX
+set CTYPE2(kp09m,k1003,ccd8) DEC--TNX
+set CRPIX1(kp09m,k1003,ccd8) -2453.72846069712
+set CRPIX2(kp09m,k1003,ccd8) -220.521297271533
+set CD1_1(kp09m,k1003,ccd8) -6.0224792812698E-7
+set CD2_2(kp09m,k1003,ccd8) -1.9821717936009E-7
+set CD1_2(kp09m,k1003,ccd8) 1.17789143782838E-4
+set CD2_1(kp09m,k1003,ccd8) -1.1754969984095E-4
+set WAT01(kp09m,k1003,ccd8) {system=image}
+set WAT11(kp09m,k1003,ccd8) \
+          {wtype=tnx axtype=ra lngcor = "3. 4. 4. 1. 0.02338164729683226 0.5069}
+set WAT12(kp09m,k1003,ccd8) \
+          {609925964289 -0.5300324379965969 -0.2885965030726946 -0.001112174902}
+set WAT13(kp09m,k1003,ccd8) \
+          {092347 -0.01351622196679031 0.1363857702046462 -0.2484451122598446 -}
+set WAT14(kp09m,k1003,ccd8) \
+          {4.530914302921379E-4 -0.1563033901211615 1.112133747564347 -1.888070}
+set WAT15(kp09m,k1003,ccd8) \
+          {721421723 0.007507672017601829 -0.4532772020017182 2.970866330265776}
+set WAT16(kp09m,k1003,ccd8) \
+          { -4.925715337700499 0.008942564944629555 -0.4030212148069597 2.58017}
+set WAT21(kp09m,k1003,ccd8) \
+          {wtype=tnx axtype=dec latcor = "3. 3. 3. 1. 0.02338164729683226 0.506}
+set WAT22(kp09m,k1003,ccd8) \
+          {9609925964289 -0.5300324379965969 -0.2885965030726946 0.002603091455}
+set WAT23(kp09m,k1003,ccd8) \
+          {291984 0.001046075498448592 -0.00721940184702976 0.01116848627189086}
+set WAT24(kp09m,k1003,ccd8) \
+          { 0.01763167798563941 -0.04863011303529834 0.01256213075342175 0.0225}
+set WAT25(kp09m,k1003,ccd8) \
+          {6591858042823 -0.04697554130864354 "                                }
+
+
+set WCSASTRM(kp4m,k1004,ccd1) \
+          {kp4m.20101023T041610 (Trumpler 37 R) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1004,ccd1) RA---ZPX
+set CTYPE2(kp4m,k1004,ccd1) DEC--ZPX
+set CRPIX1(kp4m,k1004,ccd1) 4264.84943434984
+set CRPIX2(kp4m,k1004,ccd1) 4157.10011745207
+set CD1_1(kp4m,k1004,ccd1) -2.6585592624916E-7
+set CD2_2(kp4m,k1004,ccd1) 2.26590668719903E-7
+set CD1_2(kp4m,k1004,ccd1) -7.2740874419059E-5
+set CD2_1(kp4m,k1004,ccd1) -7.2757380429221E-5
+set WAT01(kp4m,k1004,ccd1) {system=image}
+set WAT11(kp4m,k1004,ccd1) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1004,ccd1) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.005033838530294945 0.30}
+set WAT13(kp4m,k1004,ccd1) \
+          {34519263573747 0.1603504241444152 0.3102126706714392 9.4568717864652}
+set WAT14(kp4m,k1004,ccd1) \
+          {12E-5 -9.478106731496134E-4 0.002224198514821482 -3.398105804538654E}
+set WAT15(kp4m,k1004,ccd1) \
+          {-4 0.001177424270786496 3.620003672146888E-4 "                      }
+set WAT21(kp4m,k1004,ccd1) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1004,ccd1) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.005033838530294945 0.3}
+set WAT23(kp4m,k1004,ccd1) \
+          {034519263573747 0.1603504241444152 0.3102126706714392 2.982662459157}
+set WAT24(kp4m,k1004,ccd1) \
+          {990E-5 -1.791093001004975E-4 2.706658344555193E-4 -1.593164137698115}
+set WAT25(kp4m,k1004,ccd1) \
+          {E-4 4.132019785885831E-4 2.096467991000944E-4 "                     }
+
+set WCSASTRM(kp4m,k1004,ccd2) \
+          {kp4m.20101023T041610 (Trumpler 37 R) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1004,ccd2) RA---ZPX
+set CTYPE2(kp4m,k1004,ccd2) DEC--ZPX
+set CRPIX1(kp4m,k1004,ccd2) 2140.84034605266
+set CRPIX2(kp4m,k1004,ccd2) 4153.14343590611
+set CD1_1(kp4m,k1004,ccd2) -3.2278321588229E-7
+set CD2_2(kp4m,k1004,ccd2) 3.07331550609520E-7
+set CD1_2(kp4m,k1004,ccd2) -7.2729601492115E-5
+set CD2_1(kp4m,k1004,ccd2) -7.2714020766426E-5
+set WAT01(kp4m,k1004,ccd2) {system=image}
+set WAT11(kp4m,k1004,ccd2) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1004,ccd2) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.004185986626803987 0.30}
+set WAT13(kp4m,k1004,ccd2) \
+          {26744419799254 0.005474710170324883 0.155578833378944 3.574791814388}
+set WAT14(kp4m,k1004,ccd2) \
+          {046E-5 -8.405599595217860E-4 0.002897569076593631 -2.203039152969059}
+set WAT15(kp4m,k1004,ccd2) \
+          {E-5 -3.166322551049273E-4 8.722797699874919E-4 "                    }
+set WAT21(kp4m,k1004,ccd2) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1004,ccd2) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.004185986626803987 0.3}
+set WAT23(kp4m,k1004,ccd2) \
+          {026744419799254 0.005474710170324883 0.155578833378944 2.30655374822}
+set WAT24(kp4m,k1004,ccd2) \
+          {3142E-5 -2.466148317675923E-4 6.079304693225067E-4 -3.11448901273476}
+set WAT25(kp4m,k1004,ccd2) \
+          {6E-4 8.568022336367406E-4 0.001237950860647781 "                    }
+
+set WCSASTRM(kp4m,k1004,ccd3) \
+          {kp4m.20101023T041610 (Trumpler 37 R) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1004,ccd3) RA---ZPX
+set CTYPE2(kp4m,k1004,ccd3) DEC--ZPX
+set CRPIX1(kp4m,k1004,ccd3) 14.2913736315511
+set CRPIX2(kp4m,k1004,ccd3) 4154.27204108037
+set CD1_1(kp4m,k1004,ccd3) -3.1267994223485E-7
+set CD2_2(kp4m,k1004,ccd3) 3.14322136193277E-7
+set CD1_2(kp4m,k1004,ccd3) -7.2725518385233E-5
+set CD2_1(kp4m,k1004,ccd3) -7.2695144954164E-5
+set WAT01(kp4m,k1004,ccd3) {system=image}
+set WAT11(kp4m,k1004,ccd3) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1004,ccd3) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.003601964499120047 0.30}
+set WAT13(kp4m,k1004,ccd3) \
+          {20530181284022 -0.1491462087285314 9.479021403528286E-4 2.5273060420}
+set WAT14(kp4m,k1004,ccd3) \
+          {17232E-5 -6.583858224523414E-4 0.002382493241625663 -1.7322646794030}
+set WAT15(kp4m,k1004,ccd3) \
+          {11E-4 0.001131630526383134 1.959859066477477E-4 "                   }
+set WAT21(kp4m,k1004,ccd3) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1004,ccd3) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.003601964499120047 0.3}
+set WAT23(kp4m,k1004,ccd3) \
+          {020530181284022 -0.1491462087285314 9.479021403528286E-4 -1.60424177}
+set WAT24(kp4m,k1004,ccd3) \
+          {6221038E-5 1.467351335282644E-4 -2.347146953000481E-5 -6.84817443979}
+set WAT25(kp4m,k1004,ccd3) \
+          {4684E-5 0.001928712505434793 0.001560145938319807 "                 }
+
+set WCSASTRM(kp4m,k1004,ccd4) \
+          {kp4m.20101023T041610 (Trumpler 37 R) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1004,ccd4) RA---ZPX
+set CTYPE2(kp4m,k1004,ccd4) DEC--ZPX
+set CRPIX1(kp4m,k1004,ccd4) -2113.78992430884
+set CRPIX2(kp4m,k1004,ccd4) 4152.81883172308
+set CD1_1(kp4m,k1004,ccd4) -2.9196509409771E-7
+set CD2_2(kp4m,k1004,ccd4) 3.22440980211900E-7
+set CD1_2(kp4m,k1004,ccd4) -7.2721173868845E-5
+set CD2_1(kp4m,k1004,ccd4) -7.2698947650000E-5
+set WAT01(kp4m,k1004,ccd4) {system=image}
+set WAT11(kp4m,k1004,ccd4) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1004,ccd4) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.002916834753893139 0.30}
+set WAT13(kp4m,k1004,ccd4) \
+          {13076942944298 -0.3038964643713875 -0.1537613227178705 3.32709243168}
+set WAT14(kp4m,k1004,ccd4) \
+          {7667E-5 -7.307079758474545E-4 0.002409758490466239 -5.64026874977059}
+set WAT15(kp4m,k1004,ccd4) \
+          {6E-5 4.452727659462022E-5 -1.109297681962310E-4 "                   }
+set WAT21(kp4m,k1004,ccd4) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1004,ccd4) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.002916834753893139 0.3}
+set WAT23(kp4m,k1004,ccd4) \
+          {013076942944298 -0.3038964643713875 -0.1537613227178705 4.0658947350}
+set WAT24(kp4m,k1004,ccd4) \
+          {39405E-7 3.755152341115121E-4 -2.707303047181943E-4 2.65354111271779}
+set WAT25(kp4m,k1004,ccd4) \
+          {1E-4 0.00128204219669386 0.001033885782675917 "                     }
+
+set WCSASTRM(kp4m,k1004,ccd5) \
+          {kp4m.20101023T041610 (Trumpler 37 R) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1004,ccd5) RA---ZPX
+set CTYPE2(kp4m,k1004,ccd5) DEC--ZPX
+set CRPIX1(kp4m,k1004,ccd5) 4269.27485378461
+set CRPIX2(kp4m,k1004,ccd5) 7.54036813739541
+set CD1_1(kp4m,k1004,ccd5) -3.4402625304995E-7
+set CD2_2(kp4m,k1004,ccd5) 3.40913372283089E-7
+set CD1_2(kp4m,k1004,ccd5) -7.2684851620694E-5
+set CD2_1(kp4m,k1004,ccd5) -7.2730852344768E-5
+set WAT01(kp4m,k1004,ccd5) {system=image}
+set WAT11(kp4m,k1004,ccd5) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1004,ccd5) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2964049048341877 0.001}
+set WAT13(kp4m,k1004,ccd5) \
+          {943784292546124 0.1615529837087959 0.3118290787180343 2.817963751666}
+set WAT14(kp4m,k1004,ccd5) \
+          {635E-5 5.713660443101755E-4 0.002637041730436341 -4.471338731897290E}
+set WAT15(kp4m,k1004,ccd5) \
+          {-5 8.443742562333106E-4 3.462289135936824E-4 "                      }
+set WAT21(kp4m,k1004,ccd5) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1004,ccd5) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2964049048341877 0.00}
+set WAT23(kp4m,k1004,ccd5) \
+          {1943784292546124 0.1615529837087959 0.3118290787180343 -5.0324923902}
+set WAT24(kp4m,k1004,ccd5) \
+          {12631E-5 -4.109252519154297E-4 -2.593668283209279E-4 1.8660332029511}
+set WAT25(kp4m,k1004,ccd5) \
+          {20E-4 0.001421007393705343 4.806366785338945E-5 "                   }
+
+set WCSASTRM(kp4m,k1004,ccd6) \
+          {kp4m.20101023T041610 (Trumpler 37 R) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1004,ccd6) RA---ZPX
+set CTYPE2(kp4m,k1004,ccd6) DEC--ZPX
+set CRPIX1(kp4m,k1004,ccd6) 2145.07016415141
+set CRPIX2(kp4m,k1004,ccd6) 7.85583632623302
+set CD1_1(kp4m,k1004,ccd6) -3.2565725485334E-7
+set CD2_2(kp4m,k1004,ccd6) 3.32034554372053E-7
+set CD1_2(kp4m,k1004,ccd6) -7.2679055762467E-5
+set CD2_1(kp4m,k1004,ccd6) -7.2703788786990E-5
+set WAT01(kp4m,k1004,ccd6) {system=image}
+set WAT11(kp4m,k1004,ccd6) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1004,ccd6) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2970908460334646 0.001}
+set WAT13(kp4m,k1004,ccd6) \
+          {196507714523134 0.007055092337422752 0.1572394294845438 2.3647109174}
+set WAT14(kp4m,k1004,ccd6) \
+          {35957E-5 6.268664392258780E-4 0.002295690320150279 1.096147356720316}
+set WAT15(kp4m,k1004,ccd6) \
+          {E-4 3.089420124410418E-4 -4.270389748850065E-4 "                    }
+set WAT21(kp4m,k1004,ccd6) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1004,ccd6) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2970908460334646 0.00}
+set WAT23(kp4m,k1004,ccd6) \
+          {1196507714523134 0.007055092337422752 0.1572394294845438 -6.89137349}
+set WAT24(kp4m,k1004,ccd6) \
+          {0697043E-8 1.301600857949853E-5 1.978339153898299E-4 -2.690335850832}
+set WAT25(kp4m,k1004,ccd6) \
+          {487E-5 4.880490693265002E-4 5.309986598821831E-4 "                  }
+
+set WCSASTRM(kp4m,k1004,ccd7) \
+          {kp4m.20101023T041610 (Trumpler 37 R) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1004,ccd7) RA---ZPX
+set CTYPE2(kp4m,k1004,ccd7) DEC--ZPX
+set CRPIX1(kp4m,k1004,ccd7) 16.6944799426391
+set CRPIX2(kp4m,k1004,ccd7) 8.6494620599778
+set CD1_1(kp4m,k1004,ccd7) -3.1089155439161E-7
+set CD2_2(kp4m,k1004,ccd7) 3.43292565672127E-7
+set CD1_2(kp4m,k1004,ccd7) -7.2673012769862E-5
+set CD2_1(kp4m,k1004,ccd7) -7.2667647804745E-5
+set WAT01(kp4m,k1004,ccd7) {system=image}
+set WAT11(kp4m,k1004,ccd7) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1004,ccd7) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2976715935691927 5.607}
+set WAT13(kp4m,k1004,ccd7) \
+          {887352320769E-4 -0.1476128201188201 0.002543637993921117 4.072647037}
+set WAT14(kp4m,k1004,ccd7) \
+          {381952E-5 7.250322648829138E-4 0.002482909424094678 2.31883796628990}
+set WAT15(kp4m,k1004,ccd7) \
+          {6E-4 4.957121705539783E-4 0.001114798664356648 "                    }
+set WAT21(kp4m,k1004,ccd7) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1004,ccd7) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2976715935691927 5.60}
+set WAT23(kp4m,k1004,ccd7) \
+          {7887352320769E-4 -0.1476128201188201 0.002543637993921117 3.20328549}
+set WAT24(kp4m,k1004,ccd7) \
+          {9729242E-5 1.761066861493176E-4 7.940294729468354E-5 6.9442208546148}
+set WAT25(kp4m,k1004,ccd7) \
+          {79E-4 0.002059893010478346 0.002816539574185134 "                   }
+
+set WCSASTRM(kp4m,k1004,ccd8) \
+          {kp4m.20101023T041610 (Trumpler 37 R) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1004,ccd8) RA---ZPX
+set CTYPE2(kp4m,k1004,ccd8) DEC--ZPX
+set CRPIX1(kp4m,k1004,ccd8) -2111.42583279331
+set CRPIX2(kp4m,k1004,ccd8) 3.89865370915396
+set CD1_1(kp4m,k1004,ccd8) -3.4298944122648E-7
+set CD2_2(kp4m,k1004,ccd8) 3.93126635828950E-7
+set CD1_2(kp4m,k1004,ccd8) -7.2662374415152E-5
+set CD2_1(kp4m,k1004,ccd8) -7.2676568775961E-5
+set WAT01(kp4m,k1004,ccd8) {system=image}
+set WAT11(kp4m,k1004,ccd8) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1004,ccd8) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.298768439311146 -5.139}
+set WAT13(kp4m,k1004,ccd8) \
+          {166949077542E-4 -0.302293937143495 -0.1519151472853823 1.62516609244}
+set WAT14(kp4m,k1004,ccd8) \
+          {6289E-4 7.396566604337120E-4 0.002192012688178118 0.0011072207974844}
+set WAT15(kp4m,k1004,ccd8) \
+          {75 3.632418249501697E-4 0.002294689840316129 "                      }
+set WAT21(kp4m,k1004,ccd8) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1004,ccd8) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.298768439311146 -5.13}
+set WAT23(kp4m,k1004,ccd8) \
+          {9166949077542E-4 -0.302293937143495 -0.1519151472853823 5.7436648906}
+set WAT24(kp4m,k1004,ccd8) \
+          {00900E-5 3.237854941408102E-4 -5.079798064775624E-6 2.98965756867436}
+set WAT25(kp4m,k1004,ccd8) \
+          {3E-4 0.001420741186116065 1.992683332492802E-4 "                    }
+
+set WCSASTRM(kp4m,k1002,ccd1) \
+          {kp4m.20101023T041900 (Trumpler 37 B) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1002,ccd1) RA---ZPX
+set CTYPE2(kp4m,k1002,ccd1) DEC--ZPX
+set CRPIX1(kp4m,k1002,ccd1) 4266.71322161326
+set CRPIX2(kp4m,k1002,ccd1) 4157.26178266807
+set CD1_1(kp4m,k1002,ccd1) -2.6648370067087E-7
+set CD2_2(kp4m,k1002,ccd1) 2.30840108087589E-7
+set CD1_2(kp4m,k1002,ccd1) -7.2734994842489E-5
+set CD2_1(kp4m,k1002,ccd1) -7.2760564929445E-5
+set WAT01(kp4m,k1002,ccd1) {system=image}
+set WAT11(kp4m,k1002,ccd1) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1002,ccd1) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.005047126356426874 0.30}
+set WAT13(kp4m,k1002,ccd1) \
+          {34424223716919 0.1604753955018587 0.3103615621550516 1.3802024049972}
+set WAT14(kp4m,k1002,ccd1) \
+          {20E-4 -9.178676151002864E-4 0.002234044795154404 -7.432717119478238E}
+set WAT15(kp4m,k1002,ccd1) \
+          {-4 0.001039522705262475 0.001271412508233897 "                      }
+set WAT21(kp4m,k1002,ccd1) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1002,ccd1) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.005047126356426874 0.3}
+set WAT23(kp4m,k1002,ccd1) \
+          {034424223716919 0.1604753955018587 0.3103615621550516 2.049648846340}
+set WAT24(kp4m,k1002,ccd1) \
+          {684E-4 -2.885427384601975E-4 9.194432110335089E-5 -0.001616739079246}
+set WAT25(kp4m,k1002,ccd1) \
+          {442 0.00111091512026517 0.003094961374478641 "                      }
+
+set WCSASTRM(kp4m,k1002,ccd2) \
+          {kp4m.20101023T041900 (Trumpler 37 B) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1002,ccd2) RA---ZPX
+set CTYPE2(kp4m,k1002,ccd2) DEC--ZPX
+set CRPIX1(kp4m,k1002,ccd2) 2142.44308241952
+set CRPIX2(kp4m,k1002,ccd2) 4153.25490003602
+set CD1_1(kp4m,k1002,ccd2) -3.2390824234408E-7
+set CD2_2(kp4m,k1002,ccd2) 3.13683202677710E-7
+set CD1_2(kp4m,k1002,ccd2) -7.2727708633928E-5
+set CD2_1(kp4m,k1002,ccd2) -7.2718801864987E-5
+set WAT01(kp4m,k1002,ccd2) {system=image}
+set WAT11(kp4m,k1002,ccd2) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1002,ccd2) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.004194608580512466 0.30}
+set WAT13(kp4m,k1002,ccd2) \
+          {26776156085241 0.00556529518260608 0.1557052153151987 2.163443929033}
+set WAT14(kp4m,k1002,ccd2) \
+          {077E-5 -6.319905782246121E-4 0.002353395043687478 1.111076646625459E}
+set WAT15(kp4m,k1002,ccd2) \
+          {-4 -8.931468082228339E-4 4.520327652779091E-4 "                     }
+set WAT21(kp4m,k1002,ccd2) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1002,ccd2) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.004194608580512466 0.3}
+set WAT23(kp4m,k1002,ccd2) \
+          {026776156085241 0.00556529518260608 0.1557052153151987 -3.9799425999}
+set WAT24(kp4m,k1002,ccd2) \
+          {98640E-6 -1.690964456613682E-4 7.046588355237310E-4 3.29510762749166}
+set WAT25(kp4m,k1002,ccd2) \
+          {1E-4 -5.277776849089819E-4 -0.001459762434146269 "                  }
+
+set WCSASTRM(kp4m,k1002,ccd3) \
+          {kp4m.20101023T041900 (Trumpler 37 B) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1002,ccd3) RA---ZPX
+set CTYPE2(kp4m,k1002,ccd3) DEC--ZPX
+set CRPIX1(kp4m,k1002,ccd3) 15.5799557349831
+set CRPIX2(kp4m,k1002,ccd3) 4154.50039219594
+set CD1_1(kp4m,k1002,ccd3) -3.1573149090719E-7
+set CD2_2(kp4m,k1002,ccd3) 3.14724454947469E-7
+set CD1_2(kp4m,k1002,ccd3) -7.2721933643547E-5
+set CD2_1(kp4m,k1002,ccd3) -7.2705813581640E-5
+set WAT01(kp4m,k1002,ccd3) {system=image}
+set WAT11(kp4m,k1002,ccd3) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1002,ccd3) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.003612562628668961 0.30}
+set WAT13(kp4m,k1002,ccd3) \
+          {2055183260881 -0.1490759610049781 0.001041636039648158 1.81520563672}
+set WAT14(kp4m,k1002,ccd3) \
+          {5897E-6 -4.105526906291585E-4 0.001823112509942526 -5.05776632091793}
+set WAT15(kp4m,k1002,ccd3) \
+          {2E-4 0.002130919819714779 -0.001135362161330764 "                   }
+set WAT21(kp4m,k1002,ccd3) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1002,ccd3) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.003612562628668961 0.3}
+set WAT23(kp4m,k1002,ccd3) \
+          {02055183260881 -0.1490759610049781 0.001041636039648158 -4.811782894}
+set WAT24(kp4m,k1002,ccd3) \
+          {045368E-6 9.402000162986865E-5 1.259190138111813E-4 2.63113606422107}
+set WAT25(kp4m,k1002,ccd3) \
+          {5E-4 0.001801343965426676 0.003668221681994113 "                    }
+
+set WCSASTRM(kp4m,k1002,ccd4) \
+          {kp4m.20101023T041900 (Trumpler 37 B) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1002,ccd4) RA---ZPX
+set CTYPE2(kp4m,k1002,ccd4) DEC--ZPX
+set CRPIX1(kp4m,k1002,ccd4) -2112.72156905746
+set CRPIX2(kp4m,k1002,ccd4) 4153.21660688509
+set CD1_1(kp4m,k1002,ccd4) -2.9728636277003E-7
+set CD2_2(kp4m,k1002,ccd4) 3.20388675192621E-7
+set CD1_2(kp4m,k1002,ccd4) -7.2715043533854E-5
+set CD2_1(kp4m,k1002,ccd4) -7.2698823370672E-5
+set WAT01(kp4m,k1002,ccd4) {system=image}
+set WAT11(kp4m,k1002,ccd4) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1002,ccd4) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.002923582278744644 0.30}
+set WAT13(kp4m,k1002,ccd4) \
+          {13002307344688 -0.3038098856212484 -0.1536834025565681 3.69404664887}
+set WAT14(kp4m,k1002,ccd4) \
+          {5010E-5 -4.788713828023071E-4 0.002260679283352333 1.420342530454719}
+set WAT15(kp4m,k1002,ccd4) \
+          {E-4 9.084504979950801E-4 6.009963959630989E-4 "                     }
+set WAT21(kp4m,k1002,ccd4) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1002,ccd4) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.002923582278744644 0.3}
+set WAT23(kp4m,k1002,ccd4) \
+          {013002307344688 -0.3038098856212484 -0.1536834025565681 -5.756567699}
+set WAT24(kp4m,k1002,ccd4) \
+          {125746E-5 3.025054617701116E-4 -3.516655697588882E-5 -3.013056956117}
+set WAT25(kp4m,k1002,ccd4) \
+          {780E-4 0.00127840320543947 -2.166100333829470E-4 "                  }
+
+set WCSASTRM(kp4m,k1002,ccd5) \
+          {kp4m.20101023T041900 (Trumpler 37 B) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1002,ccd5) RA---ZPX
+set CTYPE2(kp4m,k1002,ccd5) DEC--ZPX
+set CRPIX1(kp4m,k1002,ccd5) 4270.94002646762
+set CRPIX2(kp4m,k1002,ccd5) 7.46722805337464
+set CD1_1(kp4m,k1002,ccd5) -3.4616289031535E-7
+set CD2_2(kp4m,k1002,ccd5) 3.35972556553156E-7
+set CD1_2(kp4m,k1002,ccd5) -7.2678661679799E-5
+set CD2_1(kp4m,k1002,ccd5) -7.2729533185925E-5
+set WAT01(kp4m,k1002,ccd5) {system=image}
+set WAT11(kp4m,k1002,ccd5) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1002,ccd5) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2963795907545181 0.001}
+set WAT13(kp4m,k1002,ccd5) \
+          {948124260732549 0.1616712176141548 0.3119243796648284 7.744069366792}
+set WAT14(kp4m,k1002,ccd5) \
+          {072E-5 5.442454264630320E-4 0.002924568332703201 -5.034456493680991E}
+set WAT15(kp4m,k1002,ccd5) \
+          {-4 0.001271512795641594 0.001411734583846125 "                      }
+set WAT21(kp4m,k1002,ccd5) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1002,ccd5) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2963795907545181 0.00}
+set WAT23(kp4m,k1002,ccd5) \
+          {1948124260732549 0.1616712176141548 0.3119243796648284 -3.2434701012}
+set WAT24(kp4m,k1002,ccd5) \
+          {96641E-5 -2.363664317436906E-4 -1.655294006653821E-6 1.3455369339868}
+set WAT25(kp4m,k1002,ccd5) \
+          {20E-4 0.001006555126430325 1.625548155315085E-5 "                   }
+
+set WCSASTRM(kp4m,k1002,ccd6) \
+          {kp4m.20101023T041900 (Trumpler 37 B) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1002,ccd6) RA---ZPX
+set CTYPE2(kp4m,k1002,ccd6) DEC--ZPX
+set CRPIX1(kp4m,k1002,ccd6) 2146.52946783811
+set CRPIX2(kp4m,k1002,ccd6) 7.87523090825631
+set CD1_1(kp4m,k1002,ccd6) -3.2616388559849E-7
+set CD2_2(kp4m,k1002,ccd6) 3.33470206879504E-7
+set CD1_2(kp4m,k1002,ccd6) -7.2675955251139E-5
+set CD2_1(kp4m,k1002,ccd6) -7.2700582524485E-5
+set WAT01(kp4m,k1002,ccd6) {system=image}
+set WAT11(kp4m,k1002,ccd6) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1002,ccd6) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2970762360255105 0.001}
+set WAT13(kp4m,k1002,ccd6) \
+          {199458201725832 0.007160857022984539 0.1573445099477779 2.5017450926}
+set WAT14(kp4m,k1002,ccd6) \
+          {01693E-5 6.972162623950004E-4 0.002626656327406064 9.721329697235804}
+set WAT15(kp4m,k1002,ccd6) \
+          {E-5 5.389546481831113E-4 -3.424806598516784E-5 "                    }
+set WAT21(kp4m,k1002,ccd6) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1002,ccd6) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2970762360255105 0.00}
+set WAT23(kp4m,k1002,ccd6) \
+          {1199458201725832 0.007160857022984539 0.1573445099477779 -1.41751177}
+set WAT24(kp4m,k1002,ccd6) \
+          {9133725E-6 -8.803872545114839E-5 -2.767321956119104E-4 -9.0428833160}
+set WAT25(kp4m,k1002,ccd6) \
+          {88650E-5 1.252193073520209E-4 6.258071513475618E-4 "                }
+
+set WCSASTRM(kp4m,k1002,ccd7) \
+          {kp4m.20101023T041900 (Trumpler 37 B) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1002,ccd7) RA---ZPX
+set CTYPE2(kp4m,k1002,ccd7) DEC--ZPX
+set CRPIX1(kp4m,k1002,ccd7) 18.173307553815
+set CRPIX2(kp4m,k1002,ccd7) 8.69478814546752
+set CD1_1(kp4m,k1002,ccd7) -3.1034335726627E-7
+set CD2_2(kp4m,k1002,ccd7) 3.44592302902169E-7
+set CD1_2(kp4m,k1002,ccd7) -7.2671046028035E-5
+set CD2_1(kp4m,k1002,ccd7) -7.2678240740074E-5
+set WAT01(kp4m,k1002,ccd7) {system=image}
+set WAT11(kp4m,k1002,ccd7) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1002,ccd7) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2976586884117113 5.645}
+set WAT13(kp4m,k1002,ccd7) \
+          {179254168669E-4 -0.1475268845789991 0.00265657969631649 3.0357626940}
+set WAT14(kp4m,k1002,ccd7) \
+          {90600E-5 6.014330230094743E-4 0.002140167266675047 1.353301067673894}
+set WAT15(kp4m,k1002,ccd7) \
+          {E-4 7.177608352953350E-5 8.969188060593054E-4 "                     }
+set WAT21(kp4m,k1002,ccd7) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1002,ccd7) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2976586884117113 5.64}
+set WAT23(kp4m,k1002,ccd7) \
+          {5179254168669E-4 -0.1475268845789991 0.00265657969631649 3.940547978}
+set WAT24(kp4m,k1002,ccd7) \
+          {854686E-5 3.104051079279757E-4 4.257160847800650E-4 7.01901804352464}
+set WAT25(kp4m,k1002,ccd7) \
+          {7E-4 0.002634670232180393 0.002369989077188014 "                    }
+
+set WCSASTRM(kp4m,k1002,ccd8) \
+          {kp4m.20101023T041900 (Trumpler 37 B) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1002,ccd8) RA---ZPX
+set CTYPE2(kp4m,k1002,ccd8) DEC--ZPX
+set CRPIX1(kp4m,k1002,ccd8) -2110.56642041751
+set CRPIX2(kp4m,k1002,ccd8) 3.79981077466419
+set CD1_1(kp4m,k1002,ccd8) -3.3630079627983E-7
+set CD2_2(kp4m,k1002,ccd8) 3.98770227353177E-7
+set CD1_2(kp4m,k1002,ccd8) -7.2662323100177E-5
+set CD2_1(kp4m,k1002,ccd8) -7.2666756165850E-5
+set WAT01(kp4m,k1002,ccd8) {system=image}
+set WAT11(kp4m,k1002,ccd8) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1002,ccd8) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2987473015386657 -5.06}
+set WAT13(kp4m,k1002,ccd8) \
+          {6807134561603E-4 -0.302190648553152 -0.1518088346006448 1.5614301743}
+set WAT14(kp4m,k1002,ccd8) \
+          {81418E-4 8.112720925221078E-4 0.002063399693188353 9.850988832805572}
+set WAT15(kp4m,k1002,ccd8) \
+          {E-4 8.451208520587184E-4 0.001853757450293346 "                     }
+set WAT21(kp4m,k1002,ccd8) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1002,ccd8) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2987473015386657 -5.0}
+set WAT23(kp4m,k1002,ccd8) \
+          {66807134561603E-4 -0.302190648553152 -0.1518088346006448 -8.70969750}
+set WAT24(kp4m,k1002,ccd8) \
+          {4235549E-6 1.274666636468337E-4 -6.581714703959679E-4 -2.12588648419}
+set WAT25(kp4m,k1002,ccd8) \
+          {6901E-4 0.001419750511478382 -9.227640466160549E-4 "                }
+
+set WCSASTRM(kp4m,k1005,ccd1) \
+          {kp4m.20101023T042047 (Trumpler 37 I) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1005,ccd1) RA---ZPX
+set CTYPE2(kp4m,k1005,ccd1) DEC--ZPX
+set CRPIX1(kp4m,k1005,ccd1) 4266.94347515189
+set CRPIX2(kp4m,k1005,ccd1) 4158.0605366654
+set CD1_1(kp4m,k1005,ccd1) -2.7204939444444E-7
+set CD2_2(kp4m,k1005,ccd1) 2.27072197654064E-7
+set CD1_2(kp4m,k1005,ccd1) -7.2744452225040E-5
+set CD2_1(kp4m,k1005,ccd1) -7.2765552168210E-5
+set WAT01(kp4m,k1005,ccd1) {system=image}
+set WAT11(kp4m,k1005,ccd1) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1005,ccd1) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.005118221973237662 0.30}
+set WAT13(kp4m,k1005,ccd1) \
+          {35636389452026 0.1605186943276331 0.3103996402653528 2.4150163417287}
+set WAT14(kp4m,k1005,ccd1) \
+          {93E-4 -0.001450997832488287 0.003300559805423692 -0.0013670292684812}
+set WAT15(kp4m,k1005,ccd1) \
+          {13 0.001924289521015078 0.002333016835456173 "                      }
+set WAT21(kp4m,k1005,ccd1) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1005,ccd1) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.005118221973237662 0.3}
+set WAT23(kp4m,k1005,ccd1) \
+          {035636389452026 0.1605186943276331 0.3103996402653528 2.376650931671}
+set WAT24(kp4m,k1005,ccd1) \
+          {333E-4 -7.603276984456666E-4 7.518408248882497E-5 -0.001578769684004}
+set WAT25(kp4m,k1005,ccd1) \
+          {767 0.003152230846103352 0.002356218371845464 "                     }
+
+set WCSASTRM(kp4m,k1005,ccd2) \
+          {kp4m.20101023T042047 (Trumpler 37 I) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1005,ccd2) RA---ZPX
+set CTYPE2(kp4m,k1005,ccd2) DEC--ZPX
+set CRPIX1(kp4m,k1005,ccd2) 2143.45203141289
+set CRPIX2(kp4m,k1005,ccd2) 4154.41306368808
+set CD1_1(kp4m,k1005,ccd2) -3.2328638698645E-7
+set CD2_2(kp4m,k1005,ccd2) 3.14961588635613E-7
+set CD1_2(kp4m,k1005,ccd2) -7.2730793860475E-5
+set CD2_1(kp4m,k1005,ccd2) -7.2711272011565E-5
+set WAT01(kp4m,k1005,ccd2) {system=image}
+set WAT11(kp4m,k1005,ccd2) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1005,ccd2) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.00427928683622249 0.302}
+set WAT13(kp4m,k1005,ccd2) \
+          {773654929029 0.005632273043320259 0.155762014556457 4.34001739614051}
+set WAT14(kp4m,k1005,ccd2) \
+          {7E-5 -9.177805238575788E-4 0.003173919031554692 -1.393315582200471E-}
+set WAT15(kp4m,k1005,ccd2) \
+          {4 -3.970585398157612E-4 0.001686137836095919 "                      }
+set WAT21(kp4m,k1005,ccd2) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1005,ccd2) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.00427928683622249 0.30}
+set WAT23(kp4m,k1005,ccd2) \
+          {2773654929029 0.005632273043320259 0.155762014556457 2.3580481704831}
+set WAT24(kp4m,k1005,ccd2) \
+          {71E-5 -2.392590665361096E-4 7.358461065886021E-4 -4.127800423750735E}
+set WAT25(kp4m,k1005,ccd2) \
+          {-4 2.466894275859202E-4 0.002435659626749681 "                      }
+
+set WCSASTRM(kp4m,k1005,ccd3) \
+          {kp4m.20101023T042047 (Trumpler 37 I) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1005,ccd3) RA---ZPX
+set CTYPE2(kp4m,k1005,ccd3) DEC--ZPX
+set CRPIX1(kp4m,k1005,ccd3) 16.867917183804
+set CRPIX2(kp4m,k1005,ccd3) 4155.77581063502
+set CD1_1(kp4m,k1005,ccd3) -3.1388165989853E-7
+set CD2_2(kp4m,k1005,ccd3) 3.24049007435447E-7
+set CD1_2(kp4m,k1005,ccd3) -7.2722195987985E-5
+set CD2_1(kp4m,k1005,ccd3) -7.2694092431390E-5
+set WAT01(kp4m,k1005,ccd3) {system=image}
+set WAT11(kp4m,k1005,ccd3) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1005,ccd3) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.003709493106713003 0.30}
+set WAT13(kp4m,k1005,ccd3) \
+          {21494014353249 -0.148997654346156 0.001134133546348167 3.36737973015}
+set WAT14(kp4m,k1005,ccd3) \
+          {2562E-5 -9.516909630416345E-4 0.003469068009892273 -3.97625105728404}
+set WAT15(kp4m,k1005,ccd3) \
+          {9E-4 0.0016803608676457 -7.942372466052605E-4 "                     }
+set WAT21(kp4m,k1005,ccd3) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1005,ccd3) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.003709493106713003 0.3}
+set WAT23(kp4m,k1005,ccd3) \
+          {021494014353249 -0.148997654346156 0.001134133546348167 -2.159237103}
+set WAT24(kp4m,k1005,ccd3) \
+          {729009E-5 2.423999927513690E-4 -2.924253940110308E-4 -7.377249774875}
+set WAT25(kp4m,k1005,ccd3) \
+          {861E-5 0.002091938518227792 0.001650199573709248 "                  }
+
+set WCSASTRM(kp4m,k1005,ccd4) \
+          {kp4m.20101023T042047 (Trumpler 37 I) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1005,ccd4) RA---ZPX
+set CTYPE2(kp4m,k1005,ccd4) DEC--ZPX
+set CRPIX1(kp4m,k1005,ccd4) -2110.86195172957
+set CRPIX2(kp4m,k1005,ccd4) 4154.20837998851
+set CD1_1(kp4m,k1005,ccd4) -2.9025666514569E-7
+set CD2_2(kp4m,k1005,ccd4) 3.32223712316841E-7
+set CD1_2(kp4m,k1005,ccd4) -7.2719651742708E-5
+set CD2_1(kp4m,k1005,ccd4) -7.2708420923589E-5
+set WAT01(kp4m,k1005,ccd4) {system=image}
+set WAT11(kp4m,k1005,ccd4) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1005,ccd4) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.003025755720361264 0.30}
+set WAT13(kp4m,k1005,ccd4) \
+          {14068850003037 -0.3037640796554778 -0.1535694859229535 9.54277566305}
+set WAT14(kp4m,k1005,ccd4) \
+          {9223E-5 -0.001012815118700528 0.003171627151276799 3.467110117349247}
+set WAT15(kp4m,k1005,ccd4) \
+          {E-4 -2.309590836830026E-4 6.462996686201781E-4 "                    }
+set WAT21(kp4m,k1005,ccd4) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1005,ccd4) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.003025755720361264 0.3}
+set WAT23(kp4m,k1005,ccd4) \
+          {014068850003037 -0.3037640796554778 -0.1535694859229535 -1.020781923}
+set WAT24(kp4m,k1005,ccd4) \
+          {273606E-4 4.140160885739818E-4 -6.160455808676535E-6 -6.236183762863}
+set WAT25(kp4m,k1005,ccd4) \
+          {100E-4 0.001802443593548885 -7.478950359757567E-4 "                 }
+
+set WCSASTRM(kp4m,k1005,ccd5) \
+          {kp4m.20101023T042047 (Trumpler 37 I) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1005,ccd5) RA---ZPX
+set CTYPE2(kp4m,k1005,ccd5) DEC--ZPX
+set CRPIX1(kp4m,k1005,ccd5) 4271.24063273009
+set CRPIX2(kp4m,k1005,ccd5) 9.09554871768289
+set CD1_1(kp4m,k1005,ccd5) -3.4154470133044E-7
+set CD2_2(kp4m,k1005,ccd5) 3.49332343203602E-7
+set CD1_2(kp4m,k1005,ccd5) -7.2680036623275E-5
+set CD2_1(kp4m,k1005,ccd5) -7.2740069050633E-5
+set WAT01(kp4m,k1005,ccd5) {system=image}
+set WAT11(kp4m,k1005,ccd5) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1005,ccd5) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2962770291371343 0.002}
+set WAT13(kp4m,k1005,ccd5) \
+          {04686283880161 0.1617158491039577 0.312045286396023 -6.8249408900249}
+set WAT14(kp4m,k1005,ccd5) \
+          {04E-5 3.567045468189838E-4 0.001727869718468294 7.234822299912019E-4}
+set WAT15(kp4m,k1005,ccd5) \
+          { 5.950197283055215E-4 -0.001378467665171352 "                       }
+set WAT21(kp4m,k1005,ccd5) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1005,ccd5) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2962770291371343 0.00}
+set WAT23(kp4m,k1005,ccd5) \
+          {204686283880161 0.1617158491039577 0.312045286396023 5.8154334176203}
+set WAT24(kp4m,k1005,ccd5) \
+          {63E-5 4.224946344968902E-5 6.988256388495583E-5 -4.882692814624876E-}
+set WAT25(kp4m,k1005,ccd5) \
+          {4 -9.177107322197279E-5 0.001009524837849234 "                      }
+
+set WCSASTRM(kp4m,k1005,ccd6) \
+          {kp4m.20101023T042047 (Trumpler 37 I) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1005,ccd6) RA---ZPX
+set CTYPE2(kp4m,k1005,ccd6) DEC--ZPX
+set CRPIX1(kp4m,k1005,ccd6) 2147.76221121885
+set CRPIX2(kp4m,k1005,ccd6) 9.25761725536564
+set CD1_1(kp4m,k1005,ccd6) -3.2893655447113E-7
+set CD2_2(kp4m,k1005,ccd6) 3.34921097156675E-7
+set CD1_2(kp4m,k1005,ccd6) -7.2676345420930E-5
+set CD2_1(kp4m,k1005,ccd6) -7.2696278189344E-5
+set WAT01(kp4m,k1005,ccd6) {system=image}
+set WAT11(kp4m,k1005,ccd6) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1005,ccd6) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2969766856166802 0.001}
+set WAT13(kp4m,k1005,ccd6) \
+          {306282009031932 0.007249575809318618 0.1574303591557623 4.6117216502}
+set WAT14(kp4m,k1005,ccd6) \
+          {22473E-5 6.761250779703935E-4 0.002002101447509505 -4.45594285716930}
+set WAT15(kp4m,k1005,ccd6) \
+          {4E-4 -0.001289988394720985 0.001736706132767035 "                   }
+set WAT21(kp4m,k1005,ccd6) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1005,ccd6) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2969766856166802 0.00}
+set WAT23(kp4m,k1005,ccd6) \
+          {1306282009031932 0.007249575809318618 0.1574303591557623 1.506051831}
+set WAT24(kp4m,k1005,ccd6) \
+          {362615E-5 1.464094131691459E-4 3.579328420250418E-4 -2.4140907263197}
+set WAT25(kp4m,k1005,ccd6) \
+          {18E-4 -5.166237807038117E-4 0.001056787579019152 "                  }
+
+set WCSASTRM(kp4m,k1005,ccd7) \
+          {kp4m.20101023T042047 (Trumpler 37 I) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1005,ccd7) RA---ZPX
+set CTYPE2(kp4m,k1005,ccd7) DEC--ZPX
+set CRPIX1(kp4m,k1005,ccd7) 19.4898570513865
+set CRPIX2(kp4m,k1005,ccd7) 10.2772093678739
+set CD1_1(kp4m,k1005,ccd7) -3.1109372981338E-7
+set CD2_2(kp4m,k1005,ccd7) 3.47837531533540E-7
+set CD1_2(kp4m,k1005,ccd7) -7.2671083173737E-5
+set CD2_1(kp4m,k1005,ccd7) -7.2679105721319E-5
+set WAT01(kp4m,k1005,ccd7) {system=image}
+set WAT11(kp4m,k1005,ccd7) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1005,ccd7) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2975449575291949 6.799}
+set WAT13(kp4m,k1005,ccd7) \
+          {369321867720E-4 -0.1474335300977359 0.002764994005433594 3.200961269}
+set WAT14(kp4m,k1005,ccd7) \
+          {477554E-5 4.844338699466410E-4 0.00154291918666621 3.097801210822956}
+set WAT15(kp4m,k1005,ccd7) \
+          {E-4 7.575968178857384E-4 0.001399166390353666 "                     }
+set WAT21(kp4m,k1005,ccd7) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1005,ccd7) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2975449575291949 6.79}
+set WAT23(kp4m,k1005,ccd7) \
+          {9369321867720E-4 -0.1474335300977359 0.002764994005433594 2.96869044}
+set WAT24(kp4m,k1005,ccd7) \
+          {6491279E-5 1.641260259651573E-4 2.067720241566446E-5 6.0954419742123}
+set WAT25(kp4m,k1005,ccd7) \
+          {00E-4 0.002115082086018316 0.00219256992600538 "                    }
+
+set WCSASTRM(kp4m,k1005,ccd8) \
+          {kp4m.20101023T042047 (Trumpler 37 I) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1005,ccd8) RA---ZPX
+set CTYPE2(kp4m,k1005,ccd8) DEC--ZPX
+set CRPIX1(kp4m,k1005,ccd8) -2108.42569679242
+set CRPIX2(kp4m,k1005,ccd8) 5.8877496970152
+set CD1_1(kp4m,k1005,ccd8) -3.4851672467105E-7
+set CD2_2(kp4m,k1005,ccd8) 3.93401837681561E-7
+set CD1_2(kp4m,k1005,ccd8) -7.2666661151575E-5
+set CD2_1(kp4m,k1005,ccd8) -7.2685401631553E-5
+set WAT01(kp4m,k1005,ccd8) {system=image}
+set WAT11(kp4m,k1005,ccd8) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1005,ccd8) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2986633848348572 -3.79}
+set WAT13(kp4m,k1005,ccd8) \
+          {9936837563177E-4 -0.3021133939727769 -0.1517153963076822 8.572884756}
+set WAT14(kp4m,k1005,ccd8) \
+          {946187E-5 2.723289350946082E-4 0.001149225255076407 6.62735950973265}
+set WAT15(kp4m,k1005,ccd8) \
+          {0E-4 -3.067416847488080E-4 0.001534635895899242 "                   }
+set WAT21(kp4m,k1005,ccd8) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1005,ccd8) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2986633848348572 -3.7}
+set WAT23(kp4m,k1005,ccd8) \
+          {99936837563177E-4 -0.3021133939727769 -0.1517153963076822 -1.0778827}
+set WAT24(kp4m,k1005,ccd8) \
+          {64498324E-5 1.861502638103783E-4 -2.282512974398342E-4 -2.3952112657}
+set WAT25(kp4m,k1005,ccd8) \
+          {33088E-4 0.001110125393548661 -8.756337747336850E-4 "               }
+
+set WCSASTRM(kp4m,k1003,ccd1) \
+          {kp4m.20101023T042305 (Trumpler 37 V) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1003,ccd1) RA---ZPX
+set CTYPE2(kp4m,k1003,ccd1) DEC--ZPX
+set CRPIX1(kp4m,k1003,ccd1) 4265.52139418702
+set CRPIX2(kp4m,k1003,ccd1) 4158.25289839757
+set CD1_1(kp4m,k1003,ccd1) -2.7316201716036E-7
+set CD2_2(kp4m,k1003,ccd1) 2.29591531087032E-7
+set CD1_2(kp4m,k1003,ccd1) -7.2746565301178E-5
+set CD2_1(kp4m,k1003,ccd1) -7.2758493325199E-5
+set WAT01(kp4m,k1003,ccd1) {system=image}
+set WAT11(kp4m,k1003,ccd1) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1003,ccd1) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.005134427155598647 0.30}
+set WAT13(kp4m,k1003,ccd1) \
+          {359077471305 0.1603890454993826 0.3102658586558658 1.360101121331653}
+set WAT14(kp4m,k1003,ccd1) \
+          {E-4 -0.001101019332339401 0.00250733647073643 -6.088331436230003E-4 }
+set WAT15(kp4m,k1003,ccd1) \
+          {0.00144184383702846 8.449556773664673E-4 "                          }
+set WAT21(kp4m,k1003,ccd1) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1003,ccd1) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.005134427155598647 0.3}
+set WAT23(kp4m,k1003,ccd1) \
+          {0359077471305 0.1603890454993826 0.3102658586558658 1.76402353804242}
+set WAT24(kp4m,k1003,ccd1) \
+          {0E-4 -3.206919922712290E-4 1.437724300275387E-4 -0.00134435668858818}
+set WAT25(kp4m,k1003,ccd1) \
+          {6 0.001182232549371685 0.002486370767328981 "                       }
+
+set WCSASTRM(kp4m,k1003,ccd2) \
+          {kp4m.20101023T042305 (Trumpler 37 V) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1003,ccd2) RA---ZPX
+set CTYPE2(kp4m,k1003,ccd2) DEC--ZPX
+set CRPIX1(kp4m,k1003,ccd2) 2141.42967163349
+set CRPIX2(kp4m,k1003,ccd2) 4154.48093816794
+set CD1_1(kp4m,k1003,ccd2) -3.2793925135828E-7
+set CD2_2(kp4m,k1003,ccd2) 3.14300381879415E-7
+set CD1_2(kp4m,k1003,ccd2) -7.2733966102952E-5
+set CD2_1(kp4m,k1003,ccd2) -7.2722882509608E-5
+set WAT01(kp4m,k1003,ccd2) {system=image}
+set WAT11(kp4m,k1003,ccd2) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1003,ccd2) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.004284189830945861 0.30}
+set WAT13(kp4m,k1003,ccd2) \
+          {28010726700639 0.005489034388118384 0.1556398349490826 3.47937975398}
+set WAT14(kp4m,k1003,ccd2) \
+          {8999E-5 -8.071106881254728E-4 0.00277675830402536 1.075648377316366E}
+set WAT15(kp4m,k1003,ccd2) \
+          {-5 -2.973726636008841E-4 5.921632491637482E-4 "                     }
+set WAT21(kp4m,k1003,ccd2) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1003,ccd2) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.004284189830945861 0.3}
+set WAT23(kp4m,k1003,ccd2) \
+          {028010726700639 0.005489034388118384 0.1556398349490826 2.7886227217}
+set WAT24(kp4m,k1003,ccd2) \
+          {31766E-5 -2.680895709449891E-4 7.087589600314404E-4 -4.4713589672248}
+set WAT25(kp4m,k1003,ccd2) \
+          {86E-4 7.260212852320689E-4 0.002185168257763366 "                   }
+
+set WCSASTRM(kp4m,k1003,ccd3) \
+          {kp4m.20101023T042305 (Trumpler 37 V) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1003,ccd3) RA---ZPX
+set CTYPE2(kp4m,k1003,ccd3) DEC--ZPX
+set CRPIX1(kp4m,k1003,ccd3) 14.9293550029801
+set CRPIX2(kp4m,k1003,ccd3) 4155.63927694825
+set CD1_1(kp4m,k1003,ccd3) -3.1698426859875E-7
+set CD2_2(kp4m,k1003,ccd3) 3.21495599893130E-7
+set CD1_2(kp4m,k1003,ccd3) -7.2730877999986E-5
+set CD2_1(kp4m,k1003,ccd3) -7.2704242279254E-5
+set WAT01(kp4m,k1003,ccd3) {system=image}
+set WAT11(kp4m,k1003,ccd3) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1003,ccd3) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.003693165564316758 0.30}
+set WAT13(kp4m,k1003,ccd3) \
+          {21749777720791 -0.1491485589913842 9.935494358107338E-4 2.2180001578}
+set WAT14(kp4m,k1003,ccd3) \
+          {76597E-5 -6.638177152041803E-4 0.002483553461817199 -2.9314054367165}
+set WAT15(kp4m,k1003,ccd3) \
+          {28E-4 0.001508239974559887 -2.706250168230235E-4 "                  }
+set WAT21(kp4m,k1003,ccd3) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1003,ccd3) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.003693165564316758 0.3}
+set WAT23(kp4m,k1003,ccd3) \
+          {021749777720791 -0.1491485589913842 9.935494358107338E-4 -2.11884499}
+set WAT24(kp4m,k1003,ccd3) \
+          {6232039E-5 2.555561642274047E-4 -3.730913387704665E-4 -5.47771532452}
+set WAT25(kp4m,k1003,ccd3) \
+          {3689E-5 0.00193525194485185 0.001629677892595913 "                  }
+
+set WCSASTRM(kp4m,k1003,ccd4) \
+          {kp4m.20101023T042305 (Trumpler 37 V) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1003,ccd4) RA---ZPX
+set CTYPE2(kp4m,k1003,ccd4) DEC--ZPX
+set CRPIX1(kp4m,k1003,ccd4) -2113.38933284767
+set CRPIX2(kp4m,k1003,ccd4) 4153.97728168027
+set CD1_1(kp4m,k1003,ccd4) -2.8942746866594E-7
+set CD2_2(kp4m,k1003,ccd4) 3.28116833630478E-7
+set CD1_2(kp4m,k1003,ccd4) -7.2725429673055E-5
+set CD2_1(kp4m,k1003,ccd4) -7.2701509717797E-5
+set WAT01(kp4m,k1003,ccd4) {system=image}
+set WAT11(kp4m,k1003,ccd4) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1003,ccd4) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.003012002340734055 0.30}
+set WAT13(kp4m,k1003,ccd4) \
+          {14150948802535 -0.3039019487773654 -0.1537383199513185 1.07429438601}
+set WAT14(kp4m,k1003,ccd4) \
+          {7070E-4 -9.728208238566862E-4 0.003044531926074003 4.723229083272751}
+set WAT15(kp4m,k1003,ccd4) \
+          {E-4 -2.156199396577467E-4 9.277101502134055E-4 "                    }
+set WAT21(kp4m,k1003,ccd4) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1003,ccd4) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.003012002340734055 0.3}
+set WAT23(kp4m,k1003,ccd4) \
+          {014150948802535 -0.3039019487773654 -0.1537383199513185 2.9971494114}
+set WAT24(kp4m,k1003,ccd4) \
+          {83641E-5 3.454755986716772E-4 -1.097153363883820E-4 5.16020452707123}
+set WAT25(kp4m,k1003,ccd4) \
+          {4E-4 0.001366102601565948 0.001597522387126511 "                    }
+
+set WCSASTRM(kp4m,k1003,ccd5) \
+          {kp4m.20101023T042305 (Trumpler 37 V) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1003,ccd5) RA---ZPX
+set CTYPE2(kp4m,k1003,ccd5) DEC--ZPX
+set CRPIX1(kp4m,k1003,ccd5) 4269.75522351888
+set CRPIX2(kp4m,k1003,ccd5) 8.80855871257007
+set CD1_1(kp4m,k1003,ccd5) -3.4821971944119E-7
+set CD2_2(kp4m,k1003,ccd5) 3.42967898066043E-7
+set CD1_2(kp4m,k1003,ccd5) -7.2686965627034E-5
+set CD2_1(kp4m,k1003,ccd5) -7.2736090928758E-5
+set WAT01(kp4m,k1003,ccd5) {system=image}
+set WAT11(kp4m,k1003,ccd5) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1003,ccd5) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2963118848233657 0.002}
+set WAT13(kp4m,k1003,ccd5) \
+          {054045185034129 0.161599111874343 0.3118943435480905 3.1795750259398}
+set WAT14(kp4m,k1003,ccd5) \
+          {64E-8 7.128015738422717E-4 0.002759538417586465 2.900222265315759E-4}
+set WAT15(kp4m,k1003,ccd5) \
+          { 3.451055709677935E-4 -5.468730723385176E-4 "                       }
+set WAT21(kp4m,k1003,ccd5) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1003,ccd5) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2963118848233657 0.00}
+set WAT23(kp4m,k1003,ccd5) \
+          {2054045185034129 0.161599111874343 0.3118943435480905 2.215250410257}
+set WAT24(kp4m,k1003,ccd5) \
+          {422E-5 -2.178327922864913E-4 -2.219090715675577E-4 -3.21561100415445}
+set WAT25(kp4m,k1003,ccd5) \
+          {0E-4 6.622265486462457E-4 8.888097456005137E-4 "                    }
+
+set WCSASTRM(kp4m,k1003,ccd6) \
+          {kp4m.20101023T042305 (Trumpler 37 V) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1003,ccd6) RA---ZPX
+set CTYPE2(kp4m,k1003,ccd6) DEC--ZPX
+set CRPIX1(kp4m,k1003,ccd6) 2145.73097657089
+set CRPIX2(kp4m,k1003,ccd6) 9.0689022312079
+set CD1_1(kp4m,k1003,ccd6) -3.2817233690940E-7
+set CD2_2(kp4m,k1003,ccd6) 3.34119286214037E-7
+set CD1_2(kp4m,k1003,ccd6) -7.2682627033605E-5
+set CD2_1(kp4m,k1003,ccd6) -7.2704094807402E-5
+set WAT01(kp4m,k1003,ccd6) {system=image}
+set WAT11(kp4m,k1003,ccd6) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1003,ccd6) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2970168160882026 0.001}
+set WAT13(kp4m,k1003,ccd6) \
+          {29031038806475 0.007102746210376248 0.1572962467581754 5.44718728424}
+set WAT14(kp4m,k1003,ccd6) \
+          {1884E-5 9.478456297435233E-4 0.003036138768187289 -3.613737341210560}
+set WAT15(kp4m,k1003,ccd6) \
+          {E-4 -9.812822520490758E-4 0.001553756045054448 "                    }
+set WAT21(kp4m,k1003,ccd6) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1003,ccd6) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2970168160882026 0.00}
+set WAT23(kp4m,k1003,ccd6) \
+          {129031038806475 0.007102746210376248 0.1572962467581754 1.7228069835}
+set WAT24(kp4m,k1003,ccd6) \
+          {06708E-6 -1.558759013442946E-6 1.357730236472035E-4 -1.1354217450481}
+set WAT25(kp4m,k1003,ccd6) \
+          {90E-4 4.943180317610025E-4 0.001090641717012392 "                   }
+
+set WCSASTRM(kp4m,k1003,ccd7) \
+          {kp4m.20101023T042305 (Trumpler 37 V) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1003,ccd7) RA---ZPX
+set CTYPE2(kp4m,k1003,ccd7) DEC--ZPX
+set CRPIX1(kp4m,k1003,ccd7) 17.4674508274884
+set CRPIX2(kp4m,k1003,ccd7) 9.99891632099647
+set CD1_1(kp4m,k1003,ccd7) -3.1547336527981E-7
+set CD2_2(kp4m,k1003,ccd7) 3.44667382432474E-7
+set CD1_2(kp4m,k1003,ccd7) -7.2675474776758E-5
+set CD2_1(kp4m,k1003,ccd7) -7.2682299847489E-5
+set WAT01(kp4m,k1003,ccd7) {system=image}
+set WAT11(kp4m,k1003,ccd7) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1003,ccd7) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2975926476313168 6.591}
+set WAT13(kp4m,k1003,ccd7) \
+          {955582348620E-4 -0.1475868772219766 0.002605203496895193 4.210922841}
+set WAT14(kp4m,k1003,ccd7) \
+          {332587E-5 7.019616488273261E-4 0.002320181472140863 3.12739738324751}
+set WAT15(kp4m,k1003,ccd7) \
+          {1E-4 7.563306560564151E-4 0.001422001330058913 "                    }
+set WAT21(kp4m,k1003,ccd7) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1003,ccd7) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2975926476313168 6.59}
+set WAT23(kp4m,k1003,ccd7) \
+          {1955582348620E-4 -0.1475868772219766 0.002605203496895193 3.28333591}
+set WAT24(kp4m,k1003,ccd7) \
+          {8512265E-5 2.093653624611857E-4 2.143198719058988E-4 6.6517663488422}
+set WAT25(kp4m,k1003,ccd7) \
+          {69E-4 0.001989093823782231 0.002672564262414574 "                   }
+
+set WCSASTRM(kp4m,k1003,ccd8) \
+          {kp4m.20101023T042305 (Trumpler 37 V) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1003,ccd8) RA---ZPX
+set CTYPE2(kp4m,k1003,ccd8) DEC--ZPX
+set CRPIX1(kp4m,k1003,ccd8) -2111.11079339628
+set CRPIX2(kp4m,k1003,ccd8) 5.24681548330969
+set CD1_1(kp4m,k1003,ccd8) -3.4509175445184E-7
+set CD2_2(kp4m,k1003,ccd8) 3.98102720308646E-7
+set CD1_2(kp4m,k1003,ccd8) -7.2667113242085E-5
+set CD2_1(kp4m,k1003,ccd8) -7.2677428680852E-5
+set WAT01(kp4m,k1003,ccd8) {system=image}
+set WAT11(kp4m,k1003,ccd8) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1003,ccd8) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2986984997453477 -4.20}
+set WAT13(kp4m,k1003,ccd8) \
+          {2681976458783E-4 -0.3022751687316144 -0.1518742415822474 1.090479637}
+set WAT14(kp4m,k1003,ccd8) \
+          {699781E-4 5.344643377195352E-4 0.001922134625069342 7.40616424601516}
+set WAT15(kp4m,k1003,ccd8) \
+          {2E-4 -1.615726611067317E-4 0.001645252976906298 "                   }
+set WAT21(kp4m,k1003,ccd8) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1003,ccd8) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2986984997453477 -4.2}
+set WAT23(kp4m,k1003,ccd8) \
+          {02681976458783E-4 -0.3022751687316144 -0.1518742415822474 1.50489220}
+set WAT24(kp4m,k1003,ccd8) \
+          {3563137E-4 3.098397295231786E-4 5.639278916247063E-5 0.0011599777829}
+set WAT25(kp4m,k1003,ccd8) \
+          {3564 0.001285230212047036 0.002132809263209146 "                    }
+
+set WCSASTRM(kp4m,k1044,ccd1) \
+          {kp4m.20101023T042517 (Trumpler 37 Us) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1044,ccd1) RA---ZPX
+set CTYPE2(kp4m,k1044,ccd1) DEC--ZPX
+set CRPIX1(kp4m,k1044,ccd1) 4265.54410948129
+set CRPIX2(kp4m,k1044,ccd1) 4156.98236059176
+set CD1_1(kp4m,k1044,ccd1) -2.6751428665531E-7
+set CD2_2(kp4m,k1044,ccd1) 2.34841107839581E-7
+set CD1_2(kp4m,k1044,ccd1) -7.2742787976348E-5
+set CD2_1(kp4m,k1044,ccd1) -7.2763640529873E-5
+set WAT01(kp4m,k1044,ccd1) {system=image}
+set WAT11(kp4m,k1044,ccd1) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1044,ccd1) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.005029251657398355 0.30}
+set WAT13(kp4m,k1044,ccd1) \
+          {34585701653276 0.160380586939712 0.3102894334409662 1.39744146836401}
+set WAT14(kp4m,k1044,ccd1) \
+          {0E-4 -7.961486291920349E-4 0.001889135761162158 -8.144356809217530E-}
+set WAT15(kp4m,k1044,ccd1) \
+          {4 9.718530977725039E-4 0.001430408914346433 "                       }
+set WAT21(kp4m,k1044,ccd1) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1044,ccd1) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.005029251657398355 0.3}
+set WAT23(kp4m,k1044,ccd1) \
+          {034585701653276 0.160380586939712 0.3102894334409662 1.5565141592634}
+set WAT24(kp4m,k1044,ccd1) \
+          {87E-4 -1.275065062195267E-4 3.811442683450260E-4 -0.0013124693373582}
+set WAT25(kp4m,k1044,ccd1) \
+          {63 4.761505692926751E-5 0.002789993949284405 "                      }
+
+set WCSASTRM(kp4m,k1044,ccd2) \
+          {kp4m.20101023T042517 (Trumpler 37 Us) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1044,ccd2) RA---ZPX
+set CTYPE2(kp4m,k1044,ccd2) DEC--ZPX
+set CRPIX1(kp4m,k1044,ccd2) 2141.65265610953
+set CRPIX2(kp4m,k1044,ccd2) 4153.13690206004
+set CD1_1(kp4m,k1044,ccd2) -3.2276351730894E-7
+set CD2_2(kp4m,k1044,ccd2) 3.14091930193741E-7
+set CD1_2(kp4m,k1044,ccd2) -7.2732909899119E-5
+set CD2_1(kp4m,k1044,ccd2) -7.2708833087901E-5
+set WAT01(kp4m,k1044,ccd2) {system=image}
+set WAT11(kp4m,k1044,ccd2) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1044,ccd2) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.004185960810138987 0.30}
+set WAT13(kp4m,k1044,ccd2) \
+          {26879237669628 0.005505222647310064 0.1556264104323877 3.74445026423}
+set WAT14(kp4m,k1044,ccd2) \
+          {1879E-5 -6.985648469997536E-4 0.002301348554819283 -1.69883021809622}
+set WAT15(kp4m,k1044,ccd2) \
+          {1E-4 8.705080566232650E-5 0.001313396611977822 "                    }
+set WAT21(kp4m,k1044,ccd2) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1044,ccd2) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.004185960810138987 0.3}
+set WAT23(kp4m,k1044,ccd2) \
+          {026879237669628 0.005505222647310064 0.1556264104323877 6.5808292645}
+set WAT24(kp4m,k1044,ccd2) \
+          {54486E-6 -9.485117562059809E-5 2.688292498584885E-4 -5.1208635108638}
+set WAT25(kp4m,k1044,ccd2) \
+          {61E-5 1.815299729742401E-4 1.840968939214260E-4 "                   }
+
+set WCSASTRM(kp4m,k1044,ccd3) \
+          {kp4m.20101023T042517 (Trumpler 37 Us) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1044,ccd3) RA---ZPX
+set CTYPE2(kp4m,k1044,ccd3) DEC--ZPX
+set CRPIX1(kp4m,k1044,ccd3) 14.6753957653424
+set CRPIX2(kp4m,k1044,ccd3) 4154.29338081766
+set CD1_1(kp4m,k1044,ccd3) -3.1677673915556E-7
+set CD2_2(kp4m,k1044,ccd3) 3.14642448995699E-7
+set CD1_2(kp4m,k1044,ccd3) -7.2728924804677E-5
+set CD2_1(kp4m,k1044,ccd3) -7.2704029806905E-5
+set WAT01(kp4m,k1044,ccd3) {system=image}
+set WAT11(kp4m,k1044,ccd3) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1044,ccd3) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.003595504972323912 0.30}
+set WAT13(kp4m,k1044,ccd3) \
+          {20688940325262 -0.1491376950341277 9.759148092439667E-4 9.3859026911}
+set WAT14(kp4m,k1044,ccd3) \
+          {84830E-6 -4.951144986376604E-4 0.002073877149615653 -3.7489692246640}
+set WAT15(kp4m,k1044,ccd3) \
+          {34E-4 0.00200234856349452 -3.357471242508236E-4 "                   }
+set WAT21(kp4m,k1044,ccd3) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1044,ccd3) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.003595504972323912 0.3}
+set WAT23(kp4m,k1044,ccd3) \
+          {020688940325262 -0.1491376950341277 9.759148092439667E-4 -2.19956353}
+set WAT24(kp4m,k1044,ccd3) \
+          {3976838E-6 1.039373370921217E-4 1.040702364691236E-4 3.9042558315186}
+set WAT25(kp4m,k1044,ccd3) \
+          {82E-4 0.00189567901310046 0.004633286557296598 "                    }
+
+set WCSASTRM(kp4m,k1044,ccd4) \
+          {kp4m.20101023T042517 (Trumpler 37 Us) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1044,ccd4) RA---ZPX
+set CTYPE2(kp4m,k1044,ccd4) DEC--ZPX
+set CRPIX1(kp4m,k1044,ccd4) -2113.7976423703
+set CRPIX2(kp4m,k1044,ccd4) 4152.82957903859
+set CD1_1(kp4m,k1044,ccd4) -2.9609591587605E-7
+set CD2_2(kp4m,k1044,ccd4) 3.19091978940636E-7
+set CD1_2(kp4m,k1044,ccd4) -7.2722287751091E-5
+set CD2_1(kp4m,k1044,ccd4) -7.2699225091321E-5
+set WAT01(kp4m,k1044,ccd4) {system=image}
+set WAT11(kp4m,k1044,ccd4) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1044,ccd4) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.002900485715009669 0.30}
+set WAT13(kp4m,k1044,ccd4) \
+          {13043623955273 -0.3038842791038089 -0.153762283688112 4.172644238065}
+set WAT14(kp4m,k1044,ccd4) \
+          {190E-5 -6.719704573355593E-4 0.002332916636316337 3.717179105503696E}
+set WAT15(kp4m,k1044,ccd4) \
+          {-5 1.713604348090502E-4 1.032296084564077E-4 "                      }
+set WAT21(kp4m,k1044,ccd4) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1044,ccd4) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.002900485715009669 0.3}
+set WAT23(kp4m,k1044,ccd4) \
+          {013043623955273 -0.3038842791038089 -0.153762283688112 -1.2607116872}
+set WAT24(kp4m,k1044,ccd4) \
+          {49270E-5 2.981765377648217E-4 -1.260994571835053E-4 9.83140808131292}
+set WAT25(kp4m,k1044,ccd4) \
+          {1E-5 0.001134349118323739 6.110885743655496E-4 "                    }
+
+set WCSASTRM(kp4m,k1044,ccd5) \
+          {kp4m.20101023T042517 (Trumpler 37 Us) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1044,ccd5) RA---ZPX
+set CTYPE2(kp4m,k1044,ccd5) DEC--ZPX
+set CRPIX1(kp4m,k1044,ccd5) 4269.83617439495
+set CRPIX2(kp4m,k1044,ccd5) 7.07849314913414
+set CD1_1(kp4m,k1044,ccd5) -3.5090743048443E-7
+set CD2_2(kp4m,k1044,ccd5) 3.38312997319888E-7
+set CD1_2(kp4m,k1044,ccd5) -7.2687598269293E-5
+set CD2_1(kp4m,k1044,ccd5) -7.2737917506011E-5
+set WAT01(kp4m,k1044,ccd5) {system=image}
+set WAT11(kp4m,k1044,ccd5) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1044,ccd5) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2964342250217344 0.001}
+set WAT13(kp4m,k1044,ccd5) \
+          {939797401222845 0.1616096799317753 0.3118895887906057 2.505560039519}
+set WAT14(kp4m,k1044,ccd5) \
+          {459E-6 6.355211490011630E-4 0.002782656617819738 2.269240643232980E-}
+set WAT15(kp4m,k1044,ccd5) \
+          {4 6.853383618555275E-4 -3.233903875825586E-4 "                      }
+set WAT21(kp4m,k1044,ccd5) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1044,ccd5) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2964342250217344 0.00}
+set WAT23(kp4m,k1044,ccd5) \
+          {1939797401222845 0.1616096799317753 0.3118895887906057 8.46762391239}
+set WAT24(kp4m,k1044,ccd5) \
+          {2543E-6 -4.280943914769531E-4 -4.624655168886317E-4 -3.2134360821201}
+set WAT25(kp4m,k1044,ccd5) \
+          {63E-4 0.001263669056961539 0.001070283649446804 "                   }
+
+set WCSASTRM(kp4m,k1044,ccd6) \
+          {kp4m.20101023T042517 (Trumpler 37 Us) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1044,ccd6) RA---ZPX
+set CTYPE2(kp4m,k1044,ccd6) DEC--ZPX
+set CRPIX1(kp4m,k1044,ccd6) 2145.58491082735
+set CRPIX2(kp4m,k1044,ccd6) 7.72923223382244
+set CD1_1(kp4m,k1044,ccd6) -3.3032460261593E-7
+set CD2_2(kp4m,k1044,ccd6) 3.31198769382206E-7
+set CD1_2(kp4m,k1044,ccd6) -7.2685761539203E-5
+set CD2_1(kp4m,k1044,ccd6) -7.2708592509462E-5
+set WAT01(kp4m,k1044,ccd6) {system=image}
+set WAT11(kp4m,k1044,ccd6) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1044,ccd6) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2971268394366571 0.001}
+set WAT13(kp4m,k1044,ccd6) \
+          {197528527934707 0.0070930328029831 0.1572837806304724 2.055096750005}
+set WAT14(kp4m,k1044,ccd6) \
+          {104E-5 6.869470900086349E-4 0.002568699639282029 2.159204641135636E-}
+set WAT15(kp4m,k1044,ccd6) \
+          {4 3.676135269585158E-4 -8.995443923314493E-4 "                      }
+set WAT21(kp4m,k1044,ccd6) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1044,ccd6) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2971268394366571 0.00}
+set WAT23(kp4m,k1044,ccd6) \
+          {1197528527934707 0.0070930328029831 0.1572837806304724 1.37106767183}
+set WAT24(kp4m,k1044,ccd6) \
+          {7419E-5 -5.239008782048012E-5 -3.838756959773723E-4 -4.5764793909264}
+set WAT25(kp4m,k1044,ccd6) \
+          {03E-4 -5.862161968016708E-4 0.002261661225819976 "                  }
+
+set WCSASTRM(kp4m,k1044,ccd7) \
+          {kp4m.20101023T042517 (Trumpler 37 Us) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1044,ccd7) RA---ZPX
+set CTYPE2(kp4m,k1044,ccd7) DEC--ZPX
+set CRPIX1(kp4m,k1044,ccd7) 17.1831675280411
+set CRPIX2(kp4m,k1044,ccd7) 8.47726292527092
+set CD1_1(kp4m,k1044,ccd7) -3.1838306077707E-7
+set CD2_2(kp4m,k1044,ccd7) 3.45947515075108E-7
+set CD1_2(kp4m,k1044,ccd7) -7.2677247145802E-5
+set CD2_1(kp4m,k1044,ccd7) -7.2680296152042E-5
+set WAT01(kp4m,k1044,ccd7) {system=image}
+set WAT11(kp4m,k1044,ccd7) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1044,ccd7) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2977164778554654 5.485}
+set WAT13(kp4m,k1044,ccd7) \
+          {793320047028E-4 -0.147602955555143 0.002590265742320147 3.9177084262}
+set WAT14(kp4m,k1044,ccd7) \
+          {64374E-5 7.905931013937050E-4 0.002579606426494564 -1.68044035933857}
+set WAT15(kp4m,k1044,ccd7) \
+          {8E-5 9.173402555048497E-4 -9.915258862256487E-4 "                   }
+set WAT21(kp4m,k1044,ccd7) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1044,ccd7) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2977164778554654 5.48}
+set WAT23(kp4m,k1044,ccd7) \
+          {5793320047028E-4 -0.147602955555143 0.002590265742320147 3.159993500}
+set WAT24(kp4m,k1044,ccd7) \
+          {412509E-5 6.509207586657046E-5 -2.367132193233401E-4 9.4335342917064}
+set WAT25(kp4m,k1044,ccd7) \
+          {66E-4 0.001770679933529723 0.004799289216680377 "                   }
+
+set WCSASTRM(kp4m,k1044,ccd8) \
+          {kp4m.20101023T042517 (Trumpler 37 Us) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1044,ccd8) RA---ZPX
+set CTYPE2(kp4m,k1044,ccd8) DEC--ZPX
+set CRPIX1(kp4m,k1044,ccd8) -2111.59641114822
+set CRPIX2(kp4m,k1044,ccd8) 3.34643431401599
+set CD1_1(kp4m,k1044,ccd8) -3.3859801389385E-7
+set CD2_2(kp4m,k1044,ccd8) 3.99043465575812E-7
+set CD1_2(kp4m,k1044,ccd8) -7.2663430600115E-5
+set CD2_1(kp4m,k1044,ccd8) -7.2672468966694E-5
+set WAT01(kp4m,k1044,ccd8) {system=image}
+set WAT11(kp4m,k1044,ccd8) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1044,ccd8) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2987946794239533 -5.44}
+set WAT13(kp4m,k1044,ccd8) \
+          {8209820398404E-4 -0.3022890774324212 -0.1518944504660656 2.442706753}
+set WAT14(kp4m,k1044,ccd8) \
+          {122603E-4 0.00111506852878211 0.00262133506073759 0.0016285795780160}
+set WAT15(kp4m,k1044,ccd8) \
+          {01 0.001460028182435618 0.003085541733127661 "                      }
+set WAT21(kp4m,k1044,ccd8) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1044,ccd8) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2987946794239533 -5.4}
+set WAT23(kp4m,k1044,ccd8) \
+          {48209820398404E-4 -0.3022890774324212 -0.1518944504660656 5.85572354}
+set WAT24(kp4m,k1044,ccd8) \
+          {3021280E-6 4.178561680739406E-4 2.607801396081142E-5 -2.347195545982}
+set WAT25(kp4m,k1044,ccd8) \
+          {971E-4 0.001791214378845522 -0.001093219141525768 "                 }
+
+set WCSASTRM(kp4m,k1020,ccd1) \
+          {kp4m.20101023T043258 (Trumpler 37 z) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1020,ccd1) RA---ZPX
+set CTYPE2(kp4m,k1020,ccd1) DEC--ZPX
+set CRPIX1(kp4m,k1020,ccd1) 4265.8438530943
+set CRPIX2(kp4m,k1020,ccd1) 4156.51258439527
+set CD1_1(kp4m,k1020,ccd1) -2.7720648176236E-7
+set CD2_2(kp4m,k1020,ccd1) 2.38066030300824E-7
+set CD1_2(kp4m,k1020,ccd1) -7.2756579440176E-5
+set CD2_1(kp4m,k1020,ccd1) -7.2767505923313E-5
+set WAT01(kp4m,k1020,ccd1) {system=image}
+set WAT11(kp4m,k1020,ccd1) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1020,ccd1) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.00501748934529906 0.303}
+set WAT13(kp4m,k1020,ccd1) \
+          {5231238209863 0.1603976793321905 0.3103276443512941 2.04527444672706}
+set WAT14(kp4m,k1020,ccd1) \
+          {9E-4 -0.001532618273456128 0.003095553205801828 -9.641102370428145E-}
+set WAT15(kp4m,k1020,ccd1) \
+          {4 0.002538665503261922 0.001262631867174197 "                       }
+set WAT21(kp4m,k1020,ccd1) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1020,ccd1) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.00501748934529906 0.30}
+set WAT23(kp4m,k1020,ccd1) \
+          {35231238209863 0.1603976793321905 0.3103276443512941 2.0006952058152}
+set WAT24(kp4m,k1020,ccd1) \
+          {48E-4 -4.708589711725552E-4 8.008784709465091E-4 -0.0014983630961576}
+set WAT25(kp4m,k1020,ccd1) \
+          {05 9.710606836924815E-4 0.002891951366850745 "                      }
+
+set WCSASTRM(kp4m,k1020,ccd2) \
+          {kp4m.20101023T043258 (Trumpler 37 z) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1020,ccd2) RA---ZPX
+set CTYPE2(kp4m,k1020,ccd2) DEC--ZPX
+set CRPIX1(kp4m,k1020,ccd2) 2142.24857410134
+set CRPIX2(kp4m,k1020,ccd2) 4152.88540642038
+set CD1_1(kp4m,k1020,ccd2) -3.3476909940823E-7
+set CD2_2(kp4m,k1020,ccd2) 3.21156037506425E-7
+set CD1_2(kp4m,k1020,ccd2) -7.2737208449524E-5
+set CD2_1(kp4m,k1020,ccd2) -7.2716966851508E-5
+set WAT01(kp4m,k1020,ccd2) {system=image}
+set WAT11(kp4m,k1020,ccd2) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1020,ccd2) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.004169237174807403 0.30}
+set WAT13(kp4m,k1020,ccd2) \
+          {27133781220989 0.005520067373422249 0.1556868324920485 4.60475153302}
+set WAT14(kp4m,k1020,ccd2) \
+          {4403E-5 -0.001009271696454668 0.00337689284396871 -9.596286296733989}
+set WAT15(kp4m,k1020,ccd2) \
+          {E-6 -5.918690391929416E-5 5.380529989668730E-4 "                    }
+set WAT21(kp4m,k1020,ccd2) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1020,ccd2) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.004169237174807403 0.3}
+set WAT23(kp4m,k1020,ccd2) \
+          {027133781220989 0.005520067373422249 0.1556868324920485 1.6189176385}
+set WAT24(kp4m,k1020,ccd2) \
+          {75026E-5 -2.467689877202892E-4 6.289219321760575E-4 -6.9662647336066}
+set WAT25(kp4m,k1020,ccd2) \
+          {39E-5 7.552159265811153E-4 -1.945758973134750E-4 "                  }
+
+set WCSASTRM(kp4m,k1020,ccd3) \
+          {kp4m.20101023T043258 (Trumpler 37 z) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1020,ccd3) RA---ZPX
+set CTYPE2(kp4m,k1020,ccd3) DEC--ZPX
+set CRPIX1(kp4m,k1020,ccd3) 15.7306157172619
+set CRPIX2(kp4m,k1020,ccd3) 4154.07324043354
+set CD1_1(kp4m,k1020,ccd3) -3.2271662764442E-7
+set CD2_2(kp4m,k1020,ccd3) 3.29170349767561E-7
+set CD1_2(kp4m,k1020,ccd3) -7.2734056325398E-5
+set CD2_1(kp4m,k1020,ccd3) -7.2701956921707E-5
+set WAT01(kp4m,k1020,ccd3) {system=image}
+set WAT11(kp4m,k1020,ccd3) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1020,ccd3) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.00356805521853082 0.302}
+set WAT13(kp4m,k1020,ccd3) \
+          {0746168078258 -0.1491170298005911 0.001051828600440945 3.66407128548}
+set WAT14(kp4m,k1020,ccd3) \
+          {7056E-5 -9.280454084204592E-4 0.0032180570532476 -3.278781775881381E}
+set WAT15(kp4m,k1020,ccd3) \
+          {-4 9.627010439030923E-4 -0.001044569059338023 "                     }
+set WAT21(kp4m,k1020,ccd3) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1020,ccd3) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.00356805521853082 0.30}
+set WAT23(kp4m,k1020,ccd3) \
+          {20746168078258 -0.1491170298005911 0.001051828600440945 -1.692911349}
+set WAT24(kp4m,k1020,ccd3) \
+          {901200E-5 1.867726014288610E-4 -2.247593375291453E-4 -6.722893148852}
+set WAT25(kp4m,k1020,ccd3) \
+          {240E-5 0.001607110953138908 0.001190869531580786 "                  }
+
+set WCSASTRM(kp4m,k1020,ccd4) \
+          {kp4m.20101023T043258 (Trumpler 37 z) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1020,ccd4) RA---ZPX
+set CTYPE2(kp4m,k1020,ccd4) DEC--ZPX
+set CRPIX1(kp4m,k1020,ccd4) -2112.12654587479
+set CRPIX2(kp4m,k1020,ccd4) 4152.5737645999
+set CD1_1(kp4m,k1020,ccd4) -2.9787696920117E-7
+set CD2_2(kp4m,k1020,ccd4) 3.38016368598652E-7
+set CD1_2(kp4m,k1020,ccd4) -7.2728111851950E-5
+set CD2_1(kp4m,k1020,ccd4) -7.2711205726569E-5
+set WAT01(kp4m,k1020,ccd4) {system=image}
+set WAT11(kp4m,k1020,ccd4) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1020,ccd4) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.002875297192728698 0.30}
+set WAT13(kp4m,k1020,ccd4) \
+          {13066693824174 -0.3038911170135427 -0.1536671018618442 9.21320892686}
+set WAT14(kp4m,k1020,ccd4) \
+          {7068E-5 -0.001120936154150586 0.003551618015926846 2.681462475427194}
+set WAT15(kp4m,k1020,ccd4) \
+          {E-4 -2.112949985071936E-4 4.823409714984571E-4 "                    }
+set WAT21(kp4m,k1020,ccd4) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1020,ccd4) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.002875297192728698 0.3}
+set WAT23(kp4m,k1020,ccd4) \
+          {013066693824174 -0.3038911170135427 -0.1536671018618442 -3.582615082}
+set WAT24(kp4m,k1020,ccd4) \
+          {019490E-5 4.550817083054058E-4 -3.302275550950529E-4 -1.760761345371}
+set WAT25(kp4m,k1020,ccd4) \
+          {393E-5 0.001550722304977047 4.910195409546722E-4 "                  }
+
+set WCSASTRM(kp4m,k1020,ccd5) \
+          {kp4m.20101023T043258 (Trumpler 37 z) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1020,ccd5) RA---ZPX
+set CTYPE2(kp4m,k1020,ccd5) DEC--ZPX
+set CRPIX1(kp4m,k1020,ccd5) 4269.66841720124
+set CRPIX2(kp4m,k1020,ccd5) 7.68282351325958
+set CD1_1(kp4m,k1020,ccd5) -3.4545409573565E-7
+set CD2_2(kp4m,k1020,ccd5) 3.60422637348410E-7
+set CD1_2(kp4m,k1020,ccd5) -7.2695242714028E-5
+set CD2_1(kp4m,k1020,ccd5) -7.2755822119930E-5
+set WAT01(kp4m,k1020,ccd5) {system=image}
+set WAT11(kp4m,k1020,ccd5) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1020,ccd5) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2964337249825431 0.001}
+set WAT13(kp4m,k1020,ccd5) \
+          {960438465370993 0.1616369035304848 0.312044002109924 -9.801653670024}
+set WAT14(kp4m,k1020,ccd5) \
+          {810E-6 2.834993581583454E-4 0.001790858659321561 1.618754886527453E-}
+set WAT15(kp4m,k1020,ccd5) \
+          {4 9.914063559755424E-4 -6.949264263096375E-5 "                      }
+set WAT21(kp4m,k1020,ccd5) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1020,ccd5) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2964337249825431 0.00}
+set WAT23(kp4m,k1020,ccd5) \
+          {1960438465370993 0.1616369035304848 0.312044002109924 4.875020325160}
+set WAT24(kp4m,k1020,ccd5) \
+          {452E-5 -4.691520601005397E-5 -3.216082418897509E-4 -4.39182973672744}
+set WAT25(kp4m,k1020,ccd5) \
+          {0E-4 -1.922498658589716E-4 8.800781074246248E-4 "                   }
+
+set WCSASTRM(kp4m,k1020,ccd6) \
+          {kp4m.20101023T043258 (Trumpler 37 z) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1020,ccd6) RA---ZPX
+set CTYPE2(kp4m,k1020,ccd6) DEC--ZPX
+set CRPIX1(kp4m,k1020,ccd6) 2146.47051302399
+set CRPIX2(kp4m,k1020,ccd6) 7.79036073886183
+set CD1_1(kp4m,k1020,ccd6) -3.3225681984634E-7
+set CD2_2(kp4m,k1020,ccd6) 3.44670386868646E-7
+set CD1_2(kp4m,k1020,ccd6) -7.2686763672671E-5
+set CD2_1(kp4m,k1020,ccd6) -7.2704574889059E-5
+set WAT01(kp4m,k1020,ccd6) {system=image}
+set WAT11(kp4m,k1020,ccd6) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1020,ccd6) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2971260103938058 0.001}
+set WAT13(kp4m,k1020,ccd6) \
+          {206416556009287 0.007156916352253929 0.1573946063843845 2.6361361308}
+set WAT14(kp4m,k1020,ccd6) \
+          {37458E-5 6.058539695333238E-4 0.002232158274993195 -5.26612446265993}
+set WAT15(kp4m,k1020,ccd6) \
+          {9E-5 3.170080251898340E-4 6.805474072753636E-4 "                    }
+set WAT21(kp4m,k1020,ccd6) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1020,ccd6) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2971260103938058 0.00}
+set WAT23(kp4m,k1020,ccd6) \
+          {1206416556009287 0.007156916352253929 0.1573946063843845 1.434404644}
+set WAT24(kp4m,k1020,ccd6) \
+          {303212E-5 1.774766476406784E-4 2.206271859213035E-4 -7.7865173384362}
+set WAT25(kp4m,k1020,ccd6) \
+          {77E-5 -0.001365284861037198 -6.230925659646526E-4 "                 }
+
+set WCSASTRM(kp4m,k1020,ccd7) \
+          {kp4m.20101023T043258 (Trumpler 37 z) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1020,ccd7) RA---ZPX
+set CTYPE2(kp4m,k1020,ccd7) DEC--ZPX
+set CRPIX1(kp4m,k1020,ccd7) 18.2685312226736
+set CRPIX2(kp4m,k1020,ccd7) 8.5826696085943
+set CD1_1(kp4m,k1020,ccd7) -3.2144425739317E-7
+set CD2_2(kp4m,k1020,ccd7) 3.50758648037576E-7
+set CD1_2(kp4m,k1020,ccd7) -7.2679712460870E-5
+set CD2_1(kp4m,k1020,ccd7) -7.2678324153099E-5
+set WAT01(kp4m,k1020,ccd7) {system=image}
+set WAT11(kp4m,k1020,ccd7) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1020,ccd7) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2977247618051143 5.566}
+set WAT13(kp4m,k1020,ccd7) \
+          {571170335571E-4 -0.1475201413184844 0.002688744886622829 2.820927851}
+set WAT14(kp4m,k1020,ccd7) \
+          {855103E-5 4.726676165788473E-4 0.001567398838131861 2.12050213231909}
+set WAT15(kp4m,k1020,ccd7) \
+          {7E-4 5.036184714333082E-4 9.850914042232019E-4 "                    }
+set WAT21(kp4m,k1020,ccd7) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1020,ccd7) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2977247618051143 5.56}
+set WAT23(kp4m,k1020,ccd7) \
+          {6571170335571E-4 -0.1475201413184844 0.002688744886622829 3.55444764}
+set WAT24(kp4m,k1020,ccd7) \
+          {4933337E-5 2.068240166875723E-4 2.040005619763309E-4 7.9771663188059}
+set WAT25(kp4m,k1020,ccd7) \
+          {00E-4 0.002020715930923536 0.003569015286457114 "                   }
+
+set WCSASTRM(kp4m,k1020,ccd8) \
+          {kp4m.20101023T043258 (Trumpler 37 z) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1020,ccd8) RA---ZPX
+set CTYPE2(kp4m,k1020,ccd8) DEC--ZPX
+set CRPIX1(kp4m,k1020,ccd8) -2109.69059768784
+set CRPIX2(kp4m,k1020,ccd8) 4.14143973431746
+set CD1_1(kp4m,k1020,ccd8) -3.5666147401488E-7
+set CD2_2(kp4m,k1020,ccd8) 4.00650564311318E-7
+set CD1_2(kp4m,k1020,ccd8) -7.2677179967459E-5
+set CD2_1(kp4m,k1020,ccd8) -7.2689915553164E-5
+set WAT01(kp4m,k1020,ccd8) {system=image}
+set WAT11(kp4m,k1020,ccd8) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1020,ccd8) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2988676290428867 -5.24}
+set WAT13(kp4m,k1020,ccd8) \
+          {4910388327719E-4 -0.3022234370617136 -0.1517865158635328 6.562278688}
+set WAT14(kp4m,k1020,ccd8) \
+          {429969E-5 2.272165276550670E-4 0.001241046978919055 5.16150453856477}
+set WAT15(kp4m,k1020,ccd8) \
+          {3E-4 -6.321363978651532E-4 0.001315883913185671 "                   }
+set WAT21(kp4m,k1020,ccd8) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1020,ccd8) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2988676290428867 -5.2}
+set WAT23(kp4m,k1020,ccd8) \
+          {44910388327719E-4 -0.3022234370617136 -0.1517865158635328 3.13810597}
+set WAT24(kp4m,k1020,ccd8) \
+          {1702345E-5 1.451408284380405E-4 -1.121602572494611E-4 1.784518457302}
+set WAT25(kp4m,k1020,ccd8) \
+          {635E-4 7.821462662215984E-4 1.422715077537934E-4 "                  }
+
+set WCSASTRM(kp4m,k1009,ccd1) \
+          {kp4m.20101023T043624 (Trumpler 37 ha) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1009,ccd1) RA---ZPX
+set CTYPE2(kp4m,k1009,ccd1) DEC--ZPX
+set CRPIX1(kp4m,k1009,ccd1) 4266.25724065269
+set CRPIX2(kp4m,k1009,ccd1) 4159.37480254111
+set CD1_1(kp4m,k1009,ccd1) -2.8526744908338E-7
+set CD2_2(kp4m,k1009,ccd1) 2.35588601546300E-7
+set CD1_2(kp4m,k1009,ccd1) -7.2741736719100E-5
+set CD2_1(kp4m,k1009,ccd1) -7.2762118857642E-5
+set WAT01(kp4m,k1009,ccd1) {system=image}
+set WAT11(kp4m,k1009,ccd1) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1009,ccd1) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.005242789785522471 0.30}
+set WAT13(kp4m,k1009,ccd1) \
+          {37041441185105 0.1604254312967605 0.3103342239216862 1.6891424970409}
+set WAT14(kp4m,k1009,ccd1) \
+          {60E-4 -0.001606793998962452 0.00313347561959862 -5.991393848485458E-}
+set WAT15(kp4m,k1009,ccd1) \
+          {4 0.002790141448357071 4.030389385239774E-4 "                       }
+set WAT21(kp4m,k1009,ccd1) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1009,ccd1) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.005242789785522471 0.3}
+set WAT23(kp4m,k1009,ccd1) \
+          {037041441185105 0.1604254312967605 0.3103342239216862 2.064116035949}
+set WAT24(kp4m,k1009,ccd1) \
+          {503E-4 -4.728704654495106E-4 2.898866620234885E-4 -0.001513313338854}
+set WAT25(kp4m,k1009,ccd1) \
+          {942 0.001640529994605146 0.002698160445283561 "                     }
+
+set WCSASTRM(kp4m,k1009,ccd2) \
+          {kp4m.20101023T043624 (Trumpler 37 ha) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1009,ccd2) RA---ZPX
+set CTYPE2(kp4m,k1009,ccd2) DEC--ZPX
+set CRPIX1(kp4m,k1009,ccd2) 2142.46833189381
+set CRPIX2(kp4m,k1009,ccd2) 4155.64203112027
+set CD1_1(kp4m,k1009,ccd2) -3.3376727549046E-7
+set CD2_2(kp4m,k1009,ccd2) 3.18512065416495E-7
+set CD1_2(kp4m,k1009,ccd2) -7.2730801724347E-5
+set CD2_1(kp4m,k1009,ccd2) -7.2714134171555E-5
+set WAT01(kp4m,k1009,ccd2) {system=image}
+set WAT11(kp4m,k1009,ccd2) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1009,ccd2) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.004369343177602298 0.30}
+set WAT13(kp4m,k1009,ccd2) \
+          {28851978517333 0.005545879345890984 0.1556960189029448 3.30062634258}
+set WAT14(kp4m,k1009,ccd2) \
+          {7685E-5 -7.787663361932583E-4 0.002930687200896836 -1.13190642993865}
+set WAT15(kp4m,k1009,ccd2) \
+          {0E-4 -0.001264326439465551 0.002299952576048835 "                   }
+set WAT21(kp4m,k1009,ccd2) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1009,ccd2) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.004369343177602298 0.3}
+set WAT23(kp4m,k1009,ccd2) \
+          {028851978517333 0.005545879345890984 0.1556960189029448 1.7087514122}
+set WAT24(kp4m,k1009,ccd2) \
+          {88573E-5 -2.410291462058897E-4 8.023006225030320E-4 -2.1646184734067}
+set WAT25(kp4m,k1009,ccd2) \
+          {57E-4 1.127084215422180E-5 0.001444083868676477 "                   }
+
+set WCSASTRM(kp4m,k1009,ccd3) \
+          {kp4m.20101023T043624 (Trumpler 37 ha) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1009,ccd3) RA---ZPX
+set CTYPE2(kp4m,k1009,ccd3) DEC--ZPX
+set CRPIX1(kp4m,k1009,ccd3) 15.9305924498583
+set CRPIX2(kp4m,k1009,ccd3) 4156.97140310195
+set CD1_1(kp4m,k1009,ccd3) -3.2756131584528E-7
+set CD2_2(kp4m,k1009,ccd3) 3.26041420808156E-7
+set CD1_2(kp4m,k1009,ccd3) -7.2725236773258E-5
+set CD2_1(kp4m,k1009,ccd3) -7.2692438753617E-5
+set WAT01(kp4m,k1009,ccd3) {system=image}
+set WAT11(kp4m,k1009,ccd3) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1009,ccd3) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.003768532397960936 0.30}
+set WAT13(kp4m,k1009,ccd3) \
+          {2248894997986 -0.1490710997725424 0.001065461974320512 2.52064029262}
+set WAT14(kp4m,k1009,ccd3) \
+          {1050E-5 -7.781246666470196E-4 0.002844189011808881 -4.15841658169722}
+set WAT15(kp4m,k1009,ccd3) \
+          {7E-4 0.00146984588789625 -0.001125592413767697 "                    }
+set WAT21(kp4m,k1009,ccd3) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1009,ccd3) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.003768532397960936 0.3}
+set WAT23(kp4m,k1009,ccd3) \
+          {02248894997986 -0.1490710997725424 0.001065461974320512 -2.246336168}
+set WAT24(kp4m,k1009,ccd3) \
+          {784039E-5 2.717622668885233E-4 -4.071294130017760E-4 -5.480985177191}
+set WAT25(kp4m,k1009,ccd3) \
+          {273E-5 0.001989085913126402 0.001677303516934827 "                  }
+
+set WCSASTRM(kp4m,k1009,ccd4) \
+          {kp4m.20101023T043624 (Trumpler 37 ha) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1009,ccd4) RA---ZPX
+set CTYPE2(kp4m,k1009,ccd4) DEC--ZPX
+set CRPIX1(kp4m,k1009,ccd4) -2112.0429982525
+set CRPIX2(kp4m,k1009,ccd4) 4155.27218465509
+set CD1_1(kp4m,k1009,ccd4) -3.0154784160653E-7
+set CD2_2(kp4m,k1009,ccd4) 3.33567034625341E-7
+set CD1_2(kp4m,k1009,ccd4) -7.2723032441855E-5
+set CD2_1(kp4m,k1009,ccd4) -7.2701459769158E-5
+set WAT01(kp4m,k1009,ccd4) {system=image}
+set WAT11(kp4m,k1009,ccd4) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1009,ccd4) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.003056001020458096 0.30}
+set WAT13(kp4m,k1009,ccd4) \
+          {14740873016221 -0.3038269269290829 -0.1536410817748261 1.81148384899}
+set WAT14(kp4m,k1009,ccd4) \
+          {7987E-4 -0.001041502180197247 0.003567022431889572 0.001122964390496}
+set WAT15(kp4m,k1009,ccd4) \
+          {997 1.756824692977784E-4 0.002468235120532971 "                     }
+set WAT21(kp4m,k1009,ccd4) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1009,ccd4) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.003056001020458096 0.3}
+set WAT23(kp4m,k1009,ccd4) \
+          {014740873016221 -0.3038269269290829 -0.1536410817748261 -6.393391688}
+set WAT24(kp4m,k1009,ccd4) \
+          {317985E-6 4.907246216235623E-4 -1.982605422708719E-4 2.8682261376041}
+set WAT25(kp4m,k1009,ccd4) \
+          {64E-4 0.00187855799068223 0.001272297531851454 "                    }
+
+set WCSASTRM(kp4m,k1009,ccd5) \
+          {kp4m.20101023T043624 (Trumpler 37 ha) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1009,ccd5) RA---ZPX
+set CTYPE2(kp4m,k1009,ccd5) DEC--ZPX
+set CRPIX1(kp4m,k1009,ccd5) 4270.39143635124
+set CRPIX2(kp4m,k1009,ccd5) 10.3398842758472
+set CD1_1(kp4m,k1009,ccd5) -3.5308984122281E-7
+set CD2_2(kp4m,k1009,ccd5) 3.53951598798566E-7
+set CD1_2(kp4m,k1009,ccd5) -7.2685681532886E-5
+set CD2_1(kp4m,k1009,ccd5) -7.2742194372668E-5
+set WAT01(kp4m,k1009,ccd5) {system=image}
+set WAT11(kp4m,k1009,ccd5) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1009,ccd5) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2961842861837457 0.002}
+set WAT13(kp4m,k1009,ccd5) \
+          {186354598407553 0.1616583239682425 0.3120110276461737 -6.45838048657}
+set WAT14(kp4m,k1009,ccd5) \
+          {6080E-5 4.183194296446990E-4 0.002212725254133727 7.054371095516218E}
+set WAT15(kp4m,k1009,ccd5) \
+          {-4 9.361140511400395E-4 -0.00124497589814813 "                      }
+set WAT21(kp4m,k1009,ccd5) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1009,ccd5) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2961842861837457 0.00}
+set WAT23(kp4m,k1009,ccd5) \
+          {2186354598407553 0.1616583239682425 0.3120110276461737 6.72613294380}
+set WAT24(kp4m,k1009,ccd5) \
+          {3455E-5 -1.789175047580416E-4 -2.018708886212112E-4 -6.9385697429667}
+set WAT25(kp4m,k1009,ccd5) \
+          {47E-4 5.200677682757919E-4 0.001635790475250317 "                   }
+
+set WCSASTRM(kp4m,k1009,ccd6) \
+          {kp4m.20101023T043624 (Trumpler 37 ha) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1009,ccd6) RA---ZPX
+set CTYPE2(kp4m,k1009,ccd6) DEC--ZPX
+set CRPIX1(kp4m,k1009,ccd6) 2146.79317121614
+set CRPIX2(kp4m,k1009,ccd6) 10.4710179568566
+set CD1_1(kp4m,k1009,ccd6) -3.3268429436581E-7
+set CD2_2(kp4m,k1009,ccd6) 3.42798792353424E-7
+set CD1_2(kp4m,k1009,ccd6) -7.2678679586556E-5
+set CD2_1(kp4m,k1009,ccd6) -7.2698033888791E-5
+set WAT01(kp4m,k1009,ccd6) {system=image}
+set WAT11(kp4m,k1009,ccd6) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1009,ccd6) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2968979848910492 0.001}
+set WAT13(kp4m,k1009,ccd6) \
+          {402212766465925 0.007178822655534247 0.1573954590805771 6.2755874864}
+set WAT14(kp4m,k1009,ccd6) \
+          {83700E-5 8.851460701874660E-4 0.002531678476742234 -6.41275076972512}
+set WAT15(kp4m,k1009,ccd6) \
+          {7E-4 -0.001979409516242127 0.002401285386721556 "                   }
+set WAT21(kp4m,k1009,ccd6) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1009,ccd6) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2968979848910492 0.00}
+set WAT23(kp4m,k1009,ccd6) \
+          {1402212766465925 0.007178822655534247 0.1573954590805771 1.106991074}
+set WAT24(kp4m,k1009,ccd6) \
+          {500726E-5 5.355713440515377E-5 -4.909669946460563E-5 -2.120081177725}
+set WAT25(kp4m,k1009,ccd6) \
+          {486E-4 -7.717302624550627E-4 6.614498080370923E-4 "                 }
+
+set WCSASTRM(kp4m,k1009,ccd7) \
+          {kp4m.20101023T043624 (Trumpler 37 ha) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1009,ccd7) RA---ZPX
+set CTYPE2(kp4m,k1009,ccd7) DEC--ZPX
+set CRPIX1(kp4m,k1009,ccd7) 18.6472100182441
+set CRPIX2(kp4m,k1009,ccd7) 11.4558260081704
+set CD1_1(kp4m,k1009,ccd7) -3.2068544711600E-7
+set CD2_2(kp4m,k1009,ccd7) 3.51667765937676E-7
+set CD1_2(kp4m,k1009,ccd7) -7.2672749233539E-5
+set CD2_1(kp4m,k1009,ccd7) -7.2677007229946E-5
+set WAT01(kp4m,k1009,ccd7) {system=image}
+set WAT11(kp4m,k1009,ccd7) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1009,ccd7) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2974858383966325 7.655}
+set WAT13(kp4m,k1009,ccd7) \
+          {128249563323E-4 -0.1474909643665887 0.002718948934625759 3.780847316}
+set WAT14(kp4m,k1009,ccd7) \
+          {790476E-5 5.896356560526881E-4 0.001911843829294556 3.34907342063481}
+set WAT15(kp4m,k1009,ccd7) \
+          {0E-4 7.757159813691084E-4 0.001534503873135347 "                    }
+set WAT21(kp4m,k1009,ccd7) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1009,ccd7) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2974858383966325 7.65}
+set WAT23(kp4m,k1009,ccd7) \
+          {5128249563323E-4 -0.1474909643665887 0.002718948934625759 3.24237017}
+set WAT24(kp4m,k1009,ccd7) \
+          {6865941E-5 1.734355999319984E-4 2.232880652845525E-5 6.8413910501567}
+set WAT25(kp4m,k1009,ccd7) \
+          {22E-4 0.002206812008938498 0.002598432533767701 "                   }
+
+set WCSASTRM(kp4m,k1009,ccd8) \
+          {kp4m.20101023T043624 (Trumpler 37 ha) by F. Valdes 2010-10-28}
+set CTYPE1(kp4m,k1009,ccd8) RA---ZPX
+set CTYPE2(kp4m,k1009,ccd8) DEC--ZPX
+set CRPIX1(kp4m,k1009,ccd8) -2109.7808802061
+set CRPIX2(kp4m,k1009,ccd8) 6.91322575087064
+set CD1_1(kp4m,k1009,ccd8) -3.5749752063719E-7
+set CD2_2(kp4m,k1009,ccd8) 4.01729618921319E-7
+set CD1_2(kp4m,k1009,ccd8) -7.2664778742049E-5
+set CD2_1(kp4m,k1009,ccd8) -7.2672728117935E-5
+set WAT01(kp4m,k1009,ccd8) {system=image}
+set WAT11(kp4m,k1009,ccd8) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(kp4m,k1009,ccd8) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.2986189820638793 -3.24}
+set WAT13(kp4m,k1009,ccd8) \
+          {9156904432632E-4 -0.3021596549990935 -0.1517534977521979 5.706594446}
+set WAT14(kp4m,k1009,ccd8) \
+          {528167E-5 2.164470533938016E-4 0.001258748821160683 4.48670069083936}
+set WAT15(kp4m,k1009,ccd8) \
+          {5E-4 -6.942780597189713E-4 0.001189046687581617 "                   }
+set WAT21(kp4m,k1009,ccd8) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(kp4m,k1009,ccd8) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.2986189820638793 -3.2}
+set WAT23(kp4m,k1009,ccd8) \
+          {49156904432632E-4 -0.3021596549990935 -0.1517534977521979 2.09480637}
+set WAT24(kp4m,k1009,ccd8) \
+          {8492999E-5 7.696029630874534E-5 -2.574849034679715E-4 1.221451375499}
+set WAT25(kp4m,k1009,ccd8) \
+          {565E-4 6.732322980936007E-4 5.652105153659127E-5 "                  }
+
+
+# Default astrometery.
+set WCSASTRM(kp4m,ccd1) $WCSASTRM(kp4m,k1003,ccd1)
+set CTYPE1(kp4m,ccd1) $CTYPE1(kp4m,k1003,ccd1)
+set CTYPE2(kp4m,ccd1) $CTYPE2(kp4m,k1003,ccd1)
+set CRPIX1(kp4m,ccd1) $CRPIX1(kp4m,k1003,ccd1)
+set CRPIX2(kp4m,ccd1) $CRPIX2(kp4m,k1003,ccd1)
+set CD1_1(kp4m,ccd1) $CD1_1(kp4m,k1003,ccd1)
+set CD2_2(kp4m,ccd1) $CD2_2(kp4m,k1003,ccd1)
+set CD1_2(kp4m,ccd1) $CD1_2(kp4m,k1003,ccd1)
+set CD2_1(kp4m,ccd1) $CD2_1(kp4m,k1003,ccd1)
+set WAT01(kp4m,ccd1) $WAT01(kp4m,k1003,ccd1)
+set WAT11(kp4m,ccd1) $WAT11(kp4m,k1003,ccd1)
+set WAT12(kp4m,ccd1) $WAT12(kp4m,k1003,ccd1)
+set WAT13(kp4m,ccd1) $WAT13(kp4m,k1003,ccd1)
+set WAT14(kp4m,ccd1) $WAT14(kp4m,k1003,ccd1)
+set WAT15(kp4m,ccd1) $WAT15(kp4m,k1003,ccd1)
+set WAT21(kp4m,ccd1) $WAT21(kp4m,k1003,ccd1)
+set WAT22(kp4m,ccd1) $WAT22(kp4m,k1003,ccd1)
+set WAT23(kp4m,ccd1) $WAT23(kp4m,k1003,ccd1)
+set WAT24(kp4m,ccd1) $WAT24(kp4m,k1003,ccd1)
+set WAT25(kp4m,ccd1) $WAT25(kp4m,k1003,ccd1)
+
+set WCSASTRM(kp4m,ccd2) $WCSASTRM(kp4m,k1003,ccd2)
+set CTYPE1(kp4m,ccd2) $CTYPE1(kp4m,k1003,ccd2)
+set CTYPE2(kp4m,ccd2) $CTYPE2(kp4m,k1003,ccd2)
+set CRPIX1(kp4m,ccd2) $CRPIX1(kp4m,k1003,ccd2)
+set CRPIX2(kp4m,ccd2) $CRPIX2(kp4m,k1003,ccd2)
+set CD1_1(kp4m,ccd2) $CD1_1(kp4m,k1003,ccd2)
+set CD2_2(kp4m,ccd2) $CD2_2(kp4m,k1003,ccd2)
+set CD1_2(kp4m,ccd2) $CD1_2(kp4m,k1003,ccd2)
+set CD2_1(kp4m,ccd2) $CD2_1(kp4m,k1003,ccd2)
+set WAT01(kp4m,ccd2) $WAT01(kp4m,k1003,ccd2)
+set WAT11(kp4m,ccd2) $WAT11(kp4m,k1003,ccd2)
+set WAT12(kp4m,ccd2) $WAT12(kp4m,k1003,ccd2)
+set WAT13(kp4m,ccd2) $WAT13(kp4m,k1003,ccd2)
+set WAT14(kp4m,ccd2) $WAT14(kp4m,k1003,ccd2)
+set WAT15(kp4m,ccd2) $WAT15(kp4m,k1003,ccd2)
+set WAT21(kp4m,ccd2) $WAT21(kp4m,k1003,ccd2)
+set WAT22(kp4m,ccd2) $WAT22(kp4m,k1003,ccd2)
+set WAT23(kp4m,ccd2) $WAT23(kp4m,k1003,ccd2)
+set WAT24(kp4m,ccd2) $WAT24(kp4m,k1003,ccd2)
+set WAT25(kp4m,ccd2) $WAT25(kp4m,k1003,ccd2)
+
+set WCSASTRM(kp4m,ccd3) $WCSASTRM(kp4m,k1003,ccd3)
+set CTYPE1(kp4m,ccd3) $CTYPE1(kp4m,k1003,ccd3)
+set CTYPE2(kp4m,ccd3) $CTYPE2(kp4m,k1003,ccd3)
+set CRPIX1(kp4m,ccd3) $CRPIX1(kp4m,k1003,ccd3)
+set CRPIX2(kp4m,ccd3) $CRPIX2(kp4m,k1003,ccd3)
+set CD1_1(kp4m,ccd3) $CD1_1(kp4m,k1003,ccd3)
+set CD2_2(kp4m,ccd3) $CD2_2(kp4m,k1003,ccd3)
+set CD1_2(kp4m,ccd3) $CD1_2(kp4m,k1003,ccd3)
+set CD2_1(kp4m,ccd3) $CD2_1(kp4m,k1003,ccd3)
+set WAT01(kp4m,ccd3) $WAT01(kp4m,k1003,ccd3)
+set WAT11(kp4m,ccd3) $WAT11(kp4m,k1003,ccd3)
+set WAT12(kp4m,ccd3) $WAT12(kp4m,k1003,ccd3)
+set WAT13(kp4m,ccd3) $WAT13(kp4m,k1003,ccd3)
+set WAT14(kp4m,ccd3) $WAT14(kp4m,k1003,ccd3)
+set WAT15(kp4m,ccd3) $WAT15(kp4m,k1003,ccd3)
+set WAT21(kp4m,ccd3) $WAT21(kp4m,k1003,ccd3)
+set WAT22(kp4m,ccd3) $WAT22(kp4m,k1003,ccd3)
+set WAT23(kp4m,ccd3) $WAT23(kp4m,k1003,ccd3)
+set WAT24(kp4m,ccd3) $WAT24(kp4m,k1003,ccd3)
+set WAT25(kp4m,ccd3) $WAT25(kp4m,k1003,ccd3)
+
+set WCSASTRM(kp4m,ccd4) $WCSASTRM(kp4m,k1003,ccd4)
+set CTYPE1(kp4m,ccd4) $CTYPE1(kp4m,k1003,ccd4)
+set CTYPE2(kp4m,ccd4) $CTYPE2(kp4m,k1003,ccd4)
+set CRPIX1(kp4m,ccd4) $CRPIX1(kp4m,k1003,ccd4)
+set CRPIX2(kp4m,ccd4) $CRPIX2(kp4m,k1003,ccd4)
+set CD1_1(kp4m,ccd4) $CD1_1(kp4m,k1003,ccd4)
+set CD2_2(kp4m,ccd4) $CD2_2(kp4m,k1003,ccd4)
+set CD1_2(kp4m,ccd4) $CD1_2(kp4m,k1003,ccd4)
+set CD2_1(kp4m,ccd4) $CD2_1(kp4m,k1003,ccd4)
+set WAT01(kp4m,ccd4) $WAT01(kp4m,k1003,ccd4)
+set WAT11(kp4m,ccd4) $WAT11(kp4m,k1003,ccd4)
+set WAT12(kp4m,ccd4) $WAT12(kp4m,k1003,ccd4)
+set WAT13(kp4m,ccd4) $WAT13(kp4m,k1003,ccd4)
+set WAT14(kp4m,ccd4) $WAT14(kp4m,k1003,ccd4)
+set WAT15(kp4m,ccd4) $WAT15(kp4m,k1003,ccd4)
+set WAT21(kp4m,ccd4) $WAT21(kp4m,k1003,ccd4)
+set WAT22(kp4m,ccd4) $WAT22(kp4m,k1003,ccd4)
+set WAT23(kp4m,ccd4) $WAT23(kp4m,k1003,ccd4)
+set WAT24(kp4m,ccd4) $WAT24(kp4m,k1003,ccd4)
+set WAT25(kp4m,ccd4) $WAT25(kp4m,k1003,ccd4)
+
+set WCSASTRM(kp4m,ccd5) $WCSASTRM(kp4m,k1003,ccd5)
+set CTYPE1(kp4m,ccd5) $CTYPE1(kp4m,k1003,ccd5)
+set CTYPE2(kp4m,ccd5) $CTYPE2(kp4m,k1003,ccd5)
+set CRPIX1(kp4m,ccd5) $CRPIX1(kp4m,k1003,ccd5)
+set CRPIX2(kp4m,ccd5) $CRPIX2(kp4m,k1003,ccd5)
+set CD1_1(kp4m,ccd5) $CD1_1(kp4m,k1003,ccd5)
+set CD2_2(kp4m,ccd5) $CD2_2(kp4m,k1003,ccd5)
+set CD1_2(kp4m,ccd5) $CD1_2(kp4m,k1003,ccd5)
+set CD2_1(kp4m,ccd5) $CD2_1(kp4m,k1003,ccd5)
+set WAT01(kp4m,ccd5) $WAT01(kp4m,k1003,ccd5)
+set WAT11(kp4m,ccd5) $WAT11(kp4m,k1003,ccd5)
+set WAT12(kp4m,ccd5) $WAT12(kp4m,k1003,ccd5)
+set WAT13(kp4m,ccd5) $WAT13(kp4m,k1003,ccd5)
+set WAT14(kp4m,ccd5) $WAT14(kp4m,k1003,ccd5)
+set WAT15(kp4m,ccd5) $WAT15(kp4m,k1003,ccd5)
+set WAT21(kp4m,ccd5) $WAT21(kp4m,k1003,ccd5)
+set WAT22(kp4m,ccd5) $WAT22(kp4m,k1003,ccd5)
+set WAT23(kp4m,ccd5) $WAT23(kp4m,k1003,ccd5)
+set WAT24(kp4m,ccd5) $WAT24(kp4m,k1003,ccd5)
+set WAT25(kp4m,ccd5) $WAT25(kp4m,k1003,ccd5)
+
+set WCSASTRM(kp4m,ccd6) $WCSASTRM(kp4m,k1003,ccd6)
+set CTYPE1(kp4m,ccd6) $CTYPE1(kp4m,k1003,ccd6)
+set CTYPE2(kp4m,ccd6) $CTYPE2(kp4m,k1003,ccd6)
+set CRPIX1(kp4m,ccd6) $CRPIX1(kp4m,k1003,ccd6)
+set CRPIX2(kp4m,ccd6) $CRPIX2(kp4m,k1003,ccd6)
+set CD1_1(kp4m,ccd6) $CD1_1(kp4m,k1003,ccd6)
+set CD2_2(kp4m,ccd6) $CD2_2(kp4m,k1003,ccd6)
+set CD1_2(kp4m,ccd6) $CD1_2(kp4m,k1003,ccd6)
+set CD2_1(kp4m,ccd6) $CD2_1(kp4m,k1003,ccd6)
+set WAT01(kp4m,ccd6) $WAT01(kp4m,k1003,ccd6)
+set WAT11(kp4m,ccd6) $WAT11(kp4m,k1003,ccd6)
+set WAT12(kp4m,ccd6) $WAT12(kp4m,k1003,ccd6)
+set WAT13(kp4m,ccd6) $WAT13(kp4m,k1003,ccd6)
+set WAT14(kp4m,ccd6) $WAT14(kp4m,k1003,ccd6)
+set WAT15(kp4m,ccd6) $WAT15(kp4m,k1003,ccd6)
+set WAT21(kp4m,ccd6) $WAT21(kp4m,k1003,ccd6)
+set WAT22(kp4m,ccd6) $WAT22(kp4m,k1003,ccd6)
+set WAT23(kp4m,ccd6) $WAT23(kp4m,k1003,ccd6)
+set WAT24(kp4m,ccd6) $WAT24(kp4m,k1003,ccd6)
+set WAT25(kp4m,ccd6) $WAT25(kp4m,k1003,ccd6)
+
+set WCSASTRM(kp4m,ccd7) $WCSASTRM(kp4m,k1003,ccd7)
+set CTYPE1(kp4m,ccd7) $CTYPE1(kp4m,k1003,ccd7)
+set CTYPE2(kp4m,ccd7) $CTYPE2(kp4m,k1003,ccd7)
+set CRPIX1(kp4m,ccd7) $CRPIX1(kp4m,k1003,ccd7)
+set CRPIX2(kp4m,ccd7) $CRPIX2(kp4m,k1003,ccd7)
+set CD1_1(kp4m,ccd7) $CD1_1(kp4m,k1003,ccd7)
+set CD2_2(kp4m,ccd7) $CD2_2(kp4m,k1003,ccd7)
+set CD1_2(kp4m,ccd7) $CD1_2(kp4m,k1003,ccd7)
+set CD2_1(kp4m,ccd7) $CD2_1(kp4m,k1003,ccd7)
+set WAT01(kp4m,ccd7) $WAT01(kp4m,k1003,ccd7)
+set WAT11(kp4m,ccd7) $WAT11(kp4m,k1003,ccd7)
+set WAT12(kp4m,ccd7) $WAT12(kp4m,k1003,ccd7)
+set WAT13(kp4m,ccd7) $WAT13(kp4m,k1003,ccd7)
+set WAT14(kp4m,ccd7) $WAT14(kp4m,k1003,ccd7)
+set WAT15(kp4m,ccd7) $WAT15(kp4m,k1003,ccd7)
+set WAT21(kp4m,ccd7) $WAT21(kp4m,k1003,ccd7)
+set WAT22(kp4m,ccd7) $WAT22(kp4m,k1003,ccd7)
+set WAT23(kp4m,ccd7) $WAT23(kp4m,k1003,ccd7)
+set WAT24(kp4m,ccd7) $WAT24(kp4m,k1003,ccd7)
+set WAT25(kp4m,ccd7) $WAT25(kp4m,k1003,ccd7)
+
+set WCSASTRM(kp4m,ccd8) $WCSASTRM(kp4m,k1003,ccd8)
+set CTYPE1(kp4m,ccd8) $CTYPE1(kp4m,k1003,ccd8)
+set CTYPE2(kp4m,ccd8) $CTYPE2(kp4m,k1003,ccd8)
+set CRPIX1(kp4m,ccd8) $CRPIX1(kp4m,k1003,ccd8)
+set CRPIX2(kp4m,ccd8) $CRPIX2(kp4m,k1003,ccd8)
+set CD1_1(kp4m,ccd8) $CD1_1(kp4m,k1003,ccd8)
+set CD2_2(kp4m,ccd8) $CD2_2(kp4m,k1003,ccd8)
+set CD1_2(kp4m,ccd8) $CD1_2(kp4m,k1003,ccd8)
+set CD2_1(kp4m,ccd8) $CD2_1(kp4m,k1003,ccd8)
+set WAT01(kp4m,ccd8) $WAT01(kp4m,k1003,ccd8)
+set WAT11(kp4m,ccd8) $WAT11(kp4m,k1003,ccd8)
+set WAT12(kp4m,ccd8) $WAT12(kp4m,k1003,ccd8)
+set WAT13(kp4m,ccd8) $WAT13(kp4m,k1003,ccd8)
+set WAT14(kp4m,ccd8) $WAT14(kp4m,k1003,ccd8)
+set WAT15(kp4m,ccd8) $WAT15(kp4m,k1003,ccd8)
+set WAT21(kp4m,ccd8) $WAT21(kp4m,k1003,ccd8)
+set WAT22(kp4m,ccd8) $WAT22(kp4m,k1003,ccd8)
+set WAT23(kp4m,ccd8) $WAT23(kp4m,k1003,ccd8)
+set WAT24(kp4m,ccd8) $WAT24(kp4m,k1003,ccd8)
+set WAT25(kp4m,ccd8) $WAT25(kp4m,k1003,ccd8)
+
+set WCSASTRM(kp09m,ccd1) $WCSASTRM(kp09m,k1003,ccd1)
+set CTYPE1(kp09m,ccd1) $CTYPE1(kp09m,k1003,ccd1)
+set CTYPE2(kp09m,ccd1) $CTYPE2(kp09m,k1003,ccd1)
+set CRPIX1(kp09m,ccd1) $CRPIX1(kp09m,k1003,ccd1)
+set CRPIX2(kp09m,ccd1) $CRPIX2(kp09m,k1003,ccd1)
+set CD1_1(kp09m,ccd1) $CD1_1(kp09m,k1003,ccd1)
+set CD2_2(kp09m,ccd1) $CD2_2(kp09m,k1003,ccd1)
+set CD1_2(kp09m,ccd1) $CD1_2(kp09m,k1003,ccd1)
+set CD2_1(kp09m,ccd1) $CD2_1(kp09m,k1003,ccd1)
+set WAT01(kp09m,ccd1) $WAT01(kp09m,k1003,ccd1)
+set WAT11(kp09m,ccd1) $WAT11(kp09m,k1003,ccd1)
+set WAT12(kp09m,ccd1) $WAT12(kp09m,k1003,ccd1)
+set WAT13(kp09m,ccd1) $WAT13(kp09m,k1003,ccd1)
+set WAT14(kp09m,ccd1) $WAT14(kp09m,k1003,ccd1)
+set WAT15(kp09m,ccd1) $WAT15(kp09m,k1003,ccd1)
+set WAT21(kp09m,ccd1) $WAT21(kp09m,k1003,ccd1)
+set WAT22(kp09m,ccd1) $WAT22(kp09m,k1003,ccd1)
+set WAT23(kp09m,ccd1) $WAT23(kp09m,k1003,ccd1)
+set WAT24(kp09m,ccd1) $WAT24(kp09m,k1003,ccd1)
+set WAT25(kp09m,ccd1) $WAT25(kp09m,k1003,ccd1)
+
+set WCSASTRM(kp09m,ccd2) $WCSASTRM(kp09m,k1003,ccd2)
+set CTYPE1(kp09m,ccd2) $CTYPE1(kp09m,k1003,ccd2)
+set CTYPE2(kp09m,ccd2) $CTYPE2(kp09m,k1003,ccd2)
+set CRPIX1(kp09m,ccd2) $CRPIX1(kp09m,k1003,ccd2)
+set CRPIX2(kp09m,ccd2) $CRPIX2(kp09m,k1003,ccd2)
+set CD1_1(kp09m,ccd2) $CD1_1(kp09m,k1003,ccd2)
+set CD2_2(kp09m,ccd2) $CD2_2(kp09m,k1003,ccd2)
+set CD1_2(kp09m,ccd2) $CD1_2(kp09m,k1003,ccd2)
+set CD2_1(kp09m,ccd2) $CD2_1(kp09m,k1003,ccd2)
+set WAT01(kp09m,ccd2) $WAT01(kp09m,k1003,ccd2)
+set WAT11(kp09m,ccd2) $WAT11(kp09m,k1003,ccd2)
+set WAT12(kp09m,ccd2) $WAT12(kp09m,k1003,ccd2)
+set WAT13(kp09m,ccd2) $WAT13(kp09m,k1003,ccd2)
+set WAT14(kp09m,ccd2) $WAT14(kp09m,k1003,ccd2)
+set WAT15(kp09m,ccd2) $WAT15(kp09m,k1003,ccd2)
+set WAT21(kp09m,ccd2) $WAT21(kp09m,k1003,ccd2)
+set WAT22(kp09m,ccd2) $WAT22(kp09m,k1003,ccd2)
+set WAT23(kp09m,ccd2) $WAT23(kp09m,k1003,ccd2)
+set WAT24(kp09m,ccd2) $WAT24(kp09m,k1003,ccd2)
+set WAT25(kp09m,ccd2) $WAT25(kp09m,k1003,ccd2)
+
+set WCSASTRM(kp09m,ccd3) $WCSASTRM(kp09m,k1003,ccd3)
+set CTYPE1(kp09m,ccd3) $CTYPE1(kp09m,k1003,ccd3)
+set CTYPE2(kp09m,ccd3) $CTYPE2(kp09m,k1003,ccd3)
+set CRPIX1(kp09m,ccd3) $CRPIX1(kp09m,k1003,ccd3)
+set CRPIX2(kp09m,ccd3) $CRPIX2(kp09m,k1003,ccd3)
+set CD1_1(kp09m,ccd3) $CD1_1(kp09m,k1003,ccd3)
+set CD2_2(kp09m,ccd3) $CD2_2(kp09m,k1003,ccd3)
+set CD1_2(kp09m,ccd3) $CD1_2(kp09m,k1003,ccd3)
+set CD2_1(kp09m,ccd3) $CD2_1(kp09m,k1003,ccd3)
+set WAT01(kp09m,ccd3) $WAT01(kp09m,k1003,ccd3)
+set WAT11(kp09m,ccd3) $WAT11(kp09m,k1003,ccd3)
+set WAT12(kp09m,ccd3) $WAT12(kp09m,k1003,ccd3)
+set WAT13(kp09m,ccd3) $WAT13(kp09m,k1003,ccd3)
+set WAT14(kp09m,ccd3) $WAT14(kp09m,k1003,ccd3)
+set WAT15(kp09m,ccd3) $WAT15(kp09m,k1003,ccd3)
+set WAT21(kp09m,ccd3) $WAT21(kp09m,k1003,ccd3)
+set WAT22(kp09m,ccd3) $WAT22(kp09m,k1003,ccd3)
+set WAT23(kp09m,ccd3) $WAT23(kp09m,k1003,ccd3)
+set WAT24(kp09m,ccd3) $WAT24(kp09m,k1003,ccd3)
+set WAT25(kp09m,ccd3) $WAT25(kp09m,k1003,ccd3)
+
+set WCSASTRM(kp09m,ccd4) $WCSASTRM(kp09m,k1003,ccd4)
+set CTYPE1(kp09m,ccd4) $CTYPE1(kp09m,k1003,ccd4)
+set CTYPE2(kp09m,ccd4) $CTYPE2(kp09m,k1003,ccd4)
+set CRPIX1(kp09m,ccd4) $CRPIX1(kp09m,k1003,ccd4)
+set CRPIX2(kp09m,ccd4) $CRPIX2(kp09m,k1003,ccd4)
+set CD1_1(kp09m,ccd4) $CD1_1(kp09m,k1003,ccd4)
+set CD2_2(kp09m,ccd4) $CD2_2(kp09m,k1003,ccd4)
+set CD1_2(kp09m,ccd4) $CD1_2(kp09m,k1003,ccd4)
+set CD2_1(kp09m,ccd4) $CD2_1(kp09m,k1003,ccd4)
+set WAT01(kp09m,ccd4) $WAT01(kp09m,k1003,ccd4)
+set WAT11(kp09m,ccd4) $WAT11(kp09m,k1003,ccd4)
+set WAT12(kp09m,ccd4) $WAT12(kp09m,k1003,ccd4)
+set WAT13(kp09m,ccd4) $WAT13(kp09m,k1003,ccd4)
+set WAT14(kp09m,ccd4) $WAT14(kp09m,k1003,ccd4)
+set WAT15(kp09m,ccd4) $WAT15(kp09m,k1003,ccd4)
+set WAT21(kp09m,ccd4) $WAT21(kp09m,k1003,ccd4)
+set WAT22(kp09m,ccd4) $WAT22(kp09m,k1003,ccd4)
+set WAT23(kp09m,ccd4) $WAT23(kp09m,k1003,ccd4)
+set WAT24(kp09m,ccd4) $WAT24(kp09m,k1003,ccd4)
+set WAT25(kp09m,ccd4) $WAT25(kp09m,k1003,ccd4)
+
+set WCSASTRM(kp09m,ccd5) $WCSASTRM(kp09m,k1003,ccd5)
+set CTYPE1(kp09m,ccd5) $CTYPE1(kp09m,k1003,ccd5)
+set CTYPE2(kp09m,ccd5) $CTYPE2(kp09m,k1003,ccd5)
+set CRPIX1(kp09m,ccd5) $CRPIX1(kp09m,k1003,ccd5)
+set CRPIX2(kp09m,ccd5) $CRPIX2(kp09m,k1003,ccd5)
+set CD1_1(kp09m,ccd5) $CD1_1(kp09m,k1003,ccd5)
+set CD2_2(kp09m,ccd5) $CD2_2(kp09m,k1003,ccd5)
+set CD1_2(kp09m,ccd5) $CD1_2(kp09m,k1003,ccd5)
+set CD2_1(kp09m,ccd5) $CD2_1(kp09m,k1003,ccd5)
+set WAT01(kp09m,ccd5) $WAT01(kp09m,k1003,ccd5)
+set WAT11(kp09m,ccd5) $WAT11(kp09m,k1003,ccd5)
+set WAT12(kp09m,ccd5) $WAT12(kp09m,k1003,ccd5)
+set WAT13(kp09m,ccd5) $WAT13(kp09m,k1003,ccd5)
+set WAT14(kp09m,ccd5) $WAT14(kp09m,k1003,ccd5)
+set WAT15(kp09m,ccd5) $WAT15(kp09m,k1003,ccd5)
+set WAT21(kp09m,ccd5) $WAT21(kp09m,k1003,ccd5)
+set WAT22(kp09m,ccd5) $WAT22(kp09m,k1003,ccd5)
+set WAT23(kp09m,ccd5) $WAT23(kp09m,k1003,ccd5)
+set WAT24(kp09m,ccd5) $WAT24(kp09m,k1003,ccd5)
+set WAT25(kp09m,ccd5) $WAT25(kp09m,k1003,ccd5)
+
+set WCSASTRM(kp09m,ccd6) $WCSASTRM(kp09m,k1003,ccd6)
+set CTYPE1(kp09m,ccd6) $CTYPE1(kp09m,k1003,ccd6)
+set CTYPE2(kp09m,ccd6) $CTYPE2(kp09m,k1003,ccd6)
+set CRPIX1(kp09m,ccd6) $CRPIX1(kp09m,k1003,ccd6)
+set CRPIX2(kp09m,ccd6) $CRPIX2(kp09m,k1003,ccd6)
+set CD1_1(kp09m,ccd6) $CD1_1(kp09m,k1003,ccd6)
+set CD2_2(kp09m,ccd6) $CD2_2(kp09m,k1003,ccd6)
+set CD1_2(kp09m,ccd6) $CD1_2(kp09m,k1003,ccd6)
+set CD2_1(kp09m,ccd6) $CD2_1(kp09m,k1003,ccd6)
+set WAT01(kp09m,ccd6) $WAT01(kp09m,k1003,ccd6)
+set WAT11(kp09m,ccd6) $WAT11(kp09m,k1003,ccd6)
+set WAT12(kp09m,ccd6) $WAT12(kp09m,k1003,ccd6)
+set WAT13(kp09m,ccd6) $WAT13(kp09m,k1003,ccd6)
+set WAT14(kp09m,ccd6) $WAT14(kp09m,k1003,ccd6)
+set WAT15(kp09m,ccd6) $WAT15(kp09m,k1003,ccd6)
+set WAT21(kp09m,ccd6) $WAT21(kp09m,k1003,ccd6)
+set WAT22(kp09m,ccd6) $WAT22(kp09m,k1003,ccd6)
+set WAT23(kp09m,ccd6) $WAT23(kp09m,k1003,ccd6)
+set WAT24(kp09m,ccd6) $WAT24(kp09m,k1003,ccd6)
+set WAT25(kp09m,ccd6) $WAT25(kp09m,k1003,ccd6)
+
+set WCSASTRM(kp09m,ccd7) $WCSASTRM(kp09m,k1003,ccd7)
+set CTYPE1(kp09m,ccd7) $CTYPE1(kp09m,k1003,ccd7)
+set CTYPE2(kp09m,ccd7) $CTYPE2(kp09m,k1003,ccd7)
+set CRPIX1(kp09m,ccd7) $CRPIX1(kp09m,k1003,ccd7)
+set CRPIX2(kp09m,ccd7) $CRPIX2(kp09m,k1003,ccd7)
+set CD1_1(kp09m,ccd7) $CD1_1(kp09m,k1003,ccd7)
+set CD2_2(kp09m,ccd7) $CD2_2(kp09m,k1003,ccd7)
+set CD1_2(kp09m,ccd7) $CD1_2(kp09m,k1003,ccd7)
+set CD2_1(kp09m,ccd7) $CD2_1(kp09m,k1003,ccd7)
+set WAT01(kp09m,ccd7) $WAT01(kp09m,k1003,ccd7)
+set WAT11(kp09m,ccd7) $WAT11(kp09m,k1003,ccd7)
+set WAT12(kp09m,ccd7) $WAT12(kp09m,k1003,ccd7)
+set WAT13(kp09m,ccd7) $WAT13(kp09m,k1003,ccd7)
+set WAT14(kp09m,ccd7) $WAT14(kp09m,k1003,ccd7)
+set WAT15(kp09m,ccd7) $WAT15(kp09m,k1003,ccd7)
+set WAT21(kp09m,ccd7) $WAT21(kp09m,k1003,ccd7)
+set WAT22(kp09m,ccd7) $WAT22(kp09m,k1003,ccd7)
+set WAT23(kp09m,ccd7) $WAT23(kp09m,k1003,ccd7)
+set WAT24(kp09m,ccd7) $WAT24(kp09m,k1003,ccd7)
+set WAT25(kp09m,ccd7) $WAT25(kp09m,k1003,ccd7)
+
+set WCSASTRM(kp09m,ccd8) $WCSASTRM(kp09m,k1003,ccd8)
+set CTYPE1(kp09m,ccd8) $CTYPE1(kp09m,k1003,ccd8)
+set CTYPE2(kp09m,ccd8) $CTYPE2(kp09m,k1003,ccd8)
+set CRPIX1(kp09m,ccd8) $CRPIX1(kp09m,k1003,ccd8)
+set CRPIX2(kp09m,ccd8) $CRPIX2(kp09m,k1003,ccd8)
+set CD1_1(kp09m,ccd8) $CD1_1(kp09m,k1003,ccd8)
+set CD2_2(kp09m,ccd8) $CD2_2(kp09m,k1003,ccd8)
+set CD1_2(kp09m,ccd8) $CD1_2(kp09m,k1003,ccd8)
+set CD2_1(kp09m,ccd8) $CD2_1(kp09m,k1003,ccd8)
+set WAT01(kp09m,ccd8) $WAT01(kp09m,k1003,ccd8)
+set WAT11(kp09m,ccd8) $WAT11(kp09m,k1003,ccd8)
+set WAT12(kp09m,ccd8) $WAT12(kp09m,k1003,ccd8)
+set WAT13(kp09m,ccd8) $WAT13(kp09m,k1003,ccd8)
+set WAT14(kp09m,ccd8) $WAT14(kp09m,k1003,ccd8)
+set WAT15(kp09m,ccd8) $WAT15(kp09m,k1003,ccd8)
+set WAT21(kp09m,ccd8) $WAT21(kp09m,k1003,ccd8)
+set WAT22(kp09m,ccd8) $WAT22(kp09m,k1003,ccd8)
+set WAT23(kp09m,ccd8) $WAT23(kp09m,k1003,ccd8)
+set WAT24(kp09m,ccd8) $WAT24(kp09m,k1003,ccd8)
+set WAT25(kp09m,ccd8) $WAT25(kp09m,k1003,ccd8)
+
+# Default when there is no astrometry.
+set WCSASTRM(ccd1) {None available}
+set CTYPE1(ccd1)  LINEAR; set CTYPE2(ccd1)  LINEAR
+set CRVAL1(ccd1)  4096.5; set CRVAL2(ccd1)  4096.5
+set CRPIX1(ccd1)  4096.5; set CRPIX2(ccd1)  4096.5
+set CD1_1(ccd1) 1.; set CD2_2(ccd1) 1.; set CD1_2(ccd1) 0.; set CD2_1(ccd1) 0.
+set WCSASTRM(ccd2) {None available}
+set CTYPE1(ccd2)  LINEAR; set CTYPE2(ccd2)  LINEAR
+set CRVAL1(ccd2)  4096.5; set CRVAL2(ccd2)  4096.5
+set CRPIX1(ccd2)  2048.5; set CRPIX2(ccd2)  4096.5
+set CD1_1(ccd2) 1.; set CD2_2(ccd2) 1.; set CD1_2(ccd2) 0.; set CD2_1(ccd2) 0.
+set WCSASTRM(ccd3) {None available}
+set CTYPE1(ccd3)  LINEAR; set CTYPE2(ccd3)  LINEAR
+set CRVAL1(ccd3)  4096.5; set CRVAL2(ccd3)  4096.5
+set CRPIX1(ccd3)     0.5; set CRPIX2(ccd3)  4096.5
+set CD1_1(ccd3) 1.; set CD2_2(ccd3) 1.; set CD1_2(ccd3) 0.; set CD2_1(ccd3) 0.
+set WCSASTRM(ccd4) {None available}
+set CTYPE1(ccd4)  LINEAR; set CTYPE2(ccd4)  LINEAR
+set CRVAL1(ccd4)  4096.5; set CRVAL2(ccd4)  4096.5
+set CRPIX1(ccd4) -2047.5; set CRPIX2(ccd4)  4096.5
+set CD1_1(ccd4) 1.; set CD2_2(ccd4) 1.; set CD1_2(ccd4) 0.; set CD2_1(ccd4) 0.
+set WCSASTRM(ccd5) {None available}
+set CTYPE1(ccd5)  LINEAR; set CTYPE2(ccd5)  LINEAR
+set CRVAL1(ccd5)  4096.5; set CRVAL2(ccd5)  4096.5
+set CRPIX1(ccd5)  4096.5; set CRPIX2(ccd5)     0.5
+set CD1_1(ccd5) 1.; set CD2_2(ccd5) 1.; set CD1_2(ccd5) 0.; set CD2_1(ccd5) 0.
+set WCSASTRM(ccd6) {None available}
+set CTYPE1(ccd6)  LINEAR; set CTYPE2(ccd6)  LINEAR
+set CRVAL1(ccd6)  4096.5; set CRVAL2(ccd6)  4096.5
+set CRPIX1(ccd6)  2048.5; set CRPIX2(ccd6)     0.5
+set CD1_1(ccd6) 1.; set CD2_2(ccd6) 1.; set CD1_2(ccd6) 0.; set CD2_1(ccd6) 0.
+set WCSASTRM(ccd7) {None available}
+set CTYPE1(ccd7)  LINEAR; set CTYPE2(ccd7)  LINEAR
+set CRVAL1(ccd7)  4096.5; set CRVAL2(ccd7)  4096.5
+set CRPIX1(ccd7)     0.5; set CRPIX2(ccd7)     0.5
+set CD1_1(ccd7) 1.; set CD2_2(ccd7) 1.; set CD1_2(ccd7) 0.; set CD2_1(ccd7) 0.
+set WCSASTRM(ccd8) {None available}
+set CTYPE1(ccd8)  LINEAR; set CTYPE2(ccd8)  LINEAR
+set CRVAL1(ccd8)  4096.5; set CRVAL2(ccd8)  4096.5
+set CRPIX1(ccd8) -2047.5; set CRPIX2(ccd8)     0.5
+set CD1_1(ccd8) 1.; set CD2_2(ccd8) 1.; set CD1_2(ccd8) 0.; set CD2_1(ccd8) 0.

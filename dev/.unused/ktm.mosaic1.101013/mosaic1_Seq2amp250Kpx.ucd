@@ -1,0 +1,5 @@
+set detval(gain,nocs) normal
+
+set detval(gain,approx) 0.88
+set detval(rdnoise,approx) 5.0
+set detval(saturate,approx) 220000

@@ -1,0 +1,27 @@
+#!/bin/csh -f 
+
+# Set the location of the system to help in configuring the machine names.
+# The location is simply a 2-character code stored in the '_location' file
+# in the top directory, values may be:
+#
+#	"CR"		=> Tucson Clean Room
+#	"FR"		=> Tucson Flex Rig
+#	"KP"		=> KPNO 4-meter
+#	"CT"		=> CTIO 4-meter
+#
+setenv LOC	`cat /dhs/_location`
+setenv DOM	`cat /dhs/_domain`
+
+#-------------------------------------------------------------------------------
+
+
+if ($1 == "-n") then
+    rsync -nCavz . nfdhs-01-${LOC}.${DOM}:/dhs
+    rsync -nCavz . nfdhs-02-${LOC}.${DOM}:/dhs
+    rsync -nCavz . nfdca-${LOC}.${DOM}:/dhs
+else
+    rsync -Cavz . nfdhs-01-${LOC}.${DOM}:/dhs
+    rsync -Cavz . nfdhs-02-${LOC}.${DOM}:/dhs
+    rsync -Cavz . nfdca-${LOC}.${DOM}:/dhs
+endif
+

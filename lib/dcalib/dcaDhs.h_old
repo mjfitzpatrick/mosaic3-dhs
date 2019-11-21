@@ -1,0 +1,173 @@
+/*
+
+Low-Level Private Procedures
+
+
+      dcaInitChannel  (dhsNW, type)
+          dcaConnect  (dhsNW, devstr)
+
+      dcaOpenChannel  (chan)
+  dcaValidateChannel  (chan)
+     dcaCloseChannel  (chan)
+
+ dev = dcaGetSuperDev (dhsNW)
+   dev = dcaGetDCADev (dhsNW)
+    node = dcaDevNode (dev)
+    port = dcaDevPort (dev)
+
+	     dcaSend  (chan, option, value)
+	      dcaSet  (dhsNW, option, value)
+      value = dcaGet  (dhsNW, option)
+
+     msg = dcaFmtMsg  (msgtype, whoami, addr, size)
+     stat =  dcaSendMsg  (dhsNW, msg)
+	  dcaReadMsg  (dhsNW, client_data)
+
+	     dcaSend  (dhsNW, buf, size)
+	     dcaRecv  (dhsNW, buf, size)
+
+	   connectTo  (chan)
+
+Utility Procedures/Macros:
+
+  	 fd = DCS_FD (dhsNW)		DCS => Data Capture Supervisor
+         fd = DCC_FD (dhsNW)		DCC => Data Capture Collector
+
+*/
+
+extern int procDebug;       /* use in DPRINTs debug macros */
+
+/*---------------------------------------------------------------------------
+Data Structures:
+----------------------------------------------------------------------------*/
+#ifndef NULL
+#define NULL 0
+#endif
+
+#ifndef NO
+#define NO 0
+#endif
+
+typedef struct {
+
+    double expID;                        /* exposure ID                  */
+    char *obsSetID;                      /* observation set ID           */
+
+} dhsData, *dhsDataPtr;
+
+dhsData      dhs;                    /* global state struct          */
+
+
+typedef struct msgHeader {
+        long type;	/* message type, e.g. DCA_OPEN|DCA_SYS	  	*/
+        ulong whoami;	/* sender of data			  	*/
+
+        double expnum;	/* "exposure number" to which msg belongs 	*/
+        /*char *obset;	 "observation set" to which msg belongs 	*/
+	/* static array to be sent over the net */
+	char obset[80];  /* "observation set" to which msg belongs      */
+
+        long value;	/* set/get message value			*/
+
+        long retry;	/* retry count for this message	  	  	*/
+        long nbytes;	/* number of bytes of data following msg  	*/
+        long checksum;	/* MD5 sum of data (for meta/pixel only)  	*/
+	long addr;
+	long size;
+} *msgHdrPtr, msgType, msgHeader;
+
+#define SZMSG 120
+
+struct dcaMessage {
+    struct msgHeader *mheader;
+    void *client_data;	/* data to be sent/read			  	*/
+    int  *data_size;	/* size of data to be sent/read		  	*/
+};
+
+
+#define DCA_OPEN        000000001  /* Open something                       */
+#define DCA_CLOSE       000000002  /* Close something                      */
+#define DCA_READ        000000004  /* Read something                       */
+#define DCA_WRITE       000000010  /* Write something                      */
+
+#define DCA_INIT        000000020  /* Initialize something                 */
+#define DCA_FAIL        000000040  /* Write something                      */
+#define DCA_NOOP        000000100  /* NO-OP, used to request an ACK        */
+#define DCA_ALIVE       000000200  /* Pixel data                           */
+
+#define DCA_SET         000000400  /* Set something                        */
+#define DCA_GET         000001000  /* Get something                        */
+
+#define DCA_SYS         000002000  /* DHS System                           */
+#define DCA_CONNECT     000004000  /* Connection to DHS collector  */
+#define DCA_CON         000010000  /* Connection to DHS collector          */
+#define DCA_EXP         000020000  /* Single Exposure                      */
+#define DCA_META        000040000  /* Meta Data                            */
+
+#define DCA_STICKY      000100000  /* Message Sticky Bit                   */
+
+#define DCA_PIXEL       000100000 /* Pixel data                          */
+#define DCA_OBS_CONFIG  000200000 /* observation set config structure    */
+#define DCA_FP_CONFIG   000400000 /* focal plane config structure        */
+#define DCA_MD_CONFIG   001000000 /* metadata config structure           */
+#define DCA_EXPID       002000000 /* exposure ID                         */
+#define DCA_OBSID       004000000 /* obs set ID                          */
+#define DCA_EXP_OBSID   010000000 /* obs set ID                         */
+
+
+/* Set/Get options. */
+#define DCA_ACK		2	/* ACK message             		     */
+#define DCA_ERR	        -2	/* Error return             		     */
+#define DCA_OK	        1       /* Okay return             		     */
+
+#define DCA_IO_MODE     5       /* operational mode (live, simulation, etc)  */
+#define DCA_IO_METHOD   6       /* communications method                     */
+#define DCA_IO_SIZE     7       /* communications 'packet' size              */
+
+#define DCA_CHECKSUM    8       /* compute checksum data for I/O? (boolean)  */
+#define DCA_DIRECTORY   9       /* set/get the current working directory     */
+#define DCA_SUPDEV      10      /* supervisor "device" name                  */
+
+#define DCA_NPANS       11      /* no. of PANs in use                        */
+#define DCA_NCLIENTS    12      /* no. of clients connected to Supervisor    */
+#define DCA_NCOLLECTORS		/* no. of collectors in use by Supervisor    */
+
+#define DCA_SUPERVISOR	000030	/* Supevisor ID			*/
+#define DCA_COLLECTOR	000040	/* Collector ID			*/
+
+#define	DCA_DCADEV      21      /* Collector device string 		     */
+
+#define DCA_DEBUG_LEVEL		/* debug level 				     */
+#define DCA_SIMUL_LEVEL		/* simulation level			     */
+
+#define DHS_SUPERVISOR  "DHS_SUPERVISOR" /* env variable for Supervisor machine */
+/* Set/Get values. */
+#define DCA_CAPTURE		/* I/O modes */
+#define DCA_SIMULATION
+#define DCA_DEBUG
+
+#define DCA_FAST		/* I/O methods */
+#define DCA_RELIABLE
+
+#define DCA_NOCS
+#define DCA_MSL
+#define DCA_PAN
+
+/* Prototype definitions */
+
+char *dcaGetDCADev       (int socket);
+void  dcaCloseChannel    (dhsChan *chan);
+int   dcaConnectionACK   (int socket);
+char *dcaGetSuperDev     (dhsNetw *dhsNW);
+char *dcaGetNode         (char *device);
+int   dcaGetPort         (char *device);
+int   dcaValidateChannel (dhsChan *chan);
+int   dcaInitChannel     (dhsNetw *dhsNW, ulong type);
+int   dcaOpenChannel     (dhsChan *chan);
+msgHdrPtr dcaFmtMsg      (ulong vtype, ulong whoami, ...);
+int   dcaSendMsg         (int socket, msgHdrPtr ptr);
+int   dcaRecvMsg         (int socket, char *client_data, int size);
+int   dcaRecv            (int socket, char *buf, int size);
+int   dcaSend            (int socket, char *buffer, int size);
+int   dcaSendfpConfig (int socket, ulong whoAmI, char *buf, int size);
+

@@ -1,0 +1,63 @@
+#!/bin/csh -f
+
+
+set i = 0
+if ("`uname -m`" == "Power Macintosh") then
+    foreach shm (`sudo ipcs -mp | \
+	    more +4 | \
+	    awk '{print ($3,$2,$5)}' | \
+	    egrep fitz | awk '{print ($1,$2,$3,"go")}'`)
+
+        if ($i == 0) then
+	    set key = $shm
+        else if ($i == 1) then
+	    set id = $shm
+        else if ($i == 2) then
+	    set size = $shm
+        else if ($shm == "go") then
+            echo -n "Cleaning:  key="$key"  shmid="$id"  ...  "
+            sudo ipcrm -M $key
+	    echo "    status = "$status
+	    set i = -1
+        endif
+        set i = `expr $i + 1`
+    end
+
+    # Clear the lock files.
+    /bin/rm -f foo    	  >& /dev/null
+    /bin/rm -f foo_*  	  >& /dev/null
+    /bin/rm -f /tmp/.smc* >& /dev/null
+
+    # Make sure we got 'em all.
+    sudo ipcs -mp
+    exit 0
+else
+
+    set id = `id -u`
+    foreach shm (`cat /proc/sysvipc/shm | \
+	      awk '{print ($1,$2,$4,$8)}' | \
+	      egrep $id | awk '{print ($1,$2,$3,"go")}'`)
+
+        if ($i == 0) then
+	    set key = $shm
+        else if ($i == 1) then
+	    set id = $shm
+        else if ($i == 2) then
+	    set size = $shm
+        else if ($shm == "go") then
+            echo -n "Cleaning:  key="$key"  shmid="$id"  size="$size" ...  "
+            sudo ipcrm -m $id
+	    echo "    status = "$status
+	    set i = -1
+        endif
+        set i = `expr $i + 1`
+    end
+
+    # Clear the lock files.
+    /bin/rm -f foo    	  >& /dev/null
+    /bin/rm -f foo_*  	  >& /dev/null
+    /bin/rm -f /tmp/.smc* >& /dev/null
+
+    # Make sure we got 'em all.
+    ipcs -m
+endif

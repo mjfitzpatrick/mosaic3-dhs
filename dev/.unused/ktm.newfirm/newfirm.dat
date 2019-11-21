@@ -1,0 +1,372 @@
+# Extensions Names
+
+set extname(PanA,2,1) im1
+set extname(PanA,1,1) im2
+set extname(PanB,2,1) im3
+set extname(PanB,1,1) im4
+
+# Detectors
+
+set mosname NEWFIRM
+set mossize "\[1:4096,1:4096\]"
+
+set detname(im1) "SN019"
+set detname(im2) "SN022"
+set detname(im3) "SN013"
+set detname(im4) "SN011"
+
+set detsize(im1) "\[1:2046,1:2046\]"
+set detsize(im2) "\[1:2046,1:2046\]"
+set detsize(im3) "\[1:2046,1:2046\]"
+set detsize(im4) "\[1:2046,1:2046\]"
+
+set saturate(im1) 9000
+set saturate(im2) 9000
+set saturate(im3) 10000
+set saturate(im4) 8000
+
+# Geometry.
+
+set detsec(im1) "\[1:2046,1:2046\]"
+set detsec(im2) "\[2047:4092,1:2046\]"
+set detsec(im3) "\[1:2046,2047:4092\]"
+set detsec(im4) "\[2047:4092,2047:4092\]"
+
+set datasec(im1) "\[2:2047,2:2047\]"
+set datasec(im2) "\[2:2047,2:2047\]"
+set datasec(im3) "\[2:2047,2:2047\]"
+set datasec(im4) "\[2:2047,2:2047\]"
+
+set trimsec(im1) "\[2:2047,2:2047\]"
+set trimsec(im2) "\[2:2047,2:2047\]"
+set trimsec(im3) "\[2:2047,2:2047\]"
+set trimsec(im4) "\[2:2047,2:2047\]"
+
+set biassec(im1) "\[2049:2112,2:2047\]"
+set biassec(im2) "\[2049:2112,2:2047\]"
+set biassec(im3) "\[2049:2112,2:2047\]"
+set biassec(im4) "\[2049:2112,2:2047\]"
+
+# Detector dependent calibration files.
+
+set bpm(im1) "BPM\$bpm080215\[im1\]"
+set bpm(im2) "BPM\$bpm080215\[im2\]"
+set bpm(im3) "BPM\$bpm080215\[im3\]"
+set bpm(im4) "BPM\$bpm080215\[im4\]"
+
+# Filter translations.  Anything not define by wcsfilter defaults to the
+# default solution which is currently J.
+
+set wcsfilter(J_k2001)			 J
+set wcsfilter(H_k2002)			 H
+set wcsfilter(Ks_k2003)			 Ks
+
+# WCS Astrometry.
+# Currently available: J
+
+set WCSASTRM(kp4m,J,im1) \
+          {kp4m.20080213T073546 (USNO F J) by F. Valdes 2008-02-14}
+set CTYPE1(kp4m,J,im1) RA---TNX
+set CTYPE2(kp4m,J,im1) DEC--TNX
+set CRPIX1(kp4m,J,im1) 2099.35221502519
+set CRPIX2(kp4m,J,im1) 2096.35188404019
+set CD1_1(kp4m,J,im1) -1.0980305862190E-4
+set CD2_2(kp4m,J,im1) 1.09812992973335E-4
+set CD1_2(kp4m,J,im1) 1.98721100975830E-7
+set CD2_1(kp4m,J,im1) -6.5838416476644E-7
+set WAT01(kp4m,J,im1) {system=image}
+set WAT11(kp4m,J,im1) \
+          {wtype=tnx axtype=ra lngcor = "3. 4. 4. 2. 0.005222239643447366 0.230}
+set WAT12(kp4m,J,im1) \
+          {3958827361763 -0.2300630522335702 -0.003928143231877321 -0.001114087}
+set WAT13(kp4m,J,im1) \
+          {145613971 0.01884323423028653 -0.06406359383927175 -0.02905742131005}
+set WAT14(kp4m,J,im1) \
+          {108 -0.008048497759860484 0.06452382062283505 -0.2159030032845992 -0}
+set WAT15(kp4m,J,im1) \
+          {.02625288616847394 -0.03427527668789979 -0.05717312101539648 "      }
+set WAT21(kp4m,J,im1) \
+          {wtype=tnx axtype=dec latcor = "3. 4. 4. 2. 0.005222239643447366 0.23}
+set WAT22(kp4m,J,im1) \
+          {03958827361763 -0.2300630522335702 -0.003928143231877321 0.001100774}
+set WAT23(kp4m,J,im1) \
+          {783598311 -0.009430451856139785 0.04251163389849088 -0.0923869579146}
+set WAT24(kp4m,J,im1) \
+          {0815 0.01886049780937818 -0.06221944192920887 -0.01168087592751612 0}
+set WAT25(kp4m,J,im1) \
+          {.06623702942513309 -0.1876219133831757 -0.02060419838613524 "       }
+
+set WCSASTRM(kp4m,J,im2) \
+          {kp4m.20080213T073546 (USNO F J) by F. Valdes 2008-02-14}
+set CTYPE1(kp4m,J,im2) RA---TNX
+set CTYPE2(kp4m,J,im2) DEC--TNX
+set CRPIX1(kp4m,J,im2) -52.2465722956823
+set CRPIX2(kp4m,J,im2) 2105.91574159889
+set CD1_1(kp4m,J,im2) -1.0982398880450E-4
+set CD2_2(kp4m,J,im2) 1.09801031556021E-4
+set CD1_2(kp4m,J,im2) -4.6988972619267E-7
+set CD2_1(kp4m,J,im2) 4.66478102638881E-7
+set WAT01(kp4m,J,im2) {system=image}
+set WAT11(kp4m,J,im2) \
+          {wtype=tnx axtype=ra lngcor = "3. 4. 4. 2. -0.2306302420305344 -0.004}
+set WAT12(kp4m,J,im2) \
+          {858672678200623 -0.2310970814060485 -0.005379489134771373 0.00108431}
+set WAT13(kp4m,J,im2) \
+          {5813882055 0.01870546253213495 0.07508301965614899 0.009312776588337}
+set WAT14(kp4m,J,im2) \
+          {784 0.009216319056655229 0.06563829557470701 0.226085670304512 0.039}
+set WAT15(kp4m,J,im2) \
+          {32814812709763 -0.01623884774019605 0.09258075148470523 "           }
+set WAT21(kp4m,J,im2) \
+          {wtype=tnx axtype=dec latcor = "3. 4. 4. 2. -0.2306302420305344 -0.00}
+set WAT22(kp4m,J,im2) \
+          {4858672678200623 -0.2310970814060485 -0.005379489134771373 0.0011165}
+set WAT23(kp4m,J,im2) \
+          {77492947789 0.008004309543766572 0.02344880886776 0.0496337164436056}
+set WAT24(kp4m,J,im2) \
+          {5 0.01972537346286767 0.07334739888339361 -0.01265473154164752 0.076}
+set WAT25(kp4m,J,im2) \
+          {21547655154249 0.2481179702106983 0.004272044714077916 "            }
+
+set WCSASTRM(kp4m,J,im3) \
+          {kp4m.20080213T073546 (USNO F J) by F. Valdes 2008-02-14}
+set CTYPE1(kp4m,J,im3) RA---TNX
+set CTYPE2(kp4m,J,im3) DEC--TNX
+set CRPIX1(kp4m,J,im3) 2101.63237254115
+set CRPIX2(kp4m,J,im3) -50.7624943670674
+set CD1_1(kp4m,J,im3) -1.0985191825868E-4
+set CD2_2(kp4m,J,im3) 1.09880713376026E-4
+set CD1_2(kp4m,J,im3) -6.6660875052534E-7
+set CD2_1(kp4m,J,im3) 1.69418416400736E-7
+set WAT01(kp4m,J,im3) {system=image}
+set WAT11(kp4m,J,im3) \
+          {wtype=tnx axtype=ra lngcor = "3. 4. 4. 2. 0.004492565560390317 0.230}
+set WAT12(kp4m,J,im3) \
+          {72399034824 0.00533181399717984 0.230604433776277 -0.001029085783968}
+set WAT13(kp4m,J,im3) \
+          {746 0.01925958955731109 -0.07433260540697299 -0.004884163222982779 0}
+set WAT14(kp4m,J,im3) \
+          {.005833085159440595 -0.05849086207569504 0.2114847869059743 -0.01058}
+set WAT15(kp4m,J,im3) \
+          {217033146088 -0.04474261784550024 0.01476004425431264 "             }
+set WAT21(kp4m,J,im3) \
+          {wtype=tnx axtype=dec latcor = "3. 4. 4. 2. 0.004492565560390317 0.23}
+set WAT22(kp4m,J,im3) \
+          {072399034824 0.00533181399717984 0.230604433776277 -0.00109105786614}
+set WAT23(kp4m,J,im3) \
+          {7353 0.009191058529124267 -0.03819870635228334 0.08908886422484287 0}
+set WAT24(kp4m,J,im3) \
+          {.01957541604660406 -0.07540109120156779 0.003295738458626623 -0.0762}
+set WAT25(kp4m,J,im3) \
+          {3510260977149 0.2314208859055437 0.004852590380852531 "             }
+
+set WCSASTRM(kp4m,J,im4) \
+          {kp4m.20080213T073546 (USNO F J) by F. Valdes 2008-02-14}
+set CTYPE1(kp4m,J,im4) RA---TNX
+set CTYPE2(kp4m,J,im4) DEC--TNX
+set CRPIX1(kp4m,J,im4) -55.7819697389276
+set CRPIX2(kp4m,J,im4) -54.512275578189
+set CD1_1(kp4m,J,im4) -1.0976065771109E-4
+set CD2_2(kp4m,J,im4) 1.09811131101673E-4
+set CD1_2(kp4m,J,im4) 3.66929904760407E-7
+set CD2_1(kp4m,J,im4) -4.9376024528111E-7
+set WAT01(kp4m,J,im4) {system=image}
+set WAT11(kp4m,J,im4) \
+          {wtype=tnx axtype=ra lngcor = "3. 4. 4. 2. -0.2308921235652924 -0.005}
+set WAT12(kp4m,J,im4) \
+          {437468201735913 0.005057101869872462 0.2378791268475956 0.0010104239}
+set WAT13(kp4m,J,im4) \
+          {75621697 0.01920080503642599 0.07511010526326894 0.0057138214720842 }
+set WAT14(kp4m,J,im4) \
+          {-0.006323150924630567 -0.05813803896530765 -0.2109155810428061 0.019}
+set WAT15(kp4m,J,im4) \
+          {80466762799422 -0.04569273997385644 -0.04621729298567434 "          }
+set WAT21(kp4m,J,im4) \
+          {wtype=tnx axtype=dec latcor = "3. 4. 4. 2. -0.2308921235652924 -0.00}
+set WAT22(kp4m,J,im4) \
+          {5437468201735913 0.005057101869872462 0.2378791268475956 -0.00102997}
+set WAT23(kp4m,J,im4) \
+          {9528959375 -0.008108324729106435 -0.03968693939074968 -0.10681644012}
+set WAT24(kp4m,J,im4) \
+          {64423 0.01757534187489985 0.04952436016576073 -0.05478264040375286 -}
+set WAT25(kp4m,J,im4) \
+          {0.06456665712169278 -0.1716459271789401 -0.008263650098570802 "     }
+
+# Default astrometry.
+set WCSASTRM(kp4m,im1) $WCSASTRM(kp4m,J,im1)
+set CTYPE1(kp4m,im1) $CTYPE1(kp4m,J,im1)
+set CTYPE2(kp4m,im1) $CTYPE2(kp4m,J,im1)
+set CRPIX1(kp4m,im1) $CRPIX1(kp4m,J,im1)
+set CRPIX2(kp4m,im1) $CRPIX2(kp4m,J,im1)
+set CD1_1(kp4m,im1) $CD1_1(kp4m,J,im1)
+set CD2_2(kp4m,im1) $CD2_2(kp4m,J,im1)
+set CD1_2(kp4m,im1) $CD1_2(kp4m,J,im1)
+set CD2_1(kp4m,im1) $CD2_1(kp4m,J,im1)
+set WAT01(kp4m,im1) $WAT01(kp4m,J,im1)
+set WAT11(kp4m,im1) $WAT11(kp4m,J,im1)
+set WAT12(kp4m,im1) $WAT12(kp4m,J,im1)
+set WAT13(kp4m,im1) $WAT13(kp4m,J,im1)
+set WAT14(kp4m,im1) $WAT14(kp4m,J,im1)
+set WAT15(kp4m,im1) $WAT15(kp4m,J,im1)
+set WAT21(kp4m,im1) $WAT21(kp4m,J,im1)
+set WAT22(kp4m,im1) $WAT22(kp4m,J,im1)
+set WAT23(kp4m,im1) $WAT23(kp4m,J,im1)
+set WAT24(kp4m,im1) $WAT24(kp4m,J,im1)
+set WAT25(kp4m,im1) $WAT25(kp4m,J,im1)
+
+set WCSASTRM(kp4m,im2) $WCSASTRM(kp4m,J,im2)
+set CTYPE1(kp4m,im2) $CTYPE1(kp4m,J,im2)
+set CTYPE2(kp4m,im2) $CTYPE2(kp4m,J,im2)
+set CRPIX1(kp4m,im2) $CRPIX1(kp4m,J,im2)
+set CRPIX2(kp4m,im2) $CRPIX2(kp4m,J,im2)
+set CD1_1(kp4m,im2) $CD1_1(kp4m,J,im2)
+set CD2_2(kp4m,im2) $CD2_2(kp4m,J,im2)
+set CD1_2(kp4m,im2) $CD1_2(kp4m,J,im2)
+set CD2_1(kp4m,im2) $CD2_1(kp4m,J,im2)
+set WAT01(kp4m,im2) $WAT01(kp4m,J,im2)
+set WAT11(kp4m,im2) $WAT11(kp4m,J,im2)
+set WAT12(kp4m,im2) $WAT12(kp4m,J,im2)
+set WAT13(kp4m,im2) $WAT13(kp4m,J,im2)
+set WAT14(kp4m,im2) $WAT14(kp4m,J,im2)
+set WAT15(kp4m,im2) $WAT15(kp4m,J,im2)
+set WAT21(kp4m,im2) $WAT21(kp4m,J,im2)
+set WAT22(kp4m,im2) $WAT22(kp4m,J,im2)
+set WAT23(kp4m,im2) $WAT23(kp4m,J,im2)
+set WAT24(kp4m,im2) $WAT24(kp4m,J,im2)
+set WAT25(kp4m,im2) $WAT25(kp4m,J,im2)
+
+set WCSASTRM(kp4m,im3) $WCSASTRM(kp4m,J,im3)
+set CTYPE1(kp4m,im3) $CTYPE1(kp4m,J,im3)
+set CTYPE2(kp4m,im3) $CTYPE2(kp4m,J,im3)
+set CRPIX1(kp4m,im3) $CRPIX1(kp4m,J,im3)
+set CRPIX2(kp4m,im3) $CRPIX2(kp4m,J,im3)
+set CD1_1(kp4m,im3) $CD1_1(kp4m,J,im3)
+set CD2_2(kp4m,im3) $CD2_2(kp4m,J,im3)
+set CD1_2(kp4m,im3) $CD1_2(kp4m,J,im3)
+set CD2_1(kp4m,im3) $CD2_1(kp4m,J,im3)
+set WAT01(kp4m,im3) $WAT01(kp4m,J,im3)
+set WAT11(kp4m,im3) $WAT11(kp4m,J,im3)
+set WAT12(kp4m,im3) $WAT12(kp4m,J,im3)
+set WAT13(kp4m,im3) $WAT13(kp4m,J,im3)
+set WAT14(kp4m,im3) $WAT14(kp4m,J,im3)
+set WAT15(kp4m,im3) $WAT15(kp4m,J,im3)
+set WAT21(kp4m,im3) $WAT21(kp4m,J,im3)
+set WAT22(kp4m,im3) $WAT22(kp4m,J,im3)
+set WAT23(kp4m,im3) $WAT23(kp4m,J,im3)
+set WAT24(kp4m,im3) $WAT24(kp4m,J,im3)
+set WAT25(kp4m,im3) $WAT25(kp4m,J,im3)
+
+set WCSASTRM(kp4m,im4) $WCSASTRM(kp4m,J,im4)
+set CTYPE1(kp4m,im4) $CTYPE1(kp4m,J,im4)
+set CTYPE2(kp4m,im4) $CTYPE2(kp4m,J,im4)
+set CRPIX1(kp4m,im4) $CRPIX1(kp4m,J,im4)
+set CRPIX2(kp4m,im4) $CRPIX2(kp4m,J,im4)
+set CD1_1(kp4m,im4) $CD1_1(kp4m,J,im4)
+set CD2_2(kp4m,im4) $CD2_2(kp4m,J,im4)
+set CD1_2(kp4m,im4) $CD1_2(kp4m,J,im4)
+set CD2_1(kp4m,im4) $CD2_1(kp4m,J,im4)
+set WAT01(kp4m,im4) $WAT01(kp4m,J,im4)
+set WAT11(kp4m,im4) $WAT11(kp4m,J,im4)
+set WAT12(kp4m,im4) $WAT12(kp4m,J,im4)
+set WAT13(kp4m,im4) $WAT13(kp4m,J,im4)
+set WAT14(kp4m,im4) $WAT14(kp4m,J,im4)
+set WAT15(kp4m,im4) $WAT15(kp4m,J,im4)
+set WAT21(kp4m,im4) $WAT21(kp4m,J,im4)
+set WAT22(kp4m,im4) $WAT22(kp4m,J,im4)
+set WAT23(kp4m,im4) $WAT23(kp4m,J,im4)
+set WAT24(kp4m,im4) $WAT24(kp4m,J,im4)
+set WAT25(kp4m,im4) $WAT25(kp4m,J,im4)
+
+set WCSASTRM(im1) $WCSASTRM(kp4m,im1)
+set CTYPE1(im1) $CTYPE1(kp4m,im1)
+set CTYPE2(im1) $CTYPE2(kp4m,im1)
+set CRPIX1(im1) $CRPIX1(kp4m,im1)
+set CRPIX2(im1) $CRPIX2(kp4m,im1)
+set CD1_1(im1) $CD1_1(kp4m,im1)
+set CD2_2(im1) $CD2_2(kp4m,im1)
+set CD1_2(im1) $CD1_2(kp4m,im1)
+set CD2_1(im1) $CD2_1(kp4m,im1)
+set WAT01(im1) $WAT01(kp4m,im1)
+set WAT11(im1) $WAT11(kp4m,im1)
+set WAT12(im1) $WAT12(kp4m,im1)
+set WAT13(im1) $WAT13(kp4m,im1)
+set WAT14(im1) $WAT14(kp4m,im1)
+set WAT15(im1) $WAT15(kp4m,im1)
+set WAT21(im1) $WAT21(kp4m,im1)
+set WAT22(im1) $WAT22(kp4m,im1)
+set WAT23(im1) $WAT23(kp4m,im1)
+set WAT24(im1) $WAT24(kp4m,im1)
+set WAT25(im1) $WAT25(kp4m,im1)
+
+set WCSASTRM(im2) $WCSASTRM(kp4m,im2)
+set CTYPE1(im2) $CTYPE1(kp4m,im2)
+set CTYPE2(im2) $CTYPE2(kp4m,im2)
+set CRPIX1(im2) $CRPIX1(kp4m,im2)
+set CRPIX2(im2) $CRPIX2(kp4m,im2)
+set CD1_1(im2) $CD1_1(kp4m,im2)
+set CD2_2(im2) $CD2_2(kp4m,im2)
+set CD1_2(im2) $CD1_2(kp4m,im2)
+set CD2_1(im2) $CD2_1(kp4m,im2)
+set WAT01(im2) $WAT01(kp4m,im2)
+set WAT11(im2) $WAT11(kp4m,im2)
+set WAT12(im2) $WAT12(kp4m,im2)
+set WAT13(im2) $WAT13(kp4m,im2)
+set WAT14(im2) $WAT14(kp4m,im2)
+set WAT15(im2) $WAT15(kp4m,im2)
+set WAT21(im2) $WAT21(kp4m,im2)
+set WAT22(im2) $WAT22(kp4m,im2)
+set WAT23(im2) $WAT23(kp4m,im2)
+set WAT24(im2) $WAT24(kp4m,im2)
+set WAT25(im2) $WAT25(kp4m,im2)
+
+set WCSASTRM(im3) $WCSASTRM(kp4m,im3)
+set CTYPE1(im3) $CTYPE1(kp4m,im3)
+set CTYPE2(im3) $CTYPE2(kp4m,im3)
+set CRPIX1(im3) $CRPIX1(kp4m,im3)
+set CRPIX2(im3) $CRPIX2(kp4m,im3)
+set CD1_1(im3) $CD1_1(kp4m,im3)
+set CD2_2(im3) $CD2_2(kp4m,im3)
+set CD1_2(im3) $CD1_2(kp4m,im3)
+set CD2_1(im3) $CD2_1(kp4m,im3)
+set WAT01(im3) $WAT01(kp4m,im3)
+set WAT11(im3) $WAT11(kp4m,im3)
+set WAT12(im3) $WAT12(kp4m,im3)
+set WAT13(im3) $WAT13(kp4m,im3)
+set WAT14(im3) $WAT14(kp4m,im3)
+set WAT15(im3) $WAT15(kp4m,im3)
+set WAT21(im3) $WAT21(kp4m,im3)
+set WAT22(im3) $WAT22(kp4m,im3)
+set WAT23(im3) $WAT23(kp4m,im3)
+set WAT24(im3) $WAT24(kp4m,im3)
+set WAT25(im3) $WAT25(kp4m,im3)
+
+set WCSASTRM(im4) $WCSASTRM(kp4m,im4)
+set CTYPE1(im4) $CTYPE1(kp4m,im4)
+set CTYPE2(im4) $CTYPE2(kp4m,im4)
+set CRPIX1(im4) $CRPIX1(kp4m,im4)
+set CRPIX2(im4) $CRPIX2(kp4m,im4)
+set CD1_1(im4) $CD1_1(kp4m,im4)
+set CD2_2(im4) $CD2_2(kp4m,im4)
+set CD1_2(im4) $CD1_2(kp4m,im4)
+set CD2_1(im4) $CD2_1(kp4m,im4)
+set WAT01(im4) $WAT01(kp4m,im4)
+set WAT11(im4) $WAT11(kp4m,im4)
+set WAT12(im4) $WAT12(kp4m,im4)
+set WAT13(im4) $WAT13(kp4m,im4)
+set WAT14(im4) $WAT14(kp4m,im4)
+set WAT15(im4) $WAT15(kp4m,im4)
+set WAT21(im4) $WAT21(kp4m,im4)
+set WAT22(im4) $WAT22(kp4m,im4)
+set WAT23(im4) $WAT23(kp4m,im4)
+set WAT24(im4) $WAT24(kp4m,im4)
+set WAT25(im4) $WAT25(kp4m,im4)
+
+# LTV values.  In a more general version it could be set from datasec.
+set LTV1(im1) 1.0
+set LTV2(im1) 1.0
+set LTV1(im2) 1.0
+set LTV2(im2) 1.0
+set LTV1(im3) 1.0
+set LTV2(im3) 1.0
+set LTV1(im4) 1.0
+set LTV2(im4) 1.0

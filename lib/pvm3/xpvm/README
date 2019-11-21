@@ -1,0 +1,184 @@
+
+			X	P	V	M
+
+XPVM is a graphical console and monitor for PVM.  It provides a
+graphical interface to the PVM console commands and information,
+along with several animated views to monitor the execution of PVM
+programs.  These views provide information about the interactions
+among tasks in a parallel PVM program, to assist in debugging and
+performance tuning.
+
+To analyze a program using XPVM, a user need only compile their
+program using the PVM library, version 3.3 or later, which has been
+instrumented to capture tracing information at run-time.  Then, any
+task spawned from XPVM will return trace event information, for
+analysis in real time, or for post-mortem playback from saved
+trace files.
+
+For specifics on the various features of XPVM, and how to operate
+them, please refer to the appropriate on-line pop-up help information.
+
+How to Get Started:
+===================
+
+Thank you for helping with the Beta-Testing of XPVM Version 1.1.
+Your cooperation and suggestions are greatly appreciated.
+
+Other Things You Need for XPVM:
+-------------------------------
+
+1. PVM 3.3.0 or later.
+2. TCL 7.3 or later.
+3. TK 3.6.1 or later.
+
+You can obtain the latest version of PVM via netlib@ornl.gov,
+the same way you obtained XPVM.  If you need the TCL & TK packages,
+they are available via anonymous ftp to ftp.smli.com in /pub/tcl.
+
+To install xpvm:
+----------------
+
+1. Un-tar your distribution - you should get an "xpvm" directory, with
+	"tracer" and "src" sub-directories full o' stuff.
+
+2. Customize "xpvm/src/Makefile.aimk":
+
+	You will need to set up constants for XPVM based on the version
+	of PVM installed on your system:
+
+	----------------------------------------------------------------
+
+	For a PVM 3.3.* installation, you should use:
+
+		PVMVERSION = -DUSE_PVM_33
+	
+	For a PVM 3.4.* installation, you should use:
+
+		PVMVERSION = -DUSE_PVM_34
+	
+	----------------------------------------------------------------
+
+	You will also need to adjust the definitions for TCLLIBDIR, TKLIBDIR,
+	TCLINCL, and TKINCL to point to the locations of the TCL and TK
+	libraries and include files on your system, respectively.  Normal
+	settings for a personal installation might be:
+
+		TCLLIBDIR = -L/home/joeuser/tcl/$(PVM_ARCH)
+		TCLINCL = /home/joeuser/tcl
+
+		TKLIBDIR = -L/home/joeuser/tk/$(PVM_ARCH)
+		TKINCL = /home/joeuser/tk
+
+	If TCL and TK are installed in some globally accessible system
+	directory for all the users on your system, then you will likely
+	want the settings to be something like:
+
+		TCLLIBDIR =
+		TCLINCL = /usr/local/tcl
+
+		TKLIBDIR =
+		TKINCL = /usr/local/tk
+
+	----------------------------------------------------------------
+
+	You will need to verify the location of the X11 libraries
+	and include files on your system, and appropriately set the
+	XLIBDIR and XINCL variables.
+
+	If your system is "normal", you can just set:
+
+		XLIBDIR = -L/usr/lib
+		XINCL = -I/usr/include/X11
+
+			- or equivalently -
+		
+		XLIBDIR =
+		XINCL =
+
+	----------------------------------------------------------------
+
+	You may also need to add one extra library to the SYSLIBS
+	define, to account for the new TCL / TK libraries now using
+	shared libraries on siome systems.
+
+	If your system uses the "dl" dynamic linking library, you need
+	to add a "-ldl" to SYSLIBS:
+
+		SYSLIBS = (other system dependent libraries...) -ldl -lm
+	
+	On some systems the library is added by a "-lld", as in:
+
+		SYSLIBS = (other system dependent libraries...) -lld -lm
+
+	And on some systems the library is added by a "-ldld", as in:
+
+		SYSLIBS = (other system dependent libraries...) -ldld -lm
+
+3. Set shell environment variables.
+
+	You must set the XPVM_ROOT shell environment variable to point to
+	the absolute path of where you have installed the top directory in
+	the XPVM distribution.  For example:
+
+		setenv XPVM_ROOT /home/joeuser/pvm3/xpvm
+
+	You might want to use the .cshrc file stub provided in the
+	"xpvm/src/cshrc.stub" file to set $XPVM_ROOT every time you
+	start a new shell.
+
+	----------------------------------------------------------------
+
+	You will also need to set the TCL_LIBRARY and TK_LIBRARY variables
+	to point to the directories containing the *.tcl initialization files
+	for TCL & TK.  For example:
+
+		setenv TCL_LIBRARY /home/jolineuser/tcl/library
+		setenv TK_LIBRARY /home/jolineuser/tk/library
+
+4. Once the above changes have been applied, go to the top-level
+	"xpvm" directory ($XPVM_ROOT), and type "make".
+
+	This will create an executable "xpvm" file for the architecture
+	you are on.  The executable file will be located in a subdirectory
+	of "xpvm/src", with the same name as the PVM architecture identifier:
+
+		$XPVM_ROOT/src/$PVM_ARCH/xpvm
+
+		e.g. "/home/joeuser/xpvm/src/SUN4/xpvm"
+
+Using XPVM:
+-----------
+
+XPVM is built with on-line help menus.  PVM programs do not need
+to be re-compiled to use XPVM (assuming they are using PVM 3.3 or
+later.)
+
+XPVM will automatically start up PVM on your machine if it is not
+already running, and users can specify a default list of hosts to
+include in this start-up configuration, using a ".xpvm_hosts" file
+in their home directory (see on-line help under "Hosts" in XPVM).
+
+There are also several new command line arguments supported in XPVM
+that allow customized selection of default host files, trace files,
+and the local machine name (to allow various network interface choices).
+To see XPVM's command line options, execute "xpvm -HELP" (the "-help"
+option is predefined for TCL applications :-).
+
+Correspondence:
+---------------
+
+Mail any questions, problems or suggestions to me, Jim Kohl, at:
+
+	kohl@msr.epm.ornl.gov
+
+Good Luck!  :-)
+
+(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:(:
+
+    James Arthur Kohl, Ph.D.                "Da Blooos Brathas?!  They
+    Oak Ridge National Laboratory               still owe you money, Fool!"
+    kohl@msr.epm.ornl.gov
+    http://www.epm.ornl.gov/~kohl/          Long Live Curtis Blues!!!
+
+:):):):):):):):):):):):):):):):):):):):):):):):):):):):):):):):):):):):):):):)
+

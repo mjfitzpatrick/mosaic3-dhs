@@ -1,0 +1,22 @@
+{ Tasks Help - System Tasks }
+{ In PVM, some tasks are not directly spawned, but rather are }
+{ created as needed by the system to serve certain purposes. }
+{ XPVM can also capture trace events from these system tasks, }
+{ if desired. }
+{}
+{ By selecting the "SYS TASKS" button on the "Tasks" menu, a }
+{ menu will be raised showing a list of the system tasks that }
+{ XPVM can monitor.  Each system task is listed by name, with }
+{ a square status box next to it on the left.  If the box is }
+{ illuminated in purple, then that system task is to be }
+{ monitored. }
+{}
+{ Currently, the only system task that XPVM monitors is the }
+{ PVM Group Server.  Note that XPVM starts the group server }
+{ at start-up time, and restarts the group server after }
+{ XPVM-initiated PVM resets.  This is done to allow trace }
+{ event capture from tasks not spawned by XPVM (a task can }
+{ poll the "xpvm" group for instance "0", which is the XPVM }
+{ task, and then set its tracing options to send events to }
+{ XPVM). }
+{}

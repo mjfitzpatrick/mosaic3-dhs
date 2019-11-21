@@ -1,0 +1,187 @@
+I just finished getting the new Mosaic messaging and data capture system
+running in test mode on Rush and Driftwood so it is a good time for a brief
+status report.
+
+"Test mode" means that the message bus prototype and the data capture agent
+(DCA) are functional, but there is no Arcon interface.  A test program
+running on Rush is used to write manufactured data to the message bus and
+this is descrambled and written to a disk file by the DCA running on
+Driftwood.  Rush is a SS-20 and Driftwood is a 200 MHz Ultrasparc, with Fast
+Ethernet connecting the two.  The DCA is fully functional now except for the
+keyword translation module for the Arcon.
+
+
+TIMINGS
+
+I ran a few timing tests using 8K by 8K simulated observations (8 2K by 4K
+images per observation, 16 bit pixels, 134MB total).  All these timings are
+preliminary since the software is not yet fully functional.  Most of the
+pixel processing is being done however, and this will dominate the timings,
+so things should not change greatly.
+
+    o	The timing for the simulated data feed on Rush is 6.1u+29.3s or
+	about 36 sec cpu.
+
+    o   The timing for the DCA running on Driftwood is 5.0u+9.0s or about
+	14 cpu seconds for the image capture.  This includes the message bus
+	i/o, descrambling the image, and writing the multiextension disk FITS
+	file.
+
+    o   The overall clock time for the full operation is currently about 62
+	seconds, at the end of which the image is complete on disk on
+	Driftwood.  About 14 seconds of the full time appears to be flushing
+	memory to disk on Driftwood (syncing the 134 MB file) at the end of
+	the readout.  If an asynchronous sync is used the clock time drops
+	to 50 seconds for the full operation.
+
+The DCA runtimes on Driftwood are very fast.  Runtime is mostly dominated by
+the speed with which the relatively slow SS-20 can copy out the 134 MB of
+data.  There should be no problem keeping up with the readout speed of the
+Mosaic however, and we are only using 5-15% of the cpu of Driftwood so there
+is plenty of processing power remaining for things like the RTD.
+
+As a check on the timings I ran the following benchmark:
+
+	rcp xpimXXX[0123] driftwood:/md1/<dir>
+
+where /md1 is a fast striped disk on Driftwood and the rcp is executed on
+Rush to copy out 4 xpim files for 134 MB total.  This benchmark merely copies
+data to the network and writes it to a file on the remote end, which to a
+first approximation is what the message bus / DCA is doing.  The timing is
+5.7u+30.9s with a clock time of 1:10 measured on Rush.  This is very close
+to the message bus / DCA timings, which suggests that the timings are
+dominated by memory copies and network i/o on Rush.  (The 134 MB in 14
+seconds benchmark I reported on a while back measured only the bandwidth of
+the Fast Ethernet).
+
+During these benchmarks the Mosaic/Arcon software was idling on Rush.  The
+load factor consistently read about 3-4 or higher throughout (excluding these
+benchmarks).  I am not sure why the load factor was so high since the cpu
+was only 20% busy - there appeared to be high readings for interrupts (370)
+and context switches (1000) which may account for the load (a typical system
+will show something like 30/30 for these numbers using vmstat 5).  There are
+many processes and they are pretty active even when "idle".  I did not look
+into it carefully, but it appears that the Arcon software significantly loads
+the acquisition computer even when idling, which is another reason for
+pushing the acquisition off onto a dedicated computer.
+
+To see what effect the idling acquisition system was having on the timings
+I redid the benchmark following a reboot.  This improved things quite a bit:
+
+    idle system benchmark (on Rush):  3.7u 22.7s 0:31 83%
+
+The busy system benchmarks are probably more representative of what we will
+see in the operational system, but this test is a better measure of the
+message bus / DCA performance, and it illustrates how much the idling Arcon
+system is loading the computer (we should repeat the idle system measurements
+following a reboot/restart to ensure that things weren't in an odd state).
+
+
+SOFTWARE NOTES
+
+Although a draft design for the full message bus exists, the prototype DCA
+uses PVM directly (PVM stands for Parallel Virtual Machine, a distributed
+and parallel processing messaging system which currently looks to be the best
+bet for the basis of our general message bus (and yes we have looked
+extensively at CORBA)).  The DCA itself is fairly complete though, and will
+not be greatly affected when the messaging system is later replaced.  The
+full messaging system, with producer/consumer events, will be needed later
+to implement distributed shared objects and the RTD.
+
+
+Some random notes about the message bus.
+
+    o	The message bus is a software facility.  It may use special hardware
+	for the communications layer but in most cases it uses standard
+	facilities such as UDP and TCP sockets and shared memory.
+	Multiprocessing support is intrinsic in this approach (this is
+	important with the next generation of computers which will all be
+	multiprocessor).
+
+    o   The message bus has an existence in its own right, i.e. you start it
+	up and it has a little console which tells you what hosts are part
+	of the virtual machine, and what tasks or services are running or
+	available.  Clients and services may connect and disconnect
+	dynamically at runtime.  Discovery facilities can be used to
+	determine what services are available and to query their methods.
+
+    o   In the case of the Mosaic we have a process (data feed) on the
+	acquisition computer which wants to feed data to the DCA running on
+	the data handling computer.  The feed process connects to the message
+	bus.  It then queries for the DCA service, gets the taskid, and sends
+	a message to the DCA to see if it is alive.  The feed can then send
+	data to the DCA.
+
+    o	The data source (e.g. Arcon) and the DCA can connect or disconnect
+	to the message bus at any time, so long as the message bus is running
+	on all hosts.
+
+    o	Neither process knows or cares what computer the other is running
+	on.   For example, if a problem develops one can restart the DCA on
+	a different computer and the acquisition system will never know the
+	difference.  The next readout will merely go to the new DCA.
+
+    o	In general the message bus involves a message router daemon which
+	runs on each host.  Messages are sent to the local message bus
+	daemon which forwards them as necessary.  This is necessary for
+	general messaging and to minimize us of file descriptors in large
+	networks.  Direct or point-to-point connections are however possible
+	when needed for high performance (as for the DCA).  A good message
+	bus will hide the use of direct links.
+
+
+Some random notes about the DCA.
+
+    o	The Data Capture Agent is a Mosaic DHS process which connects to the
+	message bus and processes incoming DCA requests, building new
+	imagefiles on disk.
+
+    o	A StartReadout event signals the start of a readout; each readout
+	results in one imagefile on disk.  Each readout is assigned a unique
+	sequence number by the data source (DCA client).
+
+    o	Multiple simultaneous readouts are possible, each identified by its
+	own sequence number (and disk imagefile).  This may not seem 
+	necessary, but even if the feature is not used explicitly it can be
+	important in a distributed system where there is little control over
+	concurrent operations on different hosts.
+
+    o	The DCA directly writes a multiextension FITS file to disk.  Amps
+	can be interleaved in the incoming data.  The data is "unscrambled"
+	at the same time that it is copied to the output imagefile, hence
+	there is effectively no overhead for unscrambling the data.  Any
+	number of subimages in the observation imagefile can be written
+	simultaneously.
+
+    o	A keyword translation module is used to regularize header keywords,
+	converting them from whatever format is used in the feed to the
+	format used in the DHS and archive.  The translation module is a
+	text file which is selected at runtime; different versions can be
+	provided for different detectors or instrument configurations.
+	(In the case of the NOAO Mosaic Frank will be writing the keyword
+	translation module, making it easy to integrate this with the data
+	reductions).
+
+    o	Keyword translation works by spooling incoming header data in a
+	number of "keyword databases", which are data objects in memory in
+	the DCA.  Each keyword database or KWDB has a "group name" identifying
+	the type keywords it contains.  The set of group names and the
+	number of KWDB for a readout is detector or instrument specific.
+	At EndReadout time a Tcl module is called to perform the keyword
+	translation.  This takes the set of input KWDB and produces a set
+	of output KWDB, one for the FITS primary header and one for each
+	extension.
+
+    o	The DCA writes FITS multiextension files containing multiple images.
+	Non-image extensions can however be supported, allowing tables or
+	other FITS objects to be inserted into the output imagefile.
+
+
+Once we complete the Arcon interface and Arcon keyword translation module
+we will be able to use the new data capture software with the Mosaic.
+Later improvements to the software will be mostly internal.  The RTD
+integration requires the full message bus and the distributed shared image
+DSO (which also requires the full message bus).  Implementing these will
+require some changes to the software but as stated these are changes to
+internal interfaces, the outward operation of the software should not be
+much affected.

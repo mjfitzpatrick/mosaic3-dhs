@@ -1,0 +1,147 @@
+48c48
+<     char *node, *ip, *op;
+---
+>     char *node, *sm, *ip, *op;
+19,20d18
+< #define bzero(b,len) ((void)memset((void *)(b),'\0',(len)),(void)0)
+< 
+101,102c99
+<     bzero (dcaHost->ip_addr, SZ_FNAME); 
+<     sprintf (dcaHost->ip_addr, "%s", inet_ntoa(h_addr));
+---
+>     sprintf (dcaHost->ip_addr, "%s\0", inet_ntoa(h_addr));
+45c45
+< 	    DPRINT(40, dhsDebug,
+---
+> 	    DPRINT(40, procDebug,
+57c57
+< 	    DPRINT(40, dhsDebug,
+---
+> 	    DPRINT(40, procDebug,
+68c68
+< 		DPRINT(40, dhsDebug,
+---
+> 		DPRINT(40, procDebug,
+89c89
+< 	    DPRINT(40, dhsDebug,
+---
+> 	    DPRINT(40, procDebug,
+107c107
+< 	    DPRINT(40, dhsDebug, "Reinitializeing SUPER connection\n");
+---
+> 	    DPRINT(40, procDebug, "Reinitializeing SUPER connection\n");
+133c133
+< 	    DPRINT(40, dhsDebug, line);
+---
+> 	    DPRINT(40, procDebug, line);
+145c145
+< 	    DPRINT(40, dhsDebug, "Collector: We are already connected\n");
+---
+> 	    DPRINT(40, procDebug, "Collector: We are already connected\n");
+151c151
+< 		DPRINT(40, dhsDebug, "Collector: connection alive\n");
+---
+> 		DPRINT(40, procDebug, "Collector: connection alive\n");
+157c157
+< 		DPRINT(40, dhsDebug, "Collector: close connection - retry\n");
+---
+> 		DPRINT(40, procDebug, "Collector: close connection - retry\n");
+167c167
+< 	DPRINT(40, dhsDebug, "Collector: Try to open again\n");
+---
+> 	DPRINT(40, procDebug, "Collector: Try to open again\n");
+170c170
+< 	    DPRINT(40, dhsDebug, "Collector: opened successfully\n");
+---
+> 	    DPRINT(40, procDebug, "Collector: opened successfully\n");
+173c173
+< 	    DPRINT(40, dhsDebug, "Collector: open failed\n");
+---
+> 	    DPRINT(40, procDebug, "Collector: open failed\n");
+58,60c58,60
+<     if (dhsDebug > 100) {
+< 	fprintf (stderr, "Header; size=%d  %d\n", (int)sizeof(msgType), (int)msg->size);
+< 	fprintf (stderr, "      ; type=%d  whoami=%d\n", (int)msg->type, (int)msg->whoami);
+---
+>     if (procDebug > 100) {
+> 	fprintf (stderr, "Header; size=%d  %d\n", sizeof(msgType), msg->size);
+> 	fprintf (stderr, "      ; type=%d  whoami=%d\n", msg->type,msg->whoami);
+40c40
+<     DPRINTF (30, dhsDebug, "Open Channel: port=%d\n", chan->port);
+---
+>     DPRINTF (30, procDebug, "Open Channel: port=%d\n", chan->port);
+43c43
+< 	DPRINTF (30, dhsDebug, "            : node='%s(SIM)'\n", chan->node);
+---
+> 	DPRINTF (30, procDebug, "            : node='%s(SIM)'\n", chan->node);
+47c47
+< 	DPRINTF (30, dhsDebug, "            : node='%s'\n", chan->node);
+---
+> 	DPRINTF (30, procDebug, "            : node='%s'\n", chan->node);
+59c59
+<     int istat;
+---
+>     int istat, reuse = 1;
+24c24
+< #if 0
+---
+> 
+26c26
+< #endif
+---
+> 
+78c78
+< #if 0
+---
+> 
+110d109
+< #endif
+47c47
+< 	return 0;
+---
+> 	return;
+50d49
+<     return 0;
+25,26c25
+< in_addr_t inet_addr(const char *cp); 
+< #define bzero(b,len) ((void)memset((void *)(b),'\0',(len)),(void)0)
+---
+> 
+68c67
+<     int	  fd, rfd;
+---
+>     int	  omain, fd, rfd;
+111c110
+<         sprintf (msg, "sup_connect %s@%s:%d", name, hostname, pid);
+---
+>         sprintf (msg, "sup_connect %s@%s:%d\0", name, hostname, pid);
+114c113
+<         sprintf (msg, "sup_connect %s@%s.%s:%d", name, hostname, domain, pid);
+---
+>         sprintf (msg, "sup_connect %s@%s.%s:%d\0", name, hostname, domain, pid);
+141c140
+<     sprintf (msg, "sup_ready rc_%s@%s.%s:%d", name, hostname, domain, pid);
+---
+>     sprintf (msg, "sup_ready rc_%s@%s.%s:%d\0", name, hostname, domain, pid);
+152c151
+<     sprintf (msg, "Client ready ...");
+---
+>     sprintf (msg, "Client ready ...\0");
+177c176
+<     sprintf (msg_buf, "sup_status %s", msg);
+---
+>     sprintf (msg_buf, "sup_status %s\0", msg);
+198c197
+<     sprintf (msg, "sup_quit");		/* tell em we're leaving */
+---
+>     sprintf (msg, "sup_quit\0");		/* tell em we're leaving */
+200c199
+<     return close (fd);					/* close the socket	 */
+---
+>     close (fd);					/* close the socket	 */
+262c261
+<     char     *ip=(char *)NULL, lhost[SZMSG], port_str[SZMSG], host_str[SZMSG];
+---
+>     char     *ip, lhost[SZMSG], port_str[SZMSG], host_str[SZMSG];
+263a263
+>     struct   servent *sv;

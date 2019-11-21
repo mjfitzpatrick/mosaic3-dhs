@@ -1,0 +1,77 @@
+#!/bin/csh -f 
+
+# Set the location of the system to help in configuring the machine names.
+# The location is simply a 2-character code stored in the '_location' file
+# in the top directory, values may be:
+#
+#	"CR"		=> Tucson Clean Room
+#	"FR"		=> Tucson Flex Rig
+#	"KP"		=> KPNO 4-meter
+#	"CT"		=> CTIO 4-meter
+#
+
+set LOC         = `cat /dhs/_location`
+set INST        = `cat /dhs/_instrument`
+set PRE         = "nf"
+set NPANS       = 1
+
+if (${INST} == "mosaic3") then
+    set PRE      = "mosaic3"
+    set NPANS    = 1
+else
+    echo "Invalid instrument '"${INST}"'"
+    exit 1
+endif
+
+
+
+#-------------------------------------------------------------------------------
+
+chdir /dhs
+
+if ("$1" == "-n") then
+    if ($NPANS == 2) then
+        echo "${PRE}dhs-02..." ; rsync -nCavz . ${PRE}dhs-02${LOC}:/dhs
+    endif
+    echo "${PRE}dhs-01..." ; rsync -nCavz . ${PRE}dhs-01${LOC}:/dhs
+    if ($PRE == "nf") then
+        echo "${PRE}dca..."    ; rsync -nCavz . ${PRE}dca${LOC}:/dhs
+    endif
+    exit
+endif
+
+if ("$1" == "-f") then
+    echo "Removing old version on remote machines...."
+    if ($NPANS == 2) then
+        ssh ${PRE}dhs-02${LOC} /bin/rm -rf /dhs/\*
+    endif
+    ssh ${PRE}dhs-01${LOC} /bin/rm -rf /dhs/\*
+    if ($PRE == "nf") then
+        ssh ${PRE}dca${LOC} /bin/rm -rf /dhs/\*
+    endif
+    echo "Done."
+endif
+
+echo "Syncing remote machines...."
+if ($NPANS == 2) then
+    echo "${PRE}dhs-02..." ; rsync -Cavz . ${PRE}dhs-02${LOC}:/dhs
+endif
+echo "${PRE}dhs-01..." ; rsync -Cavz . ${PRE}dhs-01${LOC}:/dhs
+if ($PRE == "nf") then
+    echo "${PRE}dca..."    ; rsync -Cavz . ${PRE}dca${LOC}:/dhs
+endif
+echo "Done."
+
+
+exit 0
+
+chdir /home/dhs.ktm
+
+if ($PRE == "nf") then
+  if ("$1" == "-n") then
+    echo "${PRE}dca..."    ; rsync -nCavz . ${PRE}dca${LOC}:/home/dhs.ktm
+  else
+    echo "${PRE}dca..."    ; rsync -Cavz . ${PRE}dca${LOC}:/home/dhs.ktm
+  endif
+endif
+

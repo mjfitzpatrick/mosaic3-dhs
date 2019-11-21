@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Red Hat Linux VNC session startup script
+unset SESSION_MANAGER
+#exec /etc/X11/xinit/xinitrc
+
+[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
+[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
+[ -r $HOME/.xmodmaprc  ] && xmodmap $HOME/.xmodmaprc
+
+xsetroot -solid grey
+vncconfig -iconic &
+/dhs/x11iraf/ximtool/ximtool -xflip -xrm \*showToolBar:true -xrm \*showPanelBar:true -geometry +450+200 -port 3200 -nports 10 -xflip &
+xterm -geometry 80x24+10+10 -iconic -ls -title "$VNCDESKTOP Desktop" &
+xterm -geometry 80x24+10+10 -iconic -ls -title "$VNCDESKTOP Desktop" &
+xhost + 
+mwm &
+

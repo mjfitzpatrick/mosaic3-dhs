@@ -1,0 +1,51 @@
+{ Options Help - Task Sorting }
+{ The user can choose several ways to sort the PVM Task information }
+{ displayed in XPVM. }
+{}
+{ XPVM supports three distinct sorting choices: }
+{}
+{         Alphabetical By Host Name and Task Name }
+{}
+{         Numerical By Task ID }
+{}
+{         Custom Sort - Manual Arrangement By The User }
+{}
+{ Each sort selection determines how tasks are arranged in the }
+{ Space-Time, Message Queue and Call Trace Views.  For each }
+{ view the tasks are displayed in their sorted order, from top }
+{ to bottom or from left to right as appropriate. }
+{}
+{ The "Alphabetical" sort uses a string composed like: }
+{}
+{         <host_name>:<task_name> }
+{}
+{ to sort the tasks.  Here "<host_name>" is the name of the }
+{ host on which the task is running, as a simple alias without }
+{ the extended network domain information (e.g. "foo" rather }
+{ than "foo.bar.com").  The <task_name> is the name of the task }
+{ executable if it is known - XPVM cannot identify the names of }
+{ tasks spawned directly from a user shell. }
+{}
+{ The numerical "Task ID" sorting simply uses the PVM Task ID }
+{ (or "tid") to sort the tasks.  The tasks are sorted in order }
+{ of increasing tids, to approximate the spawn order on a per }
+{ host basis. }
+{}
+{ The "Custom" task sort option in effect "turns off" any }
+{ automatic task sorting by XPVM, and allows the user to }
+{ arbitrarily arrange the tasks.  Tasks are initially placed }
+{ in the order of their creation (as determined by which }
+{ task's trace events reach XPVM first).  Then the user }
+{ can "grab" tasks and move them around, using either the }
+{ Space-Time or Call Trace View task label window.  A task }
+{ is moved by clicking on its task label with the Left mouse }
+{ button, in a way similar to task label queries (see the }
+{ online help for Views/Space-Time or Views/Call Trace).  }
+{ Normally, when the mouse pointer is moved up or down }
+{ over the task labels with the Left mouse button held }
+{ down, the query pop-up will change to display the label }
+{ for each different task.  But in "Custom" sort mode, }
+{ the user actually moves the task with the mouse pointer, }
+{ placing the task in its new location when the mouse }
+{ button is released. }
+{}

@@ -1,0 +1,15 @@
+# FIles that need to be modified everytime the CCD dimensions are changed
+
+#on mosaic3-dtn
+/home/dhs/dev/src.mosaic3/imageCfg.h 
+/home/dhs/dev/src.mosaic3/detector.h 
+/home/dhs/dev/src.mosaic3/rtd.c
+/home/dhs/smcmgr/smcmgr.h 
+/home/dhs/ktm/mosaic3.dat
+/home/mosaic/src/nohs/nohsInitLocals.tcl
+
+#On mosaic3pan-a-dtn
+/Mosaic3/cfg/_mosaic3/ccp.cfg
+/Mosaic3/cfg/_mosaic3/mosaic3.arr
+/Mosaic3/cfg/_mosaic3/mosaic3_DefaultSetup.mod
+

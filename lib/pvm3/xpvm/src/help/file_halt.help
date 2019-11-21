@@ -1,0 +1,8 @@
+{ File Help - Halting PVM & XPVM }
+{ This function is identical to the PVM console "halt" command. }
+{}
+{ When the "Halt" button in XPVM is pressed, PVM will be shut down. }
+{ All tasks will be killed, the Virtual Machine will be disconnected }
+{ and halted (not the actual machines, just the PVM daemons :-), }
+{ and XPVM and all PVM consoles will exit. }
+{}

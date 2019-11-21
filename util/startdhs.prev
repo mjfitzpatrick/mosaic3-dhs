@@ -1,0 +1,199 @@
+#!/bin/csh
+
+# Set the location of the system to help in configuring the machine names.
+# The location is simply a 2-character code stored in the '_location' file
+# in the top directory, values may be:
+#
+#	"CR"		=> Tucson Clean Room
+#	"FR"		=> Tucson Flex Rig
+#	"KP"		=> KPNO 4-meter
+#	"CT"		=> CTIO 4-meter
+#
+set LOC		= `cat /dhs/_location`
+set INST	= `cat /dhs/_instrument`
+set NPANS	= 1
+set NCLIENTS	= 6
+set PRE	    	= "nf"
+
+set rawDir   	= "/home/data/"
+set procDir  	= "/home/data/"
+set fileRoot 	= "image"
+set dbg		= 0
+set verb	= 0
+
+
+#-------------------------------------------------------------------------------
+# Process command-line arguments
+#-------------------------------------------------------------------------------
+
+while ("$1" != "")
+    if ("$1" == "-l") then
+	shift ; set LOC   = $1
+    else if ("$1" == "-i") then
+	shift ; set INST   = $1
+
+    else if ("$1" == "-d") then
+	set dbg = 1
+    else if ("$1" == "-v") then
+	set verb = 1
+
+    else if ("$1" == "-rawDir") then
+	set rawDir = "$2"
+	shift
+    else if ("$1" == "-procDir") then
+	set procDir = "$2"
+	shift
+    else if ("$1" == "-fileRoot") then
+	set fileRoot = "$argv[2]"
+
+    else 
+        echo "Invalid argument '"$1"'"
+    endif
+
+    if ("$2" == "") then
+        break
+    else
+        shift
+    endif
+end
+
+#-------------------------------------------------------------------------------
+# Setup params based in instrument and location.
+#-------------------------------------------------------------------------------
+
+if (${INST} == "mosaic3") then
+    set nclients = 6
+    set NPANS	 = 1
+    set PRE	 = "mosaic3"
+
+else 
+    echo "Invalid instrument '"${INST}"'"
+    exit 1
+endif
+
+#-------------------------------------------------------------------------------
+# Echo params
+#-------------------------------------------------------------------------------
+if ($dbg == 1) then
+    echo "     LOC = ${LOC}"
+    echo "    INST = ${INST}"
+    echo "   NPANS = ${NPANS}"
+    echo "NCLIENTS = ${NCLIENTS}"
+    echo "     dbg = $dbg"
+    echo "    verb = $verb"
+    exit
+endif
+
+
+echo "Using ${INST}${LOC} ..."
+
+if ($?DISPLAY) then
+    setenv USER_DISPLAY 	$DISPLAY
+else
+    setenv USER_DISPLAY 	localhost:0.0
+endif
+
+setenv DISPLAY 		${INST}${LOC}:1.0
+setenv RTD		fast:inet:3200:${INST}${LOC}:1.0
+
+if ($dbg == 1) then
+    echo "Using DISPLAY ${DISPLAY} ..."
+    echo "Using RTD ${RTD} ..."
+endif
+
+#-------------------------------------------------------------------------------
+
+
+echo "Sync'ing /dhs Directory... via /dhs/bin/syncdhs"
+echo ""
+cp /dhs/super/super /dhs/bin
+/dhs/bin/syncdhs						>& /dev/null
+
+echo "Cleaning up earlier DHS.... via /dhs/bin/pvmclean"
+
+#/dhs/bin/pvmclean
+/dhs/bin/zzkpvm
+
+echo "Re-Starting VNC for DHS...."
+echo ""
+vncserver -kill :1						>& /dev/null
+vncserver -AlwaysShared -geometry 1280x1024 -depth 8 -cc 3	>& /dev/null
+
+echo "Starting VNC viewer...."
+(vncviewer -passwd /dhs/lib/vnc/passwd -display $USER_DISPLAY :1 >& /dev/null &)
+
+echo "Starting DHS...."
+echo ""
+
+ 	
+echo "init rawDir = " ${rawDir}
+
+set XTERM	= "xterm -ls -sl 4096"
+
+
+#--------------
+# Collectors
+#--------------
+#(sleep 10; ssh ${PRE}dhs-01${LOC} $XTERM -iconic -display ${INST}${LOC}:1.0 -fn fixed -geometry 80x20+0+400 -e /dhs/bin/collector -console -mbus -port 4575 -debug 60 -id NOCS & ) &
+(sleep 10; ssh ${PRE}dhs-01${LOC} $XTERM -iconic -display ${INST}${LOC}:1.0 -fn fixed -geometry 80x20+0+400 -e "/dhs/zzdev/zs.collector 4575 "NOCS" /tmp/col1.log" & ) &
+
+
+#(sleep 11; ssh ${PRE}dhs-01${LOC} $XTERM -iconic -display ${INST}${LOC}:1.0 -fn fixed -geometry 80x20+0+350 -e /dhs/bin/collector -console -mbus -port 4576 -debug 60 -id PanA & ) &
+(sleep 11; ssh ${PRE}dhs-01${LOC} $XTERM -iconic -display ${INST}${LOC}:1.0 -fn fixed -geometry 80x20+0+350 -e "/dhs/zzdev/zs.collector  4576 PanA /tmp/col2.log" & ) &
+
+if ($NPANS == 2) then
+ #(sleep 12; ssh ${PRE}dhs-02${LOC} $XTERM -iconic -display ${INST}${LOC}:1.0 -fn fixed -geometry 80x20+300+350 -e /dhs/bin/collector -console -mbus -port 4577 -debug 60 -id PanB & ) &
+  (sleep 12; ssh ${PRE}dhs-02${LOC} $XTERM -iconic -display ${INST}${LOC}:1.0 -fn fixed -geometry 80x20+300+350 -e "/dhs/zzdev/zs.collector  4577 PanB  /tmp/col3.log" & ) &
+endif
+
+#--------------
+# SMC Managers
+#--------------
+#(sleep 13; ssh ${PRE}dhs-01${LOC} $XTERM -iconic -display ${INST}${LOC}:1.0 -fn fixed -geometry 80x20+0+450 -e /dhs/bin/smcmgr -console -trim -mbus -dev $RTD -raw -debug 60 & ) &
+(sleep 13; ssh ${PRE}dhs-01${LOC} $XTERM -iconic -display ${INST}${LOC}:1.0 -fn fixed -geometry 80x20+0+450 -e "/dhs/zzdev/zs.smcmgr $RTD /tmp/smc1.log" & ) &
+
+if ($NPANS == 2) then
+(sleep 14; ssh ${PRE}dhs-02${LOC} $XTERM -iconic -display ${INST}${LOC}:1.0 -fn fixed -geometry 80x20+300+400 -e "/dhs/zzdev/zs.smcmgr $RTD /tmp/smc2.log"  & ) &
+endif
+
+#--------------
+# Picfeeds
+#--------------
+(sleep 15; ssh ${PRE}dhs-01${LOC}  $XTERM -iconic -display ${INST}${LOC}:1.0 -fn fixed -geometry 80x20+0+500 -e "/dhs/zzdev/zs.pxf /tmp/pxf1.log" & ) &
+
+if ($NPANS == 2) then
+(sleep 16; ssh ${PRE}dhs-02${LOC}  $XTERM -iconic -display ${INST}${LOC}:1.0 -fn fixed -geometry 80x20+300+450 -e "/dhs/zzdev/zs.pxf /tmp/pxf2.log" & ) &
+endif
+
+#--------------
+# DCA
+#-------------
+#(sleep 25; ssh ${PRE}dhs-01${LOC} $XTERM -display ${INST}${LOC}:1.0 \
+#    -fn fixed -geometry 80x20+645+360 \
+#    -e /dhs/bin/mosdca -debug 2 -reqlevel 2 -vminit cachesize=312m \
+#	-imformat %N%04I.fits \
+#	-maxgkw 150 -maxikw 150 \
+#	-dir /home/data \
+#	-ktm /dhs/lib/${INST}.tcl & ) &
+(sleep 25; ssh ${PRE}dhs-01${LOC} $XTERM -display ${INST}${LOC}:1.0 -fn fixed -geometry 80x20+645+360 -e "/dhs/zzdev/z.mosdca ${INST}  /tmp/mos.log" & ) &
+
+
+#--------------
+# IRAF Window
+#-------------
+(sleep 20 ; xgterm -iconic -display ${INST}${LOC}:1.0 -fn fixed -geometry 80x40+10+100 -e cl & ) &
+
+
+echo "last rawDir = " ${rawDir}
+
+#exec $XTERM -display :1.0 -fn fixed -geometry 80x22+645+40 \
+#    -e "/dhs/bin/super -port 4150 -console \
+#	-rawDir ${rawDir} \
+#	-procDir ${rawDir} \
+#	-config /dhs/lib/config-mosaic3.null \
+#	-nclients ${NCLIENTS} \
+#	-geometry 640x630+0+40" |& tee /tmp/super.log
+
+#exec $XTERM -display :1.0 -fn fixed -geometry 80x22+645+40 -e /dhs/bin/super -port 4150 -console -rawDir ${rawDir} -procDir ${rawDir} -config /dhs/lib/config-mosaic3.null -nclients ${NCLIENTS} -geometry 640x630+0+40 |& tee /tmp/super.log
+
+exec $XTERM -display :1.0 -fn fixed -geometry 80x22+645+40 -e "/dhs/zzdev/z.super ${rawDir} ${NCLIENTS} /tmp/super.log"

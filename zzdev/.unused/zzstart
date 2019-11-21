@@ -1,0 +1,64 @@
+#!/bin/csh -f 
+
+# Set the location of the system to help in configuring the machine names.
+# The location is simply a 2-character code stored in the '_location' file
+# in the top directory, values may be:
+#
+#	"CR"		=> Tucson Clean Room
+#	"FR"		=> Tucson Flex Rig
+#	"KP"		=> KPNO 4-meter
+#	"CT"		=> CTIO 4-meter
+#
+setenv LOC	`cat /dhs/_location`
+setenv DOM	`cat /dhs/_domain`
+
+setenv USER_DISPLAY 	$DISPLAY
+setenv DISPLAY 		newfirm-CR:1.0
+setenv RTD		fast:inet:3200:newfirm-CR:1.0
+
+#-------------------------------------------------------------------------------
+
+
+
+echo "Data Directory..."
+echo ""
+ls /home/data
+echo ""
+
+
+echo "Cleaning up...."
+echo ""
+./zzkpvm
+echo ""
+
+
+echo "Re-Starting VNC for DHS...."
+echo ""
+vncserver -kill :1						>& /dev/null
+vncserver -geometry 1280x1024 -depth 8 -cc 3			>& /dev/null
+
+echo "Starting VNC viewer...."
+(vncviewer -passwd ~/.vnc/passwd -display $USER_DISPLAY :1	>& /dev/null &)
+
+
+echo "Starting DHS...."
+echo ""
+
+
+(sleep 4; ssh nfdhs-01-CR xterm -iconic -display newfirm-CR:1.0 -fn fixed -geometry 80x20+0+350 -e /dhs/bin/collector -console -mbus -port 4575 -debug 60 -id PanA & ) &
+
+(sleep 6; ssh nfdhs-01-CR xterm -iconic -display newfirm-CR:1.0 -fn fixed -geometry 80x20+0+400 -e /dhs/bin/collector -console -mbus -port 4576 -debug 60 -id NOCS & ) &
+
+(sleep 8; ssh nfdhs-01-CR xterm -iconic -display newfirm-CR:1.0 -fn fixed -geometry 80x20+0+450 -e /dhs/bin/smcmgr -console -mbus -dev $RTD -debug 60 & ) &
+
+(sleep 10; ssh nfdhs-01-CR  xterm -iconic -display newfirm-CR:1.0 -fn fixed -geometry 80x20+0+500 -e /dhs/bin/pxf -console -mbus -debug 60 & ) &
+
+(sleep 12; ssh nfdhs-02-CR xterm -iconic -display newfirm-CR:1.0 -fn fixed -geometry 80x20+300+350 -e /dhs/bin/collector -console -mbus -port 4576 -debug 60 -id PanB & ) &
+
+(sleep 14; ssh nfdhs-02-CR xterm -iconic -display newfirm-CR:1.0 -fn fixed -geometry 80x20+300+400 -e /dhs/bin/smcmgr -console -mbus -dev $RTD -debug 60 & ) &
+
+(sleep 16; ssh nfdhs-02-CR  xterm -iconic -display newfirm-CR:1.0 -fn fixed -geometry 80x20+300+450 -e /dhs/bin/pxf -console -mbus -debug 60 & ) &
+
+(sleep 20; xterm -display :1.0 -fn fixed -geometry 80x20+645+360 -e /dhs/mosdca/mosdca -debug 2 -reqlevel 2 -vminit cachesize=312m -imformat %N -maxgkw 2048 -maxikw 2048 -dir /home/data -ktm /dhs/lib/newfirm.tcl & ) &
+
+exec xterm -display :1.0 -fn fixed -geometry 80x22+645+40 -e /dhs/dhssup/super -port 4150 -console -config /dhs/dhssup/_config.null -nclients 8 -geometry 640x580+0+40

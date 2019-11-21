@@ -1,0 +1,44 @@
+{ Hosts in XPVM }
+{ Hosts can be added to and deleted from the PVM Virtual Machine }
+{ using a pull-down menu in XPVM.  This menu is raised and lowered }
+{ by clicking on the "Hosts" button in the main XPVM window. }
+{}
+{ The menu shows a list of available hosts, with a colored status }
+{ box to the left of each host name to indicate whether the host is }
+{ currently in the Virtual Machine.  Clicking on a particular host }
+{ either adds or deletes that host from the current configuration.  }
+{ A purple status box means the host is in the Virtual Machine, a }
+{ clear status box means the host is not. }
+{}
+{ The list of hosts defaults to just one entry for the local host, }
+{ but is user configurable.  A default user Virtual Machine can be }
+{ automagically configured from a ".xpvm_hosts" file in the user's }
+{ top level directory.  In this file, each line should contain the }
+{ name of exactly one host machine to be added to PVM.  If the first }
+{ character of a line is '#', then that line will be treated as a }
+{ comment.  If the first character is '&', then the host will not }
+{ be added to the Virtual Machine on start-up, but will be included }
+{ in the host menu list. }
+{}
+{ Example .xpvm_hosts File: }
+{ ------------------------- }
+{ # }
+{ # XPVM Hosts }
+{ # }
+{ msr.epm.ornl.gov }
+{ &bigblu0 }
+{ &vis1.epm.ornl.gov }
+{}
+{ This file causes machine "msr" to be added to the Virtual Machine }
+{ on XPVM start-up, and adds "bigblu0" and "vis1" to the host menu }
+{ list, but does not add them to the Virtual Machine yet. }
+{}
+{ The Hosts menu also includes two fixed options, "Add All Hosts" }
+{ and "Other Hosts".  The "Add All Hosts" option will attempt to }
+{ add all hosts currently listed on the hosts menu to the Virtual }
+{ Machine.  Any hosts not already present will be added.  The }
+{ "Other Hosts" feature allows new hosts to be added dynamically }
+{ by the user.  Clicking on the "Other Hosts" button causes a host }
+{ name prompt to appear below the button.  A new host is added by }
+{ simply typing in its name and hitting "Return" (on the keyboard). }
+{}

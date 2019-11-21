@@ -1,0 +1,16 @@
+gcc -Wall -Wstrict-prototypes -Wmissing-prototypes -g -c -m32 \
+    -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc \
+    -D__MNSNERR__ -D_MNSN_STD_HDR_ -D_shmUtil_H_ -D__USE_MISC \
+    -DXLONG=int \
+        dcaDev.c \
+        dcaOpenChannel.c \
+        dcamsg.c \
+        dcaCloseChannel.c \
+        dcaConnectionACK.c \
+        dcaInitChannel.c \
+        dcaRecv.c  \
+        dcaSend.c \
+        dcaSuper.c \
+        dcaHost.c \
+        dcaSimulator.c
+ar -r dcalib.a *.o

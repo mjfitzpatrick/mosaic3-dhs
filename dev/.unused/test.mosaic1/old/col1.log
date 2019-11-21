@@ -1,0 +1,27 @@
+Mon Mar 2 11:33:54 EST 2015 Starting
+Collector ID:  'NOCS'....
+smUtilAttach:  id=0x13565962 key=0xc000010 size=3196060
+Attached to SMC....
+Opened socket on port 4575, fd=3
+Adding mbus input handler....
+Adding console input handler....
+Adding socket input handler....
+Waiting for PAN to connect, id='NOCS'...
+mbusSend READY COLLECTOR
+Done mbusSend READY COLLECTOR
+mbusAppMainLoop
+Connecting client on 3...
+Client ready on 5...
+Waiting for message: socket=5
+	*DBG* *** DCA_OPEN EXPOSURE.
+	*DBG* DCA_SET | DCA_FP_CONFIG received: 44 bytes
+	*DBG* fpCfg.(x,y)Start: (0,0)
+	*DBG* fpCfg.(x,y)Size: (4296,8192)
+	*DBG* ExpID: 2450000.100000
+	*DBG* DCA_EXP_OBSID received
+	*DBG* ExpID: 2450000.100000
+	*DBG* ObsSetID: TestIDf
+	*DBG* DCA_DIRECTORY: ''
+	*DBG* *** DCA_CLOSE EXPOSURE.
+
+

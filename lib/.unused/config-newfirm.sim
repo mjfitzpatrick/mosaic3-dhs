@@ -1,0 +1,140 @@
+#
+#  Configuration file for the NEWFIRM DHS.  
+#
+#  The file format is a simple text table of the form
+#
+#	<task> <host> <name> <command>
+#
+#  where <task> is one of 
+#
+#	Supervisor	The DHS Supervisor process
+#	Collector	A Collector component to accept data from a PAN
+#	PicFeed		A PicFeed component to serialize the data
+#	RTD		Real-Time Display component
+#	DCA		Data Capture Agent which create a FITS file
+#	KTM		Keyword Translation Module
+#
+#  The <host> host is the name of the machine on which the specified task
+#  is to be started ('localhost' implies the current machine).  <name> is a
+#  user-defined name of the task as it will appear in the status readouts,
+#  commands are assumed to accept a "-name" flag to set this properly.
+#  <command> is the path (on the named machine) to the command to execute,
+#  the command may take arguments
+#
+#  Note that multiple instances of a <task> indicate multiple occurrances of
+#  that process are requested.  If the task cannot be started on the
+#  designated machine, another machine specified for that same class of task
+#  will be used before finally falling back to the current machine.
+#
+#  Task names are case-insensitive and may be repeated.  Comments begin with
+#  a '#' and extend to the end-of-line.  Column value may not be ommitted.
+#  Comments and blank lines in this file are ignored, complex lines may be
+#  continued with a backslash escape of the newline.
+#
+
+#--------------------------------
+# Console definiton table.  Note, the '%d' in the geometry specification
+# is replaced automatically when the windows are spawned to tile them
+# "nicely"
+#--------------------------------
+
+console	   display	env
+console    rootcmd	xterm -geometry 80x20+%d+%d -fn fixed 
+console	   debugLevel	120
+console	   winXinit	0
+console	   winYinit	0
+console	   winXstep	80
+console	   winYstep	120
+console	   client_delay	1
+
+trigger	   newfirm
+
+
+#----------------------------------------------------------------
+# Keyword Monitoring Table -- Not Yet Fully Implemented
+#----------------------------------------------------------------
+
+#monitor NOCTYP		NOCS_Pre
+#monitor imageCount	any
+#monitor expID		any
+#monitor expStrtTime	any
+#monitor expEndTime	any
+
+
+
+#----------------------------------------------------------------
+# Pseudo Host Table
+#----------------------------------------------------------------
+
+host 	localhost	127.0.0.1	# Do Not Remove
+host 	tucana 		127.0.0.1	# Do Not Remove
+host 	denali 		127.0.0.1	# Do Not Remove
+
+host 	newfirm 	127.0.0.1
+host 	nfpan-a 	127.0.0.1
+host 	nfpan-b 	127.0.0.1
+host 	nfdhs-01	127.0.0.1
+host 	nfdhs-02	127.0.0.1
+host 	nfdca	 	127.0.0.1
+
+
+#----------------------------------------------------------------
+# Client Application table.
+#----------------------------------------------------------------
+
+# Supervisor s:newfirm	/ndhs/bin/super -name Super -port 4150
+# 
+# # Pan A processes
+# Collector  s:nfdhs-01	/ndhs/bin/collector -console \
+# 						-port 4550 -id PanA
+# SMCMgr     s:nfdhs-01	/ndhs/bin/smcmgr -console -mbus \
+# 				-dev fast:inet:3201:140.252.52.168
+# PXF        s:nfdhs-01 	/ndhs/bin/pxf -console -mbus
+# 
+# console	   winXinit	350
+# console	   winYinit	0
+# 
+# 
+# # Pan B processes
+# Collector  s:nfdhs-02	/ndhs/bin/collector -console \
+# 						-port 4551 -id PanB
+# SMCMgr     s:nfdhs-02	/ndhs/bin/smcmgr -console -mbus \
+# 			-dev fast:inet:3201:140.252.52.168
+# PXF        s:nfdhs-02 	/ndhs/bin/pxf -console -mbus
+# 
+# 
+# console	   winXinit	700
+# console	   winYinit	0
+# 
+# 
+# # NOCS processes
+# #Collector  s:nfdhs-01	/ndhs/bin/collector -console \
+# #						-port 4552 -id NOCS
+# 
+# console	   client_delay	5
+# 
+# NF-DCA     s:newfirm     /ndhs/bin/mosdca -debug 2 \
+#                                         -reqlevel 2 \
+#                                         -vminit cachesize=312m \
+#                                         -imformat %N \
+#                                         -maxgkw 2048 \
+#                                         -maxikw 2048 \
+#                                         -dir /home/data \
+#                                         -ktm /ndhs/lib/generic.tcl
+# 
+# 
+
+
+#----------------------------------------------------------------
+# Pairing table.
+#
+#       PAN Host			Collector Host
+#----------------------------------------------------------------
+pair	localhost			localhost
+pair	localhost			newfirm
+
+pair	newfirm				nfdhs-01:4575
+pair	nfpan-a				nfdhs-01:4576
+pair	nfpan-b				nfdhs-02:4577
+
+# End of Configuration

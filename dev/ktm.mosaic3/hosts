@@ -1,0 +1,17 @@
+# HOSTS -- IRAF local network host table.
+pipedm          : pipedm!/iraf/iraf/bin.redhat/irafks.e
+pipedevn        : pipedevn!/iraf/iraf/bin.redhat/irafks.e
+pipen2          : pipen2!/iraf/iraf/bin.redhat/irafks.e
+pipedmn         : pipedmn!/iraf/iraf/bin.redhat/irafks.e
+pipen01         : pipen01!/iraf/iraf/bin.redhat/irafks.e
+pipen02         : pipen02!/iraf/iraf/bin.redhat/irafks.e
+pipen03         : pipen03!/iraf/iraf/bin.redhat/irafks.e
+pipen04         : pipen04!/iraf/iraf/bin.redhat/irafks.e
+pipen05         : pipen05!/iraf/iraf/bin.redhat/irafks.e
+pipen06         : pipen06!/iraf/iraf/bin.redhat/irafks.e
+pipen07         : pipen07!/iraf/iraf/bin.redhat/irafks.e
+pipen08         : pipen08!/iraf/iraf/bin.redhat/irafks.e
+nfpipe-01       : nfpipe-01!/iraf/iraf/bin.redhat/irafks.e
+nfpipe-02       : nfpipe-02!/iraf/iraf/bin.redhat/irafks.e
+nfdca           : nfdca!/iraf/iraf/bin.redhat/irafks.e
+newfirm         : newfirm!/iraf/iraf/bin.redhat/irafks.e

@@ -1,0 +1,44 @@
+Attaching to cache at addr=0xb749a000 key=0xc000010 sz=3196060
+smUtilAttach:  id=0x10911754 key=0xc000010 size=3196060
+
+   smCache {			0xb725d000
+            memKey = 0xc000010
+             shmid = 10911754
+        cache_addr = 0xb749a000
+        cache_size = 3196060
+         vm_locked = 0
+             ctime = Mon Mar  2 10:44:07 2015
+               new = 1
+            np_max = 4096
+        np_hiwater = 0
+     mem_allocated = 285586898
+         mem_avail = -281699774
+            npages = 10
+               top = 10
+             pdata = 0xb725d494
+            pstate = pid:23746  addr:0xb749a000  Mon Mar  2 10:44:07 2015
+                     pid:23770  addr:0xb746e000  Mon Mar  2 10:44:09 2015
+                     pid:23917  addr:0xb725d000  Mon Mar  2 10:59:16 2015
+                     pid:23808  addr:0xb7478000  Mon Mar  2 10:44:17 2015
+             debug = 1
+   }
+
+   sysConfig {			(0xb725d184)
+       cache_path = '/tmp/.smc500'
+           config = 'debug=0'
+       cache_size = 3196060
+     cache_memKey = 0xc000010
+            nsegs = 4096
+     min_seg_size = 4096 (bytes)
+       lock_cache = 3
+        lock_segs = 3
+	   sys_page_size = 4
+	  sys_phys_pages = 230029
+	sys_avphys_pages = 172766
+	       sys_pmask = 3
+   }
+
+Waiting for input....
+BCAST:  from:262146  subj:8 msg='option dirname /home/data
+'
+    SET on SMCMgr: option dirname /home/data

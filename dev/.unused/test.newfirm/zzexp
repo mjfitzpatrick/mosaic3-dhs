@@ -1,0 +1,5 @@
+#!/bin/csh -f
+
+xterm -geometry 80x22+100+100 -e /dhs/test/nocs -host newfirm -interactive  &
+xterm -geometry 80x22+100+300 -e /dhs/test/pan  -host nfpan-a -A     	     &
+xterm -geometry 80x22+100+500 -e /dhs/test/pan  -host nfpan-b -B     	     &

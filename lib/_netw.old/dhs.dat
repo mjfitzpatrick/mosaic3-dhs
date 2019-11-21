@@ -1,0 +1,2081 @@
+#ifndef _dhsImpl_H_						#ifndef _dhsImpl_H_
+ #define _dhsImpl_H_ 1.1.0					 #define _dhsImpl_H_ 1.1.0
+ #define _dhsImpl_D_ "11 January, 2008."			 #define _dhsImpl_D_ "11 January, 2008."
+ #define _dhsImpl_S_ "1.1.0"					 #define _dhsImpl_S_ "1.1.0"
+ #define _dhsImpl_A_ "P. N. Daly, N. C. Buchholz"		 #define _dhsImpl_A_ "P. N. Daly, N. C. Buchholz"
+ #define _dhsImpl_C_ "(c) AURA Inc, 2004. All rights reserved	 #define _dhsImpl_C_ "(c) AURA Inc, 2004. All rights reserved
+
+ #ifndef XLONG							 #ifndef XLONG
+  #define XLONG int						  #define XLONG int
+ #endif								 #endif
+
+ /***********************************************************	 /***********************************************************
+  * define(s)							  * define(s)
+  ***********************************************************	  ***********************************************************
+ #define DHS_IMPLEMENTATION "NETW"				 #define DHS_IMPLEMENTATION "NETW"
+ #define DHS_IMPL_MAXSTR       128				 #define DHS_IMPL_MAXSTR       128
+
+ /***********************************************************	 /***********************************************************
+  * typedef(s)							  * typedef(s)
+  ***********************************************************	  ***********************************************************
+ typedef struct dhsChan {					 typedef struct dhsChan {
+  int   fd;                   /* socket descriptor for connec	  int   fd;                   /* socket descriptor for connec
+  char *device;               /* the 'node:port' string      	  char *device;               /* the 'node:port' string      
+  char *node;                 /* node where DCA object is run	  char *node;                 /* node where DCA object is run
+  char *name;                 /* name of client application	  char *name;                 /* name of client application
+  int   port;                 /* port on node for DCA object 	  int   port;                 /* port on node for DCA object 
+  int   nerrs;                /* error count on channel      	  int   nerrs;                /* error count on channel      
+  int   nresends;             /* packet resend count on chann	  int   nresends;             /* packet resend count on chann
+  int   retries;              /* needed at all??             	  int   retries;              /* needed at all??             
+  int   timeout;              /* needed at all??             	  int   timeout;              /* needed at all??             
+  int   initialized;          /* needed at all??             	  int   initialized;          /* needed at all??             
+  int   connected;            /* connection status flag      	  int   connected;            /* connection status flag      
+  int   type;                 /* channel type                	  int   type;                 /* channel type                
+ } dhsChan;							 } dhsChan;
+
+ typedef struct dhsNetw {					 typedef struct dhsNetw {
+  struct dhsChan  *super;     /* Supervisor channel          	  struct dhsChan  *super;     /* Supervisor channel          
+  struct dhsChan  *collector; /* Collector channel           	  struct dhsChan  *collector; /* Collector channel           
+  int    nopen;               /* No. of open channels        	  int    nopen;               /* No. of open channels        
+ } dhsNetw;							 } dhsNetw;
+
+ extern dhsNetw dhsNW;						 extern dhsNetw dhsNW;
+
+ /***********************************************************	 /***********************************************************
+ * prototype(s)							 * prototype(s)
+ ************************************************************	 ************************************************************
+ int dcaSimulator( void );					 int dcaSimulator( void );
+
+ /***********************************************************	 /***********************************************************
+  * variable(s) 						  * variable(s) 
+  ***********************************************************	  ***********************************************************
+ #ifndef DHSUTILAUX						 #ifndef DHSUTILAUX
+  extern char dhsUtilDIR[256];					  extern char dhsUtilDIR[256];
+  extern char dhsUtilFILENAME[256];				  extern char dhsUtilFILENAME[256];
+  extern int dhsUtilFLAG;					  extern int dhsUtilFLAG;
+  extern int dhsFileCreated;					  extern int dhsFileCreated;
+  extern int dhsExtChar;					  extern int dhsExtChar;
+ #endif								 #endif
+#endif								#endif
+							      <
+extern int dhsDebug;					      <
+/************************************************************	/************************************************************
+ * include(s):							 * include(s):
+ ************************************************************	 ************************************************************
+#if !defined(_dhsTcl_H_)					#if !defined(_dhsTcl_H_)
+ #include "dhsTcl.h"						 #include "dhsTcl.h"
+#endif								#endif
+
+#if !defined(_dhsImpl_H_)					#if !defined(_dhsImpl_H_)
+ #include "dhsImplementationSpecifics.h"			 #include "dhsImplementationSpecifics.h"
+#endif								#endif
+
+/************************************************************	/************************************************************
+ * global(s):							 * global(s):
+ ************************************************************	 ************************************************************
+#define DHS_FALSE        0					#define DHS_FALSE        0
+#define DHS_TRUE         (!DHS_FALSE)				#define DHS_TRUE         (!DHS_FALSE)
+#define DHS_NAME_LEN     DHS_IMPL_MAXSTR			#define DHS_NAME_LEN     DHS_IMPL_MAXSTR
+#define DHS_RESULT_LEN   DHS_IMPL_MAXSTR			#define DHS_RESULT_LEN   DHS_IMPL_MAXSTR
+#define DHS_ITEM_LEN     DHS_IMPL_MAXSTR			#define DHS_ITEM_LEN     DHS_IMPL_MAXSTR
+#define DHS_EXAMPLE_LEN  DHS_IMPL_MAXSTR			#define DHS_EXAMPLE_LEN  DHS_IMPL_MAXSTR
+#define DHS_HELP_LEN     MAXMSG					#define DHS_HELP_LEN     MAXMSG
+
+#ifdef TCL83							#ifdef TCL83
+ #define TCL_STUB_VERSION "8.3"					 #define TCL_STUB_VERSION "8.3"
+#endif								#endif
+#ifdef TCL84							#ifdef TCL84
+ #define TCL_STUB_VERSION "8.4"					 #define TCL_STUB_VERSION "8.4"
+#endif								#endif
+
+/************************************************************	/************************************************************
+ * shut the compiler up!					 * shut the compiler up!
+ ************************************************************	 ************************************************************
+#if defined(__PTIME__)						#if defined(__PTIME__)
+ #include <time.h>						 #include <time.h>
+ #include <stdio.h>						 #include <stdio.h>
+ char *pTime ( char *S ) {					 char *pTime ( char *S ) {
+  struct tm *tim;						  struct tm *tim;
+  time_t t = time((time_t *)&t);				  time_t t = time((time_t *)&t);
+  tim = localtime((time_t *) &t);				  tim = localtime((time_t *) &t);
+  if ( S == (char *)NULL ) return S;				  if ( S == (char *)NULL ) return S;
+  (void) sprintf(S,"%4d%02d%02d:%02d%02d%02d-", tim->tm_year+	  (void) sprintf(S,"%4d%02d%02d:%02d%02d%02d-", tim->tm_year+
+  return S;							  return S;
+ }								 }
+#endif								#endif
+
+/************************************************************	/************************************************************
+ * static(s):							 * static(s):
+ ************************************************************	 ************************************************************
+static char response[MAXMSG];					static char response[MAXMSG];
+static char result[DHS_RESULT_LEN];				static char result[DHS_RESULT_LEN];
+
+/************************************************************	/************************************************************
+ * variable(s):						      <
+ ************************************************************ <
+char __simStr[10] = "";					      <
+char resp2[MAXMSG] = "";				      <
+int dhsDebug = 0;					      <
+							      <
+/************************************************************ <
+ * structure(s)							 * structure(s)
+ ************************************************************	 ************************************************************
+typedef struct help_str { char item[DHS_NAME_LEN]; } help_t, 	typedef struct help_str { char item[DHS_NAME_LEN]; } help_t, 
+
+static help_t NM[] =  {						static help_t NM[] =  {
+ {"                  "},					 {"                  "},
+ {"DHS               "},					 {"DHS               "},
+ {"                  "},					 {"                  "},
+ {"Command           "},					 {"Command           "},
+ {"------------------"},					 {"------------------"},
+ {"                  "},					 {"                  "},
+ {"dhs::help         "},					 {"dhs::help         "},
+ {"dhs::version      "},					 {"dhs::version      "},
+ {"dhs::SysOpen      "},					 {"dhs::SysOpen      "},
+ {"dhs::SysClose     "},					 {"dhs::SysClose     "},
+ {"dhs::OpenConnect  "},					 {"dhs::OpenConnect  "},
+ {"dhs::CloseConnect "},					 {"dhs::CloseConnect "},
+ {"dhs::OpenExp      "},					 {"dhs::OpenExp      "},
+ {"dhs::CloseExp     "},					 {"dhs::CloseExp     "},
+ {"dhs::IOctl        "},					 {"dhs::IOctl        "},
+ {"dhs::ReadImage    "},					 {"dhs::ReadImage    "},
+ {"dhs::PixelData    "},					 {"dhs::PixelData    "},
+ {"dhs::MetaData     "}};					 {"dhs::MetaData     "}};
+#define NM_NUM (sizeof(NM)/sizeof(help_t))			#define NM_NUM (sizeof(NM)/sizeof(help_t))
+static help_t HP[] =  {						static help_t HP[] =  {
+ {"                            "},				 {"                            "},
+ {"MONSOON Data Handling System"},				 {"MONSOON Data Handling System"},
+ {"                            "},				 {"                            "},
+ {"Description                 "},				 {"Description                 "},
+ {"----------------------------"},				 {"----------------------------"},
+ {"                            "},				 {"                            "},
+ {"Report help                 "},				 {"Report help                 "},
+ {"Report version              "},				 {"Report version              "},
+ {"Open DHS system             "},				 {"Open DHS system             "},
+ {"Close DHS system            "},				 {"Close DHS system            "},
+ {"Open DHS connection         "},				 {"Open DHS connection         "},
+ {"Close DHS connection        "},				 {"Close DHS connection        "},
+ {"Open DHS exposure           "},				 {"Open DHS exposure           "},
+ {"Close DHS exposure          "},				 {"Close DHS exposure          "},
+ {"Perform IOCTL function      "},				 {"Perform IOCTL function      "},
+ {"Read an image               "},				 {"Read an image               "},
+ {"Send an image               "},				 {"Send an image               "},
+ {"Send meta-data block        "}};				 {"Send meta-data block        "}};
+#define HP_NUM (sizeof(HP)/sizeof(help_t))			#define HP_NUM (sizeof(HP)/sizeof(help_t))
+static help_t EG[] =  {						static help_t EG[] =  {
+ {"                                                          	 {"                                                          
+ {_dhsTcl_S_},							 {_dhsTcl_S_},
+ {"                                                          	 {"                                                          
+ {"Example                                                   	 {"Example                                                   
+ {"----------------------------------------------------------	 {"----------------------------------------------------------
+ {"                                                          	 {"                                                          
+ {"dhs::help                                                 	 {"dhs::help                                                 
+ {"dhs::version                                              	 {"dhs::version                                              
+ {"set sID     [dhs::SysOpen <sysID>]                        	 {"set sID     [dhs::SysOpen <sysID>]                        
+ {"set dhsStat [dhs::SysClose <sID>]                         	 {"set dhsStat [dhs::SysClose <sID>]                         
+ {"set cID     [dhs::OpenConnect <subID> {cfgList}]          	 {"set cID     [dhs::OpenConnect <subID> {cfgList}]          
+ {"set dhsStat [dhs::CloseConnect <cID>]                     	 {"set dhsStat [dhs::CloseConnect <cID>]                     
+ {"set eID     [dhs::OpenExp <cID> <{cfgList}> <expID> <obsID	 {"set eID     [dhs::OpenExp <cID> <{cfgList}> <expID> <obsID
+ {"set dhsStat [dhs::CloseExp <eID> <expID>]                 	 {"set dhsStat [dhs::CloseExp <eID> <expID>]                 
+ {"set dhsStat [dhs::IOctl <eID> <ioctl> <expID> <obsID>]    	 {"set dhsStat [dhs::IOctl <eID> <ioctl> <expID> <obsID>]    
+ {"set dhsStat [dhs::ReadImage <eID>]                        	 {"set dhsStat [dhs::ReadImage <eID>]                        
+ {"set dhsStat [dhs::PixelData <eID> {data} <nelms> {cfgList}	 {"set dhsStat [dhs::PixelData <eID> {data} <nelms> {cfgList}
+ {"set dhsStat [dhs::MetaData <eID> {data} <nelms> {cfgList} 	 {"set dhsStat [dhs::MetaData <eID> {data} <nelms> {cfgList} 
+#define EG_NUM (sizeof(EG)/sizeof(help_t))			#define EG_NUM (sizeof(EG)/sizeof(help_t))
+
+/************************************************************	/************************************************************
+ * dhsHelpTcl ( ... )						 * dhsHelpTcl ( ... )
+ *  Use: dhs::help						 *  Use: dhs::help
+ ************************************************************	 ************************************************************
+static int dhsHelpTcl ( ClientData clientData, Tcl_Interp *in	static int dhsHelpTcl ( ClientData clientData, Tcl_Interp *in
+ /* declare local scope variable and initialize them */		 /* declare local scope variable and initialize them */
+ int ic=0, nc=0, room=DHS_TRUE;					 int ic=0, nc=0, room=DHS_TRUE;
+ /* initialize static variables */				 /* initialize static variables */
+ (void) memset(response,'\0',MAXMSG);				 (void) memset(response,'\0',MAXMSG);
+ (void) memset(result,'\0',DHS_RESULT_LEN);			 (void) memset(result,'\0',DHS_RESULT_LEN);
+ /* write out everything else */				 /* write out everything else */
+ for ( ic=0; ic<NM_NUM; ic++ ) {				 for ( ic=0; ic<NM_NUM; ic++ ) {
+  if ( ! (room=( (DHS_HELP_LEN-nc) > (DHS_NAME_LEN+(DHS_ITEM_	  if ( ! (room=( (DHS_HELP_LEN-nc) > (DHS_NAME_LEN+(DHS_ITEM_
+  nc += sprintf((char *)&response[nc],"%s %s %s\n",NM[ic].ite	  nc += sprintf((char *)&response[nc],"%s %s %s\n",NM[ic].ite
+ }								 }
+ /* set result and return */					 /* set result and return */
+ (void) Tcl_SetResult(interp,response,TCL_STATIC);		 (void) Tcl_SetResult(interp,response,TCL_STATIC);
+ return TCL_OK;							 return TCL_OK;
+}								}
+
+/************************************************************	/************************************************************
+ * dhsVersionTcl ( ... )					 * dhsVersionTcl ( ... )
+ *  Use: dhs::version						 *  Use: dhs::version
+ ************************************************************	 ************************************************************
+static int dhsVersionTcl ( ClientData clientData, Tcl_Interp 	static int dhsVersionTcl ( ClientData clientData, Tcl_Interp 
+ /* declare local scope variable and initialize them */		 /* declare local scope variable and initialize them */
+ int nc=0;							 int nc=0;
+ /* initialize static variables */				 /* initialize static variables */
+ (void) memset(response,'\0',MAXMSG);				 (void) memset(response,'\0',MAXMSG);
+ (void) memset(result,'\0',DHS_RESULT_LEN);			 (void) memset(result,'\0',DHS_RESULT_LEN);
+ /* write */							 /* write */
+ nc = sprintf(response,"\nDHS Package v%s by %s.\n%s\nThis re	 nc = sprintf(response,"\nDHS Package v%s by %s.\n%s\nThis re
+ /* set result and return */					 /* set result and return */
+ (void) Tcl_SetResult(interp,response,TCL_STATIC);		 (void) Tcl_SetResult(interp,response,TCL_STATIC);
+ return TCL_OK;							 return TCL_OK;
+}								}
+
+/************************************************************	/************************************************************
+ * dhsReadImageTcl ( ... )					 * dhsReadImageTcl ( ... )
+ *  Use: set dhsStat [dhs::ReadImage <eID>]			 *  Use: set dhsStat [dhs::ReadImage <eID>]
+ ************************************************************	 ************************************************************
+static int dhsReadImageTcl ( ClientData clientData, Tcl_Inter	static int dhsReadImageTcl ( ClientData clientData, Tcl_Inter
+ /* declare local scope variable and initialize them */		 /* declare local scope variable and initialize them */
+ dhsHandle eID=(dhsHandle)0;					 dhsHandle eID=(dhsHandle)0;
+ int ival=0;							 int ival=0;
+ long lstat=0;						      |	 XLONG lstat=0;
+ /* initialize static variables */				 /* initialize static variables */
+ (void) memset(response,'\0',MAXMSG);				 (void) memset(response,'\0',MAXMSG);
+ (void) memset(result,'\0',DHS_RESULT_LEN);			 (void) memset(result,'\0',DHS_RESULT_LEN);
+ /* check handle */						 /* check handle */
+ if ( Tcl_GetInt(interp,argv[1],&ival) != TCL_OK ) {		 if ( Tcl_GetInt(interp,argv[1],&ival) != TCL_OK ) {
+  (void) sprintf(result,"%s","dhsReadImageTcl-E-bad handle\n"	  (void) sprintf(result,"%s","dhsReadImageTcl-E-bad handle\n"
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ eID = (dhsHandle)ival;						 eID = (dhsHandle)ival;
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::ReadImage: eID=%d\n",(int)eID);	  (void) fprintf(stderr,"dhs::ReadImage: eID=%d\n",(int)eID);
+ #endif								 #endif
+ /* execute the dhs function */					 /* execute the dhs function */
+ dhsReadImage(&lstat,response,eID);				 dhsReadImage(&lstat,response,eID);
+ if ( STATUS_BAD(lstat) ) {					 if ( STATUS_BAD(lstat) ) {
+  (void) Tcl_SetResult(interp,response,TCL_STATIC);		  (void) Tcl_SetResult(interp,response,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::ReadImage: lstat=%ld\n",lstat); |	  (void) fprintf(stderr,"dhs::ReadImage: lstat=%d\n",lstat); 
+ #endif								 #endif
+ /* return result */  						 /* return result */  
+ (void) sprintf(result,"%ld",lstat);			      |	 (void) sprintf(result,"%d",lstat);
+ (void) Tcl_SetResult(interp,result,TCL_STATIC);		 (void) Tcl_SetResult(interp,result,TCL_STATIC);
+ return TCL_OK;							 return TCL_OK;
+}								}
+
+/************************************************************	/************************************************************
+ * dhsIOctlTcl ( ... )						 * dhsIOctlTcl ( ... )
+ *  Use: set dhsStat [dhs::IOctl <eID> <ioctl> <expID> <obsID	 *  Use: set dhsStat [dhs::IOctl <eID> <ioctl> <expID> <obsID
+ ************************************************************	 ************************************************************
+static int dhsIOctlTcl ( ClientData clientData, Tcl_Interp *i	static int dhsIOctlTcl ( ClientData clientData, Tcl_Interp *i
+ /* declare local scope variable and initialize them */		 /* declare local scope variable and initialize them */
+ dhsHandle eID=(dhsHandle)0;					 dhsHandle eID=(dhsHandle)0;
+ double expID=(double)0.0;					 double expID=(double)0.0;
+ int inum=0, ic=0, ival=0;					 int inum=0, ic=0, ival=0;
+ long lstat=0;						      |	 XLONG lstat=0;
+ char obsID[DHS_IMPL_MAXSTR];					 char obsID[DHS_IMPL_MAXSTR];
+ (void) memset(obsID,'\0',DHS_IMPL_MAXSTR);			 (void) memset(obsID,'\0',DHS_IMPL_MAXSTR);
+ /* initialize static variables */				 /* initialize static variables */
+ (void) memset(response,'\0',MAXMSG);				 (void) memset(response,'\0',MAXMSG);
+ (void) memset(result,'\0',DHS_RESULT_LEN);			 (void) memset(result,'\0',DHS_RESULT_LEN);
+ /* check handle */						 /* check handle */
+ if ( Tcl_GetInt(interp,argv[1],&ival) != TCL_OK ) {		 if ( Tcl_GetInt(interp,argv[1],&ival) != TCL_OK ) {
+  (void) sprintf(result,"%s","dhsIOctlTcl-E-bad handle\n");	  (void) sprintf(result,"%s","dhsIOctlTcl-E-bad handle\n");
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ eID = (dhsHandle)ival;						 eID = (dhsHandle)ival;
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::IOctl: eID=%d\n",(int)eID); (vo	  (void) fprintf(stderr,"dhs::IOctl: eID=%d\n",(int)eID); (vo
+ #endif								 #endif
+ /* check ioctl */						 /* check ioctl */
+ if ( Tcl_GetInt(interp,argv[2],(int *)&inum) != TCL_OK ) {	 if ( Tcl_GetInt(interp,argv[2],(int *)&inum) != TCL_OK ) {
+  (void) sprintf(result,"%s","dhsIOctlTcl-E-bad ioctl\n");	  (void) sprintf(result,"%s","dhsIOctlTcl-E-bad ioctl\n");
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::IOctl: ionum=%d\n",inum); (void	  (void) fprintf(stderr,"dhs::IOctl: ionum=%d\n",inum); (void
+ #endif								 #endif
+ /* check expID */						 /* check expID */
+ if ( Tcl_GetDouble(interp,argv[3],&expID) != TCL_OK ) {	 if ( Tcl_GetDouble(interp,argv[3],&expID) != TCL_OK ) {
+  (void) sprintf(result,"%s","dhsIOctlTcl-E-bad exposure id\n	  (void) sprintf(result,"%s","dhsIOctlTcl-E-bad exposure id\n
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::IOctl: expID=%lf\n",expID); (vo	  (void) fprintf(stderr,"dhs::IOctl: expID=%lf\n",expID); (vo
+ #endif								 #endif
+ /* check obsID */						 /* check obsID */
+ for ( ic=4; ic<argc; ic++ ) { strcat(obsID,argv[ic]); strcat	 for ( ic=4; ic<argc; ic++ ) { strcat(obsID,argv[ic]); strcat
+ obsID[strlen(obsID)-1] = '\0';					 obsID[strlen(obsID)-1] = '\0';
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::IOctl: obsID=%s\n",obsID); (voi	  (void) fprintf(stderr,"dhs::IOctl: obsID=%s\n",obsID); (voi
+ #endif								 #endif
+ /* execute the dhs function */					 /* execute the dhs function */
+ dhsIOCtl(&lstat,response,eID,(long)inum,&expID,obsID,NULL);  |	 dhsIOCtl(&lstat,response,eID,(XLONG)inum,&expID,obsID,NULL);
+ if ( STATUS_BAD(lstat) ) {					 if ( STATUS_BAD(lstat) ) {
+  (void) Tcl_SetResult(interp,response,TCL_STATIC);		  (void) Tcl_SetResult(interp,response,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::IOctl: lstat=%ld\n",lstat); (vo |	  (void) fprintf(stderr,"dhs::IOctl: lstat=%d\n",lstat); (voi
+ #endif								 #endif
+ /* return result */  						 /* return result */  
+ (void) sprintf(result,"%ld",lstat);			      |	 (void) sprintf(result,"%d",lstat);
+ (void) Tcl_SetResult(interp,result,TCL_STATIC);		 (void) Tcl_SetResult(interp,result,TCL_STATIC);
+ return TCL_OK;							 return TCL_OK;
+}								}
+
+/************************************************************	/************************************************************
+ * dhsMetaDataTcl ( ... )					 * dhsMetaDataTcl ( ... )
+ *  Use: set dhsStat [dhs::MetaData <eID> <{data}> <nlines> <	 *  Use: set dhsStat [dhs::MetaData <eID> <{data}> <nlines> <
+ ************************************************************	 ************************************************************
+static int dhsMetaDataTcl ( ClientData clientData, Tcl_Interp	static int dhsMetaDataTcl ( ClientData clientData, Tcl_Interp
+ /* declare local scope variable and initialize them */		 /* declare local scope variable and initialize them */
+ char *fp=(char *)NULL, *ap=(char *)NULL, *cp=(char *)NULL;	 char *fp=(char *)NULL, *ap=(char *)NULL, *cp=(char *)NULL;
+ char **lsArgvC=(char **)NULL, **lsArgvD=(char **)NULL, **lsA	 char **lsArgvC=(char **)NULL, **lsArgvD=(char **)NULL, **lsA
+ dhsHandle eID=(dhsHandle)0;					 dhsHandle eID=(dhsHandle)0;
+ double expID=(double)0.0;					 double expID=(double)0.0;
+ int ival=0, ik=0, ic=0, ierror=0, nbytes=0, nlines=0, lsArgc	 int ival=0, ik=0, ic=0, ierror=0, nbytes=0, nlines=0, lsArgc
+ long lstat=0;						      |	 XLONG lstat=0;
+ mdConfig_t mdConfigTcl;					 mdConfig_t mdConfigTcl;
+ char fitsName[DHS_FITS_NAMESIZE], fitsValue[DHS_FITS_VALSIZE	 char fitsName[DHS_FITS_NAMESIZE], fitsValue[DHS_FITS_VALSIZE
+ char avpName[DHS_AVP_NAMESIZE], avpValue[DHS_AVP_VALSIZE], a	 char avpName[DHS_AVP_NAMESIZE], avpValue[DHS_AVP_VALSIZE], a
+ (void) memset((void *)&mdConfigTcl,0,sizeof(mdConfig_t));	 (void) memset((void *)&mdConfigTcl,0,sizeof(mdConfig_t));
+ (void) memset(fitsName,'\0',DHS_FITS_NAMESIZE);		 (void) memset(fitsName,'\0',DHS_FITS_NAMESIZE);
+ (void) memset(fitsValue,'\0',DHS_FITS_VALSIZE);		 (void) memset(fitsValue,'\0',DHS_FITS_VALSIZE);
+ (void) memset(fitsComment,'\0',DHS_FITS_COMMENT);		 (void) memset(fitsComment,'\0',DHS_FITS_COMMENT);
+ (void) memset(avpName,'\0',DHS_AVP_NAMESIZE);			 (void) memset(avpName,'\0',DHS_AVP_NAMESIZE);
+ (void) memset(avpValue,'\0',DHS_AVP_VALSIZE);			 (void) memset(avpValue,'\0',DHS_AVP_VALSIZE);
+ (void) memset(avpComment,'\0',DHS_AVP_COMMENT);		 (void) memset(avpComment,'\0',DHS_AVP_COMMENT);
+ (void) memset(obsID,'\0',DHS_IMPL_MAXSTR);			 (void) memset(obsID,'\0',DHS_IMPL_MAXSTR);
+ /* initialize static variables */				 /* initialize static variables */
+ (void) memset(response,'\0',MAXMSG);				 (void) memset(response,'\0',MAXMSG);
+ (void) memset(result,'\0',DHS_RESULT_LEN);			 (void) memset(result,'\0',DHS_RESULT_LEN);
+ /* check handle */						 /* check handle */
+ if ( Tcl_GetInt(interp,argv[1],&ival) != TCL_OK ) {		 if ( Tcl_GetInt(interp,argv[1],&ival) != TCL_OK ) {
+  (void) sprintf(result,"%s","dhsMetaDataTcl-E-bad handle\n")	  (void) sprintf(result,"%s","dhsMetaDataTcl-E-bad handle\n")
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ eID = (dhsHandle)ival;						 eID = (dhsHandle)ival;
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::MetaData: eID=%d\n",(int)eID); 	  (void) fprintf(stderr,"dhs::MetaData: eID=%d\n",(int)eID); 
+ #endif								 #endif
+ /* check data list */						 /* check data list */
+ if ( Tcl_SplitList(interp,argv[2],&lsArgcD,(tclListP_t)&lsAr	 if ( Tcl_SplitList(interp,argv[2],&lsArgcD,(tclListP_t)&lsAr
+  (void) sprintf(result,"%s","dhsMetaDataTcl-E-bad data list\	  (void) sprintf(result,"%s","dhsMetaDataTcl-E-bad data list\
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ /* check nlines */						 /* check nlines */
+ if ( Tcl_GetInt(interp,argv[3],&nlines) != TCL_OK ) {		 if ( Tcl_GetInt(interp,argv[3],&nlines) != TCL_OK ) {
+  (void) sprintf(result,"%s","dhsMetaDataTcl-E-bad nlines\n")	  (void) sprintf(result,"%s","dhsMetaDataTcl-E-bad nlines\n")
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ } 								 } 
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::MetaData: nlines=%d\n",nlines);	  (void) fprintf(stderr,"dhs::MetaData: nlines=%d\n",nlines);
+ #endif								 #endif
+ /* check configuration list */					 /* check configuration list */
+ if ( Tcl_SplitList(interp,argv[4],&lsArgcC,(tclListP_t)&lsAr	 if ( Tcl_SplitList(interp,argv[4],&lsArgcC,(tclListP_t)&lsAr
+  (void) sprintf(result,"%s","dhsMetaDataTcl-E-bad configurat	  (void) sprintf(result,"%s","dhsMetaDataTcl-E-bad configurat
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ /* check expID */						 /* check expID */
+ if ( Tcl_GetDouble(interp,argv[5],&expID) != TCL_OK ) {	 if ( Tcl_GetDouble(interp,argv[5],&expID) != TCL_OK ) {
+  (void) sprintf(result,"%s","dhsMetaDataTcl-E-bad exposure i	  (void) sprintf(result,"%s","dhsMetaDataTcl-E-bad exposure i
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::MetaData: expID=%lf\n",expID); 	  (void) fprintf(stderr,"dhs::MetaData: expID=%lf\n",expID); 
+ #endif								 #endif
+ /* check obsID */						 /* check obsID */
+ for ( ic=6; ic<argc; ic++ ) { strcat(obsID,argv[ic]); strcat	 for ( ic=6; ic<argc; ic++ ) { strcat(obsID,argv[ic]); strcat
+ obsID[strlen(obsID)-1] = '\0';					 obsID[strlen(obsID)-1] = '\0';
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::MetaData: obsID=%s\n",obsID); (	  (void) fprintf(stderr,"dhs::MetaData: obsID=%s\n",obsID); (
+ #endif								 #endif
+ /* set configuration */					 /* set configuration */
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[0],&ival) != TCL_OK )	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[0],&ival) != TCL_OK )
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[1],&ival) != TCL_OK )	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[1],&ival) != TCL_OK )
+ if ( Tcl_SplitList(interp,lsArgvC[2],&lsArgcF,(tclListP_t)&l	 if ( Tcl_SplitList(interp,lsArgvC[2],&lsArgcF,(tclListP_t)&l
+ if ( Tcl_SplitList(interp,lsArgvC[3],&lsArgcS,(tclListP_t)&l	 if ( Tcl_SplitList(interp,lsArgvC[3],&lsArgcS,(tclListP_t)&l
+ if ( ierror ) {						 if ( ierror ) {
+  (void) sprintf(result,"%s","dhsMetaDataTcl-E-bad list eleme	  (void) sprintf(result,"%s","dhsMetaDataTcl-E-bad list eleme
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::MetaData: mdConfigTcl: metaType	  (void) fprintf(stderr,"dhs::MetaData: mdConfigTcl: metaType
+ #endif								 #endif
+ for ( ic=0; ic<mdConfigTcl.numFields; ic++ ) {			 for ( ic=0; ic<mdConfigTcl.numFields; ic++ ) {
+  ival=0; if ( Tcl_GetInt(interp,lsArgvF[ic],&ival) != TCL_OK	  ival=0; if ( Tcl_GetInt(interp,lsArgvF[ic],&ival) != TCL_OK
+  ival=0; if ( Tcl_GetInt(interp,lsArgvS[ic],&ival) != TCL_OK	  ival=0; if ( Tcl_GetInt(interp,lsArgvS[ic],&ival) != TCL_OK
+  if ( ierror ) {						  if ( ierror ) {
+   (void) sprintf(result,"%s","dhsMetaDataTcl-E-bad configura	   (void) sprintf(result,"%s","dhsMetaDataTcl-E-bad configura
+   (void) Tcl_SetResult(interp,result,TCL_STATIC);		   (void) Tcl_SetResult(interp,result,TCL_STATIC);
+   return TCL_ERROR;						   return TCL_ERROR;
+   }								   }
+   #ifdef DEBUGTCL						   #ifdef DEBUGTCL
+    (void) fprintf(stderr,"dhs::MetaData: mdConfigTcl: fieldS	    (void) fprintf(stderr,"dhs::MetaData: mdConfigTcl: fieldS
+   #endif							   #endif
+ }								 }
+ /* get memory */						 /* get memory */
+ switch (mdConfigTcl.metaType) {				 switch (mdConfigTcl.metaType) {
+  case DHS_MDTYPE_FITSHEADER:					  case DHS_MDTYPE_FITSHEADER:
+   nbytes = nlines*DHS_FITS_RAWLEN;				   nbytes = nlines*DHS_FITS_RAWLEN;
+   if ( (cp=fp=(char *)Tcl_Alloc(nbytes)) == (char *)NULL ) {	   if ( (cp=fp=(char *)Tcl_Alloc(nbytes)) == (char *)NULL ) {
+    (void) sprintf(result,"%s","dhsMetaDataTcl-E-bad alloc\n"	    (void) sprintf(result,"%s","dhsMetaDataTcl-E-bad alloc\n"
+    (void) Tcl_SetResult(interp,result,TCL_STATIC);		    (void) Tcl_SetResult(interp,result,TCL_STATIC);
+    return TCL_ERROR;						    return TCL_ERROR;
+   }								   }
+   (void) memset((void *)fp,' ',nbytes);			   (void) memset((void *)fp,' ',nbytes);
+   for ( ic=0, ik=0; ik<nlines*3; ik+=3 ) {			   for ( ic=0, ik=0; ik<nlines*3; ik+=3 ) {
+    (void) sprintf((char *)fitsName,"%8s",lsArgvD[ik]);		    (void) sprintf((char *)fitsName,"%8s",lsArgvD[ik]);
+    (void) memmove((void *)fp,fitsName,DHS_FITS_NAMESIZE);   	    (void) memmove((void *)fp,fitsName,DHS_FITS_NAMESIZE);   
+    (void) sprintf((char *)fitsValue,"%20s",lsArgvD[ik+1]);	    (void) sprintf((char *)fitsValue,"%20s",lsArgvD[ik+1]);
+    (void) memmove((void *)fp,fitsValue,DHS_FITS_VALSIZE);   	    (void) memmove((void *)fp,fitsValue,DHS_FITS_VALSIZE);   
+    (void) sprintf((char *)fitsComment,"%46s",lsArgvD[ik+2]);	    (void) sprintf((char *)fitsComment,"%46s",lsArgvD[ik+2]);
+    (void) memmove((void *)fp,fitsComment,DHS_FITS_COMMENT); 	    (void) memmove((void *)fp,fitsComment,DHS_FITS_COMMENT); 
+   }								   }
+   break;							   break;
+  case DHS_MDTYPE_AVPAIR:					  case DHS_MDTYPE_AVPAIR:
+   nbytes = nlines*DHS_AVP_RAWLEN;				   nbytes = nlines*DHS_AVP_RAWLEN;
+   if ( (cp=ap=(char *)Tcl_Alloc(nbytes)) == (char *)NULL ) {	   if ( (cp=ap=(char *)Tcl_Alloc(nbytes)) == (char *)NULL ) {
+    (void) sprintf(result,"%s","dhsMetaDataTcl-E-bad alloc\n"	    (void) sprintf(result,"%s","dhsMetaDataTcl-E-bad alloc\n"
+    (void) Tcl_SetResult(interp,result,TCL_STATIC);		    (void) Tcl_SetResult(interp,result,TCL_STATIC);
+    return TCL_ERROR;						    return TCL_ERROR;
+   }								   }
+   (void) memset((void *)ap,' ',nbytes);			   (void) memset((void *)ap,' ',nbytes);
+   for ( ic=0, ik=0; ik<nlines*3; ik+=3 ) {			   for ( ic=0, ik=0; ik<nlines*3; ik+=3 ) {
+    (void) sprintf((char *)avpName,"%32s",lsArgvD[ik]);		    (void) sprintf((char *)avpName,"%32s",lsArgvD[ik]);
+    (void) memmove((void *)ap,avpName,DHS_AVP_NAMESIZE);   ap	    (void) memmove((void *)ap,avpName,DHS_AVP_NAMESIZE);   ap
+    (void) sprintf((char *)avpValue,"%32s",lsArgvD[ik+1]);	    (void) sprintf((char *)avpValue,"%32s",lsArgvD[ik+1]);
+    (void) memmove((void *)ap,avpValue,DHS_AVP_VALSIZE);   ap	    (void) memmove((void *)ap,avpValue,DHS_AVP_VALSIZE);   ap
+    (void) sprintf((char *)avpComment,"%64s",lsArgvD[ik+2]);	    (void) sprintf((char *)avpComment,"%64s",lsArgvD[ik+2]);
+    (void) memmove((void *)ap,avpComment,DHS_AVP_COMMENT); ap	    (void) memmove((void *)ap,avpComment,DHS_AVP_COMMENT); ap
+   }								   }
+   break;							   break;
+  default:							  default:
+   (void) sprintf(result,"%s","dhsMetaDataTcl-E-bad data type	   (void) sprintf(result,"%s","dhsMetaDataTcl-E-bad data type
+   (void) Tcl_SetResult(interp,result,TCL_STATIC);		   (void) Tcl_SetResult(interp,result,TCL_STATIC);
+   return TCL_ERROR;						   return TCL_ERROR;
+   break;							   break;
+ }								 }
+ /* execute the dhs function */					 /* execute the dhs function */
+ dhsSendMetaData(&lstat,response,eID,(void *)cp,(size_t)nbyte	 dhsSendMetaData(&lstat,response,eID,(void *)cp,(size_t)nbyte
+ if ( STATUS_BAD(lstat) ) {					 if ( STATUS_BAD(lstat) ) {
+  (void) Tcl_SetResult(interp,response,TCL_STATIC);		  (void) Tcl_SetResult(interp,response,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::MetaData: lstat=%ld\n",lstat);  |	  (void) fprintf(stderr,"dhs::MetaData: lstat=%d\n",lstat); (
+ #endif								 #endif
+ /* return result */						 /* return result */
+ (void) sprintf(result,"%ld",lstat);			      |	 (void) sprintf(result,"%d",lstat);
+ (void) Tcl_SetResult(interp,result,TCL_STATIC);		 (void) Tcl_SetResult(interp,result,TCL_STATIC);
+ (void) Tcl_Free((char *)lsArgvC);				 (void) Tcl_Free((char *)lsArgvC);
+ (void) Tcl_Free((char *)lsArgvD);				 (void) Tcl_Free((char *)lsArgvD);
+ (void) Tcl_Free((char *)lsArgvF);				 (void) Tcl_Free((char *)lsArgvF);
+ (void) Tcl_Free((char *)lsArgvS);				 (void) Tcl_Free((char *)lsArgvS);
+ (void) Tcl_Free((char *)cp);					 (void) Tcl_Free((char *)cp);
+ return TCL_OK;							 return TCL_OK;
+}								}
+
+/************************************************************	/************************************************************
+ * dhsPixelDataTcl ( ... )					 * dhsPixelDataTcl ( ... )
+ *  Use: set dhsStat [dhs::PixelData <eID> <{data}> <nelms> <	 *  Use: set dhsStat [dhs::PixelData <eID> <{data}> <nelms> <
+ ************************************************************	 ************************************************************
+static int dhsPixelDataTcl ( ClientData clientData, Tcl_Inter	static int dhsPixelDataTcl ( ClientData clientData, Tcl_Inter
+ /* declare local scope variable and initialize them */		 /* declare local scope variable and initialize them */
+ char **lsArgvC=(char **)NULL, **lsArgvD=(char **)NULL;		 char **lsArgvC=(char **)NULL, **lsArgvD=(char **)NULL;
+ dhsHandle eID=(dhsHandle)0;					 dhsHandle eID=(dhsHandle)0;
+ double expID=(double)0.0;					 double expID=(double)0.0;
+ int ival=0, ik=0, ic=0, ierror=0, nbytes=0, nelms=0, lsArgcC	 int ival=0, ik=0, ic=0, ierror=0, nbytes=0, nelms=0, lsArgcC
+ long lstat=0;						      |	 XLONG lstat=0;
+ XLONG *ip=(XLONG *)NULL, *dp=(XLONG *)NULL;			 XLONG *ip=(XLONG *)NULL, *dp=(XLONG *)NULL;
+ fpConfig_t fpConfigTcl;					 fpConfig_t fpConfigTcl;
+ char obsID[DHS_IMPL_MAXSTR];					 char obsID[DHS_IMPL_MAXSTR];
+ (void) memset((void *)&fpConfigTcl,0,sizeof(fpConfig_t));	 (void) memset((void *)&fpConfigTcl,0,sizeof(fpConfig_t));
+ (void) memset(obsID,'\0',DHS_IMPL_MAXSTR);			 (void) memset(obsID,'\0',DHS_IMPL_MAXSTR);
+ /* initialize static variables */				 /* initialize static variables */
+ (void) memset(response,'\0',MAXMSG);				 (void) memset(response,'\0',MAXMSG);
+ (void) memset(result,'\0',DHS_RESULT_LEN);			 (void) memset(result,'\0',DHS_RESULT_LEN);
+ /* check handle */						 /* check handle */
+ ival = 0;							 ival = 0;
+ if ( Tcl_GetInt(interp,argv[1],&ival) != TCL_OK ) {		 if ( Tcl_GetInt(interp,argv[1],&ival) != TCL_OK ) {
+  (void) sprintf(result,"%s","dhsPixelDataTcl-E-bad handle\n"	  (void) sprintf(result,"%s","dhsPixelDataTcl-E-bad handle\n"
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ eID = (dhsHandle)ival;						 eID = (dhsHandle)ival;
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::PixelData: eID=%d\n",(int)eID);	  (void) fprintf(stderr,"dhs::PixelData: eID=%d\n",(int)eID);
+ #endif								 #endif
+ /* check data list */						 /* check data list */
+ if ( Tcl_SplitList(interp,argv[2],&lsArgcD,(tclListP_t)&lsAr	 if ( Tcl_SplitList(interp,argv[2],&lsArgcD,(tclListP_t)&lsAr
+  (void) sprintf(result,"%s","dhsPixelDataTcl-E-bad data list	  (void) sprintf(result,"%s","dhsPixelDataTcl-E-bad data list
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ /* check nelms */						 /* check nelms */
+ if ( Tcl_GetInt(interp,argv[3],&nelms) != TCL_OK ) {		 if ( Tcl_GetInt(interp,argv[3],&nelms) != TCL_OK ) {
+  (void) sprintf(result,"%s","dhsPixelDataTcl-E-bad nelms\n")	  (void) sprintf(result,"%s","dhsPixelDataTcl-E-bad nelms\n")
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::PixelData: nelms=%d\n",nelms); 	  (void) fprintf(stderr,"dhs::PixelData: nelms=%d\n",nelms); 
+ #endif								 #endif
+ /* check configuration list */					 /* check configuration list */
+ if ( Tcl_SplitList(interp,argv[4],&lsArgcC,(tclListP_t)&lsAr	 if ( Tcl_SplitList(interp,argv[4],&lsArgcC,(tclListP_t)&lsAr
+  (void) sprintf(result,"%s","dhsPixelDataTcl-E-bad configura	  (void) sprintf(result,"%s","dhsPixelDataTcl-E-bad configura
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ /* check expID */						 /* check expID */
+ if ( Tcl_GetDouble(interp,argv[5],&expID) != TCL_OK ) {	 if ( Tcl_GetDouble(interp,argv[5],&expID) != TCL_OK ) {
+  (void) sprintf(result,"%s","dhsPixelDataTcl-E-bad exposure 	  (void) sprintf(result,"%s","dhsPixelDataTcl-E-bad exposure 
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::PixelData: expID=%lf\n",expID);	  (void) fprintf(stderr,"dhs::PixelData: expID=%lf\n",expID);
+ #endif								 #endif
+ /* check obsID */						 /* check obsID */
+ for ( ic=6; ic<argc; ic++ ) { strcat(obsID,argv[ic]); strcat	 for ( ic=6; ic<argc; ic++ ) { strcat(obsID,argv[ic]); strcat
+ obsID[strlen(obsID)-1] = '\0';					 obsID[strlen(obsID)-1] = '\0';
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::PixelData: obsID=%s\n",obsID); 	  (void) fprintf(stderr,"dhs::PixelData: obsID=%s\n",obsID); 
+ #endif								 #endif
+ /* set configuration */					 /* set configuration */
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[0],&ival)  != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[0],&ival)  != TCL_OK 
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[1],&ival)  != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[1],&ival)  != TCL_OK 
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[2],&ival)  != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[2],&ival)  != TCL_OK 
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[3],&ival)  != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[3],&ival)  != TCL_OK 
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[4],&ival)  != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[4],&ival)  != TCL_OK 
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[5],&ival)  != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[5],&ival)  != TCL_OK 
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[6],&ival)  != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[6],&ival)  != TCL_OK 
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[7],&ival)  != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[7],&ival)  != TCL_OK 
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[8],&ival)  != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[8],&ival)  != TCL_OK 
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[9],&ival)  != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[9],&ival)  != TCL_OK 
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[10],&ival) != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[10],&ival) != TCL_OK 
+ if ( ierror ) {						 if ( ierror ) {
+  (void) sprintf(result,"%s","dhsPixelDataTcl-E-bad list elem	  (void) sprintf(result,"%s","dhsPixelDataTcl-E-bad list elem
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::PixelData: fpConfigTcl.xSize   	  (void) fprintf(stderr,"dhs::PixelData: fpConfigTcl.xSize   
+  (void) fprintf(stderr,"dhs::PixelData: fpConfigTcl.ySize   	  (void) fprintf(stderr,"dhs::PixelData: fpConfigTcl.ySize   
+  (void) fprintf(stderr,"dhs::PixelData: fpConfigTcl.xStart  	  (void) fprintf(stderr,"dhs::PixelData: fpConfigTcl.xStart  
+  (void) fprintf(stderr,"dhs::PixelData: fpConfigTcl.yStart  	  (void) fprintf(stderr,"dhs::PixelData: fpConfigTcl.yStart  
+  (void) fprintf(stderr,"dhs::PixelData: fpConfigTcl.dataType	  (void) fprintf(stderr,"dhs::PixelData: fpConfigTcl.dataType
+  (void) fprintf(stderr,"dhs::PixelData: fpConfigTcl.xDir    	  (void) fprintf(stderr,"dhs::PixelData: fpConfigTcl.xDir    
+  (void) fprintf(stderr,"dhs::PixelData: fpConfigTcl.yDir    	  (void) fprintf(stderr,"dhs::PixelData: fpConfigTcl.yDir    
+  (void) fprintf(stderr,"dhs::PixelData: fpConfigTcl.xDetSz  	  (void) fprintf(stderr,"dhs::PixelData: fpConfigTcl.xDetSz  
+  (void) fprintf(stderr,"dhs::PixelData: fpConfigTcl.yDetSz  	  (void) fprintf(stderr,"dhs::PixelData: fpConfigTcl.yDetSz  
+  (void) fprintf(stderr,"dhs::PixelData: fpConfigTcl.xDetCnt 	  (void) fprintf(stderr,"dhs::PixelData: fpConfigTcl.xDetCnt 
+  (void) fprintf(stderr,"dhs::PixelData: fpConfigTcl.yDetCnt 	  (void) fprintf(stderr,"dhs::PixelData: fpConfigTcl.yDetCnt 
+  (void) fflush(stderr);					  (void) fflush(stderr);
+ #endif								 #endif
+ /* get memory */						 /* get memory */
+ nbytes = nelms * sizeof(XLONG);				 nbytes = nelms * sizeof(XLONG);
+ if ( (ip=dp=(XLONG *)Tcl_Alloc(nbytes)) == (XLONG *)NULL ) {	 if ( (ip=dp=(XLONG *)Tcl_Alloc(nbytes)) == (XLONG *)NULL ) {
+  (void) sprintf(result,"%s","dhsPixelDataTcl-E-bad alloc\n")	  (void) sprintf(result,"%s","dhsPixelDataTcl-E-bad alloc\n")
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ /* extract data by re-using lsArgcC/lsArgvC */			 /* extract data by re-using lsArgcC/lsArgvC */
+ (void) memset((void *)dp,0,nbytes);				 (void) memset((void *)dp,0,nbytes);
+ for ( ic=0; ic<lsArgcD; ic++ ) {				 for ( ic=0; ic<lsArgcD; ic++ ) {
+  if ( Tcl_SplitList(interp,lsArgvD[ic],&lsArgcC,(tclListP_t)	  if ( Tcl_SplitList(interp,lsArgvD[ic],&lsArgcC,(tclListP_t)
+   (void) sprintf(result,"%s","dhsPixelDataTcl-E-bad internal	   (void) sprintf(result,"%s","dhsPixelDataTcl-E-bad internal
+   (void) Tcl_SetResult(interp,result,TCL_STATIC);		   (void) Tcl_SetResult(interp,result,TCL_STATIC);
+   return TCL_ERROR;						   return TCL_ERROR;
+  }								  }
+  for ( ik=0; ik<lsArgcC; ik++ ) {				  for ( ik=0; ik<lsArgcC; ik++ ) {
+   ival = 0;							   ival = 0;
+   if ( Tcl_GetInt(interp,lsArgvC[ik],&ival) != TCL_OK ) {	   if ( Tcl_GetInt(interp,lsArgvC[ik],&ival) != TCL_OK ) {
+    (void) sprintf(result,"%s","dhsPixelDataTcl-E-bad array d	    (void) sprintf(result,"%s","dhsPixelDataTcl-E-bad array d
+    (void) Tcl_SetResult(interp,result,TCL_STATIC);		    (void) Tcl_SetResult(interp,result,TCL_STATIC);
+    return TCL_ERROR;						    return TCL_ERROR;
+   }								   }
+   *dp = (XLONG)ival;						   *dp = (XLONG)ival;
+   dp++;							   dp++;
+  }								  }
+ }								 }
+ /* execute the dhs function */					 /* execute the dhs function */
+ dhsSendPixelData(&lstat,response,eID,(void *)ip,(size_t)nbyt	 dhsSendPixelData(&lstat,response,eID,(void *)ip,(size_t)nbyt
+ if ( STATUS_BAD(lstat) ) {					 if ( STATUS_BAD(lstat) ) {
+  (void) Tcl_SetResult(interp,response,TCL_STATIC);		  (void) Tcl_SetResult(interp,response,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::PixelData: lstat=%ld\n",lstat); |	  (void) fprintf(stderr,"dhs::PixelData: lstat=%d\n",lstat); 
+ #endif								 #endif
+ /* return result */						 /* return result */
+ (void) sprintf(result,"%ld",lstat);			      |	 (void) sprintf(result,"%d",lstat);
+ (void) Tcl_SetResult(interp,result,TCL_STATIC);		 (void) Tcl_SetResult(interp,result,TCL_STATIC);
+ (void) Tcl_Free((char *)lsArgvC);				 (void) Tcl_Free((char *)lsArgvC);
+ (void) Tcl_Free((char *)lsArgvD);				 (void) Tcl_Free((char *)lsArgvD);
+ (void) Tcl_Free((char *)ip);					 (void) Tcl_Free((char *)ip);
+ return TCL_OK;							 return TCL_OK;
+}								}
+
+/************************************************************	/************************************************************
+ * dhsOpenExpTcl ( ... )					 * dhsOpenExpTcl ( ... )
+ *  Use: set eID [dhs::OpenExp <cID> <{cfgList}> <expID> <obs	 *  Use: set eID [dhs::OpenExp <cID> <{cfgList}> <expID> <obs
+ ************************************************************	 ************************************************************
+static int dhsOpenExpTcl ( ClientData clientData, Tcl_Interp 	static int dhsOpenExpTcl ( ClientData clientData, Tcl_Interp 
+ /* declare local scope variable and initialize them */		 /* declare local scope variable and initialize them */
+ char **lsArgvC=(char **)NULL;					 char **lsArgvC=(char **)NULL;
+ dhsHandle cID=(dhsHandle)0;					 dhsHandle cID=(dhsHandle)0;
+ double expID=(double)0.0;					 double expID=(double)0.0;
+ int ival=0, ic=0, ierror=0, lsArgC=0;				 int ival=0, ic=0, ierror=0, lsArgC=0;
+ long lstat=0;						      |	 XLONG lstat=0;
+ fpConfig_t fpConfigTcl;					 fpConfig_t fpConfigTcl;
+ char obsID[DHS_IMPL_MAXSTR];					 char obsID[DHS_IMPL_MAXSTR];
+ (void) memset((void *)&fpConfigTcl,0,sizeof(fpConfig_t));	 (void) memset((void *)&fpConfigTcl,0,sizeof(fpConfig_t));
+ (void) memset(obsID,'\0',DHS_IMPL_MAXSTR);			 (void) memset(obsID,'\0',DHS_IMPL_MAXSTR);
+ /* initialize static variables */				 /* initialize static variables */
+ (void) memset(response,'\0',MAXMSG);				 (void) memset(response,'\0',MAXMSG);
+ (void) memset(result,'\0',DHS_RESULT_LEN);			 (void) memset(result,'\0',DHS_RESULT_LEN);
+ /* check handle */						 /* check handle */
+ if ( Tcl_GetInt(interp,argv[1],&ival) != TCL_OK ) {		 if ( Tcl_GetInt(interp,argv[1],&ival) != TCL_OK ) {
+  (void) sprintf(result,"%s","dhsOpenExpTcl-E-bad handle\n");	  (void) sprintf(result,"%s","dhsOpenExpTcl-E-bad handle\n");
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ cID = (dhsHandle)ival;						 cID = (dhsHandle)ival;
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::OpenExp>> cID=%d\n",(int)cID); 	  (void) fprintf(stderr,"dhs::OpenExp>> cID=%d\n",(int)cID); 
+ #endif								 #endif
+ /* check configuration list */					 /* check configuration list */
+ if ( Tcl_SplitList(interp,argv[2],&lsArgC,(tclListP_t)&lsArg	 if ( Tcl_SplitList(interp,argv[2],&lsArgC,(tclListP_t)&lsArg
+  (void) sprintf(result,"%s","dhsOpenExpTcl-E-bad list\n");	  (void) sprintf(result,"%s","dhsOpenExpTcl-E-bad list\n");
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ /* check expID */						 /* check expID */
+ if ( Tcl_GetDouble(interp,argv[3],&expID) != TCL_OK ) {	 if ( Tcl_GetDouble(interp,argv[3],&expID) != TCL_OK ) {
+  (void) sprintf(result,"%s","dhsOpenExpTcl-E-bad exposure id	  (void) sprintf(result,"%s","dhsOpenExpTcl-E-bad exposure id
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::OpenExp>> expID=%lf\n",expID); 	  (void) fprintf(stderr,"dhs::OpenExp>> expID=%lf\n",expID); 
+ #endif								 #endif
+ /* check obsID */						 /* check obsID */
+ for ( ic=4; ic<argc; ic++ ) { strcat(obsID,argv[ic]); strcat	 for ( ic=4; ic<argc; ic++ ) { strcat(obsID,argv[ic]); strcat
+ obsID[strlen(obsID)-1] = '\0';					 obsID[strlen(obsID)-1] = '\0';
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::OpenExp>> obsID=%s\n",obsID); (	  (void) fprintf(stderr,"dhs::OpenExp>> obsID=%s\n",obsID); (
+ #endif								 #endif
+ /* set configuration */					 /* set configuration */
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[0],&ival)  != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[0],&ival)  != TCL_OK 
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[1],&ival)  != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[1],&ival)  != TCL_OK 
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[2],&ival)  != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[2],&ival)  != TCL_OK 
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[3],&ival)  != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[3],&ival)  != TCL_OK 
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[4],&ival)  != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[4],&ival)  != TCL_OK 
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[5],&ival)  != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[5],&ival)  != TCL_OK 
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[6],&ival)  != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[6],&ival)  != TCL_OK 
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[7],&ival)  != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[7],&ival)  != TCL_OK 
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[8],&ival)  != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[8],&ival)  != TCL_OK 
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[9],&ival)  != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[9],&ival)  != TCL_OK 
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[10],&ival) != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[10],&ival) != TCL_OK 
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::OpenExp>> fpConfigTcl.xSize=%d\	  (void) fprintf(stderr,"dhs::OpenExp>> fpConfigTcl.xSize=%d\
+  (void) fprintf(stderr,"dhs::OpenExp>> fpConfigTcl.ySize=%d\	  (void) fprintf(stderr,"dhs::OpenExp>> fpConfigTcl.ySize=%d\
+  (void) fprintf(stderr,"dhs::OpenExp>> fpConfigTcl.xStart=%d	  (void) fprintf(stderr,"dhs::OpenExp>> fpConfigTcl.xStart=%d
+  (void) fprintf(stderr,"dhs::OpenExp>> fpConfigTcl.yStart=%d	  (void) fprintf(stderr,"dhs::OpenExp>> fpConfigTcl.yStart=%d
+  (void) fprintf(stderr,"dhs::OpenExp>> fpConfigTcl.dataType=	  (void) fprintf(stderr,"dhs::OpenExp>> fpConfigTcl.dataType=
+  (void) fprintf(stderr,"dhs::OpenExp>> fpConfigTcl.xDir=%d\n	  (void) fprintf(stderr,"dhs::OpenExp>> fpConfigTcl.xDir=%d\n
+  (void) fprintf(stderr,"dhs::OpenExp>> fpConfigTcl.yDir=%d\n	  (void) fprintf(stderr,"dhs::OpenExp>> fpConfigTcl.yDir=%d\n
+  (void) fprintf(stderr,"dhs::OpenExp>> fpConfigTcl.xDetSz=%d	  (void) fprintf(stderr,"dhs::OpenExp>> fpConfigTcl.xDetSz=%d
+  (void) fprintf(stderr,"dhs::OpenExp>> fpConfigTcl.yDetSz=%d	  (void) fprintf(stderr,"dhs::OpenExp>> fpConfigTcl.yDetSz=%d
+  (void) fprintf(stderr,"dhs::OpenExp>> fpConfigTcl.xDetCnt=%	  (void) fprintf(stderr,"dhs::OpenExp>> fpConfigTcl.xDetCnt=%
+  (void) fprintf(stderr,"dhs::OpenExp>> fpConfigTcl.yDetCnt=%	  (void) fprintf(stderr,"dhs::OpenExp>> fpConfigTcl.yDetCnt=%
+ #endif								 #endif
+ if ( ierror ) {						 if ( ierror ) {
+  (void) sprintf(result,"%s","dhsOpenExpTcl-E-bad list elemen	  (void) sprintf(result,"%s","dhsOpenExpTcl-E-bad list elemen
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ /* execute the dhs function */					 /* execute the dhs function */
+ dhsOpenExp(&lstat,response,cID,&fpConfigTcl,&expID,obsID);	 dhsOpenExp(&lstat,response,cID,&fpConfigTcl,&expID,obsID);
+ if ( STATUS_BAD(lstat) ) {					 if ( STATUS_BAD(lstat) ) {
+  (void) Tcl_SetResult(interp,response,TCL_STATIC);		  (void) Tcl_SetResult(interp,response,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::OpenExp: lstat=%ld\n",lstat); ( |	  (void) fprintf(stderr,"dhs::OpenExp: lstat=%d\n",lstat); (v
+ #endif								 #endif
+ /* return result */						 /* return result */
+ (void) sprintf(result,"%ld",lstat);			      |	 (void) sprintf(result,"%d",lstat);
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::OpenExp>> response=\"%s\"\n",re	  (void) fprintf(stderr,"dhs::OpenExp>> response=\"%s\"\n",re
+  (void) fprintf(stderr,"dhs::OpenExp>> result=\"%s\"\n",resu	  (void) fprintf(stderr,"dhs::OpenExp>> result=\"%s\"\n",resu
+ #endif								 #endif
+ (void) Tcl_SetResult(interp,result,TCL_STATIC);		 (void) Tcl_SetResult(interp,result,TCL_STATIC);
+ (void) Tcl_Free((char *)lsArgvC);				 (void) Tcl_Free((char *)lsArgvC);
+ return TCL_OK;							 return TCL_OK;
+}								}
+
+/************************************************************	/************************************************************
+ * dhsCloseExpTcl ( ... )					 * dhsCloseExpTcl ( ... )
+ *  Use: set dhsStat [dhs::CloseExp <eID> <expID>]		 *  Use: set dhsStat [dhs::CloseExp <eID> <expID>]
+ ************************************************************	 ************************************************************
+static int dhsCloseExpTcl ( ClientData clientData, Tcl_Interp	static int dhsCloseExpTcl ( ClientData clientData, Tcl_Interp
+ /* declare local scope variable and initialize them */		 /* declare local scope variable and initialize them */
+ dhsHandle eID=(dhsHandle)0;					 dhsHandle eID=(dhsHandle)0;
+ double expID=(double)0.0;					 double expID=(double)0.0;
+ int ival=0;							 int ival=0;
+ long lstat=0;						      |	 XLONG lstat=0;
+ char obsID[DHS_IMPL_MAXSTR];					 char obsID[DHS_IMPL_MAXSTR];
+ (void) memset(obsID,'\0',DHS_IMPL_MAXSTR);			 (void) memset(obsID,'\0',DHS_IMPL_MAXSTR);
+ /* initialize static variables */				 /* initialize static variables */
+ (void) memset(response,'\0',MAXMSG);				 (void) memset(response,'\0',MAXMSG);
+ (void) memset(result,'\0',DHS_RESULT_LEN);			 (void) memset(result,'\0',DHS_RESULT_LEN);
+ /* check handle */						 /* check handle */
+ if ( Tcl_GetInt(interp,argv[1],&ival) != TCL_OK ) {		 if ( Tcl_GetInt(interp,argv[1],&ival) != TCL_OK ) {
+  (void) sprintf(result,"%s","dhsCloseExpTcl-E-bad handle\n")	  (void) sprintf(result,"%s","dhsCloseExpTcl-E-bad handle\n")
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ eID = (dhsHandle)ival;						 eID = (dhsHandle)ival;
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::CloseExp>> eID=%d\n",(int)eID);	  (void) fprintf(stderr,"dhs::CloseExp>> eID=%d\n",(int)eID);
+ #endif								 #endif
+ /* check expID */						 /* check expID */
+ if ( Tcl_GetDouble(interp,argv[2],&expID) != TCL_OK ) {	 if ( Tcl_GetDouble(interp,argv[2],&expID) != TCL_OK ) {
+  (void) sprintf(result,"%s","dhsCloseExpTcl-E-bad exposure i	  (void) sprintf(result,"%s","dhsCloseExpTcl-E-bad exposure i
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::CloseExp>> expID=%lf\n",expID);	  (void) fprintf(stderr,"dhs::CloseExp>> expID=%lf\n",expID);
+ #endif								 #endif
+ /* execute the dhs function */					 /* execute the dhs function */
+ dhsCloseExp(&lstat,response,eID,expID);			 dhsCloseExp(&lstat,response,eID,expID);
+ if ( STATUS_BAD(lstat) ) {					 if ( STATUS_BAD(lstat) ) {
+  (void) Tcl_SetResult(interp,response,TCL_STATIC);		  (void) Tcl_SetResult(interp,response,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::CloseExp>> lstat=%ld\n",lstat); |	  (void) fprintf(stderr,"dhs::CloseExp>> lstat=%d\n",lstat); 
+ #endif								 #endif
+ /* return result */  						 /* return result */  
+ (void) sprintf(result,"%ld",lstat);			      |	 (void) sprintf(result,"%d",lstat);
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::CloseExp>> response=\"%s\"\n",r	  (void) fprintf(stderr,"dhs::CloseExp>> response=\"%s\"\n",r
+  (void) fprintf(stderr,"dhs::CloseExp>> result=\"%s\"\n",res	  (void) fprintf(stderr,"dhs::CloseExp>> result=\"%s\"\n",res
+ #endif								 #endif
+ (void) Tcl_SetResult(interp,result,TCL_STATIC);		 (void) Tcl_SetResult(interp,result,TCL_STATIC);
+ return TCL_OK;							 return TCL_OK;
+}								}
+
+/************************************************************	/************************************************************
+ * dhsOpenConnect ( ... )					 * dhsOpenConnect ( ... )
+ *  Use: set cID [dhs::OpenConnect <systemID> <{cfgList}>]	 *  Use: set cID [dhs::OpenConnect <systemID> <{cfgList}>]
+ ************************************************************	 ************************************************************
+static int dhsOpenConnectTcl ( ClientData clientData, Tcl_Int	static int dhsOpenConnectTcl ( ClientData clientData, Tcl_Int
+ /* declare local scope variable and initialize them */		 /* declare local scope variable and initialize them */
+ char **lsArgvC=(char **)NULL;					 char **lsArgvC=(char **)NULL;
+ dhsHandle cID=(dhsHandle)0;					 dhsHandle cID=(dhsHandle)0;
+ int whoami=0, ierror=0, ival=0, lsArgC=0;			 int whoami=0, ierror=0, ival=0, lsArgC=0;
+ long lstat=0;						      |	 XLONG lstat=0;
+ fpConfig_t fpConfigTcl;					 fpConfig_t fpConfigTcl;
+ char obsID[DHS_IMPL_MAXSTR];					 char obsID[DHS_IMPL_MAXSTR];
+ (void) memset((void *)&fpConfigTcl,0,sizeof(fpConfig_t));	 (void) memset((void *)&fpConfigTcl,0,sizeof(fpConfig_t));
+ (void) memset(obsID,'\0',DHS_IMPL_MAXSTR);			 (void) memset(obsID,'\0',DHS_IMPL_MAXSTR);
+ /* initialize static variables */				 /* initialize static variables */
+ (void) memset(response,'\0',MAXMSG);				 (void) memset(response,'\0',MAXMSG);
+ (void) memset(result,'\0',DHS_RESULT_LEN);			 (void) memset(result,'\0',DHS_RESULT_LEN);
+ /* check systemID */						 /* check systemID */
+ if ( Tcl_GetInt(interp,argv[1],&whoami) != TCL_OK ) {		 if ( Tcl_GetInt(interp,argv[1],&whoami) != TCL_OK ) {
+  (void) sprintf(result,"%s","dhsOpenConnectTcl-E-bad system 	  (void) sprintf(result,"%s","dhsOpenConnectTcl-E-bad system 
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::OpenConnect>> whoami=%d (0x%x)\ |	  (void) fprintf(stderr,"dhs::OpenConnect>> whoami=%d (0x%x)\
+ #endif								 #endif
+ /* check configuration list */					 /* check configuration list */
+ if ( Tcl_SplitList(interp,argv[2],&lsArgC,(tclListP_t)&lsArg	 if ( Tcl_SplitList(interp,argv[2],&lsArgC,(tclListP_t)&lsArg
+  (void) sprintf(result,"%s","dhsOpenConnectTcl-E-bad list\n"	  (void) sprintf(result,"%s","dhsOpenConnectTcl-E-bad list\n"
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ /* set configuration */					 /* set configuration */
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[0],&ival) != TCL_OK )	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[0],&ival) != TCL_OK )
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[1],&ival) != TCL_OK )	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[1],&ival) != TCL_OK )
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[2],&ival) != TCL_OK )	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[2],&ival) != TCL_OK )
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[3],&ival) != TCL_OK )	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[3],&ival) != TCL_OK )
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[4],&ival) != TCL_OK )	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[4],&ival) != TCL_OK )
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[5],&ival) != TCL_OK )	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[5],&ival) != TCL_OK )
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[6],&ival) != TCL_OK )	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[6],&ival) != TCL_OK )
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[7],&ival) != TCL_OK )	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[7],&ival) != TCL_OK )
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[8],&ival) != TCL_OK )	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[8],&ival) != TCL_OK )
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[9],&ival) != TCL_OK )	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[9],&ival) != TCL_OK )
+ ival=0; if ( Tcl_GetInt(interp,lsArgvC[10],&ival) != TCL_OK 	 ival=0; if ( Tcl_GetInt(interp,lsArgvC[10],&ival) != TCL_OK 
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::OpenConnect>> fpConfigTcl.xSize	  (void) fprintf(stderr,"dhs::OpenConnect>> fpConfigTcl.xSize
+  (void) fprintf(stderr,"dhs::OpenConnect>> fpConfigTcl.ySize	  (void) fprintf(stderr,"dhs::OpenConnect>> fpConfigTcl.ySize
+  (void) fprintf(stderr,"dhs::OpenConnect>> fpConfigTcl.xStar	  (void) fprintf(stderr,"dhs::OpenConnect>> fpConfigTcl.xStar
+  (void) fprintf(stderr,"dhs::OpenConnect>> fpConfigTcl.yStar	  (void) fprintf(stderr,"dhs::OpenConnect>> fpConfigTcl.yStar
+  (void) fprintf(stderr,"dhs::OpenConnect>> fpConfigTcl.dataT	  (void) fprintf(stderr,"dhs::OpenConnect>> fpConfigTcl.dataT
+  (void) fprintf(stderr,"dhs::OpenConnect>> fpConfigTcl.xDir=	  (void) fprintf(stderr,"dhs::OpenConnect>> fpConfigTcl.xDir=
+  (void) fprintf(stderr,"dhs::OpenConnect>> fpConfigTcl.yDir=	  (void) fprintf(stderr,"dhs::OpenConnect>> fpConfigTcl.yDir=
+  (void) fprintf(stderr,"dhs::OpenConnect>> fpConfigTcl.xDetS	  (void) fprintf(stderr,"dhs::OpenConnect>> fpConfigTcl.xDetS
+  (void) fprintf(stderr,"dhs::OpenConnect>> fpConfigTcl.yDetS	  (void) fprintf(stderr,"dhs::OpenConnect>> fpConfigTcl.yDetS
+  (void) fprintf(stderr,"dhs::OpenConnect>> fpConfigTcl.xDetC	  (void) fprintf(stderr,"dhs::OpenConnect>> fpConfigTcl.xDetC
+  (void) fprintf(stderr,"dhs::OpenConnect>> fpConfigTcl.yDetC	  (void) fprintf(stderr,"dhs::OpenConnect>> fpConfigTcl.yDetC
+ #endif								 #endif
+ if ( ierror ) {						 if ( ierror ) {
+  (void) sprintf(result,"%s","dhsOpenConnectTcl-E-bad list el	  (void) sprintf(result,"%s","dhsOpenConnectTcl-E-bad list el
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ /* execute the dhs function */					 /* execute the dhs function */
+ dhsOpenConnect(&lstat,response,&cID,(long)whoami,&fpConfigTc |	 dhsOpenConnect(&lstat,response,&cID,(XLONG)whoami,&fpConfigT
+ if ( STATUS_BAD(lstat) ) {					 if ( STATUS_BAD(lstat) ) {
+  (void) Tcl_SetResult(interp,response,TCL_STATIC);		  (void) Tcl_SetResult(interp,response,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::OpenConnect>> lstat=%ld\n",lsta |	  (void) fprintf(stderr,"dhs::OpenConnect>> lstat=%d\n",lstat
+ #endif								 #endif
+ /* return result */						 /* return result */
+ (void) sprintf(result,"%d",(int)cID);				 (void) sprintf(result,"%d",(int)cID);
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::OpenConnect>> response=\"%s\"\n	  (void) fprintf(stderr,"dhs::OpenConnect>> response=\"%s\"\n
+  (void) fprintf(stderr,"dhs::OpenConnect>> result=\"%s\"\n",	  (void) fprintf(stderr,"dhs::OpenConnect>> result=\"%s\"\n",
+ #endif								 #endif
+ (void) Tcl_SetResult(interp,result,TCL_STATIC);		 (void) Tcl_SetResult(interp,result,TCL_STATIC);
+ (void) Tcl_Free((char *)lsArgvC);				 (void) Tcl_Free((char *)lsArgvC);
+ return TCL_OK;							 return TCL_OK;
+}								}
+
+/************************************************************	/************************************************************
+ * dhsCloseConnectTcl ( ... )					 * dhsCloseConnectTcl ( ... )
+ *  Use: set dhsStat [dhs::CloseConnect <cID>]			 *  Use: set dhsStat [dhs::CloseConnect <cID>]
+ ************************************************************	 ************************************************************
+static int dhsCloseConnectTcl ( ClientData clientData, Tcl_In	static int dhsCloseConnectTcl ( ClientData clientData, Tcl_In
+ /* declare local scope variable and initialize them */		 /* declare local scope variable and initialize them */
+ dhsHandle cID=(dhsHandle)0;					 dhsHandle cID=(dhsHandle)0;
+ int ival=0;							 int ival=0;
+ long lstat=0;						      |	 XLONG lstat=0;
+ char obsID[DHS_IMPL_MAXSTR];					 char obsID[DHS_IMPL_MAXSTR];
+ (void) memset(obsID,'\0',DHS_IMPL_MAXSTR);			 (void) memset(obsID,'\0',DHS_IMPL_MAXSTR);
+ /* initialize static variables */				 /* initialize static variables */
+ (void) memset(response,'\0',MAXMSG);				 (void) memset(response,'\0',MAXMSG);
+ (void) memset(result,'\0',DHS_RESULT_LEN);			 (void) memset(result,'\0',DHS_RESULT_LEN);
+ /* check handle */						 /* check handle */
+ if ( Tcl_GetInt(interp,argv[1],&ival) != TCL_OK ) {		 if ( Tcl_GetInt(interp,argv[1],&ival) != TCL_OK ) {
+  (void) sprintf(result,"%s","dhsCloseConnectTcl-E-bad handle	  (void) sprintf(result,"%s","dhsCloseConnectTcl-E-bad handle
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ cID = (dhsHandle)ival;						 cID = (dhsHandle)ival;
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::CloseConnect>> cID=%d\n",(int)c	  (void) fprintf(stderr,"dhs::CloseConnect>> cID=%d\n",(int)c
+ #endif								 #endif
+ /* execute the dhs function */					 /* execute the dhs function */
+ dhsCloseConnect(&lstat,response,cID);				 dhsCloseConnect(&lstat,response,cID);
+ if ( STATUS_BAD(lstat) ) {					 if ( STATUS_BAD(lstat) ) {
+  (void) Tcl_SetResult(interp,response,TCL_STATIC);		  (void) Tcl_SetResult(interp,response,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::CloseConnect>> lstat=%ld\n",lst |	  (void) fprintf(stderr,"dhs::CloseConnect>> lstat=%d\n",lsta
+ #endif								 #endif
+ /* return result */  						 /* return result */  
+ (void) sprintf(result,"%ld",lstat);			      |	 (void) sprintf(result,"%d",lstat);
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::CloseConnect>> response=\"%s\"\	  (void) fprintf(stderr,"dhs::CloseConnect>> response=\"%s\"\
+  (void) fprintf(stderr,"dhs::CloseConnect>> result=\"%s\"\n"	  (void) fprintf(stderr,"dhs::CloseConnect>> result=\"%s\"\n"
+ #endif								 #endif
+ (void) Tcl_SetResult(interp,result,TCL_STATIC);		 (void) Tcl_SetResult(interp,result,TCL_STATIC);
+ return TCL_OK;							 return TCL_OK;
+}								}
+
+/************************************************************	/************************************************************
+ * dhsSysOpenTcl ( ... )					 * dhsSysOpenTcl ( ... )
+ *  Use: set sID [dhs::SysOpen <systemID>]			 *  Use: set sID [dhs::SysOpen <systemID>]
+ ************************************************************	 ************************************************************
+static int dhsSysOpenTcl ( ClientData clientData, Tcl_Interp 	static int dhsSysOpenTcl ( ClientData clientData, Tcl_Interp 
+ /* declare local scope variable and initialize them */		 /* declare local scope variable and initialize them */
+ dhsHandle sID=(dhsHandle)0;					 dhsHandle sID=(dhsHandle)0;
+ int whoami=0;							 int whoami=0;
+ long lstat=0;						      |	 XLONG lstat=0;
+ char obsID[DHS_IMPL_MAXSTR];					 char obsID[DHS_IMPL_MAXSTR];
+ (void) memset(obsID,'\0',DHS_IMPL_MAXSTR);			 (void) memset(obsID,'\0',DHS_IMPL_MAXSTR);
+ /* initialize static variables */				 /* initialize static variables */
+ (void) memset(response,'\0',MAXMSG);				 (void) memset(response,'\0',MAXMSG);
+ (void) memset(result,'\0',DHS_RESULT_LEN);			 (void) memset(result,'\0',DHS_RESULT_LEN);
+ /* check systemID */						 /* check systemID */
+ if ( Tcl_GetInt(interp,argv[1],&whoami) != TCL_OK ) {		 if ( Tcl_GetInt(interp,argv[1],&whoami) != TCL_OK ) {
+  (void) sprintf(result,"%s","dhsSysOpenTcl-E-bad system id\n	  (void) sprintf(result,"%s","dhsSysOpenTcl-E-bad system id\n
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::SysOpen>> whoami=%d (0x%x)\n",( |	  (void) fprintf(stderr,"dhs::SysOpen>> whoami=%d (0x%x)\n",(
+ #endif								 #endif
+ /* execute the dhs function */					 /* execute the dhs function */
+ dhsSysOpen(&lstat,response,&sID,(long)whoami);		      |	 dhsSysOpen(&lstat,response,&sID,(XLONG)whoami);
+ if ( STATUS_BAD(lstat) ) {					 if ( STATUS_BAD(lstat) ) {
+  (void) Tcl_SetResult(interp,response,TCL_STATIC);		  (void) Tcl_SetResult(interp,response,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::SysOpen>> lstat=%ld, sID=%d\n", |	  (void) fprintf(stderr,"dhs::SysOpen>> lstat=%d, sID=%d\n",l
+ #endif								 #endif
+ /* return result */  						 /* return result */  
+ (void) sprintf(result,"%d",(int)sID);				 (void) sprintf(result,"%d",(int)sID);
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::SysOpen>> response=\"%s\"\n",re	  (void) fprintf(stderr,"dhs::SysOpen>> response=\"%s\"\n",re
+  (void) fprintf(stderr,"dhs::SysOpen>> result=\"%s\"\n",resu	  (void) fprintf(stderr,"dhs::SysOpen>> result=\"%s\"\n",resu
+ #endif								 #endif
+ (void) Tcl_SetResult(interp,result,TCL_STATIC);		 (void) Tcl_SetResult(interp,result,TCL_STATIC);
+ return TCL_OK;							 return TCL_OK;
+}								}
+
+/************************************************************	/************************************************************
+ * dhsSysCloseTcl ( ... )					 * dhsSysCloseTcl ( ... )
+ *  Use: set dhsStat [dhs::SysClose <sID>]			 *  Use: set dhsStat [dhs::SysClose <sID>]
+ ************************************************************	 ************************************************************
+static int dhsSysCloseTcl ( ClientData clientData, Tcl_Interp	static int dhsSysCloseTcl ( ClientData clientData, Tcl_Interp
+ /* declare local scope variable and initialize them */		 /* declare local scope variable and initialize them */
+ dhsHandle sID=(dhsHandle)0;					 dhsHandle sID=(dhsHandle)0;
+ int ival=0;							 int ival=0;
+ long lstat=0;						      |	 XLONG lstat=0;
+ /* initialize static variables */				 /* initialize static variables */
+ (void) memset(response,'\0',MAXMSG);				 (void) memset(response,'\0',MAXMSG);
+ (void) memset(result,'\0',DHS_RESULT_LEN);			 (void) memset(result,'\0',DHS_RESULT_LEN);
+ /* check handle */						 /* check handle */
+ if ( Tcl_GetInt(interp,argv[1],&ival) != TCL_OK ) {		 if ( Tcl_GetInt(interp,argv[1],&ival) != TCL_OK ) {
+  (void) sprintf(result,"%s","dhsSysCloseTcl-E-bad handle\n")	  (void) sprintf(result,"%s","dhsSysCloseTcl-E-bad handle\n")
+  (void) Tcl_SetResult(interp,result,TCL_STATIC);		  (void) Tcl_SetResult(interp,result,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ sID = (dhsHandle)ival;						 sID = (dhsHandle)ival;
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::SysClose>> sID=%d\n",(int)sID);	  (void) fprintf(stderr,"dhs::SysClose>> sID=%d\n",(int)sID);
+ #endif								 #endif
+ /* execute the dhs function */					 /* execute the dhs function */
+ dhsSysClose(&lstat,response,sID);				 dhsSysClose(&lstat,response,sID);
+ if ( STATUS_BAD(lstat) ) {					 if ( STATUS_BAD(lstat) ) {
+  (void) Tcl_SetResult(interp,response,TCL_STATIC);		  (void) Tcl_SetResult(interp,response,TCL_STATIC);
+  return TCL_ERROR;						  return TCL_ERROR;
+ }								 }
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::SysClose>> lstat=%ld\n",lstat); |	  (void) fprintf(stderr,"dhs::SysClose>> lstat=%d\n",lstat); 
+ #endif								 #endif
+ /* return result */  						 /* return result */  
+ (void) sprintf(result,"%ld",lstat);			      |	 (void) sprintf(result,"%d",lstat);
+ #ifdef DEBUGTCL						 #ifdef DEBUGTCL
+  (void) fprintf(stderr,"dhs::SysClose>> response=\"%s\"\n",r	  (void) fprintf(stderr,"dhs::SysClose>> response=\"%s\"\n",r
+  (void) fprintf(stderr,"dhs::SysClose>> result=\"%s\"\n",res	  (void) fprintf(stderr,"dhs::SysClose>> result=\"%s\"\n",res
+ #endif								 #endif
+ (void) Tcl_SetResult(interp,result,TCL_STATIC);		 (void) Tcl_SetResult(interp,result,TCL_STATIC);
+ return TCL_OK;							 return TCL_OK;
+}								}
+
+/************************************************************	/************************************************************
+ * dhstcl_Init ( ... )						 * dhstcl_Init ( ... )
+ ************************************************************	 ************************************************************
+int Dhstcl_Init ( Tcl_Interp *interp ) {			int Dhstcl_Init ( Tcl_Interp *interp ) {
+ /* declare local scope variable and initialize them */		 /* declare local scope variable and initialize them */
+ int nc=0;							 int nc=0;
+ /* initialize static variables */				 /* initialize static variables */
+ (void) memset(response,'\0',MAXMSG);				 (void) memset(response,'\0',MAXMSG);
+ (void) memset(result,'\0',DHS_RESULT_LEN);			 (void) memset(result,'\0',DHS_RESULT_LEN);
+ /* write banner */						 /* write banner */
+ nc = sprintf(result,"\nDHS Package v%s by %s.\n%s\nThis rele	 nc = sprintf(result,"\nDHS Package v%s by %s.\n%s\nThis rele
+ (void) Tcl_SetResult(interp,result,TCL_STATIC);		 (void) Tcl_SetResult(interp,result,TCL_STATIC);
+ /* make the wrapper(s) available to Tcl/tk */			 /* make the wrapper(s) available to Tcl/tk */
+ if ( Tcl_InitStubs(interp,TCL_STUB_VERSION,0) == (char *)NUL	 if ( Tcl_InitStubs(interp,TCL_STUB_VERSION,0) == (char *)NUL
+ Tcl_CreateCommand(interp,"dhs::help",        (Tcl_CmdProc *)	 Tcl_CreateCommand(interp,"dhs::help",        (Tcl_CmdProc *)
+ Tcl_CreateCommand(interp,"dhs::version",     (Tcl_CmdProc *)	 Tcl_CreateCommand(interp,"dhs::version",     (Tcl_CmdProc *)
+ Tcl_CreateCommand(interp,"dhs::SysOpen",     (Tcl_CmdProc *)	 Tcl_CreateCommand(interp,"dhs::SysOpen",     (Tcl_CmdProc *)
+ Tcl_CreateCommand(interp,"dhs::SysClose",    (Tcl_CmdProc *)	 Tcl_CreateCommand(interp,"dhs::SysClose",    (Tcl_CmdProc *)
+ Tcl_CreateCommand(interp,"dhs::OpenConnect", (Tcl_CmdProc *)	 Tcl_CreateCommand(interp,"dhs::OpenConnect", (Tcl_CmdProc *)
+ Tcl_CreateCommand(interp,"dhs::CloseConnect",(Tcl_CmdProc *)	 Tcl_CreateCommand(interp,"dhs::CloseConnect",(Tcl_CmdProc *)
+ Tcl_CreateCommand(interp,"dhs::OpenExp",     (Tcl_CmdProc *)	 Tcl_CreateCommand(interp,"dhs::OpenExp",     (Tcl_CmdProc *)
+ Tcl_CreateCommand(interp,"dhs::CloseExp",    (Tcl_CmdProc *)	 Tcl_CreateCommand(interp,"dhs::CloseExp",    (Tcl_CmdProc *)
+ Tcl_CreateCommand(interp,"dhs::IOctl",       (Tcl_CmdProc *)	 Tcl_CreateCommand(interp,"dhs::IOctl",       (Tcl_CmdProc *)
+ Tcl_CreateCommand(interp,"dhs::ReadImage",   (Tcl_CmdProc *)	 Tcl_CreateCommand(interp,"dhs::ReadImage",   (Tcl_CmdProc *)
+ Tcl_CreateCommand(interp,"dhs::PixelData",   (Tcl_CmdProc *)	 Tcl_CreateCommand(interp,"dhs::PixelData",   (Tcl_CmdProc *)
+ Tcl_CreateCommand(interp,"dhs::MetaData",    (Tcl_CmdProc *)	 Tcl_CreateCommand(interp,"dhs::MetaData",    (Tcl_CmdProc *)
+ /* provide the package */					 /* provide the package */
+ return Tcl_PkgProvide(interp,"dhs",_dhsTcl_S_);		 return Tcl_PkgProvide(interp,"dhs",_dhsTcl_S_);
+}								}
+#if !defined(_dhsTcl_H_)					#if !defined(_dhsTcl_H_)
+ #define _dhsTcl_H_ 1.1.0					 #define _dhsTcl_H_ 1.1.0
+ #define _dhsTcl_D_ "11 January, 2008."				 #define _dhsTcl_D_ "11 January, 2008."
+ #define _dhsTcl_S_ "1.1.0"					 #define _dhsTcl_S_ "1.1.0"
+ #define _dhsTcl_A_ "P. N. Daly"				 #define _dhsTcl_A_ "P. N. Daly"
+ #define _dhsTcl_C_ "(C) AURA Inc, 2004. All rights reserved.	 #define _dhsTcl_C_ "(C) AURA Inc, 2004. All rights reserved.
+ 								 
+ #if !defined(_dhsUtil_H_)					 #if !defined(_dhsUtil_H_)
+   #include <dhsUtil.h>						   #include <dhsUtil.h>
+ #endif								 #endif
+ 								 
+ #if !defined(_TCL)						 #if !defined(_TCL)
+  #include <tcl.h>						  #include <tcl.h>
+ #endif								 #endif
+
+ #ifdef TCL83							 #ifdef TCL83
+  typedef char ***tclListP_t;					  typedef char ***tclListP_t;
+ #endif								 #endif
+ #ifdef TCL84							 #ifdef TCL84
+  typedef CONST char ***tclListP_t;				  typedef CONST char ***tclListP_t;
+ #endif								 #endif
+
+#endif								#endif
+/************************************************************	/************************************************************
+ * include(s):							 * include(s):
+ ************************************************************	 ************************************************************
+extern int dhsDebug;						extern int dhsDebug;
+#define DHSUTILAUX						#define DHSUTILAUX
+#if !defined(_dhsUtil_H_)					#if !defined(_dhsUtil_H_)
+ #include "dhsUtil.h"						 #include "dhsUtil.h"
+#endif								#endif
+
+#if !defined(_dhsImpl_H_)					#if !defined(_dhsImpl_H_)
+ #include "dhsImplementationSpecifics.h"			 #include "dhsImplementationSpecifics.h"
+#endif 								#endif 
+
+#include "dcaDhs.h"						#include "dcaDhs.h"
+
+/* dhsImpl_t impStruct; */					/* dhsImpl_t impStruct; */
+char dhsUtilDIR[DHS_MAXSTR];					char dhsUtilDIR[DHS_MAXSTR];
+char dhsUtilFILENAME[DHS_MAXSTR];				char dhsUtilFILENAME[DHS_MAXSTR];
+int dhsUtilFLAG = 0;						int dhsUtilFLAG = 0;
+int dhsLabVersion = 1;						int dhsLabVersion = 1;
+int dhsFileCreated = 0;						int dhsFileCreated = 0;
+int dhsExtChar = 'a';						int dhsExtChar = 'a';
+struct dhsMem *dhsMemP;						struct dhsMem *dhsMemP;
+							      >
+dhsNetw dhsNW, *dhsNWP;						dhsNetw dhsNW, *dhsNWP;
+							      >
+dhsData dhs={0,""};						dhsData dhs={0,""};
+							      >
+							      >	int procDebug = 60;
+							      >
+							      >	char __simStr[10]="";
+/************************************************************	/************************************************************
+ * include(s):							 * include(s):
+ ************************************************************	 ************************************************************
+#if !defined(_dhsUtil_H_)					#if !defined(_dhsUtil_H_)
+ #include "dhsUtil.h"						 #include "dhsUtil.h"
+#endif								#endif
+#if !defined(_dhsImpl_H_)					#if !defined(_dhsImpl_H_)
+ #include "dhsImplementationSpecifics.h"			 #include "dhsImplementationSpecifics.h"
+#endif 								#endif 
+							      >
+#include "dcaDhs.h"						#include "dcaDhs.h"
+
+/************************************************************	/************************************************************
+ * dhsUtilCloseConnect ( ... )					 * dhsUtilCloseConnect ( ... )
+ ************************************************************	 ************************************************************
+void dhsUtilCloseConnect (				      |	void dhsUtilCloseConnect ( XLONG *istat,    /* inherited stat
+  long *istat,    /* inherited status                         |				   char *resp,      /* response messa
+  char *resp,      /* response message                        |				   dhsHandle dhsID  /* dhs handle    
+  dhsHandle dhsID  /* dhs handle                              |	    ) 
+) {							      |	{
+							      |	    int stat;
+  /* declare some variables and initialize them */	      |	    int socket;
+  int stat = 0;						      |
+  int socket = 0;					      |	    /* check the inherited status */
+							      |	    if ( STATUS_BAD(*istat) ) return;
+  /* check the inherited status */			      |	    MNSN_CLEAR_STR(resp,'\0');
+  if ( STATUS_BAD(*istat) ) return;			      |	    
+  MNSN_CLEAR_STR(resp,'\0');				      |	    if (dcaSimulator())
+							      |	       return;
+  /* if simulating, return */				      |
+  if ( dcaSimulator() ) return;				      |	    /* check input values */
+							      |	    if ( dhsID < (dhsHandle)0 ) {
+  /* check input parameter(s) */			      |		*istat = DHS_ERROR;
+  if ( dhsID < (dhsHandle)0 ) {				      |		MNSN_RET_FAILURE(resp,"dhsCloseConnect: BadParam: dhs
+   *istat = DHS_ERROR;					      |		return;
+   (void) sprintf(resp,"bad parameter dhsID<0");	      |	    }
+   MNSN_RPT_FAILURE(resp,"dhsUtilCloseConnect: Failed. \\\\") |
+   return;						      |
+  }							      |	    /* Send message to server to close smc SHM */
+							      |	    socket = dhsNW.collector->fd;
+  /* do something for _netw variant */			      |	    stat = dcaSendMsg (socket, dcaFmtMsg (DCA_CLOSE|DCA_CONNE
+  socket = dhsNW.collector->fd;				      |
+  stat = dcaSendMsg(socket,dcaFmtMsg(DCA_CLOSE|DCA_CONNECT,(i |	    socket = dhsNW.super->fd;
+  socket = dhsNW.super->fd;				      |	    stat = dcaSendMsg (socket, dcaFmtMsg (DCA_CLOSE|DCA_CONNE
+  stat = dcaSendMsg (socket,dcaFmtMsg(DCA_CLOSE|DCA_CONNECT,( |
+  close(dhsNW.collector->fd);				      |	    /* Close the File Descriptors. */
+  close(dhsNW.super->fd);				      |	    close (dhsNW.collector->fd);
+							      |	    close (dhsNW.super->fd);
+  /* return */						      |
+  *istat = DHS_OK;					      |	    /* for this library, this is a no-op */
+  MNSN_RET_SUCCESS(resp,"dhsUtilCloseConnect: Success.");     |	    *istat = DHS_OK;
+  return;						      |	    MNSN_RET_SUCCESS(resp,"dhsCloseConnect:  Success.");
+							      >
+							      >	    /* return */
+							      >	    return;
+}								}
+/************************************************************	/************************************************************
+ * include(s):							 * include(s):
+ ************************************************************	 ************************************************************
+#if !defined(_dhsUtil_H_)					#if !defined(_dhsUtil_H_)
+ #include "dhsUtil.h"						 #include "dhsUtil.h"
+#endif								#endif
+#if !defined(_dhsImpl_H_)					#if !defined(_dhsImpl_H_)
+ #include "dhsImplementationSpecifics.h"			 #include "dhsImplementationSpecifics.h"
+#endif 								#endif 
+							      >
+#include "dcaDhs.h"						#include "dcaDhs.h"
+
+							      >
+/************************************************************	/************************************************************
+ * dhsUtilCloseExp ( ... )					 * dhsUtilCloseExp ( ... )
+ ************************************************************	 ************************************************************
+void dhsUtilCloseExp (					      |	void dhsUtilCloseExp ( XLONG *istat,    /* inherited status  
+  long *istat,    /* inherited status                         |			       char *resp,      /* response message  
+  char *resp,      /* response message                        |			       dhsHandle dhsID, /* dhs handle        
+  dhsHandle dhsID, /* dhs handle                              |			       double expID     /* exposure identifie
+  double expID     /* exposure identifier                     |	    ) 
+) {							      |	{
+							      |	    /* check the inherited status */
+  /* check the inherited status */			      |	    if ( STATUS_BAD(*istat) ) return;
+  if ( STATUS_BAD(*istat) ) return;			      |	    MNSN_CLEAR_STR(resp,'\0');
+  MNSN_CLEAR_STR(resp,'\0');				      |	    
+							      |
+  /* if simulating, return */				      |	    if (dcaSimulator())
+  if ( dcaSimulator() ) return;				      |	       return;
+							      |
+  /* check input parameter(s) */			      |	    /* check input values  */
+  if ( dhsID < (dhsHandle)0 ) {				      |	    if ( dhsID<(dhsHandle)0 || expID<=(double)0.0 ) 
+   *istat = DHS_ERROR;					      |	    {
+   (void) sprintf(resp,"bad parameter dhsID<0");	      |		*istat = DHS_ERROR;
+   MNSN_RPT_FAILURE(resp,"dhsUtilCloseExp: Failed. \\\\");    |		MNSN_RET_FAILURE(resp,"dhsCloseExp:  bad parameter. d
+   return;						      |		return;
+  }							      |	    }
+  if ( expID <= (double)0.0 ) {				      |
+   *istat = DHS_ERROR;					      |	    /* Send the CloseExp message to the Collector and Supervi
+   (void) sprintf(resp,"bad parameter expID<=0.0");	      |	     */
+   MNSN_RPT_FAILURE(resp,"dhsUtilCloseExp: Failed. \\\\");    |	    *istat = dcaSendMsg ( (int )dhsNW.collector->fd,
+   return;						      |		dcaFmtMsg (DCA_CLOSE|DCA_EXP, DHS_IAMPAN) );
+  }							      |	    *istat = dcaSendMsg ( (int )dhsNW.super->fd,
+							      |		dcaFmtMsg (DCA_CLOSE|DCA_EXP, DHS_IAMPAN) );
+  /* do something for _netw variant */			      |
+  *istat = dcaSendMsg((int)dhsNW.collector->fd,dcaFmtMsg(DCA_ |	    /* for this library, this is a no-op */
+  *istat = dcaSendMsg((int)dhsNW.super->fd,dcaFmtMsg(DCA_CLOS |	    *istat = DHS_OK;
+							      |	    MNSN_RET_SUCCESS(resp,"dhsCloseExp:  Success.");
+  /* return */						      |
+  *istat = DHS_OK;					      |	    /* return */
+  MNSN_RET_SUCCESS(resp,"dhsUtilCloseExp: Success.");	      |	    return;
+  return;						      <
+}								}
+/************************************************************	/************************************************************
+ * include(s):							 * include(s):
+ ************************************************************	 ************************************************************
+#if !defined(_dhsUtil_H_)					#if !defined(_dhsUtil_H_)
+ #include "dhsUtil.h"						 #include "dhsUtil.h"
+#endif								#endif
+#if !defined(_dhsImpl_H_)					#if !defined(_dhsImpl_H_)
+ #include "dhsImplementationSpecifics.h"			 #include "dhsImplementationSpecifics.h"
+#endif 								#endif 
+							      >
+/************************************************************	/************************************************************
+ * include(s):							 * include(s):
+ ************************************************************	 ************************************************************
+#if !defined(_dhsUtil_H_)					#if !defined(_dhsUtil_H_)
+ #include "dhsUtil.h"						 #include "dhsUtil.h"
+#endif								#endif
+#if !defined(_dhsImpl_H_)					#if !defined(_dhsImpl_H_)
+ #include "dhsImplementationSpecifics.h"			 #include "dhsImplementationSpecifics.h"
+#endif 								#endif 
+
+/************************************************************	/************************************************************
+ * dhsUtilIOCtl ( ... )						 * dhsUtilIOCtl ( ... )
+ ************************************************************	 ************************************************************
+void dhsUtilIOCtl (					      |	void dhsUtilIOCtl ( XLONG *istat,        /* inherited status 
+  long *istat,        /* inherited status                     |			    char *resp,          /* response message 
+  char *resp,          /* response message                    |			    dhsHandle dhsID,     /* dhs handle       
+  dhsHandle dhsID,     /* dhs handle                          |			    XLONG ioctlFunction, /* ioctl function   
+  long ioctlFunction, /* ioctl function                       |			    double *expID,       /* exposure identifi
+  double *expID,       /* exposure identifier                 |			    char *obsetID,       /* observation set i
+  char *obsetID,       /* observation set identifier          |			    ...                  /* variable argument
+  ...                  /* variable argument list              |	    ) 
+) {							      |	{
+							      |	    va_list args;
+  /* declare soime variables and initialize them */	      |	    char *fname, *dirname;
+  va_list args;						      |	 
+  char *fname = (char *)NULL;				      |	    /* check the inherited status */
+  char *dirname = (char *)NULL;				      |	    if ( STATUS_BAD(*istat) ) return;
+							      |	    MNSN_CLEAR_STR(resp,'\0');
+  /* check the inherited status */			      <
+  if ( STATUS_BAD(*istat) ) return;			      <
+  MNSN_CLEAR_STR(resp,'\0');				      <
+    								    
+  /* check input parameter(s) */			      |	    /* check input values   Cannot check for < 0 since it is 
+  /* COMMENTED OUT BECAUSE WE DON'T NEED THESE CHECKS!	      |	                            See this later
+    if ( expID == (double *)NULL ) {			      |	    if ( dhsID < (dhsHandle)0 ) 
+     *istat = DHS_ERROR;				      |	    {
+     (void) sprintf(resp,"bad parameter expID==NULL");	      |		*istat = DHS_ERROR;
+     MNSN_RPT_FAILURE(resp,"dhsUtilIOCtl: Failed. \\\\");     |		MNSN_RET_FAILURE(resp,"dhsUtilIOCtl:  bad parameter d
+     return;						      |		return;
+    }							      <
+  */							      <
+  /* COMMENTED OUT BECAUSE WE DON'T NEED THESE CHECKS!	      <
+    if ( obsetID == (char *)NULL ) {			      <
+     *istat = DHS_ERROR;				      <
+     (void) sprintf(resp,"bad parameter obsetID==NULL");      <
+     MNSN_RPT_FAILURE(resp,"dhsUtilIOCtl: Failed. \\\\");     <
+     return;						      <
+    }							      <
+  */							      <
+  /* COMMENTED OUT BECAUSE WE DON'T NEED THESE CHECKS!	      <
+    if ( dhsID < (dhsHandle)0 ) {			      <
+     *istat = DHS_ERROR;				      <
+     (void) sprintf(resp,"bad parameter dhsID<0");	      <
+     MNSN_RPT_FAILURE(resp,"dhsUtilIOCtl: Failed. \\\\");     <
+     return;						      <
+    }								    }
+  */							      |	*/
+							      >	    va_start(args,obsetID); 
+
+  /* start va args */					      |	    /* switch on ioctlFunction */
+  va_start(args,obsetID); 				      |	    switch (ioctlFunction) 
+							      |	    {
+  /* switch on ioctlFunction */				      |	      case DHS_IOC_SETFILENAME:			/* set new ba
+  switch (ioctlFunction) {				      |		  fname = va_arg(args,char *);          /* get the ne
+   case DHS_IOC_SETFILENAME:				      |		  strncpy(dhsUtilFILENAME,fname, DHS_MAXSTR);
+    fname = va_arg(args,char *);			      |		  dhsUtilFLAG = (dhsUtilFLAG > 0) ? 3 : 1;
+    (void) strncpy(dhsUtilFILENAME,fname,DHS_MAXSTR);	      |		  sprintf(resp,"dhsUtilIOCtl: Success filename set to
+    dhsUtilFLAG = (dhsUtilFLAG > 0) ? 3 : 1;		      |		  MNSN_RET_SUCCESS(resp, "");
+    *istat = DHS_OK;					      |		  *istat = DHS_OK;
+    (void) sprintf(resp,"filename set to %s",fname);	      |		  break;
+    MNSN_RET_SUCCESS(resp,"dhsUtilIOCtl: Success. \\\\");     |	      case DHS_IOC_SETDIR:			/* set new di
+    break;						      |		  dirname = va_arg(args,char *);
+   case DHS_IOC_SETDIR:					      |		  strncpy(dhsUtilDIR, dirname, DHS_MAXSTR);
+    dirname = va_arg(args,char *);			      |		  dhsUtilFLAG = (dhsUtilFLAG > 0) ? 3 : 2;
+    (void) strncpy(dhsUtilDIR,dirname,DHS_MAXSTR);	      |		  sprintf(resp,"dhsUtilIOCtl: Success directory set t
+    dhsUtilFLAG = (dhsUtilFLAG > 0) ? 3 : 2;		      |		  *istat = DHS_OK;
+    *istat = DHS_OK;					      |		  MNSN_RET_SUCCESS(resp, "");
+    (void) sprintf(resp,"directory set to %s",dirname);	      |		  break;
+    MNSN_RET_SUCCESS(resp,"dhsUtilIOCtl: Success. \\\\");     |	/*       case DHS_LAB_VERSION: */
+    break;						      |	/* 	  dhsLabVersion = va_arg(args,int); */
+   case DHS_IOC_OBSCONFIG:				      |	/* 	  break; */
+   case DHS_IOC_MDCONFIG:				      |	      case DHS_IOC_OBSCONFIG:
+   case DHS_IOC_FPCONFIG:				      |	      case DHS_IOC_MDCONFIG:
+   case DHS_IOC_KEYWORD_TRANS:				      |	      case DHS_IOC_FPCONFIG:
+   case DHS_IOC_DEBUG_LVL:				      |	      case DHS_IOC_KEYWORD_TRANS:
+   case DHS_IOC_SIMULATION:				      |	      case DHS_IOC_DEBUG_LVL:
+    *istat = DHS_OK;					      |	      case DHS_IOC_SIMULATION:
+    (void) sprintf(resp,"ioctlFunction=%ld not implemented",( |		  *istat = DHS_OK;
+    MNSN_RET_SUCCESS(resp,"dhsUtilIOCtl: Success. \\\\");     |		   MNSN_RET_SUCCESS(resp,"dhsUtilIOCtl: function Not 
+    break;						      |		  break;
+   default:						      |	      default:
+    *istat = DHS_ERROR;					      |		  *istat = DHS_ERROR;
+    (void) sprintf(resp,"unknown ioctlFunction=%ld",(long)ioc |		  sprintf(resp,"dhsUtilIOCtl: Failed, bad ioctl funct
+    MNSN_RPT_FAILURE(resp,"dhsUtilIOCtl: Failed. \\\\");      |		  MNSN_RET_FAILURE(resp,"");
+    break;						      |		  break;
+  }							      |	    }
+							      <
+  /* end va args */					      <
+  va_end(args);						      <
+
+  /* return */						      |	    va_end(args);
+  return;						      |	    /* return */
+							      >	    return;
+}								}
+/************************************************************	/************************************************************
+ * include(s):							 * include(s):
+ ************************************************************	 ************************************************************
+#if !defined(_dhsUtil_H_)					#if !defined(_dhsUtil_H_)
+ #include "dhsUtil.h"					      |	#include "dhsUtil.h"
+#endif								#endif
+#if !defined(_sockUtil_H_)					#if !defined(_sockUtil_H_)
+ #include "sockUtil.h"					      |	#include "sockUtil.h"
+#endif								#endif
+#if !defined(_dhsImpl_H_)					#if !defined(_dhsImpl_H_)
+ #include "dhsImplementationSpecifics.h"		      |	#include "dhsImplementationSpecifics.h"
+#endif 							      |	#endif
+							      >
+#include "dcaDhs.h"						#include "dcaDhs.h"
+#define MAXTRYS 10					      <
+
+/************************************************************ |	#define MAXTRYS  10
+ * dhsConnectCollector ( ... )				      |
+ ************************************************************ <
+int dhsConnectCollector (				      <
+  long *istat, /* inherited status                            <
+  char *resp,  /* response buffer                             <
+  long whoami  /* Identifier                                  <
+) {							      <
+							      <
+  /* declare some variables and initialize them */	      <
+  int ic = 0;						      <
+  int sc = 0;						      <
+  MNSN_CLEAR_STR(resp,'\0');				      <
+							      <
+  /* loop until we get a valid collector connection */	      <
+  for ( ic=0; ic<MAXTRYS; ic++ ) {			      <
+   if ( (sc=dcaInitChannel(&dhsNW,DCA_COLLECTOR)) == DCA_OK ) <
+       (void) dcaSendMsg((int)dhsNW.collector->fd,dcaFmtMsg(D <
+    (void) sprintf(resp,"connected to collector, super->fd=%d <
+    MNSN_RPT_SUCCESS(resp,"dhsConnectCollector: Success. \\\\ <
+    return DHS_OK;					      <
+   }							      <
+  }							      <
+							      <
+  /* can't get a collector connection, notify the super */    <
+  (void) sprintf(resp,"failed to connect to collector, status <
+  MNSN_RPT_FAILURE(resp,"dhsConnectCollector: Failed. \\\\"); <
+  (void) dcaSendMsg((int)dhsNW.super->fd,dcaFmtMsg(DCA_FAIL|D <
+  return DHS_ERROR;					      <
+}							      <
+
+/************************************************************ <
+ * dhsUtilOpenConnect ( ... )				      <
+ ************************************************************ <
+void dhsUtilOpenConnect (					void dhsUtilOpenConnect (
+  long *istat,     /* inherited status                        |	       XLONG *istat,         			/* inherited 
+  char *resp,       /* response message                       |	       char *resp,          			/* response b
+  dhsHandle *dhsID, /* returned handle                        |	       dhsHandle *dhsID,    			/* socket fil
+  long whoami,     /* identifier for mid-level system         |	       XLONG whoAmI,        			/* Identifier
+  fpConfig_t *cfg   /* focal plane configuration              |	       fpConfig_t *pixConfig        		/* fpConfig  
+) {							      |	    )
+							      |	{ 
+  /* declare some variables and initialize them */	      |	     int i, stat, socket_super;
+  int stat = 0;						      |
+  int socket_super = 0;					      |
+  char line[MAXMSG];					      |	     *istat = DHS_OK;		/* initialize status	
+  (void) memset((void *)line,'\0',MAXMSG);		      |	     *dhsID = 0;    		/* Reset for next iteration 
+							      |
+  /* check the inherited status */			      |	     DPRINT(30, procDebug, "**** dhsOpenConnect\n");
+  if ( STATUS_BAD(*istat) ) return;			      |
+  MNSN_CLEAR_STR(resp,'\0');				      |	     if (dcaSimulator())
+							      |		return;
+  /* reset value(s) */					      |
+  *istat = DHS_OK;					      |	     /* Validate the connection to supervisor.
+  *dhsID = 0;						      |	     */
+							      |	     if (dhsNW.super != NULL) {
+  /* if simulating, return */				      |	        DPRINT(30, procDebug, "**** dhsOpenConnect validating
+  if ( dcaSimulator() ) return;				      |	        if (dcaValidateChannel (dhsNW.super) == DCA_ERR) {
+    							      |	            if (dcaInitChannel (&dhsNW, DCA_SUPERVISOR) == DC
+  /* check input parameter(s) */			      |	                MNSN_RET_FAILURE(resp,
+  /* COMMENT OUT AS WE DON'T NEED THESE CHECKS!		      |		          "dhsOpenConnect: Error connecting to Superv
+    if ( dhsID == (dhsHandle *)NULL ) {			      |		        *istat = DHS_ERROR ;
+     *istat = DHS_ERROR;				      |	                return;
+     (void) sprintf(resp,"bad parameter dhsID==NULL");	      |	            }
+     MNSN_RPT_FAILURE(resp,"dhsOpenConnect: Failed. \\\\");   |	        }
+     return;						      |
+    }							      |	     } else if (dcaInitChannel (&dhsNW, DCA_SUPERVISOR) == DC
+  */							      |	        printf("dhsOpenConnect: Error connecting to Superviso
+  /* COMMENT OUT AS WE DON'T NEED THESE CHECKS!		      |		*istat = DHS_ERROR ;
+    if ( whoami==DHS_IAMOCS || whoami==DHS_IAMMSL ) {	      |	        return;
+     *istat = DHS_ERROR;				      |	     }
+     (void) sprintf(resp,"bad parameter whoami=%ld",(long)who |
+     MNSN_RPT_FAILURE(resp,"dhsOpenConnect: Failed. \\\\");   |
+     return;						      |	      DPRINTF(30, procDebug, "**** dhsOpenConnect super:0x%x\
+    }							      |		(int *)dhsNW.super);
+  */							      |	      DPRINTF(30, procDebug, "**** dhsOpenConnect super->fd:%
+							      |		(int)dhsNW.super->fd);
+  /* do something for _netw variant */			      |	      DPRINTF(30, procDebug, "**** dhsOpenConnect fpConfig si
+  (void) sprintf(line,"dhsOpenConnect: validating supervisor  |		(int)sizeof (*pixConfig));
+  MNSN_REPORT_MSG(resp,line);				      |
+  if ( dhsNW.super != NULL ) {				      |	      socket_super = (int )dhsNW.super->fd;
+   if ( (stat=dcaValidateChannel(dhsNW.super)) == DCA_ERR ) { |
+    (void) sprintf(resp,"error validating channel to supervis |	      /* Send a SET_FOCAL_PLANE message to the super.
+    MNSN_RPT_FAILURE(resp,"dhsOpenConnect: Failed. \\\\");    |	      */
+    if ( (stat=dcaInitChannel(&dhsNW, DCA_SUPERVISOR)) == DCA |	      DPRINT(30, procDebug, "**** dhsOpenConnect sending fpCf
+     *istat = DHS_ERROR;				      |	      if (dcaSendfpConfig (socket_super, whoAmI, 
+     (void) sprintf(resp,"error initializing channel to super |	          (char *)pixConfig, sizeof(*pixConfig)) == DCA_ERR) 
+     MNSN_RPT_FAILURE(resp,"dhsOpenConnect: Failed. \\\\");   |	              MNSN_RET_FAILURE(resp, 
+     return;						      |		          "dhsOpenConnect: Cannot send fpConfig to Su
+    }							      |		      *istat = DHS_ERROR ;
+   }							      |		      return;
+  } else if ( (stat=dcaInitChannel(&dhsNW,DCA_SUPERVISOR)) == |	      }
+   *istat = DHS_ERROR;					      |	      DPRINT(30, procDebug, "**** dhsOpenConnect done sending
+   (void) sprintf(resp,"error connecting to supervisor, statu |
+   MNSN_RPT_FAILURE(resp,"dhsOpenConnect: Failed. \\\\");     |
+   return;						      |	      /* Send the openConnect to the Supervisor.
+  }							      |	      */
+  (void) sprintf(line,"dhsOpenConnect: super=%p",(int *)dhsNW |	      stat = dcaSendMsg(socket_super, 
+  MNSN_REPORT_MSG(resp,line);				      |		  dcaFmtMsg(DCA_OPEN|DCA_CONNECT,(int)NULL));
+  (void) sprintf(line,"dhsOpenConnect: super->fd=%d",(int)dhs |
+  MNSN_REPORT_MSG(resp,line);				      |	      /* Get a valid collector connection.
+  (void) sprintf(line,"dhsOpenConnect: fpConfig size=%d",(int |	      */
+  MNSN_REPORT_MSG(resp,line);				      |	      dhsConnectCollector (istat, resp, whoAmI);
+							      |
+  /* send fpConfig to the supervisor */			      |	      /* See if we already have a connection made by dhsOpenS
+  socket_super = (int)dhsNW.super->fd;			      |	      ** via dcaInitChannel.
+  (void) sprintf(line,"dhsOpenConnect: sending fpConfig");    |	      */
+  MNSN_REPORT_MSG(resp,line);				      |	      if (dhsNW.collector != (struct dhsChan *) NULL) {
+  if ( (stat=dcaSendfpConfig(socket_super,whoami,(char *)cfg, |	         return;
+   *istat = DHS_ERROR;					      |	      } else {
+   (void) sprintf(resp,"error sending fpConfig to supervisor, |	         MNSN_RET_FAILURE(resp, "dhsOpenConnect: Cannot conne
+   MNSN_RPT_FAILURE(resp,"dhsOpenConnect: Failed. \\\\");     |	         *istat = DHS_ERROR ;
+   return;						      |		 return;
+  }							      |	      }
+  (void) sprintf(line,"dhsOpenConnect: sent fpConfig");	      |	}
+  MNSN_REPORT_MSG(resp,line);				      <
+							      <
+  /* send the openConnect to the supervisor */		      <
+  stat = dcaSendMsg(socket_super,dcaFmtMsg(DCA_OPEN|DCA_CONNE <
+							      <
+  /* get a valid collector connection */		      <
+  (void) dhsConnectCollector(istat,resp2,whoami);	      <
+  if ( STATUS_BAD(*istat) ) MNSN_RPT_FAILURE(resp2,"dhsOpenCo <
+							      <
+  /* see if we already have a connection made by dhsOpenSys v <
+  if ( dhsNW.collector != (struct dhsChan *)NULL ) {	      <
+   *istat = DHS_OK;					      <
+   MNSN_RET_SUCCESS(resp,"dhsOpenConnect: Success.");	      <
+  } else {						      <
+   *istat = DHS_ERROR;					      <
+   (void) sprintf(resp,"cannot connect to collector");	      <
+   MNSN_RET_FAILURE(resp,"dhsOpenConnect: Failed. \\\\");     <
+  }							      <
+
+  /* return */ 						      |	int 
+  return;						      |	dhsConnectCollector (
+							      >	    XLONG *istat,         			/* inherited 
+							      >	    char *resp,          			/* response b
+							      >	    XLONG whoAmI        			/* Identifier
+							      >	)
+							      >	{
+							      >	     int  i;
+							      >
+							      >
+							      >	      /* Loop MAXTRY times until we get a valid collector con
+							      >	      */
+							      >	      for (i = 0; i < MAXTRYS; i++) {
+							      >	          DPRINT(30, procDebug, 
+							      >	                "**** dhsOpenConnect init new collector chann
+							      >	          if (dcaInitChannel (&dhsNW, DCA_COLLECTOR) == DCA_O
+							      >	              /* Send an INIT to the collector.
+							      >	              DPRINTF(30, procDebug, "**** dhsOpenConnect: co
+							      >	                 dhsNW.collector->node);
+							      >	              DPRINTF(30, procDebug, "**** dhsOpenConnect: co
+							      >	                 dhsNW.collector->port);
+							      >	              */
+							      >	              DPRINT(30, procDebug, "**** dhsOpenConnect send
+							      >	              dcaSendMsg ((int)dhsNW.collector->fd, dcaFmtMsg
+							      >
+							      >	              DPRINTF(30, procDebug, 
+							      >	                  "**** dhsOpenConnect at dcaInit super fd:%d
+							      >	                  (int)dhsNW.super->fd);
+							      >	              DPRINTF(30, procDebug, 
+							      >	                  "**** dhsOpenConnect at dcaInit collector f
+							      >	                  (int)dhsNW.collector->fd);
+							      >
+							      >		      return DHS_OK;
+							      >
+							      >	          } else {
+							      >	              /* Can't get a Collector connection, notify the
+							      >	              */
+							      >	              DPRINT(30, procDebug, "**** dhsOpenConnect getC
+							      >	              dcaSendMsg ((int )dhsNW.super->fd, 
+							      >	                  dcaFmtMsg (DCA_FAIL|DCA_CONNECT, whoAmI));
+							      >
+							      >		      return DHS_ERROR;
+							      >	          }
+							      >	      }
+}								}
+/************************************************************	/************************************************************
+ * include(s):							 * include(s):
+ ************************************************************	 ************************************************************
+#if !defined(_dhsUtil_H_)					#if !defined(_dhsUtil_H_)
+ #include "dhsUtil.h"					      |	#include "dhsUtil.h"
+#endif								#endif
+#if !defined(_sockUtil_H_)					#if !defined(_sockUtil_H_)
+ #include "sockUtil.h"					      |	#include "sockUtil.h"
+#endif								#endif
+#if !defined(_dhsImpl_H_)					#if !defined(_dhsImpl_H_)
+ #include "dhsImplementationSpecifics.h"		      |	#include "dhsImplementationSpecifics.h"
+#endif 							      |	#endif
+#include "dcaDhs.h"					      <
+
+int dhsConnectCollector ( long *istat, char *resp, long whoam |	#include "dcaDhs.h"
+
+/************************************************************ |	void dhsUtilOpenExp ( XLONG *istat,    		/* inherited 
+ * dhsUtilOpenExp ( ... )				      |	                      char *resp,      		/* response m
+ ************************************************************ |	                      dhsHandle dhsID, 		/* dhs handle
+void dhsUtilOpenExp (					      |	                      fpConfig_t *fpCfg, 	/* focal plan
+  long *istat,    /* inherited status                         |	                      double *expID,   		/* exposure i
+  char *resp,      /* response message                        |	                      char *obsetID    		/* observatio
+  dhsHandle dhsID, /* dhs handle                              |	    )
+  fpConfig_t *cfg, /* focal plane configuration               |
+  double *expID,   /* exposure identifier                     |	{
+  char *obsetID    /* observation set identifier              |	        int socket, stat;
+) {							      |		int szt;
+							      |
+  /* declare some variables and initialize them */	      |
+  int socket = 0;					      |		/* check the inherited status */
+  int stat = 0;						      |		if ( STATUS_BAD(*istat) ) return;
+  int szt = 0;						      |		    MNSN_CLEAR_STR(resp,'\0');
+  char line[MAXMSG];					      |
+  (void) memset((void *)line,'\0',MAXMSG);		      |	        if (dcaSimulator())
+							      |	            return;
+  (void) sprintf(line,"dhsOpenExp: ending istat=%ld",*istat); |
+  MNSN_REPORT_MSG(resp,line);				      |		/* check input parameters */
+							      |		if ( fpCfg==(fpConfig_t *)NULL || expID==(double *)NU
+  /* check the inherited status */			      |		     obsetID==(char *)NULL )
+  if ( STATUS_BAD(*istat) ) return;			      |		{
+  MNSN_CLEAR_STR(resp,'\0');				      |		    *istat = DHS_ERROR;
+    							      |		    sprintf(resp,"dhsOpenExp:  bad parameter, %s ",
+  /* if simulating, return */				      |	                    ((fpCfg==(fpConfig_t*)NULL) ? "FP fpCfg p
+  if ( dcaSimulator() ) return;				      |	                    ((expID == (double *)NULL)?"expID==NULL":
+							      |		    MNSN_RET_FAILURE(resp,"");
+  /* check input parameter(s) */			      |		    return;
+  if ( cfg == (fpConfig_t *)NULL ) {			      |		}
+   *istat = DHS_ERROR;					      |
+   (void) sprintf(resp,"bad parameter cfg==NULL");	      |	        /* check input values */
+   MNSN_RPT_FAILURE(resp,"dhsOpenExp: Failed. \\\\");	      |	        if ( dhsID < (dhsHandle )0 )
+   return;						      |	        {
+  }							      |	            *istat = DHS_ERROR;
+  if ( expID == (double *)NULL ) {			      |	            MNSN_RET_FAILURE(resp,
+   *istat = DHS_ERROR;					      |	               "dhsOpenExp: Bad parameter, dhsHandle invalid.
+   (void) sprintf(resp,"bad parameter expID==NULL");	      |	            return;
+   MNSN_RPT_FAILURE(resp,"dhsOpenExp: Failed. \\\\");	      |	        }
+   return;						      |	        /* END CHECKING INPUTS */
+  }							      |
+  if ( obsetID == (char *)NULL ) {			      |	        DPRINTF(30, procDebug,
+   *istat = DHS_ERROR;					      |		    "**** dhsUtilOpenExp: dhsNW.super->fd: %d\n",dhsN
+   (void) sprintf(resp,"bad parameter obsetID==NULL");	      |	        DPRINTF(30, procDebug,
+   MNSN_RPT_FAILURE(resp,"dhsOpenExp: Failed. \\\\");	      |		    "**** dhsUtilOpenExp: dhsNW.collector->fd: %d\n",
+   return;						      |		    dhsNW.collector->fd);
+  }							      |
+  if ( dhsID < (dhsHandle)0 ) {				      |	    	/* Validate the connection to supervisor */
+   *istat = DHS_ERROR;					      |	    	if (dcaValidateChannel (dhsNW.super) == DCA_ERR) {
+   (void) sprintf(resp,"bad parameter dhsID<0");	      |
+   MNSN_RPT_FAILURE(resp,"dhsOpenExp: Failed. \\\\");	      |		    /* Try to reconnect to the supervisor before fail
+   return;						      |		    */
+  }							      |	            if (dcaInitChannel (&dhsNW, DCA_SUPERVISOR) == DC
+							      |	    	        dcaValidateChannel (dhsNW.super) == DCA_ERR) 
+  /* validate the connection to supervisor */		      |
+  (void) sprintf(line,"dhsOpenExp: dhsNW.super->fd=%d",(int)d |	                *istat = DHS_ERROR;
+  MNSN_REPORT_MSG(resp,line);				      |	                MNSN_RET_FAILURE(resp,
+  (void) sprintf(line,"dhsOpenExp: dhsNW.collector->fd=%d",(i |	                    "dhsOpenExp: Cannot validate connection t
+  MNSN_REPORT_MSG(resp,line);				      |		        return;
+  if ( (stat=dcaValidateChannel(dhsNW.super)) == DCA_ERR ) {  |	            }
+   (void) sprintf(resp,"failed to validate channel to supervi |		}
+   MNSN_RPT_FAILURE(resp,"dhsOpenExp: Failed. \\\\");	      |	        DPRINTF(30, procDebug,
+   if ( (stat=dcaInitChannel(&dhsNW,DCA_SUPERVISOR))==DCA_ERR |		     "**** dhsUtilOpenExp: valid connection on %s.\n"
+    *istat = DHS_ERROR;					      |
+    (void) sprintf(resp,"failed to initialize channel to supe |	        dhs.expID = *expID;    	/*dcaFmtMsg will read these 2
+    MNSN_RPT_FAILURE(resp,"dhsOpenExp: Failed. \\\\");	      |		dhs.obsSetID = obsetID;
+    return;						      |	        DPRINT(30, procDebug,
+   }							      |		     "**** dhsUtilOpenExp: validating connection to c
+  }							      <
+  (void) sprintf(line,"dhsOpenExp: valid connection to superv <
+  MNSN_REPORT_MSG(resp,line);				      <
+							      <
+  /* set value(s) */					      <
+  dhs.expID = *expID;					      <
+  dhs.obsSetID = obsetID;				      <
+
+  /* validate channel to collector */			      |	    	if (dcaValidateChannel (dhsNW.collector) != DCA_ERR) 
+  if ( (stat=dcaValidateChannel(dhsNW.collector)) != DCA_ERR  <
+retry:								retry:
+   socket = (int)dhsNW.collector->fd;			      |	    	    socket = (int )dhsNW.collector->fd;
+   (void) sprintf(line,"dhsOpenExp: sending fpConfig to fd=%d |
+   MNSN_REPORT_MSG(resp,line);				      |	            DPRINTF(30, procDebug,
+   /* send an OpenExposure to the collector and supervisor */ |		         "**** dhsUtilOpenExp: sending fpConfig to fd
+   stat = dcaSendMsg(dhsNW.collector->fd,dcaFmtMsg(DCA_OPEN|D |
+   stat = dcaSendMsg(dhsNW.super->fd,dcaFmtMsg(DCA_OPEN|DCA_E |		    /* Send an OpenExposure to the Collector and Supe
+   if ( (stat=dcaSendfpConfig(socket,DHS_IAMPAN,(char *)cfg,s |		     */
+    *istat = DHS_ERROR;					      |		    stat = dcaSendMsg (dhsNW.collector->fd, dcaFmtMsg
+    (void) sprintf(resp,"failed to send fpConfig to collector |			DHS_IAMPAN));
+    MNSN_RPT_FAILURE(resp,"dhsOpenExp: Failed. \\\\");	      |		    stat = dcaSendMsg (dhsNW.super->fd, dcaFmtMsg (DC
+    return;						      |			DHS_IAMPAN));
+   }							      |
+   /* send message to collector with expID and obsSetID */    |	            if (dcaSendfpConfig 
+   stat = dcaSendMsg(socket,dcaFmtMsg(DCA_EXP_OBSID,(int)NULL |	                (socket, DHS_IAMPAN, (char *)fpCfg,sizeof(*fp
+  } else {						      |	                MNSN_RET_FAILURE(resp,
+   if ( (stat=dhsConnectCollector(istat,resp2,DHS_IAMPAN)) == |	                    "dhsOpenExp: Cannot send fpConfig to Coll
+    MNSN_RPT_FAILURE(resp2,"dhsOpenExp: Failed. \\\\");	      |	                *istat = DHS_ERROR ;
+    *istat = DHS_ERROR;					      |	                 return;
+    (void) sprintf(resp,"failed to validate channel to collec |	            }
+    MNSN_RPT_FAILURE(resp,"dhsOpenExp: Failed. \\\\");	      |		    /* Send message to collector with expID and obsSe
+    return;						      |		    stat = dcaSendMsg (socket, dcaFmtMsg (DCA_EXP_OBS
+   } else {						      |
+    goto retry;  /* NASTY!! */				      |	        } else {
+   }							      |		    if (dhsConnectCollector (istat, resp, DHS_IAMPAN)
+  }							      |	                *istat = DHS_ERROR;
+							      |	                MNSN_RET_FAILURE(resp,
+  /* send message to collector with DIR and FILENAME */	      |	                   "dhsOpenExp: Cannot validate connection to
+  szt = 256;						      |	                return;
+  stat = dcaSendMsg(socket,dcaFmtMsg(DCA_DIRECTORY,(int)NULL) |		    } else
+  stat = dcaSend(socket,dhsUtilDIR,szt);		      |			goto retry;
+  szt = 256;						      |	         }
+  stat = dcaSendMsg(socket,dcaFmtMsg(DCA_FNAME,(int)NULL));   |
+  stat = dcaSend(socket,dhsUtilFILENAME,szt);		      |		 /* Send message to collector with DIR and FILENAME *
+  (void) sprintf(line,"dhsOpenExp: ending istat=%ld",*istat); |		 szt = 256;
+  MNSN_REPORT_MSG(resp,line);				      |		 stat = dcaSendMsg (socket, dcaFmtMsg (DCA_DIRECTORY,
+							      |		 stat = dcaSend(socket, dhsUtilDIR, szt);
+  /* return */						      |
+  *istat = DHS_OK;					      |		 szt = 256;
+  MNSN_RET_SUCCESS(resp,"dhsOpenExp: Success.");	      |		 stat = dcaSendMsg (socket, dcaFmtMsg (DCA_FNAME, (in
+  return;						      |		 stat = dcaSend(socket, dhsUtilFILENAME, szt);
+							      >
+							      >	         DPRINTF(30, procDebug, "**** dhsUtilOpenExp: END: is
+							      >	         *istat =  DHS_OK;
+							      >		 return;
+}								}
+/************************************************************	/************************************************************
+ * include(s):							 * include(s):
+ ************************************************************	 ************************************************************
+#if !defined(_dhsUtil_H_)					#if !defined(_dhsUtil_H_)
+ #include "dhsUtil.h"						 #include "dhsUtil.h"
+#endif								#endif
+#if !defined(_dhsImpl_H_)					#if !defined(_dhsImpl_H_)
+ #include "dhsImplementationSpecifics.h"			 #include "dhsImplementationSpecifics.h"
+#endif 								#endif 
+
+/************************************************************	/************************************************************
+ * dhsUtilReadImage ( ... )					 * dhsUtilReadImage ( ... )
+ ************************************************************	 ************************************************************
+void dhsUtilReadImage (					      |	void dhsUtilReadImage ( XLONG *istat,    /* inherited status 
+  long *istat,    /* inherited status                         |				char *resp,      /* response message 
+  char *resp,      /* response message                        |				dhsHandle dhsID  /* dhs handle       
+  dhsHandle dhsID  /* dhs handle                              |	    ) 
+) {							      |	{
+							      |	    /* check the inherited status */
+  /* check the inherited status */			      |	    if ( STATUS_BAD(*istat) ) return;
+  if ( STATUS_BAD(*istat) ) return;			      |	    MNSN_CLEAR_STR(resp,'\0');
+  MNSN_CLEAR_STR(resp,'\0');				      <
+							      <
+  /* if simulating, return */				      <
+  if ( dcaSimulator() ) return;				      <
+    								    
+  /* check input parameter(s) */			      |	    /* check input values */
+  if ( dhsID < (dhsHandle)0 ) {				      |	    if ( dhsID < (dhsHandle)0 ) 
+   *istat = DHS_ERROR;					      |	    {
+   (void) sprintf(resp,"bad parameter dhsID<0");	      |		*istat = DHS_ERROR;
+   MNSN_RPT_FAILURE(resp,"dhsUtilReadImage: Failed. \\\\");   |		MNSN_RET_FAILURE(resp,"dhsReadImage:  bad parameter. 
+   return;						      |		return;
+  }							      |	    }
+
+  /* do something for _netw variant */			      |	    /* for this library, this is a no-op */
+  *istat = DHS_OK;					      |	    *istat = DHS_OK;
+							      >	    MNSN_RET_SUCCESS(resp,"dhsReadImage:  Success.");
+
+  /* return */						      |	    /* return */
+  MNSN_RET_SUCCESS(resp,"dhsUtilReadImage: Success.");	      |	    return;
+  return;						      <
+}								}
+/************************************************************	/************************************************************
+ * include(s):							 * include(s):
+ ************************************************************	 ************************************************************
+#if !defined(_dhsUtil_H_)					#if !defined(_dhsUtil_H_)
+ #include "dhsUtil.h"					      |	#include "dhsUtil.h"
+							      >	#endif
+							      >	#if !defined(_sockUtil_H_)
+							      >	#include "sockUtil.h"
+#endif								#endif
+#if !defined(_dhsImpl_H_)					#if !defined(_dhsImpl_H_)
+ #include "dhsImplementationSpecifics.h"		      |	#include "dhsImplementationSpecifics.h"
+#endif								#endif
+							      >
+#include "dcaDhs.h"						#include "dcaDhs.h"
+
+#define bzero(b,len) ((void)memset((void *)(b),'\0',(len)),(v |	void dhsSendMetaData ( 
+							      >	      XLONG *istat,        /* inherited status 		 */
+							      >	      char *resp,          /* response message           */
+							      >	      dhsHandle dhsID,     /* dhs handle                 */
+							      >	      void *blkAddr,       /* address of data block      */
+							      >	      size_t blkSize,      /* size of data block (bytes) */
+							      >	      mdConfig_t *mdCfg,   /* configuration of meta data */
+							      >	      double *expID,       /* exposure identifier        */
+							      >	      char *obsetID        /* observation set identifier */
+							      >	)
+							      >	{
+							      >		int socket, szt, stat;
+							      >		char buffer[120];
+							      >
+							      >
+							      >	        if (dcaSimulator())
+							      >	            return;
+							      >
+							      >	        *istat = DHS_OK;
+							      >		socket = dhsNW.collector->fd;
+							      >
+							      >
+							      >	        /* Skip if blksize is zero */
+							      >		if (blkSize == 0)
+							      >	            return;
+							      >
+							      >	        DPRINTF(30, procDebug,
+							      >		   "** Starting dhsSendMetaData. obsetID: %s\n",obset
+							      >
+							      >	        dcaSendMsg (socket, dcaFmtMsg (DCA_META, (int )NULL))
+							      >
+							      >		/* Send blkSize 1st*/
+							      >	        szt = sizeof(size_t);
+							      >		szt = 120;
+							      >		bzero (buffer, szt);
+							      >		memmove (buffer, (char *)&blkSize, sizeof(size_t));
+							      >		stat = dcaSend(socket, buffer, szt);
+							      >
+							      >		/* Send data block */
+							      >		stat = dcaSend (socket, (char *)blkAddr, blkSize);
+							      >	        DPRINTF(60, procDebug, "Sent MetaData block: %d bytes
+							      >		if (stat == DCA_ERR)
+							      >		   *istat = DHS_ERROR;
+							      >
+							      >		/* Send md block */
+							      >	        stat =  dcaSend (socket, (char *)mdCfg, sizeof(*mdCfg
+							      >	        DPRINTF(60, procDebug, "Sent mdCfg: %d bytes\n", size
+							      >		if (stat == DCA_ERR)
+							      >		   *istat = DHS_ERROR;
+							      >
+							      >		/* Send md block */
+							      >	        
+							      >	        DPRINTF(30, procDebug,
+							      >		   "** Ending dhsSendMetaData: %s\n",obsetID);       
+
+/************************************************************ |	        return ;
+ * dhsUtilSendMetaData ( ... )				      <
+ ************************************************************ <
+void dhsUtilSendMetaData (				      <
+  long *istat,    /* inherited status                         <
+  char *resp,      /* response message                        <
+  dhsHandle dhsID, /* dhs handle                              <
+  void *blkAddr,   /* address of data block                   <
+  size_t blkSize,  /* size of data block                      <
+  mdConfig_t *cfg, /* configuration of meta data              <
+  double *expID,   /* exposure identifier                     <
+  char *obsetID    /* observation set identifier              <
+) {							      <
+							      <
+  /* declare some variables and initialize them */	      <
+  int socket = DHS_OK;					      <
+  int stat = DHS_OK;					      <
+  int szt = 120;					      <
+  char buffer[szt];					      <
+  char line[MAXMSG];					      <
+  (void) memset((void *)line,'\0',MAXMSG);		      <
+  (void) memset((void *)buffer,'\0',szt);		      <
+  (void) memmove(buffer,(char *)&blkSize,sizeof(size_t));     <
+							      <
+  /* check the inherited status */			      <
+  if ( STATUS_BAD(*istat) ) return;			      <
+  MNSN_CLEAR_STR(resp,'\0');				      <
+    							      <
+  /* if simulating, return */				      <
+  if ( dcaSimulator() ) return;				      <
+							      <
+  /* set value(s) */					      <
+  *istat = DHS_OK;					      <
+  socket = dhsNW.collector->fd;				      <
+							      <
+  /* skip if blksize is zero */				      <
+  if ( blkSize == (size_t)0 ) return;			      <
+							      <
+  /* do something for _netw variant */			      <
+  (void) memset((void *)line,'\0',MAXMSG);		      <
+  (void) sprintf(line,"dhsSendMetaData: starting \"%s\", expI <
+  MNSN_REPORT_MSG(resp,line);				      <
+  (void) dcaSendMsg(socket,dcaFmtMsg(DCA_META,(int)NULL));    <
+							      <
+  /* send blkSize first */				      <
+  (void) memset((void *)line,'\0',MAXMSG);		      <
+  (void) sprintf(line,"dhsSendMetaData: send %p, size=%d, sta <
+  MNSN_REPORT_MSG(resp,line);				      <
+  if ( (stat=dcaSend(socket,buffer,szt)) == DCA_ERR ) *istat  <
+  (void) memset((void *)line,'\0',MAXMSG);		      <
+  (void) sprintf(line,"dhsSendMetaData: sent %p, size=%d, sta <
+  MNSN_REPORT_MSG(resp,line);				      <
+							      <
+  /* send data block */					      <
+  stat = DHS_OK;					      <
+  (void) memset((void *)line,'\0',MAXMSG);		      <
+  (void) sprintf(line,"dhsSendMetaData: send metadata size=%d <
+  MNSN_REPORT_MSG(resp,line);				      <
+  if ( (stat=dcaSend(socket,(char *)blkAddr,blkSize)) == DCA_ <
+  (void) memset((void *)line,'\0',MAXMSG);		      <
+  (void) sprintf(line,"dhsSendMetaData: sent metadata size=%d <
+  MNSN_REPORT_MSG(resp,line);				      <
+							      <
+  /* send md block */					      <
+  stat = DHS_OK;					      <
+  (void) memset((void *)line,'\0',MAXMSG);		      <
+  (void) sprintf(line,"dhsSendMetaData: send mdConfig %p, siz <
+  MNSN_REPORT_MSG(resp,line);				      <
+  if ( (stat=dcaSend(socket,(char *)cfg,sizeof(*cfg))) == DCA <
+  (void) memset((void *)line,'\0',MAXMSG);		      <
+  (void) sprintf(line,"dhsSendMetaData: sent mdConfig %p, siz <
+  MNSN_REPORT_MSG(resp,line);				      <
+							      <
+  /* return */						      <
+  if ( STATUS_BAD(*istat) ) {				      <
+   MNSN_RET_FAILURE(resp,"dhsSendMetaData: Failed. \\\\");    <
+  } else {						      <
+   MNSN_RET_SUCCESS(resp,"dhsSendMetaData: Success.");	      <
+  }							      <
+  return;						      <
+}								}
+/************************************************************	/************************************************************
+ * include(s):							 * include(s):
+ ************************************************************	 ************************************************************
+#if !defined(_dhsUtil_H_)					#if !defined(_dhsUtil_H_)
+ #include "dhsUtil.h"					      |	#include "dhsUtil.h"
+#endif								#endif
+#if !defined(_sockUtil_H_)					#if !defined(_sockUtil_H_)
+ #include "sockUtil.h"					      |	#include "sockUtil.h"
+#endif								#endif
+#if !defined(_dhsImpl_H_)					#if !defined(_dhsImpl_H_)
+ #include "dhsImplementationSpecifics.h"		      |	#include "dhsImplementationSpecifics.h"
+#endif								#endif
+							      >
+#include "dcaDhs.h"						#include "dcaDhs.h"
+
+/************************************************************ |	/************************************************************
+ * dhsUtilSendPixelData ( ... )				      |	/* Send pixel data to the server machine */
+ ************************************************************ <
+void dhsUtilSendPixelData (				      <
+  long *istat,    /* inherited status                         <
+  char *resp,      /* response message                        <
+  dhsHandle dhsID, /* dhs handle                              <
+  void *pxlAddr,   /* address of data block                   <
+  size_t pxlSize,  /* size of data block                      <
+  fpConfig_t *cfg, /* configuration of pixel data             <
+  double *expID,   /* exposure identifier                     <
+  char *obsetID    /* observation set identifier              <
+) {							      <
+							      <
+  /* declare some variables and initialize them */	      <
+  int sizefp = DHS_OK;					      <
+  int socket = DHS_OK;					      <
+  int stat = DHS_OK;					      <
+  char line[MAXMSG];					      <
+							      <
+  /* check the inherited status */			      <
+  if ( STATUS_BAD(*istat) ) return;			      <
+  MNSN_CLEAR_STR(resp,'\0');				      <
+    							      <
+  /* if simulating, return */				      <
+  if ( dcaSimulator() ) return;				      <
+
+  /* skip if size is zero */				      |	void dhsSendPixelData ( 
+  if ( pxlSize == (size_t)0 ) return;			      |	         XLONG *istat,       /* inherited status            *
+							      >	         char *resp,         /* response message            *
+							      >	         dhsHandle dhsID,    /* dhs handle                  *
+							      >	         void *pxlAddr,      /* address of data block       *
+							      >	         size_t frmSize,     /* size of data block          *
+							      >	         fpConfig_t *fpCfg,  /* configuration of pixel data *
+							      >	         double *expID,      /* exposure identifier         *
+							      >	         char *obsetID       /* observation set identifier  *
+							      >	)
+							      >
+							      >	{
+							      >	    int sizefp, socket, stat;
+							      >	    char line[180];
+							      >
+							      >	    DPRINT(30, procDebug, "***STARTING dhsSendPixelData\n");
+							      >
+							      >	    if (dcaSimulator())
+							      >	       return;
+							      >
+							      >
+							      >	    /* Skip if size is zero */
+							      >	    if (frmSize == 0)  {
+							      >	        DPRINT(40, procDebug, "Size is ZERO. DONE with dhsSen
+							      >	        return;
+							      >	    }
+
+  /* do something for _netw variant */			      |	    socket = dhsNW.collector->fd;
+  socket = dhsNW.collector->fd;				      |
+  (void) dcaSendMsg(socket,dcaFmtMsg(DCA_PIXEL,DHS_IAMWHO));  |	    dcaSendMsg (socket, dcaFmtMsg (DCA_PIXEL, DHS_IAMWHO));
+    								    
+  /* send cfg data to the server */			      |	    /* Send fpCfg data to the server */
+  (void) memset((void *)line,'\0',MAXMSG);		      |	    sprintf (line, "xstart: %d, ystart: %d\n", 
+  (void) sprintf(line,"dhsSendPixelData: send xstart=%d, ysta |	        (int )fpCfg->xStart, (int )fpCfg->yStart);
+   (int)cfg->xStart,(int)cfg->yStart,(int)cfg->xSize,(int)cfg |	    DPRINT(30, procDebug, line);
+  MNSN_REPORT_MSG(resp,line);				      |	    sprintf(line, "xsize: %d, ysize: %d\n", 
+  sizefp = (int)sizeof(*cfg);				      |	        (int )fpCfg->xSize, (int )fpCfg->ySize);
+  if ( (stat=dcaSend(socket,(char *)cfg,sizefp)) == DCA_ERR ) |	    DPRINT(30, procDebug, line);
+  (void) memset((void *)line,'\0',MAXMSG);		      |		
+  (void) sprintf(line,"dhsSendPixelData: sent xstart=%d, ysta |	    sizefp= sizeof(*fpCfg);
+   (int)cfg->xStart,(int)cfg->yStart,(int)cfg->xSize,(int)cfg |	    stat = dcaSend (socket, (char *)fpCfg, sizefp);
+  MNSN_REPORT_MSG(resp,line);				      |	    if (stat == DCA_ERR)
+							      |	       *istat = DHS_ERROR;
+  /* send PAN data to the server */			      |
+  stat = DHS_OK;					      |	    /* Send PAN data to the server
+  (void) memset((void *)line,'\0',MAXMSG);		      |	    */
+  (void) sprintf(line,"dhsSendPixelData: send %d bytes, stat= |	    DPRINTF(40, procDebug, "Sending frmSize: %d bytes\n",frmS
+  MNSN_REPORT_MSG(resp,line);				      |	    stat = dcaSend (socket, pxlAddr, frmSize);
+  if ( (stat=dcaSend(socket,pxlAddr,pxlSize)) == DCA_ERR ) *i |	    if (stat == DCA_ERR)
+  (void) memset((void *)line,'\0',MAXMSG);		      |	       *istat = DHS_ERROR;
+  (void) sprintf(line,"dhsSendPixelData: sent %d bytes, stat= |
+  MNSN_REPORT_MSG(resp,line);				      |	    sprintf(line, "Sent: %d bytes, istat=%d \n",(int)frmSize,
+							      |	    DPRINT(40, procDebug, line);
+  /* return */						      |	    DPRINT(40, procDebug, "DONE with dhsSendPixelData\n\n");
+  if ( STATUS_BAD(*istat) ) {				      |
+   MNSN_RET_FAILURE(resp,"dhsSendPixelData: Failed. \\\\");   |	    return;
+  } else {						      <
+   MNSN_RET_SUCCESS(resp,"dhsSendPixelData: Success.");	      <
+  }							      <
+  return;						      <
+}								}
+/************************************************************	/************************************************************
+ * include(s):							 * include(s):
+ ************************************************************	 ************************************************************
+#if !defined(_dhsUtil_H_)					#if !defined(_dhsUtil_H_)
+ #include "dhsUtil.h"						 #include "dhsUtil.h"
+#endif								#endif
+#if !defined(_dhsImpl_H_)					#if !defined(_dhsImpl_H_)
+ #include "dhsImplementationSpecifics.h"			 #include "dhsImplementationSpecifics.h"
+#endif 								#endif 
+
+/************************************************************	/************************************************************
+ * dhsUtilSysClose ( ... )					 * dhsUtilSysClose ( ... )
+ ************************************************************	 ************************************************************
+void dhsUtilSysClose (					      |	void dhsUtilSysClose ( XLONG *istat,    /* inherited status  
+  long *istat,    /* inherited status                         |			       char *resp,      /* response message  
+  char *resp,      /* response message                        |			       dhsHandle dhsID  /* dhs handle        
+  dhsHandle dhsID  /* dhs handle                              |	    ) 
+) {							      |	{
+							      |	    /* check the inherited status */
+  /* check the inherited status */			      |	    if ( STATUS_BAD(*istat) ) return;
+  if ( STATUS_BAD(*istat) ) return;			      |	    MNSN_CLEAR_STR(resp,'\0');
+  MNSN_CLEAR_STR(resp,'\0');				      <
+							      <
+  /* if simulating, return */				      <
+  if ( dcaSimulator() ) return;				      <
+    								    
+  /* check input parameter(s) */			      |	    if (dcaSimulator())
+  if ( dhsID < (dhsHandle)0 ) {				      |	       return;
+   *istat = DHS_ERROR;					      <
+   (void) sprintf(resp,"bad parameter dhsID<0");	      <
+   MNSN_RPT_FAILURE(resp,"dhsUtilSysClose: Failed. \\\\");    <
+   return;						      <
+  }							      <
+
+  /* do something for _netw variant */			      |	    /* check input values */
+  *istat = DHS_OK;					      |	    if ( dhsID < (dhsHandle)0 ) 
+							      >	    {
+							      >		*istat = DHS_ERROR;
+							      >		MNSN_RET_FAILURE(resp,"dhsSysClose:  bad parameter, d
+							      >		return;
+							      >	    }
+
+  /* return */						      |	    /* for this library, this is a no-op */
+  MNSN_RET_SUCCESS(resp,"dhsUtilSysClose: Success.");	      |	    *istat = DHS_OK;
+  return;						      |	    MNSN_RET_SUCCESS(resp,"dhsSysClose:  Success.");
+							      >	    /* return */
+							      >	    return;
+}								}
+/************************************************************	/************************************************************
+ * include(s):							 * include(s):
+ ************************************************************	 ************************************************************
+#if !defined(_dhsUtil_H_)				      <
+ #include "dhsUtil.h"					      <
+#endif							      <
+#if !defined(_sockUtil_H_)					#if !defined(_sockUtil_H_)
+#include "sockUtil.h"						#include "sockUtil.h"
+#endif								#endif
+							      >	#if !defined(_dhsUtil_H_)
+							      >	#include "dhsUtil.h"
+							      >	#endif
+#if !defined(_dhsImpl_H_)					#if !defined(_dhsImpl_H_)
+ #include "dhsImplementationSpecifics.h"		      |	#include "dhsImplementationSpecifics.h"
+#endif 							      |	#endif
+							      >
+#include "dcaDhs.h"						#include "dcaDhs.h"
+
+/************************************************************ |	void dhsUtilSysOpen ( XLONG *istat,     /* inherited status  
+ * dhsUtilSysOpen ( ... )				      |	                      char *resp,       /* response message  
+ ************************************************************ |	                      dhsHandle *dhsID, /* returned handle   
+void dhsUtilSysOpen (					      |	                      XLONG whoami      /* identifier for top
+  long *istat,     /* inherited status                        |	    )
+  char *resp,       /* response message                       |	{
+  dhsHandle *dhsID, /* returned handle                        |
+  long whoami      /* identifier for top-level system         |	    char *p, *pc;
+) {							      |	    int  port;
+							      |
+  /* declare some variables and initialize them */	      |	    *dhsID = 0;
+  char *pc = (char *)NULL;				      |	    /* check the inherited status */
+  char *p  = (char *)NULL;				      |	    if ( STATUS_BAD(*istat) ) return;
+  int port = 0;						      |	        MNSN_CLEAR_STR(resp,'\0');
+  int stat = 0;						      |
+  *dhsID = 0;						      |	    if (dcaSimulator())
+							      |	       return;
+  /* check the inherited status */			      |
+  if ( STATUS_BAD(*istat) ) return;			      |
+  MNSN_CLEAR_STR(resp,'\0');				      |	    /* Read environment variable with DHS Supervisor machine 
+    							      |	     * MONSOON_DHS syntax is "machineName:port".
+  /* if simulating, return */				      |	     */
+  if ( dcaSimulator() ) return;				      |	    p = (char *)getenv ("MONSOON_DHS");
+							      |	    if (p == NULL) {
+  /* do something for _netw variant */			      |	        MNSN_RET_FAILURE(resp,
+  if ( (p=getenv("MONSOON_DHS")) == (char *)NULL ) {	      |		  "dhsSysOpen: 'MONSOON_DHS' environment var not set.
+   *istat = DHS_ERROR;					      |	        *istat = DHS_ERROR ;
+   (void) sprintf(resp,"MONSOON_DHS not set");		      |	        return;
+   MNSN_RPT_FAILURE(resp,"dhsUtilSysOpen: Failed. \\\\");     |	    } 
+   return;						      |
+  } 							      |	    pc=index(p,':');
+  if ( (pc=index(p,':')) == (char *)NULL ) {		      |	    if (pc == NULL) {
+   *istat = DHS_ERROR;					      |	        MNSN_RET_FAILURE(resp,
+   (void) sprintf(resp,"MONSOON_DHS not machine:port");	      |		 "dhsSysOpen: 'MONSOON_DHS' environment var needs to 
+   MNSN_RPT_FAILURE(resp,"dhsUtilSysOpen: Failed. \\\\");     |	        *istat = DHS_ERROR ;
+   return;						      |	        return;
+  } 							      |	    } 
+							      |	   (void) memset(dhs.dhsSuperNode,'\0', SZNODE);
+  /* initialize parameters */				      |	    strncpy(dhs.dhsSuperNode, p, pc-p);
+  (void) memset((void *)dhs.dhsSuperNode,'\0',SZNODE);	      |
+  (void) strncpy(dhs.dhsSuperNode, p, pc-p);		      |	    port = atoi(pc+1);
+  port = atoi(pc+1);					      |	    dhs.dhsSuperPort = port;
+  dhs.dhsSuperPort = port;				      |
+  (void) memset((void *)dhs.dhsName,'\0',SZNODE);	      |	   (void) memset(dhs.dhsName,'\0', SZNODE);
+  (void) sprintf(dhs.dhsName,"PAN");			      |	   sprintf (dhs.dhsName, "PAN");
+  (void) memset((void *)dhs.dhsCollectorNode,'\0',SZNODE);    |
+  dhs.dhsCollectorPort = -1;				      |						/* Initialize the col
+							      |	   (void) memset(dhs.dhsCollectorNode,'\0', SZNODE);
+  /* establish the connection to supervisor */		      |	    dhs.dhsCollectorPort = -1;
+  if (dhsNW.super != NULL) {				      |
+   if ( (stat=dcaValidateChannel(dhsNW.super)) == DCA_ERR ) { |
+    (void) sprintf(resp,"failed to validate channel to superv |	    /* Establish the connection to supervisor.
+    MNSN_RPT_FAILURE(resp,"dhsUtilSysOpen: Failed. \\\\");    |	     */
+    if ( (stat=dcaInitChannel(&dhsNW,DCA_SUPERVISOR)) == DCA_ |	    if (dhsNW.super != NULL) {
+     *istat = DHS_ERROR;				      |	        if (dcaValidateChannel (dhsNW.super) == DCA_ERR) {
+     (void) sprintf(resp,"failed to initialize channel to sup |	            if (dcaInitChannel (&dhsNW, DCA_SUPERVISOR) == DC
+     MNSN_RPT_FAILURE(resp,"dhsUtilSysOpen: Failed. \\\\");   |	                MNSN_RET_FAILURE(resp,
+     return;						      |	                  "dhsOpenConnect: Error connecting to Superv
+							      >	                *istat = DHS_ERROR ;
+							      >	                return;
+							      >	            }
+							      >	        }
+							      >	    } else if (dcaInitChannel (&dhsNW, DCA_SUPERVISOR) == DCA
+							      >	        printf("dhsSysOpen: Error connecting to Supervisor ma
+							      >	        *istat = DHS_ERROR ;
+							      >	        return;
+    }								    }
+   }							      |
+  } else if ( (stat=dcaInitChannel(&dhsNW,DCA_SUPERVISOR)) == |
+   *istat = DHS_ERROR;					      |	    /*
+   (void) sprintf(resp,"failed to connect to supervisor");    |	        ...format a SYS_OPEN message
+   MNSN_RPT_FAILURE(resp,"dhsUtilSysOpen: Failed. \\\\");     |	        ...send it to the supervisor
+   return;						      |	        ...request state parameters from supervisor
+  }							      |	        ...read result and update structure
+							      |	    */
+  /* return */ 						      |
+  *istat = DHS_OK;					      |
+  MNSN_RET_SUCCESS(resp,"dhsUtilSysOpen: Success. \\\\");     |	    /*  Standard return.
+  return;						      |	    */
+							      >	    *istat =  DHS_OK;
+							      >	    return;
+							      >
+							      >
+}								}
+/************************************************************	/************************************************************
+ * include(s):							 * include(s):
+ ************************************************************	 ************************************************************
+#if !defined(_dhsUtil_H_)					#if !defined(_dhsUtil_H_)
+ #include "dhsUtil.h"						 #include "dhsUtil.h"
+#endif								#endif
+							      >
+#if !defined(_dhsImpl_H_)					#if !defined(_dhsImpl_H_)
+ #include "./dhsImplementationSpecifics.h"			 #include "./dhsImplementationSpecifics.h"
+#endif 								#endif 

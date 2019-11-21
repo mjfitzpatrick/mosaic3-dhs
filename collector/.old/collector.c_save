@@ -1,0 +1,90 @@
+#if !defined(_dhsUtil_H_)
+#include "dhsUtil.h"
+#endif
+#if !defined(_dhsImpl_H_)
+#include "dhsImplementationSpecifics.h"
+#endif
+
+#include "dcaDhs.h"
+
+/*****************************
+     SERVER PROGRAM.  Listen for connection from a client (elqui)
+
+*/
+#include <stdio.h>      /* for printf() and fprintf() */
+#include <sys/socket.h> /* for socket(), bind(), and connect() */
+#include <arpa/inet.h>  /* for sockaddr_in and inet_ntoa() */
+#include <stdlib.h>     /* for atoi() and exit() */
+#include <string.h>     /* for memset() */
+#include <unistd.h>     /* for close() */
+
+#define MAXPENDING 5    /* Maximum outstanding connection requests */
+
+void DieWithError (char *errorMessage);  /* Error handling function */
+int CreateTCPServerSocket(unsigned short port);
+/* void HandleClient (int, int *); */
+
+#include "smCache.h"
+
+extern int procDebug;
+
+extern smCache_t *smcOpen();
+extern smcPage_t *smcGetPage();
+
+smCache_t *smc  = (smCache_t *)NULL;
+smcPage_t *page = (smcPage_t *)NULL;
+smcSegment_t *seg = (smcSegment_t *)NULL;
+
+void HandleClient (int, smCache_t *);
+
+int main(int argc, char *argv[])
+{
+    int servSock;                    /* Socket descriptor for server */
+    int clntSock;                    /* Socket descriptor for client */
+    struct sockaddr_in ClntAddr;    /* Client address */
+    int ServPort;
+    unsigned int clntLen;          /* Length of client address data structure */
+    long status=0L;
+    char Msg[80];
+    char *pRet = &Msg[0];
+    char key[20]={"keysm1"};
+    int  create = TRUE;
+    int  *shm;
+    char config[128], fname[64];
+    int   i, j,  debug=0;
+
+    procDebug=0;
+
+    if (argv[1]) 
+       procDebug = atoi(argv[1]);
+/*
+    sprintf (config,"debug=%d,cache_file=%s\0", debug,"/tmp/smc");
+*/
+    sprintf (config,"debug=%d", debug);
+    if ((smc = smcOpen (config)) == (smCache_t *)NULL)
+         fprintf (stderr, "Error opening cache, invalid file?.\n");
+
+    ServPort = (unsigned short)COLL_PORTNUMBER;
+    servSock = CreateTCPServerSocket (ServPort);
+
+    for (;;) /* Run forever */
+    {
+        DPRINTF(40, procDebug, "Ready to connect: Handling client %s\n", 
+            inet_ntoa(ClntAddr.sin_addr));
+        /* Set the size of the in-out parameter */
+        clntLen = sizeof(ClntAddr);
+
+        /* Wait for a client to connect */
+        if ((clntSock = accept(servSock, (struct sockaddr *) &ClntAddr, 
+                               &clntLen)) < 0)
+            DieWithError("accept() failed");
+
+        /* clntSock is connected to a client! 
+        */
+        DPRINTF(40, procDebug, "Handling client %s\n", 
+            inet_ntoa(ClntAddr.sin_addr));
+
+	HandleClient (clntSock, smc);
+    }
+    smc=smcClose(smc, FALSE); 
+}

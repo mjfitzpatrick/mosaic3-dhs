@@ -1,0 +1,70 @@
+{ Trace Files in XPVM }
+{ XPVM receives task tracing information, in the form of distinct }
+{ trace events, via the standard PVM message passing mechanism, }
+{ and uses the existing message channels and PVM Daemons to route }
+{ the messages. }
+{}
+{ XPVM can play traces in "real-time", as they are collected, or }
+{ post-mortem by playing back saved trace files.  However, to avoid }
+{ significant intrusion into the execution of the PVM programs it }
+{ monitors, XPVM always saves trace events directly into a trace file }
+{ first (to avoid message queue back-ups) and then reads from the }
+{ trace file to drive its views.  To this end, it is always necessary }
+{ to have a valid, writable trace file to work with, and so XPVM }
+{ assumes a default trace file name: }
+{}
+{ 	/tmp/xpvm.trace.$(USER) }
+{}
+{ On the first execution of XPVM, this trace file will not yet exist, }
+{ and so XPVM will proceed to write traces into this file and read }
+{ them back to play them.  However, after the first spawn, this file }
+{ will exist and contain trace event records, so the user will be }
+{ prompted each time before it is overwritten. }
+{}
+{ The user may change the name of the trace file by editing the "Trace }
+{ File" entry in the trace control panel of the main window (located }
+{ between the Network and Space-Time views, if both are present. }
+{ Note that the real estate in the main window can be appropriately }
+{ allocated between those two views by grabbing on the up-n-down }
+{ arrow button at the left of the trace control panel.) }
+{}
+{ The trace files for XPVM are generated in SDDF, as specified by }
+{ Reed et al, at the University of Illinois (contact reed@cs.uiuc.edu). }
+{ SDDF is a "self-defining data format", such that the trace file }
+{ includes descriptor information for each event type, allowing }
+{ a variety of other analysis tools to interpret and use the }
+{ trace event data.  A list of the trace event descriptors for }
+{ XPVM trace events is provided via the "-S" option, }
+{ e.g. "xpvm -S". }
+{}
+{ There are two trace playing modes in XPVM, Trace OverWrite mode }
+{ and Trace Playback mode.  These are selected between using buttons }
+{ on the right side of the trace control panel.  For XPVM to save }
+{ events from currently executing tasks into a trace file, it must }
+{ be in OverWrite mode, where the trace is played in "real-time". }
+{ Once a trace file has been created, the user can switch to PlayBack }
+{ mode to replay the trace for post-mortem analysis. }
+{}
+{ In addition to the trace play modes, there are also individual }
+{ "Play" (>), "Stop" (#), "Single Step" (|>), and "Rewind" (<<) }
+{ buttons to control the actual trace play. }
+{}
+{ When "Play" is depressed, trace events are read and interpreted }
+{ continuously until all events have been processed.  "Stop" }
+{ temporarily halts the playing of the trace, and waits for input }
+{ from the user before proceeding.  "Single Step" reads the trace }
+{ one event at a time, entering the stopped state after each event. }
+{}
+{ Pressing the "Rewind" button resets XPVM to the beginning of the }
+{ trace file for replay.  If XPVM is in OverWrite mode when Rewind }
+{ is pressed, the trace file will be closed, and none of the pending }
+{ events, if any, will have been saved. }
+{}
+{ The latest time stamp from the trace event sequence is always }
+{ displayed by the "Time" label on the trace control panel.  Because }
+{ events are collected through PVM's message channels from }
+{ independent tasks, they are not necessarily globally ordered }
+{ in time, so some events will appear to occur "back in time". }
+{ Where possible, the views in XPVM compensate for this out-of-time }
+{ ordering. }
+{}

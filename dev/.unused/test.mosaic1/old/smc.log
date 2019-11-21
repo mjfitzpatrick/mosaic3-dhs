@@ -1,0 +1,85 @@
+Attaching to cache at addr=0xb749c000 key=0xc000010 sz=3196060
+smUtilAttach:  id=0x13565962 key=0xc000010 size=3196060
+
+   smCache {			0xb7284000
+            memKey = 0xc000010
+             shmid = 13565962
+        cache_addr = 0xb749c000
+        cache_size = 3196060
+         vm_locked = 0
+             ctime = Mon Mar  2 11:33:54 2015
+               new = 1
+            np_max = 4096
+        np_hiwater = 0
+     mem_allocated = 3196060
+         mem_avail = 689728
+            npages = 0
+               top = 0
+             pdata = 0xb7284494
+            pstate = pid:25385  addr:0xb749c000  Mon Mar  2 11:33:54 2015
+                     pid:25411  addr:0xb7418000  Mon Mar  2 11:33:56 2015
+                     pid:25435  addr:0xb7284000  Mon Mar  2 11:34:00 2015
+             debug = 1
+   }
+
+   sysConfig {			(0xb7284184)
+       cache_path = '/tmp/.smc500'
+           config = 'debug=0'
+       cache_size = 3196060
+     cache_memKey = 0xc000010
+            nsegs = 4096
+     min_seg_size = 4096 (bytes)
+       lock_cache = 3
+        lock_segs = 3
+	   sys_page_size = 4
+	  sys_phys_pages = 230029
+	sys_avphys_pages = 172432
+	       sys_pmask = 3
+   }
+
+Waiting for input....
+BCAST:  from:262146  subj:8 msg='option dirname /home/data
+'
+    SET on SMCMgr: option dirname /home/data
+BCAST:  from:262146  subj:8 msg='option seqno 1'
+    SET on SMCMgr: option seqno 1
+BCAST:  from:262146  subj:4 msg='process 2450000.100000'
+    START on SMCMgr: process 2450000.100000
+Processing ExpID: 2450000.100000
+Warning: cannot find frame buffer configuration table.
+smUtilAttach:  id=0x13598731 key=0xe000076 size=290816
+smUtilAttach:  id=0x13631500 key=0xe000077 size=35229696
+Rectifying data page....Displaying pixels....Warning: cannot find adequate frame buffer, using default.
+Error: attempt to write raster out of bounds.
+done.
+smUtilAttach:  id=0x13664269 key=0xe00007f size=35229696
+Rectifying data page....Displaying pixels....Warning: cannot find adequate frame buffer, using default.
+done.
+smUtilAttach:  id=0x13697038 key=0xe000080 size=35229696
+Rectifying data page....Displaying pixels....Warning: cannot find adequate frame buffer, using default.
+done.
+smUtilAttach:  id=0x13729807 key=0xe000081 size=35229696
+Rectifying data page....Displaying pixels....Warning: cannot find adequate frame buffer, using default.
+Error: attempt to write raster out of bounds.
+done.
+smUtilAttach:  id=0x13762576 key=0xe000082 size=35229696
+Rectifying data page....Displaying pixels....Warning: cannot find adequate frame buffer, using default.
+Error: attempt to write raster out of bounds.
+done.
+smUtilAttach:  id=0x13795345 key=0xe000083 size=35229696
+Rectifying data page....Displaying pixels....Warning: cannot find adequate frame buffer, using default.
+done.
+smUtilAttach:  id=0x13828114 key=0xe000090 size=35229696
+Rectifying data page....Displaying pixels....Warning: cannot find adequate frame buffer, using default.
+done.
+smUtilAttach:  id=0x13860883 key=0xe000091 size=35229696
+Rectifying data page....Displaying pixels....Warning: cannot find adequate frame buffer, using default.
+Error: attempt to write raster out of bounds.
+done.
+smUtilAttach:  id=0x13893652 key=0xe000092 size=290816
+SMC Processing done ExpID: 2450000.100000
+BCAST:  from:262146  subj:32 msg='ExpID 0.000000'
+    FINISH on SMCMgr: ExpID 0.000000
+=========== FINISH EXPID: 0.000000
+=========== Deleting EXPID: 0.000000
+

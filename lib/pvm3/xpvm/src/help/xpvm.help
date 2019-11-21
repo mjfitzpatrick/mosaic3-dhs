@@ -1,0 +1,57 @@
+{ General Help On Using XPVM }
+{}
+{		X	P	V	M }
+{}
+{ XPVM is a graphical console and monitor for PVM.  It provides a }
+{ graphical interface to the PVM console commands and information, }
+{ along with several animated views to monitor the execution of PVM }
+{ programs.  These views provide information about the interactions }
+{ among tasks in a parallel PVM program, to assist in debugging and }
+{ performance tuning. }
+{}
+{ To analyze a program using XPVM, a user need only compile their }
+{ program using the PVM library, version 3.3 or later, which has been }
+{ instrumented to capture tracing information at run-time.  Then, any }
+{ task spawned from XPVM (see help under Tasks/Spawn) will return }
+{ trace event information for analysis in real time, or for }
+{ post-mortem playback from saved trace files. }
+{}
+{ XPVM provides some status information at the top of the main }
+{ window, in the line which shows "Welcome to XPVM" at start-up. }
+{ Often, when XPVM pauses to compute internal view data, a status }
+{ message here will indicate what operation is being performed, }
+{ and when it is done.  Otherwise, each individual view may contain }
+{ its own informational messages.  For specifics on the various }
+{ features of XPVM, and how to operate them, please refer to the }
+{ appropriate on-line pop-up help information: }
+{}
+{	PVM Console Command Help: }
+{	------------------------- }
+{	* File... }
+{		- Quit XPVM }
+{		- Halt PVM }
+{	* Hosts }
+{	* Tasks... }
+{		- Spawn }
+{		- On-The-Fly }
+{		- Kill }
+{		- Signal }
+{		- System Tasks }
+{	* Reset }
+{}
+{	XPVM Views & Trace Controls: }
+{	---------------------------- }
+{	* Views }
+{		- Network }
+{		- Space-Time }
+{		- Utilization }
+{		- Message Queue }
+{		- Call Trace }
+{		- Task Output }
+{		- Event History }
+{	* Traces }
+{}
+{	Questions or Problems: }
+{	---------------------- }
+{	* Author }
+{}

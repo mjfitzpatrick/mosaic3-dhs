@@ -1,0 +1,82 @@
+# Imakefile for the DHS Supervisor.
+
+X11IRAFDIR = ../x11iraf/
+#include "../x11iraf/X11IRAF.tmpl"
+
+    CDEBUGFLAGS = -g
+
+/* Hack to build on NOAO HP systems where the Xmu and Xaw libs had to be added
+ * specially to the system they don't come with the default X11 development
+ * system.  This also avoids the binary requiring the shared lib version on
+ * systems which may not have it.
+ */
+
+        LIBDIRS = 
+        SUBDIRS = $(LIBDIRS)
+
+      /*
+      PLATFORM  = MACOSX
+      PVM_ROOT  = /usr/share/pvm3/
+      PVM_ARCH  = DARWIN
+      P_CFLAGS  = -D$(PLATFORM) -D__USE_MISC
+    CDEBUGFLAGS = -g $(P_CFLAGS) -Wall
+      */
+
+      PLATFORM  = LINUX
+      PVM_ROOT  = ../lib/pvm3/
+      #PVM_ARCH  = LINUXX86_64
+      PVM_ARCH  = LINUXI386
+      P_CFLAGS  = -D$(PLATFORM)
+    CDEBUGFLAGS = -g $(P_CFLAGS) -Wall
+
+
+  LOCAL_LDFLAGS = -L../lib  -L../lib32 -L$(PVM_ROOT)/lib/$(PVM_ARCH) $(X11IRAF_LDFLAGS)
+ EXTRA_INCLUDES = -I../include -I$(PVM_ROOT)/include -I/MNSN/soft_dev/inc \
+			-I/home/monsoon/inc $(X11IRAF_INCLUDES)
+        OBMLIBS = LibObm LibXpm
+        MATHLIB = -lm
+         CDLLIB = -lcdl
+         SMCLIB = -lsmCache
+         MSGLIB = -lmbus
+         PVMLIB = -lpvm3
+        GPVMLIB = -lgpvm3
+      DHSCMDLIB = -ldhsCmds
+      EFENCELIB = -lefence
+         DCALIB = -ldcalib
+      DHSCMDLIB = -ldhsCmds
+         DHSLIB = -ldhslib
+         XAWLIB = LibXaw3d
+             CC = /usr/bin/gcc
+
+           HDRS = super.h super.gui.h super.html.h
+           SRCS = super.c supClient.c supConfig.c supIO.c supKeyw.c \
+		  supPanHandler.c supProc.c supQueue.c supSocket.c
+           OBJS = super.o supClient.o supConfig.o supIO.o supKeyw.o \
+		  supPanHandler.o supProc.o supQueue.o supSocket.o
+
+
+AllTarget(super)
+
+NormalProgramTarget(super,$(OBJS),,${CDLLIB} ${SMCLIB} ${MSGLIB} ${PVMLIB} ${GPVMLIB} ${OBMLIBS} ${DHSCMDLIB} ${DHSLIB} ${DCALIB} XawClientLibs,$(MATHLIB))
+
+NormalProgramTarget(zzdebug,zzdebug.o $(P_CFLAGS),,${CDLLIB} ${SMCLIB} ${MSGLIB} ${PVMLIB} ${GPVMLIB} ${OBMLIBS} XawClientLibs,$(MATHLIB))
+
+
+.o:	$(HDRS)
+.c:	$(HDRS)
+
+super.o:	$(HDRS)
+super.c:	$(HDRS)
+
+super.gui.h:	super.gui
+	sed -f gui2c.sed super.gui > super.gui.h
+
+super.html.h: super.html
+	sed -f gui2c.sed super.html > super.html.h
+
+
+install::
+	cp super ../bin
+
+DependTarget()
+

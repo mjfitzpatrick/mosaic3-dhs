@@ -1,0 +1,246 @@
+			    MESSAGE BUS DESIGN NOTES
+			  Sun Feb  9 12:22:15 MST 1997
+
+
+
+Message Bus Requirements
+
+    o	Stand-alone operation.
+
+    o	Multi-process, multi-host, multi-architecture.
+
+    o	API separate from message transport layer (PVM, CORBA etc.), to
+	isolate applications from message bus implementation and evolution.
+
+    o	Flexible message generation.  Facilities for encoding messages
+	in machine independent format.  Direct access to message buffer.
+	Access to data via pointers.
+
+    o	Direct point-to-point message or request transmission as well as
+	general message broadcasting.
+
+
+Message Bus Functions
+
+    o	Connect/Disconnect to message bus.
+
+    o	Service locater, service autostart.  Requires table which maps
+	protocols (service message classes) to processes.  Object invocation
+	may be shared (multiple objects per process) or nonshared.
+
+    o	Producer/consumer event (notice) support.  Event broadcasting.
+	Subscription to events by class and other attributes.
+
+    o	Server request support.  Synchronous (RPC) and asynchronous requests.
+
+    o	Query functions.  Hosts, clients, services.
+
+    o	Objects should support queries to identify (i.e. document) object,
+	list methods supported by object.
+
+    o	Persistent object support (object can save/restore state via distributed
+	persistent storage handled by the message bus).
+
+
+Subtleties
+
+    o   Distinguish between object method invocation and RPC.  An RPC invokes
+	a function in a remote server or peer.  A method invokes a function
+	associated with a data object.  Classes or subclasses of objects may
+	share the same methods even though the objects are quite different.
+
+    o	Remote Procedure Calls (Method Invocations)
+
+	o   A simple RPC call is a command in ascii format, i.e. a command
+	    name followed by zero or more arguments.  This is very flexible
+	    but can be inefficient.  Well suited to interpreted language
+	    bindings.  Not very good for applications such as passing large
+	    data arrays.
+
+	o   A fast RPC call in a compiled language is a function stub with
+	    binary arguments.  These need to be marshalled into a binary byte
+	    stream and unmarshalled in the remote server to implement the
+	    RPC.  Efficient, but complex.
+
+	o   A possible way to have both of the above is to provide a simple
+	    ascii command interface but parse this internally into a binary
+	    format.  RPC calls implemented with function stubs in compiled
+	    languages could use the binary directly to avoid parsing the ascii
+	    representation or assembling ascii messages.
+
+Applications Programming Interface
+
+Core Messaging System
+
+	   mb = mb_Open (bus)
+         mb = mb_OpenIO (bus, addInput, addInputData, rmInput, rmInputData)
+	 mb_HandleInput (mb, fds)
+	    mb_MainLoop (mb)
+	       mb_Close (mb)
+
+	         mb_Set (mb, option, value)
+	  ival = mb_Get (mb, option)
+
+id = mb_RegisterHandler (mb, pattern, hosts, command, flags)
+	 id = mb_Handle (mb, pattern, u_fcn, u_data)
+	    mb_UnHandle (mb, id)
+	id = mb_Observe (mb, pattern, u_fcn, u_data)
+	   mb_UnObserve (mb, id)
+
+       msg = mb_MsgInit (mb, operation, encoding)	# raw, ptr, copy
+     mb_MsgSetOperation (msg, operation)
+	   mb_MsgAddRaw (msg, ptr, nbytes)
+  nbytes = mb_MsgGetRaw (msg, ptr, nbytes)
+  nbytes = mb_MsgRefRaw (msg, &ptr, nbytes)
+  nbytes = mb_MsgLenRaw (msg)
+      ptr = mb_MsgClass (msg)
+  ptr = mb_MsgOperation (msg)
+
+      dest = mb_Resolve (mb, msgclass)
+		mb_Send (mb, dest, msg)
+       msg = mb_Request (mb, dest, msg)
+   id = mb_RequestAsync (mb, dest, msg, u_fcn, u_data)
+
+
+Optional Message Encoding Facility
+
+     mb_MsgAddStringArg (msg, argname, class, string)
+       mb_MsgAddByteArg (msg, argname, class, ptr, nbytes)
+   mb_MsgAddArg[USILRD] (msg, argname, class, ptr, nitems, stride)
+	   mb_MsgPrintf (msg, format, ...)
+
+ nargs = mb_MsgArgCount (msg)
+	  mb_MsgArgType (msg, argno, argname, class, dtype, nitems)
+  ptr = mb_MsgGetArgRef (msg, argno)
+     mb_MsgGetStringArg (msg, argno, ptr)
+       mb_MsgGetByteArg (msg, argno, ptr, start, nbytes)
+   mb_MsgGetArg[USILRD] (msg, ptr, start, nitems, stride)
+   val = MsgGet[USILRD] (msg, argname)
+     nchars = MsgGetStr (msg, argname, string, maxchars)
+
+
+notes
+    message classes can be hierarchical, e.g. class.subclass.
+    the message operation is the method for that class
+    broadcast/multicast and direct routes are handled identically
+    architecture specific encoding is handled internally
+    message tags allow arbitrary message hierarchy
+    tag resolution allows multiple instances of objects (and their handlers)
+    any data after a : in the message class is passed to the object at
+	connect time, e.g.:  ObjectClass:InstanceName,mode=access-mode,...
+	encode data as init msg delivered at startup time?  maybe just string
+
+precompile tags?
+    Maintain cache of subscriptions in each task.  Use to map msgtag to
+    task-id list for broadcasts.  Once a msgtag is "resolved" the resulting
+    task list may be used for any number of sends or requests.  New
+    subscriptions invalidate caches and resolved tags, causing the tag
+    resolution to be automatically repeated in the next send.
+
+distinct or shared (current) message buffers?
+how (when) are old message buffers freed?
+
+directory service
+    msgbus node list
+    msgbus task list
+    string buffer / name resolver (map string to atom)?
+    subscriptions list?
+
+    cache these in task with message updates when things change.
+    can query service to refresh all data
+
+binary message encoding:
+    header:
+	msgtag		class.name.<...>
+	msgtype		event, request-ack, request-noack
+	source-id	task id of source
+	dest-id		task id of destination if request
+	encoding	method used to encode binary data
+	nargs		number of optional data arguments
+	datalen		number of bytes of message data
+	sbufoff		offset to string buffer
+    data:
+	{arglen name class dtype nelem data}
+    sbuf:
+	{string EOS}
+
+    Use global string buffer / name lookup instead?
+
+
+Detector Message Classes
+
+Data Capture Agent
+    The DCA registers with the message bus as a message handler and handles
+    all dca.* messages.
+
+    Handled:
+	dca.start-readout		set up for a new frame readout
+	dca.end-readout			readout has finished
+	dca.abort-readout		abort readout
+	dca.keywords			keyword data block
+	dca.pixels			pixel data block
+
+    Generated:
+	dca.*				how to distinguish from services??
+
+
+Object Orientation
+
+    What about object-oriented handlers.  Instead of having a single handler
+    or service handling a given class of messages (methods) there might be
+    one handler task for each object of the type that it handles.  The
+    requests (methods) would be the same for all instances.  The "msgtag" is
+    kind of like a URL and is mapped to a handler for the named object, which
+    opens the object and receives all requests for the object.
+
+	protocol/class
+	    instance name
+	    methods
+
+    The protocol or class name is used to locate the handler to be used.
+    The message bus controller either reuses an existing connected handler
+    or starts a new one.  A data object is then opened by the handler and
+    the handler ID to be used is returned.  A client sends requests to the
+    handler to perform operations on the data object.
+
+	protocol.method
+
+	dca . open-newimage
+	    image name etc.
+	    response is handler-id to be used
+
+
+Implementation Notes
+
+The message bus requires information over and above what is provided by PVM.
+This information must be maintained somewhere during operation of the bus.
+Some of it can be cached in client task library code, but as a general
+solution a message bus daemon task is required to store this information and
+respond to control requests.  One such daemon is sufficient for the entire
+bus.  Hence, the minimum bus will consist of the master pvmd (PVM daemon)
+and the mbd (message bus daemon).
+
+    console		optional console program
+	pvmd		PVM daemon
+	mbd		MB daemon
+
+When a new task connects or disconnects from the bus it sends a control
+message to the MBD.  Similarly, whenever a task issues a handle, observe,
+unhandle, or unobserve request this results in a control message being sent
+to the MBD, which records all message subscriptions.  When a client task
+resolves a message class into a task list it must synchronize its task
+subscription information with the MBD.
+
+
+
+
+
+
+
+
+
+
+
+
+
+oo

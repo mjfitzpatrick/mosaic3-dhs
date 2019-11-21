@@ -1,0 +1,73 @@
+Mon Mar 2 11:34:00 EST 2015 Starting
+pan : mbusConnect...
+pan : Done mbusConnect...
+ncols: 2148  nrows: 4096  bin:1
+pan : dhsSysOpen
+Opening Supervisor: name='PAN' mach='127.0.0.1' port='4150'
+isdigit(host_str) = '127.0.0.1'
+dcaSupOpenSocket: '127.0.0.1' 4150 -> '127.0.0.1'
+
+
+supOpenConn:  host='nfpan-a'  domain=''
+	use_sim: 1  act='cameradev'  sim='nfpan-a'  dom=''
+
+localhost gethostbyname(host_str) = 'localhost'
+dcaSupOpenSocket: 'cameradev:4154' -1 -> '127.0.0.1'
+pan : Done dhsSysOpen
+pan : dhsOpenConnect
+initChannel:  dev='127.0.0.1:4576'  node='127.0.0.1' port=4576
+pan : Done dhsOpenConnect
+pan : memsett
+pan : done memsett
+pan : setting header
+pan : Done setting header
+pan : mbusRecv wait
+pan : mbusRecv message received 
+pan expID::: 2450000.100000   '2450000.100000'
+pan filling diagonal ramp
+pan: Done  filling diagonal ramp
+pan: MSG subj : 4
+pan: dhsOpenExp
+dhsOpenExp : dcaValidateChannel ok 
+dhsOpenExp : dcaSendMsg to collector
+dhsOpenExp : Done dcaSendMsg to collector
+dhsOpenExp : dcaSendMsg to super
+dhsOpenExp : Done dcaSendMsg to super
+dhsOpenExp : dcaSendfpConfig
+dhsOpenExp : Done dcaSendfpConfig
+dhsOpenExp : dcaSendMsg to collector with expID and obsSetId
+dhsOpenExp : Done dcaSendMsg to collector with expID and obsSetId
+pan: Done dhsOpenExp
+pan: dhsSendMetaData
+pan: Done dhsSendMetaData
+pan: Sending image arrays
+pan : Sending 35192832 bytes,  istat=0
+pan : dhsSendPixelData
+pan : Done dhsSendPixelData
+pan : Sending 35192832 bytes,  istat=0
+pan : dhsSendPixelData
+pan : Done dhsSendPixelData
+pan : Sending 35192832 bytes,  istat=0
+pan : dhsSendPixelData
+pan : Done dhsSendPixelData
+pan : Sending 35192832 bytes,  istat=0
+pan : dhsSendPixelData
+pan : Done dhsSendPixelData
+pan : Sending 35192832 bytes,  istat=0
+pan : dhsSendPixelData
+pan : Done dhsSendPixelData
+pan : Sending 35192832 bytes,  istat=0
+pan : dhsSendPixelData
+pan : Done dhsSendPixelData
+pan : Sending 35192832 bytes,  istat=0
+pan : dhsSendPixelData
+pan : Done dhsSendPixelData
+pan : Sending 35192832 bytes,  istat=0
+pan : dhsSendPixelData
+pan : Done dhsSendPixelData
+pan : dhsSendMetaData 2nd MD Post header
+pan : Done dhsSendMetaData
+NO BUG NOCS DCA_CLOSE...
+pan : dhsSenCloseExa
+pan : Done dhsSenCloseExa
+pan : Waiting for commands

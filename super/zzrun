@@ -1,0 +1,32 @@
+#!/bin/csh -f
+
+set DISPLAY	= denali:0.0
+
+if ($1 == "col-nocs") then
+ssh nfdhs-01-CR /ndhs/bin/collector -console -mbus -port 4575 -debug 60 -id NOCS
+
+else if ($1 == "col-a") then
+ssh nfdhs-01-CR /ndhs/bin/collector -console -mbus -port 4576 -debug 60 -id PanA
+
+else if ($1 == "smc-a") then
+ssh nfdhs-01-CR /ndhs/bin/smcmgr -console -mbus -dev $RTD1 -debug 60
+
+else if ($1 == "pxf-a") then
+ssh nfdhs-01-CR  /ndhs/bin/pxf -console -mbus -debug 60
+
+else if ($1 == "col-b") then
+ssh nfdhs-02-CR /ndhs/bin/collector -console -mbus -port 4577 -debug 60 -id PanB
+
+else if ($1 == "smc-b") then
+ssh nfdhs-02-CR /ndhs/bin/smcmgr -console -mbus -dev $RTD2 -debug 60
+
+else if ($1 == "pxf-b") then
+ssh nfdhs-02-CR  /ndhs/bin/pxf -console -mbus -debug 60
+
+else if ($1 == "dca") then
+/ndhs/mosdca/mosdca -debug 2 -reqlevel 2 -vminit cachesize=312m -maxgkw 2048 -maxikw 2048 -dir /home/data -ktm /ndhs/lib/newfirm.tcl
+
+else if ($1 == "super") then
+/ndhs/dhssup/super -port 4150 -debug -console -config /ndhs/dhssup/_config.null -nclients 8 -geometry 640x580+0+40
+
+endif

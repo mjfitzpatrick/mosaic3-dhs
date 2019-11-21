@@ -1,0 +1,262 @@
+			Mosaic Data Capture Prototype
+			 Tue Feb 25 11:49:46 MST 1997
+
+
+
+1. Approach
+---------------------------------------------
+
+Designing the full data handling system including the general message bus,
+distributed shared object mechanism, data capture agent, detector message
+classes, etc. is a difficult job.  It is expedient to prototype parts of the
+system first before finishing the full design.  What follows is the design
+for a prototype data capture agent (DCA) for the NOAO Mosaic.  The
+prototype, like the final version, writes multiextension FITS files to disk
+on the data handling computer, with the image data being sent over a message
+bus between two hosts in real time during frame readout.  The major
+simplifications made in the prototype are that the full message bus
+implementation is not used (PVM is instead used directly, using
+point-to-point transfers), and there is no distributed shared image object
+rather the image is written directly to disk.  The DCA itself is also
+simplified for the prototype and is not as general as it should eventually be.
+
+Strategy for Prototype
+
+    o	Use PVM directly for messaging - point to point only, no
+	multicasting needed for prototype.  A draft design for the full
+	message bus already exists but this is not used in the prototype.
+    o	DCA reads incoming messages, writes images to disk (no DSO).
+    o	Arcon front end (ARFE) has picread-like inputs but writes to 
+	msgbus (PVM) on back end.
+
+DCA Strategy
+
+    o	Simple Unix task which connects to the message bus and listens for
+	incoming messages.  Can also monitor the standard input for "console"
+	commands.  Write status and debug messages to the standard output.
+
+    o   The prototype does not use a full distributed shared object (DSO)
+	facility to generate the output image.  This is emulated however so
+	it will be relatively easy to plug this in later.  The emulated DSO
+	writes the new image to disk using a mapped file interface and
+	lockable i/o regions similar to what will be in the DSO version.
+
+ARFE Strategy
+
+    o	Mimic picread: same XPIM input files, header server files, listen
+	on fifo for signals from Muxnex.  ARFE will be much faster than
+	picread however as it does not pixel processing, merely writes the
+	raw data to message packets.
+
+    o	Translate header and pixel packets and write to message bus.
+
+
+2. Data Capture Agent
+---------------------------------------------
+
+This is a small unix task which connects to the message bus.  Sits in a loop
+reading and processing messages from the bus.  Can also accept simple
+commands from the standard input.  Writes status and debug information to
+the standard output.  Incoming messages are processed writing pixels and
+header keywords to the output image.
+
+Messages:
+
+	StartReadout
+	    seqno
+	    imagename
+	    imagetype (flat, zero, etc.)
+
+	EndReadout
+	    seqno
+
+	AbortReadout
+	    seqno
+
+	ConfigureImage
+	    seqno
+	    nimages
+	    pixtype
+	    [naxis1 naxis2 - repeated once for each image]
+
+	WriteHeaderData
+	    seqno
+	    image (subimage list?)
+	    nkeywords
+	    [header data: 4 strings per keyword, can be null]
+
+	WritePixelData
+	    seqno
+	    datalen
+	    nstreams
+	    [stream: offset npix stride destimage x0 y0 xstep ystep xydir]
+	    [raw pixel data: packing can be anything which can be described
+	    by the preceding stream descriptors]
+
+For the sake of simplicity the prototype assumes pixels are 16 bits and that
+all images are the same size.
+
+When ConfigureImage is received the output image is readied for i/o.  Header
+and data packets are processed into the output image.  When EndReadout is
+received the header is updated and the image is closed.
+
+The details of how the output image is formatted are controlled by the DCA.
+For example, the DCA controls how much space is allocated in the global and
+extension headers, and modifies or generates keywords as necessary as header
+data is written to the output image.
+
+WritePixelData copies pixel data directly from the input message buffer to
+the output image.  Descrambling, transposing, line flipping etc. is driven
+by the stream headers.
+
+An emulated DSO-like interface (described in the next section) is used to
+manage header data and write the output image.
+
+
+
+3. Distributed Shared Image Object Interface
+---------------------------------------------
+
+In the prototype this interface does not implement a true distributed shared
+object, it is a file mapped into shared memory by the DCA process.  The
+interface below is intended to only approximate the final interface, but the
+startio/iodone approach using pointers is what is required for a DSO.  A more
+sophisticated shared keyword access mechanism will be required for the final
+interface.
+
+       dsio = dsio_open (image, mode)
+	     dsio_close (dsio)
+
+	       dsio_set (dsio, image, param, value)
+	 val = dsio_get (dsio, image, param)
+
+	dsio_initialize (dsio)				# map disk file
+       dsio_writeheader (dsio, image, kwdb)
+
+      io = dsio_startio (dsio, image, mode, x0,y0,nx,ny)
+	    dsio_iodone (dsio, io)
+
+       kwdb = kwdb_open (kwdb_name)
+	     kwdb_close (kwdb)
+       kwdb_copykeyword (kwdb, kwdb_source, index)
+ type = kwdb_getkeyword (kwdb, index, keyword, value, comment)
+	kwdb_addkeyword (kwdb, keyword, value, comment)
+	kwdb_delkeyword (kwdb, keyword)
+	   kwdb_addline (kwdb, type, value)
+    ptr = kwdb_getvalue (kwdb, keyword)
+          kwdb_setvalue (kwdb, keyword, value)
+	kwdb_setcomment (kwdb, keyword, comment)
+	 nkw = kwdb_len (kwdb)
+
+dsio_{set|get} may be used to change any interface parameters, or to set the
+image parameters, before calling dsio_initialize to prepare to do i/o on the
+image.  If opening a new image dsio_initialize creates a new, empty image of
+the desired size.
+
+Settable interface parameters:
+
+    Parameter			Example
+    ---------			---------
+    nimages			8
+    naxis1			2048		# may be image dependent
+    naxis2			4096		# may be image dependent
+    maxglobalkw			72
+    maximagekw			72
+
+Header data is buffered internally in the KWDB, one for the global header
+and one for each subimage, while the image object is being accessed.  If the
+image is opened for writing, dsio_writeheader is later called to write any
+updated header information to the image.  Header editing may be performed on
+the KWDB streams anytime before dsio_writeheader is called, e.g. by reading
+one or more KWDB and writing new ones which are what is written to the
+output header with dsio_writeheader (we may want to add a Tcl-based or other
+table driven facility for this later).  dsio_writeheader clears any unused
+header lines between the last KWDB keyword and the FITS END card.
+
+The DSIO code is responsible for writing a valid multiextension FITS file.
+DSIO will generate the following required keywords for the PHU and EHU.
+All other keywords are copied from the KWDB in the order given and formatted
+into 80 character FITS cards for insertion into the headers.
+
+PHU:
+1	SIMPLE	= T		
+2	BITPIX	= 16
+3	NAXIS	= 0
+4	EXTEND	= T
+5	NEXTEND	= <n>
+6	FILENAME= '<name>  '
+	    [KWDB keywords]
+	END
+
+EHU:
+1	XTENSION= 'image   '
+2	BITPIX	= 16
+3	NAXIS	= 2
+4	NAXIS1	= <n>
+5	NAXIS2	= <n>
+6	PCOUNT	= 0
+7	GCOUNT	= 1
+8	EXTNAME = '<name>  '
+	    [KWDB keywords]
+	END
+
+The KWDB for an extension header should include an EXTNAME keyword naming
+the extension.  Blank lines, comments and history may be inserted using the
+kwdb_addline function.
+
+To read or write the image pixels one calls dsio_startio to get a pointer
+to a given region of the image, obtaining a lock on the data (if necessary)
+in the process.  dsio_iodone should be called after i/o is completed to 
+initiate any further processing of the modified region or release any locks.
+
+
+4. Arcon Front End (ARFE)
+---------------------------------------------
+
+The ARFE module is the interface between the Arcon and the data handling
+system (message bus).  ARFE reads the raw xpim CT-packet files produced by
+Arcon/Muxnex and writes messages to the message bus.  Ideally ARFE does not
+need to do very much processing.  In particular it should be possible to copy
+the raw pixel data out unchanged by setting up the pixel stream descriptors
+so that any descrambling or line flipping occurs in the DCA when the data is
+copied to the output image.  Most of the header data in the final output
+image also comes from ARFE, but the DCA is responsible for formatting the
+output image file and may rename, merge, or otherwise modify header keywords.
+ARFE simply writes blocks of header keywords to WriteHeaderData messages.
+Much of the complexity of the ARFE task is in decoding the xpim files, and
+communicating with Muxnex via the FIFO interface (as PICREAD does now).
+
+
+	MUXNEX -----(FIFO)---+
+	   |                 |
+	   |                 |
+	   |                 |
+	xpimXXXX.SS_0 -+     |
+	xpimXXXX.SS_1  |     |
+	xpimXXXX.SS_2  |--- ARFE---> msgbus ---> DCA
+	xpimXXXX.SS_3 -+
+
+The Muxnex/FIFO and xpim/CT-packet interfaces are specific to the Arcon
+system hence are not described here.  The message protocol used in the
+prototype is as described above for the DCA.  The message bus is
+bidirectional, so ARFE may define additional messages if needed for flow
+control or for notification of when the DCA has finished writing the output
+image.
+
+
+5. Message Bus
+---------------------------------------------
+
+A design for a general message bus based on PVM exists, but the initial DCA
+prototype uses a simple binary messaging protocol built directly using PVM.
+The full message bus is expected to use PVM internally, assuming we encounter
+no serious problems with PVM in the prototype.
+
+
+
+
+
+
+
+
+oo

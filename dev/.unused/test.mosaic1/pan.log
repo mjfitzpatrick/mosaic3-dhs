@@ -1,0 +1,40 @@
+Mon May 4 08:05:35 MST 2015 Starting
+pan : mbusConnect...
+ncols: 2148  nrows: 4096  bin:1
+pan : dhsSysOpen
+Opening Supervisor: name='PAN' mach='mosaic1-dtn.tuc.noao.edu' port='4150'
+gethostbyname(host_str) = 'mosaic1-dtn.tuc.noao.edu'
+dcaSupOpenSocket: 'mosaic1-dtn.tuc.noao.edu' 4150 -> '140.252.31.61'
+
+
+supOpenConn:  host='mosaic1pan-a'  domain=''
+	use_sim: 1  act='mosaic1-dtn'  sim='mosaic1pan-a'  dom=''
+
+localhost gethostbyname(host_str) = 'localhost'
+dcaSupOpenSocket: 'mosaic1-dtn:4154' -1 -> '127.0.0.1'
+pan : dhsOpenConnect
+initChannel:  dev='127.0.0.1:4576'  node='127.0.0.1' port=4576
+pan : Init AV Pair 
+pan : Waiting for commands on message bus
+pan : mbusRecv message received 
+expID::: 2450000.100000   '2450000.100000'
+pan filling diagonal ramp
+pan: MSG subj : 4
+pan: dhsOpenExp
+pan: Sending PRE META data
+pan: Sending image arrays
+pan: Sending POST META data
+pan : dhsCloseExp
+pan : sending MB_FINISH to NOCS
+pan : Waiting for commands
+pan : mbusRecv message received 
+expID::: 2450000.100000   '2450000.100000'
+pan filling diagonal ramp
+pan: MSG subj : 4
+pan: dhsOpenExp
+pan: Sending PRE META data
+pan: Sending image arrays
+pan: Sending POST META data
+pan : dhsCloseExp
+pan : sending MB_FINISH to NOCS
+pan : Waiting for commands

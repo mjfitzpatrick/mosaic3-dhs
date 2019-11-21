@@ -1,0 +1,384 @@
+ls: ../dhsUtil*.h: No such file or directory
+
+****
+****   making libdhsNETW  ****
+****
+
+gmake clean
+ls: ../dhsUtil*.h: No such file or directory
+gmake[1]: Entering directory `/home/dhs.new/lib/_netw'
+rm -rf StaticTclp StaticUtil /home/dhs.new/lib/_netw/*.o /home/dhs.new/lib/_netw/*.a*
+rm -rf libdhsNETWTcl.a.1.1.0 libdhsNETW.a.1.1.0
+rm -rf /Monsoon/lib/dhsLibs/libdhsTcl* /Monsoon/lib/dhsLibs/libdhsUtil*
+rm -rf SharedTclp SharedUtil /home/dhs.new/lib/_netw/*.o /home/dhs.new/lib/_netw/*.so*
+rm -rf libdhsNETWTcl.so.1.1.0 libdhsNETW.so.1.1.0
+rm -rf /Monsoon/lib/dhsLibs/libdhsTcl* /Monsoon/lib/dhsLibs/libdhsUtil*
+gmake[1]: Leaving directory `/home/dhs.new/lib/_netw'
+gmake all
+ls: ../dhsUtil*.h: No such file or directory
+gmake[1]: Entering directory `/home/dhs.new/lib/_netw'
+rm -rf StaticTclp StaticUtil /home/dhs.new/lib/_netw/*.o /home/dhs.new/lib/_netw/*.a*
+rm -rf libdhsNETWTcl.a.1.1.0 libdhsNETW.a.1.1.0
+rm -rf /Monsoon/lib/dhsLibs/libdhsTcl* /Monsoon/lib/dhsLibs/libdhsUtil*
+mkdir StaticUtil
+chmod 777 StaticUtil
+mkdir StaticTclp
+chmod 777 StaticTclp
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaCloseChannel.c -o StaticTclp/dcaCloseChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaConnectionACK.c -o StaticTclp/dcaConnectionACK.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaDev.c -o StaticTclp/dcaDev.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaHost.c -o StaticTclp/dcaHost.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaInitChannel.c -o StaticTclp/dcaInitChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcamsg.c -o StaticTclp/dcamsg.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaOpenChannel.c -o StaticTclp/dcaOpenChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaRecv.c -o StaticTclp/dcaRecv.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaSend.c -o StaticTclp/dcaSend.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaSimulator.c -o StaticTclp/dcaSimulator.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaSuper.c -o StaticTclp/dcaSuper.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsTcl.c -o StaticTclp/dhsTcl.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilAux.c -o StaticTclp/dhsUtilAux.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilCloseConnect.c -o StaticTclp/dhsUtilCloseConnect.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilCloseExp.c -o StaticTclp/dhsUtilCloseExp.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilInit.c -o StaticTclp/dhsUtilInit.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilIOCtl.c -o StaticTclp/dhsUtilIOCtl.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilOpenConnect.c -o StaticTclp/dhsUtilOpenConnect.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilOpenExp.c -o StaticTclp/dhsUtilOpenExp.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilReadImage.c -o StaticTclp/dhsUtilReadImage.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilSendMetaData.c -o StaticTclp/dhsUtilSendMetaData.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilSendPixelData.c -o StaticTclp/dhsUtilSendPixelData.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilSysClose.c -o StaticTclp/dhsUtilSysClose.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilSysOpen.c -o StaticTclp/dhsUtilSysOpen.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilUnInit.c -o StaticTclp/dhsUtilUnInit.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaCloseChannel.c -o StaticUtil/dcaCloseChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaConnectionACK.c -o StaticUtil/dcaConnectionACK.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaDev.c -o StaticUtil/dcaDev.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaHost.c -o StaticUtil/dcaHost.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaInitChannel.c -o StaticUtil/dcaInitChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcamsg.c -o StaticUtil/dcamsg.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaOpenChannel.c -o StaticUtil/dcaOpenChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaRecv.c -o StaticUtil/dcaRecv.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaSend.c -o StaticUtil/dcaSend.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaSimulator.c -o StaticUtil/dcaSimulator.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaSuper.c -o StaticUtil/dcaSuper.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilAux.c -o StaticUtil/dhsUtilAux.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilCloseConnect.c -o StaticUtil/dhsUtilCloseConnect.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilCloseExp.c -o StaticUtil/dhsUtilCloseExp.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilInit.c -o StaticUtil/dhsUtilInit.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilIOCtl.c -o StaticUtil/dhsUtilIOCtl.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilOpenConnect.c -o StaticUtil/dhsUtilOpenConnect.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilOpenExp.c -o StaticUtil/dhsUtilOpenExp.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilReadImage.c -o StaticUtil/dhsUtilReadImage.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilSendMetaData.c -o StaticUtil/dhsUtilSendMetaData.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilSendPixelData.c -o StaticUtil/dhsUtilSendPixelData.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilSysClose.c -o StaticUtil/dhsUtilSysClose.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilSysOpen.c -o StaticUtil/dhsUtilSysOpen.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilUnInit.c -o StaticUtil/dhsUtilUnInit.o
+ar rv libdhsNETW.a.1.1.0 StaticUtil/dcaCloseChannel.o StaticUtil/dcaConnectionACK.o StaticUtil/dcaDev.o StaticUtil/dcaHost.o StaticUtil/dcaInitChannel.o StaticUtil/dcamsg.o StaticUtil/dcaOpenChannel.o StaticUtil/dcaRecv.o StaticUtil/dcaSend.o StaticUtil/dcaSimulator.o StaticUtil/dcaSuper.o StaticUtil/dhsUtilAux.o StaticUtil/dhsUtilCloseConnect.o StaticUtil/dhsUtilCloseExp.o StaticUtil/dhsUtilInit.o StaticUtil/dhsUtilIOCtl.o StaticUtil/dhsUtilOpenConnect.o StaticUtil/dhsUtilOpenExp.o StaticUtil/dhsUtilReadImage.o StaticUtil/dhsUtilSendMetaData.o StaticUtil/dhsUtilSendPixelData.o StaticUtil/dhsUtilSysClose.o StaticUtil/dhsUtilSysOpen.o StaticUtil/dhsUtilUnInit.o
+ar: creating libdhsNETW.a.1.1.0
+a - StaticUtil/dcaCloseChannel.o
+a - StaticUtil/dcaConnectionACK.o
+a - StaticUtil/dcaDev.o
+a - StaticUtil/dcaHost.o
+a - StaticUtil/dcaInitChannel.o
+a - StaticUtil/dcamsg.o
+a - StaticUtil/dcaOpenChannel.o
+a - StaticUtil/dcaRecv.o
+a - StaticUtil/dcaSend.o
+a - StaticUtil/dcaSimulator.o
+a - StaticUtil/dcaSuper.o
+a - StaticUtil/dhsUtilAux.o
+a - StaticUtil/dhsUtilCloseConnect.o
+a - StaticUtil/dhsUtilCloseExp.o
+a - StaticUtil/dhsUtilInit.o
+a - StaticUtil/dhsUtilIOCtl.o
+a - StaticUtil/dhsUtilOpenConnect.o
+a - StaticUtil/dhsUtilOpenExp.o
+a - StaticUtil/dhsUtilReadImage.o
+a - StaticUtil/dhsUtilSendMetaData.o
+a - StaticUtil/dhsUtilSendPixelData.o
+a - StaticUtil/dhsUtilSysClose.o
+a - StaticUtil/dhsUtilSysOpen.o
+a - StaticUtil/dhsUtilUnInit.o
+ar rv libdhsNETWTcl.a.1.1.0 StaticTclp/dcaCloseChannel.o StaticTclp/dcaConnectionACK.o StaticTclp/dcaDev.o StaticTclp/dcaHost.o StaticTclp/dcaInitChannel.o StaticTclp/dcamsg.o StaticTclp/dcaOpenChannel.o StaticTclp/dcaRecv.o StaticTclp/dcaSend.o StaticTclp/dcaSimulator.o StaticTclp/dcaSuper.o StaticTclp/dhsTcl.o StaticTclp/dhsUtilAux.o StaticTclp/dhsUtilCloseConnect.o StaticTclp/dhsUtilCloseExp.o StaticTclp/dhsUtilInit.o StaticTclp/dhsUtilIOCtl.o StaticTclp/dhsUtilOpenConnect.o StaticTclp/dhsUtilOpenExp.o StaticTclp/dhsUtilReadImage.o StaticTclp/dhsUtilSendMetaData.o StaticTclp/dhsUtilSendPixelData.o StaticTclp/dhsUtilSysClose.o StaticTclp/dhsUtilSysOpen.o StaticTclp/dhsUtilUnInit.o
+ar: creating libdhsNETWTcl.a.1.1.0
+a - StaticTclp/dcaCloseChannel.o
+a - StaticTclp/dcaConnectionACK.o
+a - StaticTclp/dcaDev.o
+a - StaticTclp/dcaHost.o
+a - StaticTclp/dcaInitChannel.o
+a - StaticTclp/dcamsg.o
+a - StaticTclp/dcaOpenChannel.o
+a - StaticTclp/dcaRecv.o
+a - StaticTclp/dcaSend.o
+a - StaticTclp/dcaSimulator.o
+a - StaticTclp/dcaSuper.o
+a - StaticTclp/dhsTcl.o
+a - StaticTclp/dhsUtilAux.o
+a - StaticTclp/dhsUtilCloseConnect.o
+a - StaticTclp/dhsUtilCloseExp.o
+a - StaticTclp/dhsUtilInit.o
+a - StaticTclp/dhsUtilIOCtl.o
+a - StaticTclp/dhsUtilOpenConnect.o
+a - StaticTclp/dhsUtilOpenExp.o
+a - StaticTclp/dhsUtilReadImage.o
+a - StaticTclp/dhsUtilSendMetaData.o
+a - StaticTclp/dhsUtilSendPixelData.o
+a - StaticTclp/dhsUtilSysClose.o
+a - StaticTclp/dhsUtilSysOpen.o
+a - StaticTclp/dhsUtilUnInit.o
+rm -rf SharedTclp SharedUtil /home/dhs.new/lib/_netw/*.o /home/dhs.new/lib/_netw/*.so*
+rm -rf libdhsNETWTcl.so.1.1.0 libdhsNETW.so.1.1.0
+rm -rf /Monsoon/lib/dhsLibs/libdhsTcl* /Monsoon/lib/dhsLibs/libdhsUtil*
+mkdir SharedUtil
+chmod 777 SharedUtil
+mkdir SharedTclp
+chmod 777 SharedTclp
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaCloseChannel.c -o SharedTclp/dcaCloseChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaConnectionACK.c -o SharedTclp/dcaConnectionACK.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaDev.c -o SharedTclp/dcaDev.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaHost.c -o SharedTclp/dcaHost.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaInitChannel.c -o SharedTclp/dcaInitChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcamsg.c -o SharedTclp/dcamsg.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaOpenChannel.c -o SharedTclp/dcaOpenChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaRecv.c -o SharedTclp/dcaRecv.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaSend.c -o SharedTclp/dcaSend.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaSimulator.c -o SharedTclp/dcaSimulator.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaSuper.c -o SharedTclp/dcaSuper.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsTcl.c -o SharedTclp/dhsTcl.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilAux.c -o SharedTclp/dhsUtilAux.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilCloseConnect.c -o SharedTclp/dhsUtilCloseConnect.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilCloseExp.c -o SharedTclp/dhsUtilCloseExp.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilInit.c -o SharedTclp/dhsUtilInit.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilIOCtl.c -o SharedTclp/dhsUtilIOCtl.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilOpenConnect.c -o SharedTclp/dhsUtilOpenConnect.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilOpenExp.c -o SharedTclp/dhsUtilOpenExp.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilReadImage.c -o SharedTclp/dhsUtilReadImage.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilSendMetaData.c -o SharedTclp/dhsUtilSendMetaData.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilSendPixelData.c -o SharedTclp/dhsUtilSendPixelData.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilSysClose.c -o SharedTclp/dhsUtilSysClose.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilSysOpen.c -o SharedTclp/dhsUtilSysOpen.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilUnInit.c -o SharedTclp/dhsUtilUnInit.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaCloseChannel.c -o SharedUtil/dcaCloseChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaConnectionACK.c -o SharedUtil/dcaConnectionACK.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaDev.c -o SharedUtil/dcaDev.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaHost.c -o SharedUtil/dcaHost.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaInitChannel.c -o SharedUtil/dcaInitChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcamsg.c -o SharedUtil/dcamsg.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaOpenChannel.c -o SharedUtil/dcaOpenChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaRecv.c -o SharedUtil/dcaRecv.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaSend.c -o SharedUtil/dcaSend.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaSimulator.c -o SharedUtil/dcaSimulator.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaSuper.c -o SharedUtil/dcaSuper.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilAux.c -o SharedUtil/dhsUtilAux.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilCloseConnect.c -o SharedUtil/dhsUtilCloseConnect.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilCloseExp.c -o SharedUtil/dhsUtilCloseExp.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilInit.c -o SharedUtil/dhsUtilInit.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilIOCtl.c -o SharedUtil/dhsUtilIOCtl.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilOpenConnect.c -o SharedUtil/dhsUtilOpenConnect.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilOpenExp.c -o SharedUtil/dhsUtilOpenExp.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilReadImage.c -o SharedUtil/dhsUtilReadImage.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilSendMetaData.c -o SharedUtil/dhsUtilSendMetaData.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilSendPixelData.c -o SharedUtil/dhsUtilSendPixelData.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilSysClose.c -o SharedUtil/dhsUtilSysClose.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilSysOpen.c -o SharedUtil/dhsUtilSysOpen.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilUnInit.c -o SharedUtil/dhsUtilUnInit.o
+ld -shared -o libdhsNETW.so.1.1.0 SharedUtil/dcaCloseChannel.o SharedUtil/dcaConnectionACK.o SharedUtil/dcaDev.o SharedUtil/dcaHost.o SharedUtil/dcaInitChannel.o SharedUtil/dcamsg.o SharedUtil/dcaOpenChannel.o SharedUtil/dcaRecv.o SharedUtil/dcaSend.o SharedUtil/dcaSimulator.o SharedUtil/dcaSuper.o SharedUtil/dhsUtilAux.o SharedUtil/dhsUtilCloseConnect.o SharedUtil/dhsUtilCloseExp.o SharedUtil/dhsUtilInit.o SharedUtil/dhsUtilIOCtl.o SharedUtil/dhsUtilOpenConnect.o SharedUtil/dhsUtilOpenExp.o SharedUtil/dhsUtilReadImage.o SharedUtil/dhsUtilSendMetaData.o SharedUtil/dhsUtilSendPixelData.o SharedUtil/dhsUtilSysClose.o SharedUtil/dhsUtilSysOpen.o SharedUtil/dhsUtilUnInit.o -L/usr/lib -lc -ldl
+ld -shared -o libdhsNETWTcl.so.1.1.0 SharedTclp/dcaCloseChannel.o SharedTclp/dcaConnectionACK.o SharedTclp/dcaDev.o SharedTclp/dcaHost.o SharedTclp/dcaInitChannel.o SharedTclp/dcamsg.o SharedTclp/dcaOpenChannel.o SharedTclp/dcaRecv.o SharedTclp/dcaSend.o SharedTclp/dcaSimulator.o SharedTclp/dcaSuper.o SharedTclp/dhsTcl.o SharedTclp/dhsUtilAux.o SharedTclp/dhsUtilCloseConnect.o SharedTclp/dhsUtilCloseExp.o SharedTclp/dhsUtilInit.o SharedTclp/dhsUtilIOCtl.o SharedTclp/dhsUtilOpenConnect.o SharedTclp/dhsUtilOpenExp.o SharedTclp/dhsUtilReadImage.o SharedTclp/dhsUtilSendMetaData.o SharedTclp/dhsUtilSendPixelData.o SharedTclp/dhsUtilSysClose.o SharedTclp/dhsUtilSysOpen.o SharedTclp/dhsUtilUnInit.o -L/usr/lib -lc -ldl
+gmake[1]: Leaving directory `/home/dhs.new/lib/_netw'
+gmake install
+ls: ../dhsUtil*.h: No such file or directory
+gmake[1]: Entering directory `/home/dhs.new/lib/_netw'
+rm -rf /Monsoon/inc/dhsTcl.h /Monsoon/inc/dhsUtil.h
+/bin/ln -sf ../src/Util/dhsLibraries/_netw/dhsTcl.h /Monsoon/inc/dhsTcl.h
+/bin/ln -sf ../src/Util/dhsLibraries/dhsUtil.h /Monsoon/inc/dhsUtil.h
+/bin/ln -sf ../src/Util/dhsLibraries/_netw/.h /Monsoon/inc/.h
+rm -rf StaticTclp StaticUtil /home/dhs.new/lib/_netw/*.o /home/dhs.new/lib/_netw/*.a*
+rm -rf libdhsNETWTcl.a.1.1.0 libdhsNETW.a.1.1.0
+rm -rf /Monsoon/lib/dhsLibs/libdhsTcl* /Monsoon/lib/dhsLibs/libdhsUtil*
+mkdir StaticUtil
+chmod 777 StaticUtil
+mkdir StaticTclp
+chmod 777 StaticTclp
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaCloseChannel.c -o StaticTclp/dcaCloseChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaConnectionACK.c -o StaticTclp/dcaConnectionACK.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaDev.c -o StaticTclp/dcaDev.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaHost.c -o StaticTclp/dcaHost.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaInitChannel.c -o StaticTclp/dcaInitChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcamsg.c -o StaticTclp/dcamsg.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaOpenChannel.c -o StaticTclp/dcaOpenChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaRecv.c -o StaticTclp/dcaRecv.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaSend.c -o StaticTclp/dcaSend.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaSimulator.c -o StaticTclp/dcaSimulator.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaSuper.c -o StaticTclp/dcaSuper.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsTcl.c -o StaticTclp/dhsTcl.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilAux.c -o StaticTclp/dhsUtilAux.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilCloseConnect.c -o StaticTclp/dhsUtilCloseConnect.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilCloseExp.c -o StaticTclp/dhsUtilCloseExp.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilInit.c -o StaticTclp/dhsUtilInit.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilIOCtl.c -o StaticTclp/dhsUtilIOCtl.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilOpenConnect.c -o StaticTclp/dhsUtilOpenConnect.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilOpenExp.c -o StaticTclp/dhsUtilOpenExp.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilReadImage.c -o StaticTclp/dhsUtilReadImage.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilSendMetaData.c -o StaticTclp/dhsUtilSendMetaData.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilSendPixelData.c -o StaticTclp/dhsUtilSendPixelData.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilSysClose.c -o StaticTclp/dhsUtilSysClose.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilSysOpen.c -o StaticTclp/dhsUtilSysOpen.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilUnInit.c -o StaticTclp/dhsUtilUnInit.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaCloseChannel.c -o StaticUtil/dcaCloseChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaConnectionACK.c -o StaticUtil/dcaConnectionACK.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaDev.c -o StaticUtil/dcaDev.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaHost.c -o StaticUtil/dcaHost.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaInitChannel.c -o StaticUtil/dcaInitChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcamsg.c -o StaticUtil/dcamsg.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaOpenChannel.c -o StaticUtil/dcaOpenChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaRecv.c -o StaticUtil/dcaRecv.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaSend.c -o StaticUtil/dcaSend.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaSimulator.c -o StaticUtil/dcaSimulator.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dcaSuper.c -o StaticUtil/dcaSuper.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilAux.c -o StaticUtil/dhsUtilAux.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilCloseConnect.c -o StaticUtil/dhsUtilCloseConnect.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilCloseExp.c -o StaticUtil/dhsUtilCloseExp.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilInit.c -o StaticUtil/dhsUtilInit.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilIOCtl.c -o StaticUtil/dhsUtilIOCtl.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilOpenConnect.c -o StaticUtil/dhsUtilOpenConnect.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilOpenExp.c -o StaticUtil/dhsUtilOpenExp.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilReadImage.c -o StaticUtil/dhsUtilReadImage.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilSendMetaData.c -o StaticUtil/dhsUtilSendMetaData.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilSendPixelData.c -o StaticUtil/dhsUtilSendPixelData.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilSysClose.c -o StaticUtil/dhsUtilSysClose.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilSysOpen.c -o StaticUtil/dhsUtilSysOpen.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -c dhsUtilUnInit.c -o StaticUtil/dhsUtilUnInit.o
+ar rv libdhsNETW.a.1.1.0 StaticUtil/dcaCloseChannel.o StaticUtil/dcaConnectionACK.o StaticUtil/dcaDev.o StaticUtil/dcaHost.o StaticUtil/dcaInitChannel.o StaticUtil/dcamsg.o StaticUtil/dcaOpenChannel.o StaticUtil/dcaRecv.o StaticUtil/dcaSend.o StaticUtil/dcaSimulator.o StaticUtil/dcaSuper.o StaticUtil/dhsUtilAux.o StaticUtil/dhsUtilCloseConnect.o StaticUtil/dhsUtilCloseExp.o StaticUtil/dhsUtilInit.o StaticUtil/dhsUtilIOCtl.o StaticUtil/dhsUtilOpenConnect.o StaticUtil/dhsUtilOpenExp.o StaticUtil/dhsUtilReadImage.o StaticUtil/dhsUtilSendMetaData.o StaticUtil/dhsUtilSendPixelData.o StaticUtil/dhsUtilSysClose.o StaticUtil/dhsUtilSysOpen.o StaticUtil/dhsUtilUnInit.o
+ar: creating libdhsNETW.a.1.1.0
+a - StaticUtil/dcaCloseChannel.o
+a - StaticUtil/dcaConnectionACK.o
+a - StaticUtil/dcaDev.o
+a - StaticUtil/dcaHost.o
+a - StaticUtil/dcaInitChannel.o
+a - StaticUtil/dcamsg.o
+a - StaticUtil/dcaOpenChannel.o
+a - StaticUtil/dcaRecv.o
+a - StaticUtil/dcaSend.o
+a - StaticUtil/dcaSimulator.o
+a - StaticUtil/dcaSuper.o
+a - StaticUtil/dhsUtilAux.o
+a - StaticUtil/dhsUtilCloseConnect.o
+a - StaticUtil/dhsUtilCloseExp.o
+a - StaticUtil/dhsUtilInit.o
+a - StaticUtil/dhsUtilIOCtl.o
+a - StaticUtil/dhsUtilOpenConnect.o
+a - StaticUtil/dhsUtilOpenExp.o
+a - StaticUtil/dhsUtilReadImage.o
+a - StaticUtil/dhsUtilSendMetaData.o
+a - StaticUtil/dhsUtilSendPixelData.o
+a - StaticUtil/dhsUtilSysClose.o
+a - StaticUtil/dhsUtilSysOpen.o
+a - StaticUtil/dhsUtilUnInit.o
+ar rv libdhsNETWTcl.a.1.1.0 StaticTclp/dcaCloseChannel.o StaticTclp/dcaConnectionACK.o StaticTclp/dcaDev.o StaticTclp/dcaHost.o StaticTclp/dcaInitChannel.o StaticTclp/dcamsg.o StaticTclp/dcaOpenChannel.o StaticTclp/dcaRecv.o StaticTclp/dcaSend.o StaticTclp/dcaSimulator.o StaticTclp/dcaSuper.o StaticTclp/dhsTcl.o StaticTclp/dhsUtilAux.o StaticTclp/dhsUtilCloseConnect.o StaticTclp/dhsUtilCloseExp.o StaticTclp/dhsUtilInit.o StaticTclp/dhsUtilIOCtl.o StaticTclp/dhsUtilOpenConnect.o StaticTclp/dhsUtilOpenExp.o StaticTclp/dhsUtilReadImage.o StaticTclp/dhsUtilSendMetaData.o StaticTclp/dhsUtilSendPixelData.o StaticTclp/dhsUtilSysClose.o StaticTclp/dhsUtilSysOpen.o StaticTclp/dhsUtilUnInit.o
+ar: creating libdhsNETWTcl.a.1.1.0
+a - StaticTclp/dcaCloseChannel.o
+a - StaticTclp/dcaConnectionACK.o
+a - StaticTclp/dcaDev.o
+a - StaticTclp/dcaHost.o
+a - StaticTclp/dcaInitChannel.o
+a - StaticTclp/dcamsg.o
+a - StaticTclp/dcaOpenChannel.o
+a - StaticTclp/dcaRecv.o
+a - StaticTclp/dcaSend.o
+a - StaticTclp/dcaSimulator.o
+a - StaticTclp/dcaSuper.o
+a - StaticTclp/dhsTcl.o
+a - StaticTclp/dhsUtilAux.o
+a - StaticTclp/dhsUtilCloseConnect.o
+a - StaticTclp/dhsUtilCloseExp.o
+a - StaticTclp/dhsUtilInit.o
+a - StaticTclp/dhsUtilIOCtl.o
+a - StaticTclp/dhsUtilOpenConnect.o
+a - StaticTclp/dhsUtilOpenExp.o
+a - StaticTclp/dhsUtilReadImage.o
+a - StaticTclp/dhsUtilSendMetaData.o
+a - StaticTclp/dhsUtilSendPixelData.o
+a - StaticTclp/dhsUtilSysClose.o
+a - StaticTclp/dhsUtilSysOpen.o
+a - StaticTclp/dhsUtilUnInit.o
+rm -rf /Monsoon/lib/libdhsTcl.a* /Monsoon/lib/libdhsUtil.a*
+cp libdhsNETWTcl.a.1.1.0 libdhsNETW.a.1.1.0 /Monsoon/lib/dhsLibs/
+ln -sf ../dhsLibs/libdhsNETWTcl.a.1.1.0 /Monsoon/lib/dhsLibs/libdhsNETWTcl.a
+ln -sf ../dhsLibs/libdhsNETW.a.1.1.0 /Monsoon/lib/dhsLibs/libdhsNETW.a
+ln -sf ../lib/dhsLibs/libdhsNETWTcl.a /Monsoon/lib/libdhsTcl.a
+ln -sf ../lib/dhsLibs/libdhsNETW.a /Monsoon/lib/libdhsUtil.a
+rm -rf SharedTclp SharedUtil /home/dhs.new/lib/_netw/*.o /home/dhs.new/lib/_netw/*.so*
+rm -rf libdhsNETWTcl.so.1.1.0 libdhsNETW.so.1.1.0
+rm -rf /Monsoon/lib/dhsLibs/libdhsTcl* /Monsoon/lib/dhsLibs/libdhsUtil*
+mkdir SharedUtil
+chmod 777 SharedUtil
+mkdir SharedTclp
+chmod 777 SharedTclp
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaCloseChannel.c -o SharedTclp/dcaCloseChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaConnectionACK.c -o SharedTclp/dcaConnectionACK.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaDev.c -o SharedTclp/dcaDev.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaHost.c -o SharedTclp/dcaHost.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaInitChannel.c -o SharedTclp/dcaInitChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcamsg.c -o SharedTclp/dcamsg.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaOpenChannel.c -o SharedTclp/dcaOpenChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaRecv.c -o SharedTclp/dcaRecv.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaSend.c -o SharedTclp/dcaSend.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaSimulator.c -o SharedTclp/dcaSimulator.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaSuper.c -o SharedTclp/dcaSuper.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsTcl.c -o SharedTclp/dhsTcl.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilAux.c -o SharedTclp/dhsUtilAux.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilCloseConnect.c -o SharedTclp/dhsUtilCloseConnect.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilCloseExp.c -o SharedTclp/dhsUtilCloseExp.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilInit.c -o SharedTclp/dhsUtilInit.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilIOCtl.c -o SharedTclp/dhsUtilIOCtl.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilOpenConnect.c -o SharedTclp/dhsUtilOpenConnect.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilOpenExp.c -o SharedTclp/dhsUtilOpenExp.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilReadImage.c -o SharedTclp/dhsUtilReadImage.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilSendMetaData.c -o SharedTclp/dhsUtilSendMetaData.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilSendPixelData.c -o SharedTclp/dhsUtilSendPixelData.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilSysClose.c -o SharedTclp/dhsUtilSysClose.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilSysOpen.c -o SharedTclp/dhsUtilSysOpen.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilUnInit.c -o SharedTclp/dhsUtilUnInit.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaCloseChannel.c -o SharedUtil/dcaCloseChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaConnectionACK.c -o SharedUtil/dcaConnectionACK.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaDev.c -o SharedUtil/dcaDev.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaHost.c -o SharedUtil/dcaHost.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaInitChannel.c -o SharedUtil/dcaInitChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcamsg.c -o SharedUtil/dcamsg.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaOpenChannel.c -o SharedUtil/dcaOpenChannel.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaRecv.c -o SharedUtil/dcaRecv.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaSend.c -o SharedUtil/dcaSend.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaSimulator.c -o SharedUtil/dcaSimulator.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dcaSuper.c -o SharedUtil/dcaSuper.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilAux.c -o SharedUtil/dhsUtilAux.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilCloseConnect.c -o SharedUtil/dhsUtilCloseConnect.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilCloseExp.c -o SharedUtil/dhsUtilCloseExp.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilInit.c -o SharedUtil/dhsUtilInit.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilIOCtl.c -o SharedUtil/dhsUtilIOCtl.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilOpenConnect.c -o SharedUtil/dhsUtilOpenConnect.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilOpenExp.c -o SharedUtil/dhsUtilOpenExp.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilReadImage.c -o SharedUtil/dhsUtilReadImage.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilSendMetaData.c -o SharedUtil/dhsUtilSendMetaData.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilSendPixelData.c -o SharedUtil/dhsUtilSendPixelData.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilSysClose.c -o SharedUtil/dhsUtilSysClose.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilSysOpen.c -o SharedUtil/dhsUtilSysOpen.o
+gcc -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/usr/local/include -I../../include -O2 -Wall -DDEBUGTCL -DXLONG=int -D__PTIME__ -DDEBUG -g -DTCL84 -fpic -shared -c dhsUtilUnInit.c -o SharedUtil/dhsUtilUnInit.o
+ld -shared -o libdhsNETW.so.1.1.0 SharedUtil/dcaCloseChannel.o SharedUtil/dcaConnectionACK.o SharedUtil/dcaDev.o SharedUtil/dcaHost.o SharedUtil/dcaInitChannel.o SharedUtil/dcamsg.o SharedUtil/dcaOpenChannel.o SharedUtil/dcaRecv.o SharedUtil/dcaSend.o SharedUtil/dcaSimulator.o SharedUtil/dcaSuper.o SharedUtil/dhsUtilAux.o SharedUtil/dhsUtilCloseConnect.o SharedUtil/dhsUtilCloseExp.o SharedUtil/dhsUtilInit.o SharedUtil/dhsUtilIOCtl.o SharedUtil/dhsUtilOpenConnect.o SharedUtil/dhsUtilOpenExp.o SharedUtil/dhsUtilReadImage.o SharedUtil/dhsUtilSendMetaData.o SharedUtil/dhsUtilSendPixelData.o SharedUtil/dhsUtilSysClose.o SharedUtil/dhsUtilSysOpen.o SharedUtil/dhsUtilUnInit.o -L/usr/lib -lc -ldl
+ld -shared -o libdhsNETWTcl.so.1.1.0 SharedTclp/dcaCloseChannel.o SharedTclp/dcaConnectionACK.o SharedTclp/dcaDev.o SharedTclp/dcaHost.o SharedTclp/dcaInitChannel.o SharedTclp/dcamsg.o SharedTclp/dcaOpenChannel.o SharedTclp/dcaRecv.o SharedTclp/dcaSend.o SharedTclp/dcaSimulator.o SharedTclp/dcaSuper.o SharedTclp/dhsTcl.o SharedTclp/dhsUtilAux.o SharedTclp/dhsUtilCloseConnect.o SharedTclp/dhsUtilCloseExp.o SharedTclp/dhsUtilInit.o SharedTclp/dhsUtilIOCtl.o SharedTclp/dhsUtilOpenConnect.o SharedTclp/dhsUtilOpenExp.o SharedTclp/dhsUtilReadImage.o SharedTclp/dhsUtilSendMetaData.o SharedTclp/dhsUtilSendPixelData.o SharedTclp/dhsUtilSysClose.o SharedTclp/dhsUtilSysOpen.o SharedTclp/dhsUtilUnInit.o -L/usr/lib -lc -ldl
+rm -rf /Monsoon/lib/libdhsTcl.so* /Monsoon/lib/libdhsUtil.so*
+cp libdhsNETWTcl.so.1.1.0 libdhsNETW.so.1.1.0 /Monsoon/lib/dhsLibs/
+ln -sf ../dhsLibs/libdhsNETWTcl.so.1.1.0 /Monsoon/lib/dhsLibs/libdhsNETWTcl.so
+ln -sf ../dhsLibs/libdhsNETW.so.1.1.0 /Monsoon/lib/dhsLibs/libdhsNETW.so
+ln -sf ../lib/dhsLibs/libdhsNETWTcl.so /Monsoon/lib/libdhsTcl.so
+ln -sf ../lib/dhsLibs/libdhsNETW.so /Monsoon/lib/libdhsUtil.so
+gmake[1]: Leaving directory `/home/dhs.new/lib/_netw'
+gmake dcalib32.a dhslib32.a
+ls: ../dhsUtil*.h: No such file or directory
+gmake[1]: Entering directory `/home/dhs.new/lib/_netw'
+gcc -m32 -Wall -DDEBUG -g -c -D__MNSNERR__ -D_MNSN_STD_HDR_ -D_shmUtil_H_ -D__USE_MISC -DXLONG=int -I.. -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/home/ndhs/include -I../../include dcaCloseChannel.c dcaConnectionACK.c dcaDev.c dcaHost.c dcaInitChannel.c dcamsg.c dcaOpenChannel.c dcaRecv.c dcaSend.c dcaSimulator.c dcaSuper.c
+ar -r dcalib32.a dca*.o
+ar: creating dcalib32.a
+gcc -m32 -Wall -DDEBUG -g -c -D__USE_MISC -DXLONG=int -I.. -I/home/dhs.new/lib/_netw -I/Monsoon/inc -I/home/ndhs/include -I../../include dhsUtilAux.c dhsUtilCloseConnect.c dhsUtilCloseExp.c dhsUtilInit.c dhsUtilIOCtl.c dhsUtilOpenConnect.c dhsUtilOpenExp.c dhsUtilReadImage.c dhsUtilSendMetaData.c dhsUtilSendPixelData.c dhsUtilSysClose.c dhsUtilSysOpen.c dhsUtilUnInit.c
+ar -r dhslib32.a dhsUtil*.o
+ar: creating dhslib32.a
+gmake[1]: Leaving directory `/home/dhs.new/lib/_netw'

@@ -1,0 +1,101 @@
+Warning: Cannot allocate colormap entry for "blue2"
+Warning: Cannot allocate colormap entry for "purple4"
+Warning: Cannot convert string "-adobe-times-medium-i-normal-*-14-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-times-bold-r-normal-*-14-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-courier-medium-r-normal-*-14-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-courier-bold-r-normal-*-14-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-courier-medium-o-normal-*-14-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-times-bold-r-normal-*-24-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-times-bold-r-normal-*-18-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-times-bold-r-normal-*-17-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-times-bold-r-normal-*-12-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-times-bold-r-normal-*-10-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-courier-medium-r-normal-*-12-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot allocate colormap entry for "#c0c0c0"
+Warning: Cannot allocate colormap entry for "gray80"
+Warning: Cannot convert string "-adobe-courier-bold-r-normal-*-12-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-courier-medium-o-normal-*-12-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot allocate colormap entry for "gray61"
+Warning: Cannot allocate colormap entry for "gray91"
+mtype 64: |DCA_NOOP:    (DCA_SET:256, DCA_NOOP:64)
+DCA_NOOP ...Sending ACK
+mtype 131328: |DCA_SET:DCA_FP_CONFIG:    (DCA_SET:256, DCA_NOOP:64)
+DCA_SET received
+DCA_SET FP_CONFIG
+DCA_FP_CONFIG received: 0 bytes 
+fpCfg.(x,y)Start: (0,0)
+fpCfg.(x,y)Size: (0,0)
+expID: 0.000000   obsetID: 
+mtype 2049: |DCA_OPEN:DCA_CONNECT:DCA_DCADEV:    (DCA_SET:256, DCA_NOOP:64)
+DCA_CONNECT OPEN received
+DCA_OPEN CONNECT: 'newfirm 1'
+mtype 533: |DCA_GET:DCA_DCADEV:    (DCA_SET:256, DCA_NOOP:64)
+DCA_GET  subtype=21
+DCADEV sending Collector: 127.0.0.1:4575, on socket: 7
+mtype 64: |DCA_NOOP:    (DCA_SET:256, DCA_NOOP:64)
+DCA_NOOP ...Sending ACK
+mtype 131328: |DCA_SET:DCA_FP_CONFIG:    (DCA_SET:256, DCA_NOOP:64)
+DCA_SET received
+DCA_SET FP_CONFIG
+DCA_FP_CONFIG received: 0 bytes 
+fpCfg.(x,y)Start: (-1077897760,11037360)
+fpCfg.(x,y)Size: (1,11034564)
+expID: 0.000000   obsetID: TestID
+mtype 2049: |DCA_OPEN:DCA_CONNECT:DCA_DCADEV:    (DCA_SET:256, DCA_NOOP:64)
+DCA_CONNECT OPEN received
+DCA_OPEN CONNECT: 'nfpan-a 1'
+mtype 533: |DCA_GET:DCA_DCADEV:    (DCA_SET:256, DCA_NOOP:64)
+DCA_GET  subtype=21
+DCADEV sending Collector: 127.0.0.1:4576, on socket: 9
+mtype 64: |DCA_NOOP:    (DCA_SET:256, DCA_NOOP:64)
+DCA_NOOP ...Sending ACK
+mtype 8193: |DCA_OPEN:DCA_EXP:DCA_DCADEV:    (DCA_SET:256, DCA_NOOP:64)
+257812465: DCA_EXP OPEN received on sock 7, host=newfirm
+from clid = 3
+** TriggerHost: 'newfirm'  curhost: 'cameradev'  procHost: 'newfirm' --> MATCHED
+Adding to QUEUE: 2450000.100000
+mtype 64: |DCA_NOOP:    (DCA_SET:256, DCA_NOOP:64)
+DCA_NOOP ...Sending ACK
+mtype 8193: |DCA_OPEN:DCA_EXP:DCA_DCADEV:    (DCA_SET:256, DCA_NOOP:64)
+257812465: DCA_EXP OPEN received on sock 9, host=nfpan-a
+from clid = 7
+** TriggerHost: 'newfirm'  curhost: 'cameradev'  procHost: 'nfpan-a' --> NO MATCH
+mtype 8194: |DCA_CLOSE:DCA_EXP:    (DCA_SET:256, DCA_NOOP:64)
+257812465: DCA_EXP CLOSE received on sock 9, host=nfpan-a
+** TriggerHost: 'newfirm'  curhost: 'cameradev'  procHost: 'nfpan-a' --> NO MATCH
+DCA_CLOSE EXP: 'nfpan-a 0'
+mtype 8194: |DCA_CLOSE:DCA_EXP:    (DCA_SET:256, DCA_NOOP:64)
+257812465: DCA_EXP CLOSE received on sock 7, host=newfirm
+** TriggerHost: 'newfirm'  curhost: 'cameradev'  procHost: 'newfirm' --> MATCHED
+READY in QUEUE: 2450000.100000
+DCA_CLOSE EXP: 'newfirm 0'
+supProcNext:  expID=2450000.100000, stat=2, count=1, done=-998/1
+STARTING expID = 2450000.100000, seqno=1 time=1425314066
+SMC PROCESS COMPLETE: ExpID 2450000.100000 (npxf=1 of 1)
+
+PXF begin: process 2450000.100000
+PXF PROCESS COMPLETE: ExpID 2450000.100000 (npxf=1 of 1)
+
+Transfer Complete: ending readout: 1
+Sending EndReadout....***************
+dhsEndReadout: end readout failed, seqno=1
+Transfer Complete: ending readout: 1
+Sending EndReadout....***************
+dhsEndReadout: end readout failed, seqno=1
+DCA Complete: ending readout: 0.000000
+SMCMgr ending: ExpID 0.000000
+**** RAWDIR set to '/home/data'
+**** PROCDIR set to '/home/data'
+DCA Complete: ending readout: 0.000000
+procQueue underflow
+Client delay: 1 seconds...
+supHostLookup:   NO MATCH 'cameradev' >>>>>>>>>>>>>>>>>
+supHostLookup:   MATCH 'nfdhs-01' >>>>>>>>>>>>>>>>>
+supHostLookup:   NO MATCH 'cameradev' >>>>>>>>>>>>>>>>>
+supHostLookup:   MATCH 'nfdhs-01' >>>>>>>>>>>>>>>>>
+*** super: task 262155 just exited ***
+setOption:  rdirname = /home/data
+setOption:  pdirname = /home/data
+Transferring data... 
+scp mosaic1dhs-01-4m:PanA_Post* /home/data
+Host key verification failed.

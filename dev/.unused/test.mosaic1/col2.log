@@ -1,0 +1,71 @@
+Mon May 4 08:05:31 MST 2015 Starting
+Collector ID:  'PanA'....
+smUtilAttach:  id=0x47316997 key=0xc027d4a size=3196060
+Attached to SMC....
+Opened socket on port 4576, fd=4
+Adding mbus input handler....
+Adding console input handler....
+Adding socket input handler....
+Waiting for PAN to connect, id='PanA'...
+Connecting client on 4...
+Client ready on 6...
+Waiting for message: socket=6
+smUtilAttach:  id=0x47415306 key=0xe027d50 size=290816
+size=256256  p->size=290816  segSize=33564  [289820] 
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x47448075 key=0xe027d51 size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x47480844 key=0xe027d52 size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x47513613 key=0xe027d53 size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x47546382 key=0xe027d54 size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x47579151 key=0xe027d55 size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x47611920 key=0xe027d56 size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x47644689 key=0xe027d57 size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x47677458 key=0xe027d58 size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+smUtilAttach:  id=0x47742996 key=0xf027d5a size=290816
+size=256256  p->size=290816  segSize=33564  [289820] 
+Waiting for message: socket=6
+smUtilAttach:  id=0x47808534 key=0xf027de2 size=290816
+size=256256  p->size=290816  segSize=33564  [289820] 
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x47841303 key=0xf027de3 size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x47874072 key=0xf027de4 size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x47906841 key=0xf027de5 size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x47939610 key=0xf027de6 size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x47972379 key=0xf027d5b size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x48005148 key=0xf027de7 size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x48037917 key=0xf027de8 size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+SETTING BIN FACTOR = 1
+smUtilAttach:  id=0x48070686 key=0xf027de9 size=35229696
+size=35192832  p->size=35229696  segSize=33564  [35226396] 
+smUtilAttach:  id=0x48136224 key=0xf027deb size=290816
+size=256256  p->size=290816  segSize=33564  [289820] 
+libpvm [t40005]: mbDisconnect: Duplicate host
+pvm_delete() failed while disconnecting

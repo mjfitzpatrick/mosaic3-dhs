@@ -1,0 +1,36 @@
+{ Views Help - Trace Event History View }
+{ The Trace Event History View provides a textual record }
+{ of each trace event as it is processed by XPVM.  For each }
+{ event a line of text is displayed that represents the }
+{ details of the PVM system call made.  This information }
+{ includes the task which invoked it and the timestamp, }
+{ which represents the relative time elapsed since the }
+{ beginning of the trace.  Then the calling parameters }
+{ or return codes / results are shown. }
+{}
+{ As each event is processed, the text line describing it is }
+{ appended to the bottom of the view canvas, and a scrollbar }
+{ allows the user to scan through the event text. }
+{}
+{ This view supports both filtering and searching features. }
+{ The "Filter" text entry allows the user to select sets of }
+{ text lines to view, by specifying a filter string.  All }
+{ lines which contain this filter string will be displayed, }
+{ while lines which do no contain the string will be omitted. }
+{ By resetting the filter string to the empty string, ALL }
+{ lines of text will be shown again. }
+{}
+{ The user can find specific information in the view using }
+{ the text search capabilities.  By entering a search string }
+{ in the "Search" text entry, the canvas will automatically }
+{ be scrolled to the next occurrence of the search string }
+{ (if any), and this string will be highlighted.  The user }
+{ can locate subsequent occurrences of the search string by }
+{ simply hitting <return> in the "Search" text entry field. }
+{ If the end of the text is reached during searching, the }
+{ search will wrap around to the beginning of the text and }
+{ continue, up to the point where the search started.  The }
+{ direction of the search can be changed by clicking on the }
+{ "(Forward)" / "(Backward)" button to the left of the }
+{ "Search" text entry field. }
+{}

@@ -1,0 +1,206 @@
+#if !defined(_dhsUtil_H_)
+#include "dhsUtil.h"
+#endif
+#if !defined(_dhsImpl_H_)
+#include "dhsImplementationSpecifics.h"
+#endif
+
+#include "dcaDhs.h"
+
+#include <stdio.h>      /* for printf() and fprintf() */
+#include <sys/socket.h> /* for recv() and send() */
+#include <unistd.h>     /* for close() */
+/* #include <string.h> */
+
+#include "smCache.h"
+
+#define SZMSG    120
+#define RCVBUFSIZE 1024   /* Size of receive buffer */
+
+void HandleClient(int socket, smCache_t *smc)
+{
+    char buffer[SZMSG];
+    int recvMsgSize;              /* Size of received message */
+    int curlen = RCVBUFSIZE;
+    int tot=0, blksize;
+    char *dev=NULL;
+    char *buff, *hdr;
+    double expID;
+    char obSetID[80];
+    struct msgHeader *msgh;       /* msgHeader msgh ; */
+    int mtype, size, msize;
+    ulong who;
+    fpConfig_t fpCfg;
+    mdConfig_t mdCfg;            /* configuration of meta data */
+
+    int totRowsPDet, totColsPDet, bytesPxl, imSize;
+    int istat;
+    char *pbuf;
+    int pagenum=0;
+    int   attach=FALSE, lock=FALSE, segtyp, nsegs;
+    int   *idata;
+    char  *cdata;
+    char line[180];
+    char directory[SZMSG]="", filename[SZMSG]="";
+    smcPage_t *page;
+    smcSegment_t *seg; 
+
+    /* Receives message code */
+    if (dcaRecv (socket, &buffer[0], SZMSG) != SZMSG) {
+        printf ("superHandleClient: Error receiving message\n");
+	return;
+    }
+
+     msize = SZMSG;
+while(msize > 0) {
+  
+    msgh = (struct msgHeader  *)buffer;
+
+    mtype = msgh->type;
+    who = msgh->whoami;
+
+    DPRINTF(40,procDebug,"\nmtype: %o\n",mtype);
+    if (mtype & DCA_SET) {
+        if (mtype & DCA_FP_CONFIG) {
+           size = sizeof(fpCfg);
+           if (dcaRecv (socket, (char *)&fpCfg, size) != size) {
+	       printf ("DCA_FP_CONFIG error \n");
+           }
+           DPRINTF(30,procDebug,"DCA_SET | DCA_FP_CONFIG received: %d bytes\n",
+	           size);
+	   sprintf(line,"fpCfg.(x,y)Start: (%d,%d)\n",
+	       (int )fpCfg.xStart,(int )fpCfg.yStart);
+           DPRINT(20,procDebug,line);
+	   sprintf(line,"fpCfg.(x,y)Size: (%d,%d)\n",
+	       (int )fpCfg.xSize,(int )fpCfg.ySize);
+           DPRINT(20,procDebug,line);
+        }  
+    } else if (mtype & DCA_DIRECTORY) {
+/*
+        if (dcaRecv (socket, directory, SZMSG) != SZMSG) {
+	    printf ("DCA_DIRECTORY receiving error \n");
+        }
+/*        DPRINTF(30,procDebug,"DCA_DIRECTORY received: '%s'\n", directory);
+printf("DCA_DIRECTORY message received\n");
+    } else if (mtype & DCA_FNAME) {
+/*
+        if (dcaRecv (socket, filename, SZMSG) != SZMSG) {
+	    printf ("DCA_FNAME receiving error \n");
+        }
+        DPRINTF(30,procDebug,"DCA_FNAME received: '%s'\n", filename);
+*/
+printf("DCA_FNAME message received\n");
+    } else if (mtype & DCA_NOOP) {
+
+        /* send ACK only */
+        msgh->type = DCA_ACK;
+        msgh->whoami = DCA_SUPERVISOR;
+        if (dcaSend (socket, (char *)msgh, SZMSG) != SZMSG) {
+            printf("DCA_NOOP error\n");
+        }
+
+    } else if (mtype & DCA_EXP_OBSID) {
+
+        expID=msgh->expnum;
+	memcpy(obSetID, msgh->obset, 80);
+        DPRINT(30,procDebug,"DCA_EXP_OBSID received\n");
+        DPRINTF(10,procDebug,"expID: %f\n",expID);
+
+    } else if (mtype & DCA_META) {
+        /* Receives meta data. We need to know how many bytes to read
+           1st */
+        size = sizeof(blksize);
+        size = SZMSG;
+        DPRINT(10,procDebug,"Handling DCA_META \n");
+        if (dcaRecv (socket, buffer, size) != size) {
+            printf("DCA_META blksize error\n");
+        }
+        memmove((int *)&blksize, buffer, 4);
+        buff= (char *)malloc(blksize);
+
+        if (dcaRecv (socket, buff, blksize) != blksize) {
+            printf("DCA_META buff error\n");
+        }
+        size = sizeof(mdCfg);
+        DPRINTF(30,procDebug,"   DCA_META size: %d\n", size);
+        if (dcaRecv (socket, (char *)&mdCfg, size) != size) {
+            printf("DCA_META bufffer error\n");
+        }
+	page = smcGetPage (smc, TY_META, blksize, TRUE, TRUE);
+	if (page == (smcPage_t *) NULL) {
+	    fprintf (stderr, "Error getting metadata page.\n");
+	    return;
+	}
+        smcSetMDConfig (page, &mdCfg);
+        smcSetFPConfig (page, &fpCfg);
+        smcSetExpID (page, expID);
+        smcSetObsetID (page, obSetID);
+
+        hdr = (char *)smcGetPageData(page);
+        memcpy(hdr, buff, blksize); 
+
+        smcUnlock (page);
+        smcDetach (smc, page, FALSE);
+
+    } else if (DCA_PIXEL & mtype) {
+        /* Read fpCfg 1st */
+        size = sizeof(fpCfg);
+        if (dcaRecv (socket, (char *)&fpCfg, size) != size) {
+	    printf ("DCA_PIXEL error reading fpCfg\n");
+        }
+        DPRINT(40,procDebug,"DCA_PIXEL: DCA_FP_CONFIG received\n");
+
+        totRowsPDet = (int )fpCfg.ySize;
+        totColsPDet = (int )fpCfg.xSize;
+        bytesPxl = 4;
+        imSize = totRowsPDet*totColsPDet*bytesPxl;
+	attach = TRUE;
+	lock = TRUE;
+	page = smcGetPage (smc, TY_DATA, imSize, attach, lock);
+        sprintf(line,
+	     "DCA_PIXEL: totRowsPDet: %d, totColsPDet: %d, imsize: %d\n",
+	      totRowsPDet,totColsPDet,imSize);
+        DPRINT(10,procDebug,line);
+
+        smcSetFPConfig (page, &fpCfg);
+        smcSetExpID (page, expID);
+        smcSetObsetID (page, obSetID);
+
+        idata = (int *) smcGetPageData (page);
+
+        istat = dcaRecv (socket, (char *)idata, imSize);
+        if (istat != imSize) {
+           printf("Error reading image size(dcaRecv) (%d): %d\n",imSize,istat);
+        }       
+
+        smcUnlock (page);
+	smcDetach (smc, page, FALSE);
+
+        DPRINTF(30,procDebug, "Read %d bytes\n",istat);
+        DPRINT(30,procDebug, "*** DONE DCA_PIXEL.\n");
+
+    } else if (mtype & DCA_CLOSE) {
+
+        DPRINT(30,procDebug,"******** Closing SMC\n");
+        /* Use this call at the calling function instead,
+           outside the loop.
+        smc=smcClose(smc, FALSE); 
+        */
+
+       close(socket);
+       return;
+    } else {
+        msgh->type = DCA_FAIL;
+        msgh->whoami = DCA_SUPERVISOR;
+    }
+
+    /* recvMsgSize = read (socket, &buffer[0], SZMSG); */
+    msize = dcaRecv (socket, &buffer[0], SZMSG); 
+
+} /* WHILE */
+
+    /* Close client socket
+    close(socket);
+    */
+
+}

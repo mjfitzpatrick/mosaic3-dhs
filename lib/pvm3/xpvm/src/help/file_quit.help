@@ -1,0 +1,7 @@
+{ File Help - Quitting XPVM }
+{ This function is identical to the PVM console "quit" command. }
+{}
+{ When the "Quit" button in XPVM is pressed, XPVM will exit, leaving }
+{ PVM running.  The current Virtual Machine will remain intact and the }
+{ PVM daemons will still be running. }
+{}

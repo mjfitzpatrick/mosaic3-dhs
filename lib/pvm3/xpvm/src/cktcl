@@ -1,0 +1,21 @@
+#!/bin/csh -f
+
+#
+# $Id: cktcl,v 4.50 1998/04/09 21:12:52 kohl Exp $
+#
+
+if ( "#$1#" == '##' || "#$2#" == '##' || "#$3#" == '##' ) then
+	echo "usage: cktcl <xpvmroot> <srcdir> <file>"
+	exit 0
+endif
+
+set xpvmroot = $1
+set srcdir = $2
+set file = $3
+
+cmp $srcdir/$file $xpvmroot/$file >& /dev/null
+
+if ( $status != 0 ) then
+	echo "Warning: TCL File $file has been modified - use make install"
+endif
+

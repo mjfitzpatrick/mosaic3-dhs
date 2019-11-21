@@ -1,0 +1,60 @@
+#!/bin/csh -f
+
+
+# Set the location of the system to help in configuring the machine names.
+# The location is simply a 2-character code stored in the '_location' file
+# in the top directory, values may be:
+#
+#       "CR"            => Tucson Clean Room
+#       "FR"            => Tucson Flex Rig
+#       "KP"            => KPNO 4-meter
+#       "CT"            => CTIO 4-meter
+#
+setenv LOC      `cat /dhs/_location`
+setenv INST     `cat /dhs/_instrument`
+
+#-------------------------------------------------------------------------------
+
+
+if (`uname -s` == "Darwin") then
+    set pflags = "-augxww"
+else
+    set pflags = "-efw"
+endif
+set pfiles = "/tmp/pvm*50*"
+
+echo halt | pvm 						>& /dev/null
+#foreach p (`ps $pflags | grep pvmd3 | awk '{print($2)}'`)
+#    kill -9 $p >& /dev/null
+#end
+/bin/rm -f $pfiles 						>& /dev/null
+
+if ($INST == "newfirm") then
+    /bin/sh -c "ssh nfdhs-01${LOC} /dhs/bin/pvmclean"
+    /bin/sh -c "ssh nfdhs-01${LOC} /dhs/bin/smclean"
+    /bin/sh -c "ssh nfdhs-02${LOC} /dhs/bin/pvmclean"
+    /bin/sh -c "ssh nfdhs-02${LOC} /dhs/bin/smclean"
+
+cat > /tmp/dhs_pvm.cmds << EOF_NDHS_PVM
+add nfdhs-01${LOC}
+add nfdhs-02${LOC}
+add nfdca${LOC}
+quit
+EOF_NDHS_PVM
+
+else
+    #/bin/sh -c "ssh -t mosaic3dhs-01${LOC} /dhs/bin/pvmclean"
+    #/bin/sh -c "ssh -t mosaic3dhs-01${LOC} /dhs/bin/smclean"
+    /bin/sh -c "ssh mosaic3dhs-01${LOC} /dhs/bin/pvmclean"
+    /bin/sh -c "ssh mosaic3dhs-01${LOC} /dhs/bin/smclean"
+
+#add mosaic3dca${LOC}
+cat > /tmp/dhs_pvm.cmds << EOF_MOS_PVM
+add mosaic3dhs-01${LOC}
+quit
+EOF_MOS_PVM
+
+endif
+
+pvm < /tmp/dhs_pvm.cmds 					>& /dev/null
+echo conf | pvm 

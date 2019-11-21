@@ -1,0 +1,21 @@
+{ Tasks Help - Signaling Tasks }
+{ XPVM supports the PVM console "sig" command for sending Unix }
+{ signals to PVM tasks.  This function is accessed by selecting }
+{ the "SIGNAL" button on the "Tasks" menu, which pops up the }
+{ signal dialog box. }
+{}
+{ To signal a task, first select the desired Unix signal from the }
+{ scrolling signals menu on the right side of the dialog box, then }
+{ choose the desired destination task(s) for the signal.  A single }
+{ task is signaled by clicking on one of the tasks in the scrolling }
+{ task list on the left side of the dialog.  Or, all of the currently }
+{ executing tasks can be signaled using the "Signal All" button. }
+{ In either case, the signal(s) are sent as soon as the mouse click }
+{ occurs. }
+{}
+{ Because XPVM avoids the overhead of continuously polling PVM }
+{ tasks while the signal dialog is up, the tasks listed may not }
+{ completely accurately reflect the existence of all currently }
+{ executing tasks.  To update the task list, press the "Refresh }
+{ Tasks" button. }
+{}

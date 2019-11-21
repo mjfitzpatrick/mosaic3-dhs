@@ -1,0 +1,972 @@
+Updating the DHS v1.0 software tree
+
+Mon May 18 08:55:20 MST 2015
+
+
+make  libs      DHSDIR=$PWD
+make[1]: Entering directory `/home/dhs.new'
+make -w dcalib     DHSDIR=$PWD install
+make[2]: Entering directory `/home/dhs.new'
+(cd lib/dcalib ; echo "making all in lib/dcalib ...";\
+	 	make -w 'CDEBUGFLAGS=-O2 -Wall -m32 -g' all);
+making all in lib/dcalib ...
+make[3]: Entering directory `/home/dhs.new/lib/dcalib'
+/bin/mkdir Static
+chmod 777 Static
+/usr/bin/gcc -I/home/dhs.new/lib/dcalib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc -g -m32 -Wall -I/home/dhs.new/lib/dcalib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc -DLINUX -DXLONG=int -Wall -Wstrict-prototypes -Wmissing-prototypes -D__MNSNERR__ -D_MNSN_STD_HDR_ -D_shmUtil_H_ -D__USE_MISC -c dcaCloseChannel.c -o Static/dcaCloseChannel.o
+/usr/bin/gcc -I/home/dhs.new/lib/dcalib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc -g -m32 -Wall -I/home/dhs.new/lib/dcalib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc -DLINUX -DXLONG=int -Wall -Wstrict-prototypes -Wmissing-prototypes -D__MNSNERR__ -D_MNSN_STD_HDR_ -D_shmUtil_H_ -D__USE_MISC -c dcaInitChannel.c -o Static/dcaInitChannel.o
+/usr/bin/gcc -I/home/dhs.new/lib/dcalib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc -g -m32 -Wall -I/home/dhs.new/lib/dcalib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc -DLINUX -DXLONG=int -Wall -Wstrict-prototypes -Wmissing-prototypes -D__MNSNERR__ -D_MNSN_STD_HDR_ -D_shmUtil_H_ -D__USE_MISC -c dcaSimulator.c -o Static/dcaSimulator.o
+/usr/bin/gcc -I/home/dhs.new/lib/dcalib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc -g -m32 -Wall -I/home/dhs.new/lib/dcalib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc -DLINUX -DXLONG=int -Wall -Wstrict-prototypes -Wmissing-prototypes -D__MNSNERR__ -D_MNSN_STD_HDR_ -D_shmUtil_H_ -D__USE_MISC -c dcaConnectionACK.c -o Static/dcaConnectionACK.o
+/usr/bin/gcc -I/home/dhs.new/lib/dcalib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc -g -m32 -Wall -I/home/dhs.new/lib/dcalib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc -DLINUX -DXLONG=int -Wall -Wstrict-prototypes -Wmissing-prototypes -D__MNSNERR__ -D_MNSN_STD_HDR_ -D_shmUtil_H_ -D__USE_MISC -c dcaOpenChannel.c -o Static/dcaOpenChannel.o
+/usr/bin/gcc -I/home/dhs.new/lib/dcalib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc -g -m32 -Wall -I/home/dhs.new/lib/dcalib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc -DLINUX -DXLONG=int -Wall -Wstrict-prototypes -Wmissing-prototypes -D__MNSNERR__ -D_MNSN_STD_HDR_ -D_shmUtil_H_ -D__USE_MISC -c dcaSuper.c -o Static/dcaSuper.o
+/usr/bin/gcc -I/home/dhs.new/lib/dcalib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc -g -m32 -Wall -I/home/dhs.new/lib/dcalib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc -DLINUX -DXLONG=int -Wall -Wstrict-prototypes -Wmissing-prototypes -D__MNSNERR__ -D_MNSN_STD_HDR_ -D_shmUtil_H_ -D__USE_MISC -c dcaDev.c -o Static/dcaDev.o
+/usr/bin/gcc -I/home/dhs.new/lib/dcalib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc -g -m32 -Wall -I/home/dhs.new/lib/dcalib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc -DLINUX -DXLONG=int -Wall -Wstrict-prototypes -Wmissing-prototypes -D__MNSNERR__ -D_MNSN_STD_HDR_ -D_shmUtil_H_ -D__USE_MISC -c dcaRecv.c -o Static/dcaRecv.o
+/usr/bin/gcc -I/home/dhs.new/lib/dcalib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc -g -m32 -Wall -I/home/dhs.new/lib/dcalib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc -DLINUX -DXLONG=int -Wall -Wstrict-prototypes -Wmissing-prototypes -D__MNSNERR__ -D_MNSN_STD_HDR_ -D_shmUtil_H_ -D__USE_MISC -c dcamsg.c -o Static/dcamsg.o
+/usr/bin/gcc -I/home/dhs.new/lib/dcalib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc -g -m32 -Wall -I/home/dhs.new/lib/dcalib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc -DLINUX -DXLONG=int -Wall -Wstrict-prototypes -Wmissing-prototypes -D__MNSNERR__ -D_MNSN_STD_HDR_ -D_shmUtil_H_ -D__USE_MISC -c dcaHost.c -o Static/dcaHost.o
+/usr/bin/gcc -I/home/dhs.new/lib/dcalib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc -g -m32 -Wall -I/home/dhs.new/lib/dcalib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include  -I/MNSN/soft_dev/inc -I/home/monsoon/inc -DLINUX -DXLONG=int -Wall -Wstrict-prototypes -Wmissing-prototypes -D__MNSNERR__ -D_MNSN_STD_HDR_ -D_shmUtil_H_ -D__USE_MISC -c dcaSend.c -o Static/dcaSend.o
+/usr/bin/ar rv /home/dhs.new/lib/dcalib/libdcalib.a Static/dcaCloseChannel.o Static/dcaInitChannel.o Static/dcaSimulator.o Static/dcaConnectionACK.o Static/dcaOpenChannel.o Static/dcaSuper.o Static/dcaDev.o Static/dcaRecv.o Static/dcamsg.o Static/dcaHost.o Static/dcaSend.o
+/usr/bin/ar: creating /home/dhs.new/lib/dcalib/libdcalib.a
+a - Static/dcaCloseChannel.o
+a - Static/dcaInitChannel.o
+a - Static/dcaSimulator.o
+a - Static/dcaConnectionACK.o
+a - Static/dcaOpenChannel.o
+a - Static/dcaSuper.o
+a - Static/dcaDev.o
+a - Static/dcaRecv.o
+a - Static/dcamsg.o
+a - Static/dcaHost.o
+a - Static/dcaSend.o
+make[3]: Leaving directory `/home/dhs.new/lib/dcalib'
+installing in /lib/dcalib...
+make[3]: Entering directory `/home/dhs.new/lib/dcalib'
+cp libdcalib.a ../
+cp dcaDhs.h ../../include
+make[3]: Leaving directory `/home/dhs.new/lib/dcalib'
+installing in /lib/dhsCmds...
+make[3]: Entering directory `/home/dhs.new/lib/dhsCmds'
+/bin/mkdir Static
+chmod 777 Static
+/usr/bin/gcc -I/home/dhs.new/lib/dhsCmds -I../../dev/src -I/dhs/lib/pvm3//include -L/dhs/lib/pvm3//lib/LINUXI386 -g -Wall -D__USE_MISC -I/home/dhs.new/lib/dhsCmds -I../../dev/src -I/dhs/lib/pvm3//include -L/dhs/lib/pvm3//lib/LINUXI386 -DLINUX -m32 -DSPLIT_AMPS -c dhsCmds.c -o Static/dhsCmds.o
+../../dev/src/imageCfg.h:4: warning: ‘nbias’ defined but not used
+../../dev/src/imageCfg.h:5: warning: ‘ccd_xsize’ defined but not used
+../../dev/src/imageCfg.h:6: warning: ‘ccd_ysize’ defined but not used
+/usr/bin/ar rv /home/dhs.new/lib/dhsCmds/libdhsCmds.a Static/dhsCmds.o
+/usr/bin/ar: creating /home/dhs.new/lib/dhsCmds/libdhsCmds.a
+a - Static/dhsCmds.o
+cp libdhsCmds.a ../
+cp dhsCmds.h ../../include/
+make[3]: Leaving directory `/home/dhs.new/lib/dhsCmds'
+installing in /lib/dhslib...
+make[3]: Entering directory `/home/dhs.new/lib/dhslib'
+/bin/mkdir Static
+chmod 777 Static
+/usr/bin/gcc -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -g -m32 -Wall -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -DLINUX -D__USE_MISC -DXLONG=int -c dhsUtilAux.c -o Static/dhsUtilAux.o
+/usr/bin/gcc -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -g -m32 -Wall -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -DLINUX -D__USE_MISC -DXLONG=int -c dhsUtilCloseConnect.c -o Static/dhsUtilCloseConnect.o
+/usr/bin/gcc -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -g -m32 -Wall -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -DLINUX -D__USE_MISC -DXLONG=int -c dhsUtilCloseExp.c -o Static/dhsUtilCloseExp.o
+/usr/bin/gcc -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -g -m32 -Wall -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -DLINUX -D__USE_MISC -DXLONG=int -c dhsUtilFileOpen.c -o Static/dhsUtilFileOpen.o
+/usr/bin/gcc -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -g -m32 -Wall -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -DLINUX -D__USE_MISC -DXLONG=int -c dhsUtilInit.c -o Static/dhsUtilInit.o
+/usr/bin/gcc -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -g -m32 -Wall -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -DLINUX -D__USE_MISC -DXLONG=int -c dhsUtilIOCtl.c -o Static/dhsUtilIOCtl.o
+/usr/bin/gcc -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -g -m32 -Wall -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -DLINUX -D__USE_MISC -DXLONG=int -c dhsUtilOpenConnect.c -o Static/dhsUtilOpenConnect.o
+/usr/bin/gcc -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -g -m32 -Wall -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -DLINUX -D__USE_MISC -DXLONG=int -c dhsUtilOpenExp.c -o Static/dhsUtilOpenExp.o
+/usr/bin/gcc -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -g -m32 -Wall -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -DLINUX -D__USE_MISC -DXLONG=int -c dhsUtilReadImage.c -o Static/dhsUtilReadImage.o
+/usr/bin/gcc -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -g -m32 -Wall -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -DLINUX -D__USE_MISC -DXLONG=int -c dhsUtilSendMetaData.c -o Static/dhsUtilSendMetaData.o
+/usr/bin/gcc -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -g -m32 -Wall -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -DLINUX -D__USE_MISC -DXLONG=int -c dhsUtilSendPixelData.c -o Static/dhsUtilSendPixelData.o
+/usr/bin/gcc -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -g -m32 -Wall -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -DLINUX -D__USE_MISC -DXLONG=int -c dhsUtilSysClose.c -o Static/dhsUtilSysClose.o
+/usr/bin/gcc -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -g -m32 -Wall -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -DLINUX -D__USE_MISC -DXLONG=int -c dhsUtilSysOpen.c -o Static/dhsUtilSysOpen.o
+/usr/bin/gcc -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -g -m32 -Wall -I/home/dhs.new/lib/dhslib -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -I../../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../cfitsio -DLINUX -D__USE_MISC -DXLONG=int -c dhsUtilUnInit.c -o Static/dhsUtilUnInit.o
+/usr/bin/ar rv /home/dhs.new/lib/dhslib/libdhslib.a Static/dhsUtilAux.o Static/dhsUtilCloseConnect.o Static/dhsUtilCloseExp.o Static/dhsUtilFileOpen.o Static/dhsUtilInit.o Static/dhsUtilIOCtl.o Static/dhsUtilOpenConnect.o Static/dhsUtilOpenExp.o Static/dhsUtilReadImage.o Static/dhsUtilSendMetaData.o Static/dhsUtilSendPixelData.o Static/dhsUtilSysClose.o Static/dhsUtilSysOpen.o Static/dhsUtilUnInit.o
+/usr/bin/ar: creating /home/dhs.new/lib/dhslib/libdhslib.a
+a - Static/dhsUtilAux.o
+a - Static/dhsUtilCloseConnect.o
+a - Static/dhsUtilCloseExp.o
+a - Static/dhsUtilFileOpen.o
+a - Static/dhsUtilInit.o
+a - Static/dhsUtilIOCtl.o
+a - Static/dhsUtilOpenConnect.o
+a - Static/dhsUtilOpenExp.o
+a - Static/dhsUtilReadImage.o
+a - Static/dhsUtilSendMetaData.o
+a - Static/dhsUtilSendPixelData.o
+a - Static/dhsUtilSysClose.o
+a - Static/dhsUtilSysOpen.o
+a - Static/dhsUtilUnInit.o
+cp libdhslib.a ../
+cp dhsImplementationSpecifics.h ../../include
+make[3]: Leaving directory `/home/dhs.new/lib/dhslib'
+installing in /lib/mbus...
+make[3]: Entering directory `/home/dhs.new/lib/mbus'
+/bin/mkdir Static
+chmod 777 Static
+/usr/bin/gcc -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -g -m32 -Wall -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -DLINUX -c mbApp.c -o Static/mbApp.o
+/usr/bin/gcc -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -g -m32 -Wall -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -DLINUX -c mbAck.c -o Static/mbAck.o
+/usr/bin/gcc -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -g -m32 -Wall -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -DLINUX -c mbBcast.c -o Static/mbBcast.o
+/usr/bin/gcc -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -g -m32 -Wall -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -DLINUX -c mbConnect.c -o Static/mbConnect.o
+/usr/bin/gcc -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -g -m32 -Wall -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -DLINUX -c mbDisconnect.c -o Static/mbDisconnect.o
+/usr/bin/gcc -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -g -m32 -Wall -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -DLINUX -c mbGroup.c -o Static/mbGroup.o
+/usr/bin/gcc -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -g -m32 -Wall -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -DLINUX -c mbHandle.c -o Static/mbHandle.o
+/usr/bin/gcc -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -g -m32 -Wall -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -DLINUX -c mbHalt.c -o Static/mbHalt.o
+/usr/bin/gcc -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -g -m32 -Wall -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -DLINUX -c mbInit.c -o Static/mbInit.o
+/usr/bin/gcc -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -g -m32 -Wall -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -DLINUX -c mbNotify.c -o Static/mbNotify.o
+/usr/bin/gcc -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -g -m32 -Wall -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -DLINUX -c mbPing.c -o Static/mbPing.o
+/usr/bin/gcc -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -g -m32 -Wall -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -DLINUX -c mbRecv.c -o Static/mbRecv.o
+/usr/bin/gcc -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -g -m32 -Wall -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -DLINUX -c mbSend.c -o Static/mbSend.o
+/usr/bin/gcc -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -g -m32 -Wall -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -DLINUX -c mbSpawn.c -o Static/mbSpawn.o
+/usr/bin/gcc -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -g -m32 -Wall -I/home/dhs.new/lib/mbus -I..//pvm3//include -L..//pvm3//lib/LINUXI386 -DLINUX -c mbUtil.c -o Static/mbUtil.o
+/usr/bin/ar rv /home/dhs.new/lib/mbus/libmbus.a Static/mbApp.o Static/mbAck.o Static/mbBcast.o Static/mbConnect.o Static/mbDisconnect.o Static/mbGroup.o Static/mbHandle.o Static/mbHalt.o Static/mbInit.o Static/mbNotify.o Static/mbPing.o Static/mbRecv.o Static/mbSend.o Static/mbSpawn.o Static/mbUtil.o
+/usr/bin/ar: creating /home/dhs.new/lib/mbus/libmbus.a
+a - Static/mbApp.o
+a - Static/mbAck.o
+a - Static/mbBcast.o
+a - Static/mbConnect.o
+a - Static/mbDisconnect.o
+a - Static/mbGroup.o
+a - Static/mbHandle.o
+a - Static/mbHalt.o
+a - Static/mbInit.o
+a - Static/mbNotify.o
+a - Static/mbPing.o
+a - Static/mbRecv.o
+a - Static/mbSend.o
+a - Static/mbSpawn.o
+a - Static/mbUtil.o
+cp libmbus.a ../
+cp mbus.h ../../include
+cp kpvm ../../bin
+make[3]: Leaving directory `/home/dhs.new/lib/mbus'
+installing in /lib/smCache...
+make[3]: Entering directory `/home/dhs.new/lib/smCache'
+/bin/mkdir Static
+chmod 777 Static
+/usr/bin/gcc -I/home/dhs.new/lib/smCache -g -Wall -DLINUX -m32 -c smCache.c -o Static/smCache.o
+smCache.c: In function ‘smcGetPage’:
+smCache.c:481: warning: unused variable ‘nsize’
+/usr/bin/gcc -I/home/dhs.new/lib/smCache -g -Wall -DLINUX -m32 -c smConfig.c -o Static/smConfig.o
+/usr/bin/gcc -I/home/dhs.new/lib/smCache -g -Wall -DLINUX -m32 -c smState.c -o Static/smState.o
+/usr/bin/gcc -I/home/dhs.new/lib/smCache -g -Wall -DLINUX -m32 -c smUtil.c -o Static/smUtil.o
+/usr/bin/ar rv /home/dhs.new/lib/smCache/libsmCache.a Static/smCache.o Static/smConfig.o Static/smState.o Static/smUtil.o
+r - Static/smCache.o
+r - Static/smConfig.o
+r - Static/smState.o
+r - Static/smUtil.o
+gcc -g -w -DLINUX -m32 -o smcop smcop.c -L. -lsmCache -lm -lc
+cp smCache.h ../../include
+cp libsmCache.a ../
+cp smcstat smcop ../../bin
+cp smclean ../../
+cp smclean ../../bin
+#mv zzdebug zzcollector zzdca zzrtd ../../bin
+make[3]: Leaving directory `/home/dhs.new/lib/smCache'
+installing in /super...
+make[3]: Entering directory `/home/dhs.new/super'
+cp super ../bin
+cp: cannot stat `super': No such file or directory
+make[3]: *** [install] Error 1
+make[3]: Leaving directory `/home/dhs.new/super'
+installing in /collector...
+make[3]: Entering directory `/home/dhs.new/collector'
+cp collector ../bin
+cp: cannot stat `collector': No such file or directory
+make[3]: *** [install] Error 1
+make[3]: Leaving directory `/home/dhs.new/collector'
+installing in /pxf...
+make[3]: Entering directory `/home/dhs.new/pxf'
+make[3]: *** No rule to make target `install'.  Stop.
+make[3]: Leaving directory `/home/dhs.new/pxf'
+installing in /smcmgr...
+make[3]: Entering directory `/home/dhs.new/smcmgr'
+gcc -I/home/dhs.new/smcmgr -I../include -I../dev/src -g -Wall -DLINUX -I/home/dhs.new/smcmgr -I../include -I../dev/src -DXLONG=int -m32 -c smcmgr.c -o smcmgr.o
+gcc -I/home/dhs.new/smcmgr -I../include -I../dev/src -g -Wall -DLINUX -I/home/dhs.new/smcmgr -I../include -I../dev/src -DXLONG=int -m32 -c mbusMsgHandler.c -o mbusMsgHandler.o
+mbusMsgHandler.c: In function ‘smProcImtype’:
+mbusMsgHandler.c:633: warning: ignoring return value of ‘realloc’, declared with attribute warn_unused_result
+gcc -I/home/dhs.new/smcmgr -I../include -I../dev/src -g -Wall -DLINUX -I/home/dhs.new/smcmgr -I../include -I../dev/src -DXLONG=int -m32 -c rotate.c -o rotate.o
+gcc -I/home/dhs.new/smcmgr -I../include -I../dev/src -g -Wall -DLINUX -I/home/dhs.new/smcmgr -I../include -I../dev/src -DXLONG=int -m32 -c smcProcess.c -o smcProcess.o
+gcc -I/home/dhs.new/smcmgr -I../include -I../dev/src -g -Wall -DLINUX -I/home/dhs.new/smcmgr -I../include -I../dev/src -DXLONG=int -m32 -c smcRTD.c -o smcRTD.o
+gcc -I/home/dhs.new/smcmgr -I../include -I../dev/src -g -Wall -DLINUX -I/home/dhs.new/smcmgr -I../include -I../dev/src -DXLONG=int -m32 -c smcRectify.c -o smcRectify.o
+../dev/src/detector.h:50: warning: ‘rasInfo’ defined but not used
+gcc -I/home/dhs.new/smcmgr -I../include -I../dev/src -g -Wall -DLINUX -I/home/dhs.new/smcmgr -I../include -I../dev/src -DXLONG=int -m32 -c rectify.c -o rectify.o
+rectify.c: In function ‘smcRectifyPage’:
+rectify.c:36: warning: unused variable ‘temp’
+rectify.c:35: warning: unused variable ‘k’
+gcc -I/home/dhs.new/smcmgr -I../include -I../dev/src -g -Wall -DLINUX -I/home/dhs.new/smcmgr -I../include -I../dev/src -DXLONG=int -m32 -c rtd.c -o rtd.o
+cc -o smcmgr -w -g -Wall -DLINUX -I/home/dhs.new/smcmgr -I../include -I../dev/src -DXLONG=int -m32 -I/home/dhs.new/smcmgr -I../include -I../dev/src smcmgr.o mbusMsgHandler.o rotate.o smcProcess.o smcRTD.o smcRectify.o rectify.o rtd.o -L../lib -L../lib/pvm3//lib/LINUXI386 -L../x11iraf/lib/ -lsmCache -lmbus -lcdl -lpvm3 -lgpvm3 -lm -lpthread
+cp smcmgr ../bin
+cp smcmgr ../bin
+make[3]: Leaving directory `/home/dhs.new/smcmgr'
+installing in /mosdca...
+make[3]: Entering directory `/home/dhs.new/mosdca'
+cc -m32 -c -g -I../include -I/usr/local/include -I../lib/pvm3/include mosdca.c
+mosdca.c: In function ‘main’:
+mosdca.c:185: warning: incompatible implicit declaration of built-in function ‘strcpy’
+mosdca.c:199: warning: incompatible implicit declaration of built-in function ‘strcpy’
+mosdca.c:204: warning: incompatible implicit declaration of built-in function ‘strcpy’
+mosdca.c:207: warning: incompatible implicit declaration of built-in function ‘strcpy’
+mosdca.c:213: warning: incompatible implicit declaration of built-in function ‘strcpy’
+mosdca.c: In function ‘dca_handle’:
+mosdca.c:570: warning: incompatible implicit declaration of built-in function ‘bzero’
+mosdca.c:770: warning: incompatible implicit declaration of built-in function ‘strlen’
+mosdca.c:781: warning: incompatible implicit declaration of built-in function ‘bzero’
+mosdca.c:959: warning: incompatible implicit declaration of built-in function ‘bzero’
+mosdca.c: In function ‘SetParam’:
+mosdca.c:1042: warning: incompatible implicit declaration of built-in function ‘strcpy’
+mosdca.c:1065: warning: incompatible implicit declaration of built-in function ‘strcpy’
+mosdca.c:1070: warning: incompatible implicit declaration of built-in function ‘strcpy’
+mosdca.c:1078: warning: incompatible implicit declaration of built-in function ‘strcpy’
+mosdca.c: In function ‘GetParam’:
+mosdca.c:1149: warning: incompatible implicit declaration of built-in function ‘strcpy’
+mosdca.c: In function ‘StartReadout’:
+mosdca.c:1222: warning: incompatible implicit declaration of built-in function ‘strcpy’
+mosdca.c: In function ‘EndReadout’:
+mosdca.c:1400: warning: incompatible implicit declaration of built-in function ‘strlen’
+mosdca.c:1403: warning: incompatible implicit declaration of built-in function ‘strcat’
+mosdca.c: In function ‘SetTclContext’:
+mosdca.c:1588: warning: incompatible implicit declaration of built-in function ‘strcpy’
+mosdca.c: In function ‘ConfigureImage’:
+mosdca.c:1650: warning: incompatible implicit declaration of built-in function ‘strcpy’
+mosdca.c: In function ‘setContext’:
+mosdca.c:2019: warning: incompatible implicit declaration of built-in function ‘memset’
+mosdca.c:2023: warning: incompatible implicit declaration of built-in function ‘strcpy’
+mosdca.c: In function ‘MakeFileName’:
+mosdca.c:2158: warning: incompatible implicit declaration of built-in function ‘bzero’
+cc -m32 -c -g -I../include -I/usr/local/include -I../lib/pvm3/include dsim.c
+dsim.c: In function ‘dsim_Open’:
+dsim.c:190: warning: incompatible implicit declaration of built-in function ‘strcpy’
+dsim.c:191: warning: incompatible implicit declaration of built-in function ‘strlen’
+dsim.c:194: warning: incompatible implicit declaration of built-in function ‘strcat’
+dsim.c: In function ‘dsim_FileName’:
+dsim.c:309: warning: incompatible implicit declaration of built-in function ‘strcpy’
+dsim.c:310: warning: incompatible implicit declaration of built-in function ‘strlen’
+dsim.c:313: warning: incompatible implicit declaration of built-in function ‘strcat’
+dsim.c: In function ‘dsim_SetStr’:
+dsim.c:429: warning: incompatible implicit declaration of built-in function ‘strcpy’
+dsim.c: In function ‘dsim_WriteHeader’:
+dsim.c:764: warning: incompatible implicit declaration of built-in function ‘memset’
+dsim.c:770: warning: incompatible implicit declaration of built-in function ‘strcpy’
+dsim.c: In function ‘dsim_Configure’:
+dsim.c:1049: warning: incompatible implicit declaration of built-in function ‘strcpy’
+dsim.c: In function ‘ds_read’:
+dsim.c:1296: warning: incompatible implicit declaration of built-in function ‘memcpy’
+dsim.c: In function ‘ds_write’:
+dsim.c:1326: warning: incompatible implicit declaration of built-in function ‘memcpy’
+cc -m32 -c -g -I../include -I/usr/local/include -I../lib/pvm3/include kwdb.c
+kwdb.c: In function ‘kwdb_Open’:
+kwdb.c:182: warning: incompatible implicit declaration of built-in function ‘calloc’
+kwdb.c:191: warning: incompatible implicit declaration of built-in function ‘strcpy’
+kwdb.c:192: warning: incompatible implicit declaration of built-in function ‘strlen’
+kwdb.c: In function ‘kwdb_AddEntry’:
+kwdb.c:286: warning: incompatible implicit declaration of built-in function ‘strlen’
+kwdb.c: In function ‘kwdb_SetValue’:
+kwdb.c:386: warning: incompatible implicit declaration of built-in function ‘memset’
+kwdb.c:387: warning: incompatible implicit declaration of built-in function ‘strlen’
+kwdb.c:391: warning: incompatible implicit declaration of built-in function ‘strcpy’
+kwdb.c: In function ‘kwdb_SetComment’:
+kwdb.c:415: warning: incompatible implicit declaration of built-in function ‘memset’
+kwdb.c:416: warning: incompatible implicit declaration of built-in function ‘strlen’
+kwdb.c:420: warning: incompatible implicit declaration of built-in function ‘strcpy’
+kwdb.c: In function ‘kwdb_SetType’:
+kwdb.c:465: warning: incompatible implicit declaration of built-in function ‘memset’
+kwdb.c:466: warning: incompatible implicit declaration of built-in function ‘strlen’
+kwdb.c:470: warning: incompatible implicit declaration of built-in function ‘strcpy’
+kwdb.c: In function ‘kwdb_ReadFITS’:
+kwdb.c:801: warning: incompatible implicit declaration of built-in function ‘strcpy’
+kwdb.c:856: warning: incompatible implicit declaration of built-in function ‘strcpy’
+kwdb.c:863: warning: incompatible implicit declaration of built-in function ‘strcpy’
+kwdb.c: In function ‘kwdb_UpdateFITS’:
+kwdb.c:963: warning: incompatible implicit declaration of built-in function ‘memset’
+kwdb.c:1009: warning: incompatible implicit declaration of built-in function ‘strcpy’
+kwdb.c:1010: warning: incompatible implicit declaration of built-in function ‘memset’
+kwdb.c: In function ‘kwdb_WriteFITS’:
+kwdb.c:1042: warning: incompatible implicit declaration of built-in function ‘memset’
+kwdb.c:1070: warning: incompatible implicit declaration of built-in function ‘strlen’
+kwdb.c: In function ‘addstr’:
+kwdb.c:1139: warning: incompatible implicit declaration of built-in function ‘strlen’
+kwdb.c:1150: warning: incompatible implicit declaration of built-in function ‘strcpy’
+cc -m32 -c -g -I../include -I/usr/local/include -I../lib/pvm3/include kwdbtcl.c
+kwdbtcl.c: In function ‘kwdb_TclInit’:
+kwdbtcl.c:73: warning: incompatible implicit declaration of built-in function ‘calloc’
+cc -m32 -c -g -I../include -I/usr/local/include -I../lib/pvm3/include vmcache.c
+vmcache.c: In function ‘vm_initcache’:
+vmcache.c:170: warning: incompatible implicit declaration of built-in function ‘strcpy’
+vmcache.c: In function ‘vm_cacheregion’:
+vmcache.c:528: warning: incompatible implicit declaration of built-in function ‘calloc’
+cc -m32 -g -I../include -I/usr/local/include -I../lib/pvm3/include mosdca.o dsim.o kwdb.o kwdbtcl.o vmcache.o -L../lib/pvm3/lib/LINUXI386/ -L/usr/local/lib -L../lib/ -ldl -lm -lmbus -lpvm3 -lgpvm3 -ltcl -o mosdca 
+kwdb.o: In function `kwdb_UpdateFITS':
+/home/dhs.new/mosdca/kwdb.c:952: warning: the use of `mktemp' is dangerous, better use `mkstemp'
+cp mosdca ..//bin/;
+make[3]: Leaving directory `/home/dhs.new/mosdca'
+make[2]: Leaving directory `/home/dhs.new'
+make -w dhslib     DHSDIR=$PWD install
+make[2]: Entering directory `/home/dhs.new'
+(cd lib/dhslib ; echo "making all in lib/dhslib ...";\
+	 	make -w 'CDEBUGFLAGS=-O2 -Wall -m32 -g' all);
+making all in lib/dhslib ...
+make[3]: Entering directory `/home/dhs.new/lib/dhslib'
+make[3]: Nothing to be done for `all'.
+make[3]: Leaving directory `/home/dhs.new/lib/dhslib'
+installing in /lib/dcalib...
+make[3]: Entering directory `/home/dhs.new/lib/dcalib'
+cp libdcalib.a ../
+cp dcaDhs.h ../../include
+make[3]: Leaving directory `/home/dhs.new/lib/dcalib'
+installing in /lib/dhsCmds...
+make[3]: Entering directory `/home/dhs.new/lib/dhsCmds'
+cp libdhsCmds.a ../
+cp dhsCmds.h ../../include/
+make[3]: Leaving directory `/home/dhs.new/lib/dhsCmds'
+installing in /lib/dhslib...
+make[3]: Entering directory `/home/dhs.new/lib/dhslib'
+cp libdhslib.a ../
+cp dhsImplementationSpecifics.h ../../include
+make[3]: Leaving directory `/home/dhs.new/lib/dhslib'
+installing in /lib/mbus...
+make[3]: Entering directory `/home/dhs.new/lib/mbus'
+cp libmbus.a ../
+cp mbus.h ../../include
+cp kpvm ../../bin
+make[3]: Leaving directory `/home/dhs.new/lib/mbus'
+installing in /lib/smCache...
+make[3]: Entering directory `/home/dhs.new/lib/smCache'
+gcc -g -w -DLINUX -m32 -o smcop smcop.c -L. -lsmCache -lm -lc
+cp smCache.h ../../include
+cp libsmCache.a ../
+cp smcstat smcop ../../bin
+cp smclean ../../
+cp smclean ../../bin
+#mv zzdebug zzcollector zzdca zzrtd ../../bin
+make[3]: Leaving directory `/home/dhs.new/lib/smCache'
+installing in /super...
+make[3]: Entering directory `/home/dhs.new/super'
+cp super ../bin
+cp: cannot stat `super': No such file or directory
+make[3]: *** [install] Error 1
+make[3]: Leaving directory `/home/dhs.new/super'
+installing in /collector...
+make[3]: Entering directory `/home/dhs.new/collector'
+cp collector ../bin
+cp: cannot stat `collector': No such file or directory
+make[3]: *** [install] Error 1
+make[3]: Leaving directory `/home/dhs.new/collector'
+installing in /pxf...
+make[3]: Entering directory `/home/dhs.new/pxf'
+make[3]: *** No rule to make target `install'.  Stop.
+make[3]: Leaving directory `/home/dhs.new/pxf'
+installing in /smcmgr...
+make[3]: Entering directory `/home/dhs.new/smcmgr'
+cp smcmgr ../bin
+make[3]: Leaving directory `/home/dhs.new/smcmgr'
+installing in /mosdca...
+make[3]: Entering directory `/home/dhs.new/mosdca'
+cp mosdca ..//bin/;
+make[3]: Leaving directory `/home/dhs.new/mosdca'
+make[2]: Leaving directory `/home/dhs.new'
+make -w dhsCmds    DHSDIR=$PWD install
+make[2]: Entering directory `/home/dhs.new'
+(cd lib/dhsCmds ; echo "making all in lib/dhsCmds ...";\
+	 	make -w 'CDEBUGFLAGS=-O2 -Wall -m32 -g' all);
+making all in lib/dhsCmds ...
+make[3]: Entering directory `/home/dhs.new/lib/dhsCmds'
+make[3]: Nothing to be done for `all'.
+make[3]: Leaving directory `/home/dhs.new/lib/dhsCmds'
+installing in /lib/dcalib...
+make[3]: Entering directory `/home/dhs.new/lib/dcalib'
+cp libdcalib.a ../
+cp dcaDhs.h ../../include
+make[3]: Leaving directory `/home/dhs.new/lib/dcalib'
+installing in /lib/dhsCmds...
+make[3]: Entering directory `/home/dhs.new/lib/dhsCmds'
+cp libdhsCmds.a ../
+cp dhsCmds.h ../../include/
+make[3]: Leaving directory `/home/dhs.new/lib/dhsCmds'
+installing in /lib/dhslib...
+make[3]: Entering directory `/home/dhs.new/lib/dhslib'
+cp libdhslib.a ../
+cp dhsImplementationSpecifics.h ../../include
+make[3]: Leaving directory `/home/dhs.new/lib/dhslib'
+installing in /lib/mbus...
+make[3]: Entering directory `/home/dhs.new/lib/mbus'
+cp libmbus.a ../
+cp mbus.h ../../include
+cp kpvm ../../bin
+make[3]: Leaving directory `/home/dhs.new/lib/mbus'
+installing in /lib/smCache...
+make[3]: Entering directory `/home/dhs.new/lib/smCache'
+gcc -g -w -DLINUX -m32 -o smcop smcop.c -L. -lsmCache -lm -lc
+cp smCache.h ../../include
+cp libsmCache.a ../
+cp smcstat smcop ../../bin
+cp smclean ../../
+cp smclean ../../bin
+#mv zzdebug zzcollector zzdca zzrtd ../../bin
+make[3]: Leaving directory `/home/dhs.new/lib/smCache'
+installing in /super...
+make[3]: Entering directory `/home/dhs.new/super'
+cp super ../bin
+cp: cannot stat `super': No such file or directory
+make[3]: *** [install] Error 1
+make[3]: Leaving directory `/home/dhs.new/super'
+installing in /collector...
+make[3]: Entering directory `/home/dhs.new/collector'
+cp collector ../bin
+cp: cannot stat `collector': No such file or directory
+make[3]: *** [install] Error 1
+make[3]: Leaving directory `/home/dhs.new/collector'
+installing in /pxf...
+make[3]: Entering directory `/home/dhs.new/pxf'
+make[3]: *** No rule to make target `install'.  Stop.
+make[3]: Leaving directory `/home/dhs.new/pxf'
+installing in /smcmgr...
+make[3]: Entering directory `/home/dhs.new/smcmgr'
+cp smcmgr ../bin
+make[3]: Leaving directory `/home/dhs.new/smcmgr'
+installing in /mosdca...
+make[3]: Entering directory `/home/dhs.new/mosdca'
+cp mosdca ..//bin/;
+make[3]: Leaving directory `/home/dhs.new/mosdca'
+make[2]: Leaving directory `/home/dhs.new'
+make -w mbus       DHSDIR=$PWD install
+make[2]: Entering directory `/home/dhs.new'
+(cd lib/mbus ; echo "making all in lib/mbus ...";\
+	 	make -w 'CDEBUGFLAGS=-O2 -Wall -m32 -g' all);
+making all in lib/mbus ...
+make[3]: Entering directory `/home/dhs.new/lib/mbus'
+make[3]: Nothing to be done for `all'.
+make[3]: Leaving directory `/home/dhs.new/lib/mbus'
+installing in /lib/dcalib...
+make[3]: Entering directory `/home/dhs.new/lib/dcalib'
+cp libdcalib.a ../
+cp dcaDhs.h ../../include
+make[3]: Leaving directory `/home/dhs.new/lib/dcalib'
+installing in /lib/dhsCmds...
+make[3]: Entering directory `/home/dhs.new/lib/dhsCmds'
+cp libdhsCmds.a ../
+cp dhsCmds.h ../../include/
+make[3]: Leaving directory `/home/dhs.new/lib/dhsCmds'
+installing in /lib/dhslib...
+make[3]: Entering directory `/home/dhs.new/lib/dhslib'
+cp libdhslib.a ../
+cp dhsImplementationSpecifics.h ../../include
+make[3]: Leaving directory `/home/dhs.new/lib/dhslib'
+installing in /lib/mbus...
+make[3]: Entering directory `/home/dhs.new/lib/mbus'
+cp libmbus.a ../
+cp mbus.h ../../include
+cp kpvm ../../bin
+make[3]: Leaving directory `/home/dhs.new/lib/mbus'
+installing in /lib/smCache...
+make[3]: Entering directory `/home/dhs.new/lib/smCache'
+gcc -g -w -DLINUX -m32 -o smcop smcop.c -L. -lsmCache -lm -lc
+cp smCache.h ../../include
+cp libsmCache.a ../
+cp smcstat smcop ../../bin
+cp smclean ../../
+cp smclean ../../bin
+#mv zzdebug zzcollector zzdca zzrtd ../../bin
+make[3]: Leaving directory `/home/dhs.new/lib/smCache'
+installing in /super...
+make[3]: Entering directory `/home/dhs.new/super'
+cp super ../bin
+cp: cannot stat `super': No such file or directory
+make[3]: *** [install] Error 1
+make[3]: Leaving directory `/home/dhs.new/super'
+installing in /collector...
+make[3]: Entering directory `/home/dhs.new/collector'
+cp collector ../bin
+cp: cannot stat `collector': No such file or directory
+make[3]: *** [install] Error 1
+make[3]: Leaving directory `/home/dhs.new/collector'
+installing in /pxf...
+make[3]: Entering directory `/home/dhs.new/pxf'
+make[3]: *** No rule to make target `install'.  Stop.
+make[3]: Leaving directory `/home/dhs.new/pxf'
+installing in /smcmgr...
+make[3]: Entering directory `/home/dhs.new/smcmgr'
+cp smcmgr ../bin
+make[3]: Leaving directory `/home/dhs.new/smcmgr'
+installing in /mosdca...
+make[3]: Entering directory `/home/dhs.new/mosdca'
+cp mosdca ..//bin/;
+make[3]: Leaving directory `/home/dhs.new/mosdca'
+make[2]: Leaving directory `/home/dhs.new'
+make -w smCache    DHSDIR=$PWD install
+make[2]: Entering directory `/home/dhs.new'
+(cd lib/smCache ; echo "making all in lib/smCache ...";\
+	 	make -w 'CDEBUGFLAGS=-O2 -Wall -m32 -g' all);
+making all in lib/smCache ...
+make[3]: Entering directory `/home/dhs.new/lib/smCache'
+gcc -g -w -DLINUX -m32 -o smcop smcop.c -L. -lsmCache -lm -lc
+make[3]: Leaving directory `/home/dhs.new/lib/smCache'
+installing in /lib/dcalib...
+make[3]: Entering directory `/home/dhs.new/lib/dcalib'
+cp libdcalib.a ../
+cp dcaDhs.h ../../include
+make[3]: Leaving directory `/home/dhs.new/lib/dcalib'
+installing in /lib/dhsCmds...
+make[3]: Entering directory `/home/dhs.new/lib/dhsCmds'
+cp libdhsCmds.a ../
+cp dhsCmds.h ../../include/
+make[3]: Leaving directory `/home/dhs.new/lib/dhsCmds'
+installing in /lib/dhslib...
+make[3]: Entering directory `/home/dhs.new/lib/dhslib'
+cp libdhslib.a ../
+cp dhsImplementationSpecifics.h ../../include
+make[3]: Leaving directory `/home/dhs.new/lib/dhslib'
+installing in /lib/mbus...
+make[3]: Entering directory `/home/dhs.new/lib/mbus'
+cp libmbus.a ../
+cp mbus.h ../../include
+cp kpvm ../../bin
+make[3]: Leaving directory `/home/dhs.new/lib/mbus'
+installing in /lib/smCache...
+make[3]: Entering directory `/home/dhs.new/lib/smCache'
+gcc -g -w -DLINUX -m32 -o smcop smcop.c -L. -lsmCache -lm -lc
+cp smCache.h ../../include
+cp libsmCache.a ../
+cp smcstat smcop ../../bin
+cp smclean ../../
+cp smclean ../../bin
+#mv zzdebug zzcollector zzdca zzrtd ../../bin
+make[3]: Leaving directory `/home/dhs.new/lib/smCache'
+installing in /super...
+make[3]: Entering directory `/home/dhs.new/super'
+cp super ../bin
+cp: cannot stat `super': No such file or directory
+make[3]: *** [install] Error 1
+make[3]: Leaving directory `/home/dhs.new/super'
+installing in /collector...
+make[3]: Entering directory `/home/dhs.new/collector'
+cp collector ../bin
+cp: cannot stat `collector': No such file or directory
+make[3]: *** [install] Error 1
+make[3]: Leaving directory `/home/dhs.new/collector'
+installing in /pxf...
+make[3]: Entering directory `/home/dhs.new/pxf'
+make[3]: *** No rule to make target `install'.  Stop.
+make[3]: Leaving directory `/home/dhs.new/pxf'
+installing in /smcmgr...
+make[3]: Entering directory `/home/dhs.new/smcmgr'
+cp smcmgr ../bin
+make[3]: Leaving directory `/home/dhs.new/smcmgr'
+installing in /mosdca...
+make[3]: Entering directory `/home/dhs.new/mosdca'
+cp mosdca ..//bin/;
+make[3]: Leaving directory `/home/dhs.new/mosdca'
+make[2]: Leaving directory `/home/dhs.new'
+make[1]: Leaving directory `/home/dhs.new'
+make  apps      DHSDIR=$PWD
+make[1]: Entering directory `/home/dhs.new'
+make -w super      DHSDIR=$PWD install
+make[2]: Entering directory `/home/dhs.new'
+(cd super ; echo "making all in super ...";\
+	 	make -w 'CDEBUGFLAGS=-O2 -Wall -m32 -g' all);
+making all in super ...
+make[3]: Entering directory `/home/dhs.new/super'
+/usr/bin/gcc -O2 -Wall -m32 -g     -I../include -I../lib/pvm3//include -I/MNSN/soft_dev/inc 			-I/home/monsoon/inc -I../x11iraf//include -I../include -I/usr/X11R6/include    -Dlinux -D__i386__ -D_POSIX_C_SOURCE=199309L -D_POSIX_SOURCE -D_XOPEN_SOURCE -D_BSD_SOURCE -D_SVID_SOURCE     -DFUNCPROTO=15 -DNARROWPROTO       -c -o super.o super.c
+../build.h:1: warning: ‘build_date’ defined but not used
+/usr/bin/gcc -O2 -Wall -m32 -g     -I../include -I../lib/pvm3//include -I/MNSN/soft_dev/inc 			-I/home/monsoon/inc -I../x11iraf//include -I../include -I/usr/X11R6/include    -Dlinux -D__i386__ -D_POSIX_C_SOURCE=199309L -D_POSIX_SOURCE -D_XOPEN_SOURCE -D_BSD_SOURCE -D_SVID_SOURCE     -DFUNCPROTO=15 -DNARROWPROTO       -c -o supClient.o supClient.c
+/usr/bin/gcc -O2 -Wall -m32 -g     -I../include -I../lib/pvm3//include -I/MNSN/soft_dev/inc 			-I/home/monsoon/inc -I../x11iraf//include -I../include -I/usr/X11R6/include    -Dlinux -D__i386__ -D_POSIX_C_SOURCE=199309L -D_POSIX_SOURCE -D_XOPEN_SOURCE -D_BSD_SOURCE -D_SVID_SOURCE     -DFUNCPROTO=15 -DNARROWPROTO       -c -o supConfig.o supConfig.c
+/usr/bin/gcc -O2 -Wall -m32 -g     -I../include -I../lib/pvm3//include -I/MNSN/soft_dev/inc 			-I/home/monsoon/inc -I../x11iraf//include -I../include -I/usr/X11R6/include    -Dlinux -D__i386__ -D_POSIX_C_SOURCE=199309L -D_POSIX_SOURCE -D_XOPEN_SOURCE -D_BSD_SOURCE -D_SVID_SOURCE     -DFUNCPROTO=15 -DNARROWPROTO       -c -o supIO.o supIO.c
+supIO.c: In function ‘supIOHandler’:
+supIO.c:624: warning: ‘txt’ is used uninitialized in this function
+/usr/bin/gcc -O2 -Wall -m32 -g     -I../include -I../lib/pvm3//include -I/MNSN/soft_dev/inc 			-I/home/monsoon/inc -I../x11iraf//include -I../include -I/usr/X11R6/include    -Dlinux -D__i386__ -D_POSIX_C_SOURCE=199309L -D_POSIX_SOURCE -D_XOPEN_SOURCE -D_BSD_SOURCE -D_SVID_SOURCE     -DFUNCPROTO=15 -DNARROWPROTO       -c -o supKeyw.o supKeyw.c
+/usr/bin/gcc -O2 -Wall -m32 -g     -I../include -I../lib/pvm3//include -I/MNSN/soft_dev/inc 			-I/home/monsoon/inc -I../x11iraf//include -I../include -I/usr/X11R6/include    -Dlinux -D__i386__ -D_POSIX_C_SOURCE=199309L -D_POSIX_SOURCE -D_XOPEN_SOURCE -D_BSD_SOURCE -D_SVID_SOURCE     -DFUNCPROTO=15 -DNARROWPROTO       -c -o supPanHandler.o supPanHandler.c
+supPanHandler.c: In function ‘superHandleClient’:
+supPanHandler.c:127: warning: ‘recvMsgSize’ is used uninitialized in this function
+supPanHandler.c:66: warning: ‘pp’ may be used uninitialized in this function
+/usr/bin/gcc -O2 -Wall -m32 -g     -I../include -I../lib/pvm3//include -I/MNSN/soft_dev/inc 			-I/home/monsoon/inc -I../x11iraf//include -I../include -I/usr/X11R6/include    -Dlinux -D__i386__ -D_POSIX_C_SOURCE=199309L -D_POSIX_SOURCE -D_XOPEN_SOURCE -D_BSD_SOURCE -D_SVID_SOURCE     -DFUNCPROTO=15 -DNARROWPROTO       -c -o supProc.o supProc.c
+supProc.c: In function ‘procAddClient’:
+supProc.c:118: warning: ‘pp’ may be used uninitialized in this function
+/usr/bin/gcc -O2 -Wall -m32 -g     -I../include -I../lib/pvm3//include -I/MNSN/soft_dev/inc 			-I/home/monsoon/inc -I../x11iraf//include -I../include -I/usr/X11R6/include    -Dlinux -D__i386__ -D_POSIX_C_SOURCE=199309L -D_POSIX_SOURCE -D_XOPEN_SOURCE -D_BSD_SOURCE -D_SVID_SOURCE     -DFUNCPROTO=15 -DNARROWPROTO       -c -o supQueue.o supQueue.c
+/usr/bin/gcc -O2 -Wall -m32 -g     -I../include -I../lib/pvm3//include -I/MNSN/soft_dev/inc 			-I/home/monsoon/inc -I../x11iraf//include -I../include -I/usr/X11R6/include    -Dlinux -D__i386__ -D_POSIX_C_SOURCE=199309L -D_POSIX_SOURCE -D_XOPEN_SOURCE -D_BSD_SOURCE -D_SVID_SOURCE     -DFUNCPROTO=15 -DNARROWPROTO       -c -o supSocket.o supSocket.c
+supSocket.c: In function ‘sup_connectClient’:
+supSocket.c:200: warning: pointer targets in passing argument 3 of ‘accept’ differ in signedness
+rm -f super
+/usr/bin/gcc -o super -I/home/monsoon/inc -I/Monsoon/inc -O2 -Wall -m32 -g     -L../lib  -L../lib32 -L../lib/pvm3//lib/LINUXI386 -L../x11iraf//lib -L../lib -L/usr/X11R6/lib   super.o supClient.o supConfig.o supIO.o supKeyw.o 		  supPanHandler.o supProc.o supQueue.o supSocket.o -lcdl -lsmCache -lmbus -lpvm3 -lgpvm3 -lobm -lXpm -ldhsCmds -ldhslib -ldcalib -lXaw3d -lXmu -lXt -lSM -lICE -lXpm -lXext -lX11     -lm 
+make[3]: Leaving directory `/home/dhs.new/super'
+installing in /lib/dcalib...
+make[3]: Entering directory `/home/dhs.new/lib/dcalib'
+cp libdcalib.a ../
+cp dcaDhs.h ../../include
+make[3]: Leaving directory `/home/dhs.new/lib/dcalib'
+installing in /lib/dhsCmds...
+make[3]: Entering directory `/home/dhs.new/lib/dhsCmds'
+cp libdhsCmds.a ../
+cp dhsCmds.h ../../include/
+make[3]: Leaving directory `/home/dhs.new/lib/dhsCmds'
+installing in /lib/dhslib...
+make[3]: Entering directory `/home/dhs.new/lib/dhslib'
+cp libdhslib.a ../
+cp dhsImplementationSpecifics.h ../../include
+make[3]: Leaving directory `/home/dhs.new/lib/dhslib'
+installing in /lib/mbus...
+make[3]: Entering directory `/home/dhs.new/lib/mbus'
+cp libmbus.a ../
+cp mbus.h ../../include
+cp kpvm ../../bin
+make[3]: Leaving directory `/home/dhs.new/lib/mbus'
+installing in /lib/smCache...
+make[3]: Entering directory `/home/dhs.new/lib/smCache'
+gcc -g -w -DLINUX -m32 -o smcop smcop.c -L. -lsmCache -lm -lc
+cp smCache.h ../../include
+cp libsmCache.a ../
+cp smcstat smcop ../../bin
+cp smclean ../../
+cp smclean ../../bin
+#mv zzdebug zzcollector zzdca zzrtd ../../bin
+make[3]: Leaving directory `/home/dhs.new/lib/smCache'
+installing in /super...
+make[3]: Entering directory `/home/dhs.new/super'
+cp super ../bin
+install in . done
+make[3]: Leaving directory `/home/dhs.new/super'
+installing in /collector...
+make[3]: Entering directory `/home/dhs.new/collector'
+cp collector ../bin
+cp: cannot stat `collector': No such file or directory
+make[3]: *** [install] Error 1
+make[3]: Leaving directory `/home/dhs.new/collector'
+installing in /pxf...
+make[3]: Entering directory `/home/dhs.new/pxf'
+make[3]: *** No rule to make target `install'.  Stop.
+make[3]: Leaving directory `/home/dhs.new/pxf'
+installing in /smcmgr...
+make[3]: Entering directory `/home/dhs.new/smcmgr'
+cp smcmgr ../bin
+make[3]: Leaving directory `/home/dhs.new/smcmgr'
+installing in /mosdca...
+make[3]: Entering directory `/home/dhs.new/mosdca'
+cp mosdca ..//bin/;
+make[3]: Leaving directory `/home/dhs.new/mosdca'
+make[2]: Leaving directory `/home/dhs.new'
+make -w collector  DHSDIR=$PWD install
+make[2]: Entering directory `/home/dhs.new'
+(cd collector ; echo "making all in collector ...";\
+	 	make -w 'CDEBUGFLAGS=-O2 -Wall -m32 -g' all);
+making all in collector ...
+make[3]: Entering directory `/home/dhs.new/collector'
+gcc -Wall -I../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../dev/src -O2 -g -m32 -D__USE_MISC -DXLONG=int -c collector.c -o collector.o
+gcc -Wall -I../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../dev/src -O2 -g -m32 -D__USE_MISC -DXLONG=int -c colPanHandler.c -o colPanHandler.o
+../dev/src/imageCfg.h:4: warning: ‘nbias’ defined but not used
+../dev/src/imageCfg.h:9: warning: ‘ndet’ defined but not used
+../dev/src/imageCfg.h:10: warning: ‘naxis’ defined but not used
+../dev/src/imageCfg.h:11: warning: ‘naxis1’ defined but not used
+../dev/src/imageCfg.h:12: warning: ‘naxis2’ defined but not used
+gcc -Wall -I../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../dev/src -O2 -g -m32 -D__USE_MISC -DXLONG=int -c colSocket.c -o colSocket.o
+colSocket.c: In function ‘col_connectClient’:
+colSocket.c:96: warning: pointer targets in passing argument 3 of ‘accept’ differ in signedness
+gcc -Wall -I../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../dev/src -O2 -g -m32 -D__USE_MISC -DXLONG=int -c consMsgHandler.c -o consMsgHandler.o
+gcc -Wall -I../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../dev/src -O2 -g -m32 -D__USE_MISC -DXLONG=int -c mbusMsgHandler.c -o mbusMsgHandler.o
+cc -o collector -w -O2 -g -m32 -D__USE_MISC -DXLONG=int -I../include -I/MNSN/soft_dev/inc -I/home/monsoon/inc -I../dev/src collector.o colPanHandler.o colSocket.o consMsgHandler.o mbusMsgHandler.o -L../lib -L../lib/pvm3//lib/LINUXI386  -ldcalib -lsmCache -lmbus -lpvm3 -lgpvm3 -lm
+cp collector ../bin
+make[3]: Leaving directory `/home/dhs.new/collector'
+installing in /lib/dcalib...
+make[3]: Entering directory `/home/dhs.new/lib/dcalib'
+cp libdcalib.a ../
+cp dcaDhs.h ../../include
+make[3]: Leaving directory `/home/dhs.new/lib/dcalib'
+installing in /lib/dhsCmds...
+make[3]: Entering directory `/home/dhs.new/lib/dhsCmds'
+cp libdhsCmds.a ../
+cp dhsCmds.h ../../include/
+make[3]: Leaving directory `/home/dhs.new/lib/dhsCmds'
+installing in /lib/dhslib...
+make[3]: Entering directory `/home/dhs.new/lib/dhslib'
+cp libdhslib.a ../
+cp dhsImplementationSpecifics.h ../../include
+make[3]: Leaving directory `/home/dhs.new/lib/dhslib'
+installing in /lib/mbus...
+make[3]: Entering directory `/home/dhs.new/lib/mbus'
+cp libmbus.a ../
+cp mbus.h ../../include
+cp kpvm ../../bin
+make[3]: Leaving directory `/home/dhs.new/lib/mbus'
+installing in /lib/smCache...
+make[3]: Entering directory `/home/dhs.new/lib/smCache'
+gcc -g -w -DLINUX -m32 -o smcop smcop.c -L. -lsmCache -lm -lc
+cp smCache.h ../../include
+cp libsmCache.a ../
+cp smcstat smcop ../../bin
+cp smclean ../../
+cp smclean ../../bin
+#mv zzdebug zzcollector zzdca zzrtd ../../bin
+make[3]: Leaving directory `/home/dhs.new/lib/smCache'
+installing in /super...
+make[3]: Entering directory `/home/dhs.new/super'
+cp super ../bin
+install in . done
+make[3]: Leaving directory `/home/dhs.new/super'
+installing in /collector...
+make[3]: Entering directory `/home/dhs.new/collector'
+cp collector ../bin
+make[3]: Leaving directory `/home/dhs.new/collector'
+installing in /pxf...
+make[3]: Entering directory `/home/dhs.new/pxf'
+make[3]: *** No rule to make target `install'.  Stop.
+make[3]: Leaving directory `/home/dhs.new/pxf'
+installing in /smcmgr...
+make[3]: Entering directory `/home/dhs.new/smcmgr'
+cp smcmgr ../bin
+make[3]: Leaving directory `/home/dhs.new/smcmgr'
+installing in /mosdca...
+make[3]: Entering directory `/home/dhs.new/mosdca'
+cp mosdca ..//bin/;
+make[3]: Leaving directory `/home/dhs.new/mosdca'
+make[2]: Leaving directory `/home/dhs.new'
+make -w smcmgr     DHSDIR=$PWD install
+make[2]: Entering directory `/home/dhs.new'
+(cd smcmgr ; echo "making all in smcmgr ...";\
+	 	make -w 'CDEBUGFLAGS=-O2 -Wall -m32 -g' all);
+making all in smcmgr ...
+make[3]: Entering directory `/home/dhs.new/smcmgr'
+make[3]: Nothing to be done for `all'.
+make[3]: Leaving directory `/home/dhs.new/smcmgr'
+installing in /lib/dcalib...
+make[3]: Entering directory `/home/dhs.new/lib/dcalib'
+cp libdcalib.a ../
+cp dcaDhs.h ../../include
+make[3]: Leaving directory `/home/dhs.new/lib/dcalib'
+installing in /lib/dhsCmds...
+make[3]: Entering directory `/home/dhs.new/lib/dhsCmds'
+cp libdhsCmds.a ../
+cp dhsCmds.h ../../include/
+make[3]: Leaving directory `/home/dhs.new/lib/dhsCmds'
+installing in /lib/dhslib...
+make[3]: Entering directory `/home/dhs.new/lib/dhslib'
+cp libdhslib.a ../
+cp dhsImplementationSpecifics.h ../../include
+make[3]: Leaving directory `/home/dhs.new/lib/dhslib'
+installing in /lib/mbus...
+make[3]: Entering directory `/home/dhs.new/lib/mbus'
+cp libmbus.a ../
+cp mbus.h ../../include
+cp kpvm ../../bin
+make[3]: Leaving directory `/home/dhs.new/lib/mbus'
+installing in /lib/smCache...
+make[3]: Entering directory `/home/dhs.new/lib/smCache'
+gcc -g -w -DLINUX -m32 -o smcop smcop.c -L. -lsmCache -lm -lc
+cp smCache.h ../../include
+cp libsmCache.a ../
+cp smcstat smcop ../../bin
+cp smclean ../../
+cp smclean ../../bin
+#mv zzdebug zzcollector zzdca zzrtd ../../bin
+make[3]: Leaving directory `/home/dhs.new/lib/smCache'
+installing in /super...
+make[3]: Entering directory `/home/dhs.new/super'
+cp super ../bin
+install in . done
+make[3]: Leaving directory `/home/dhs.new/super'
+installing in /collector...
+make[3]: Entering directory `/home/dhs.new/collector'
+cp collector ../bin
+make[3]: Leaving directory `/home/dhs.new/collector'
+installing in /pxf...
+make[3]: Entering directory `/home/dhs.new/pxf'
+make[3]: *** No rule to make target `install'.  Stop.
+make[3]: Leaving directory `/home/dhs.new/pxf'
+installing in /smcmgr...
+make[3]: Entering directory `/home/dhs.new/smcmgr'
+cp smcmgr ../bin
+make[3]: Leaving directory `/home/dhs.new/smcmgr'
+installing in /mosdca...
+make[3]: Entering directory `/home/dhs.new/mosdca'
+cp mosdca ..//bin/;
+make[3]: Leaving directory `/home/dhs.new/mosdca'
+make[2]: Leaving directory `/home/dhs.new'
+make -w pxf        DHSDIR=$PWD install
+make[2]: Entering directory `/home/dhs.new'
+(cd pxf ; echo "making all in pxf ...";\
+	 	make -w 'CDEBUGFLAGS=-O2 -Wall -m32 -g' all);
+making all in pxf ...
+make[3]: Entering directory `/home/dhs.new/pxf'
+cc -O2 -m32 -Wall -g -I./ -I../include -I/MNSN/soft_dev/inc -I../lib/cfitsio -I../dev/src -I/dhs/lib/pvm3//include -L/dhs/lib/pvm3//lib/LINUXI386 -I/home/monsoon/inc -DLINUX -DSPLIT_AMPS   -c -o pxf.o pxf.c
+cc -O2 -m32 -Wall -g -I./ -I../include -I/MNSN/soft_dev/inc -I../lib/cfitsio -I../dev/src -I/dhs/lib/pvm3//include -L/dhs/lib/pvm3//lib/LINUXI386 -I/home/monsoon/inc -DLINUX -DSPLIT_AMPS   -c -o pxfAux.o pxfAux.c
+cc -O2 -m32 -Wall -g -I./ -I../include -I/MNSN/soft_dev/inc -I../lib/cfitsio -I../dev/src -I/dhs/lib/pvm3//include -L/dhs/lib/pvm3//lib/LINUXI386 -I/home/monsoon/inc -DLINUX -DSPLIT_AMPS   -c -o pxfDCA.o pxfDCA.c
+../dev/src/imageCfg.h:3: warning: ‘nbin’ defined but not used
+../dev/src/imageCfg.h:4: warning: ‘nbias’ defined but not used
+../dev/src/imageCfg.h:5: warning: ‘ccd_xsize’ defined but not used
+../dev/src/imageCfg.h:9: warning: ‘ndet’ defined but not used
+../dev/src/imageCfg.h:10: warning: ‘naxis’ defined but not used
+../dev/src/imageCfg.h:11: warning: ‘naxis1’ defined but not used
+../dev/src/imageCfg.h:12: warning: ‘naxis2’ defined but not used
+cc -O2 -m32 -Wall -g -I./ -I../include -I/MNSN/soft_dev/inc -I../lib/cfitsio -I../dev/src -I/dhs/lib/pvm3//include -L/dhs/lib/pvm3//lib/LINUXI386 -I/home/monsoon/inc -DLINUX -DSPLIT_AMPS   -c -o pxfFITS.o pxfFITS.c
+pxfFITS.c: In function ‘pxfSendPixelData’:
+pxfFITS.c:449: warning: dereferencing type-punned pointer will break strict-aliasing rules
+cc -O2 -m32 -Wall -g -I./ -I../include -I/MNSN/soft_dev/inc -I../lib/cfitsio -I../dev/src -I/dhs/lib/pvm3//include -L/dhs/lib/pvm3//lib/LINUXI386 -I/home/monsoon/inc -DLINUX -DSPLIT_AMPS   -c -o pxfProcess.o pxfProcess.c
+cc -O2 -m32 -Wall -g -I./ -I../include -I/MNSN/soft_dev/inc -I../lib/cfitsio -I../dev/src -I/dhs/lib/pvm3//include -L/dhs/lib/pvm3//lib/LINUXI386 -I/home/monsoon/inc -DLINUX -DSPLIT_AMPS   -c -o mbusMsgHandler.o mbusMsgHandler.c
+cc -o pxf -O2 -m32 -g -w pxf.o pxfAux.o pxfDCA.o pxfFITS.o pxfProcess.o mbusMsgHandler.o -L../lib -L/dhs/lib/pvm3//lib/LINUXI386 -L../smc -L/usr/local/lib -lcfitsio -lsmCache -lmbus -ldhsCmds -lpvm3 -lgpvm3 -lm
+cp pxf ../bin
+make[3]: Leaving directory `/home/dhs.new/pxf'
+installing in /lib/dcalib...
+make[3]: Entering directory `/home/dhs.new/lib/dcalib'
+cp libdcalib.a ../
+cp dcaDhs.h ../../include
+make[3]: Leaving directory `/home/dhs.new/lib/dcalib'
+installing in /lib/dhsCmds...
+make[3]: Entering directory `/home/dhs.new/lib/dhsCmds'
+cp libdhsCmds.a ../
+cp dhsCmds.h ../../include/
+make[3]: Leaving directory `/home/dhs.new/lib/dhsCmds'
+installing in /lib/dhslib...
+make[3]: Entering directory `/home/dhs.new/lib/dhslib'
+cp libdhslib.a ../
+cp dhsImplementationSpecifics.h ../../include
+make[3]: Leaving directory `/home/dhs.new/lib/dhslib'
+installing in /lib/mbus...
+make[3]: Entering directory `/home/dhs.new/lib/mbus'
+cp libmbus.a ../
+cp mbus.h ../../include
+cp kpvm ../../bin
+make[3]: Leaving directory `/home/dhs.new/lib/mbus'
+installing in /lib/smCache...
+make[3]: Entering directory `/home/dhs.new/lib/smCache'
+gcc -g -w -DLINUX -m32 -o smcop smcop.c -L. -lsmCache -lm -lc
+cp smCache.h ../../include
+cp libsmCache.a ../
+cp smcstat smcop ../../bin
+cp smclean ../../
+cp smclean ../../bin
+#mv zzdebug zzcollector zzdca zzrtd ../../bin
+make[3]: Leaving directory `/home/dhs.new/lib/smCache'
+installing in /super...
+make[3]: Entering directory `/home/dhs.new/super'
+cp super ../bin
+install in . done
+make[3]: Leaving directory `/home/dhs.new/super'
+installing in /collector...
+make[3]: Entering directory `/home/dhs.new/collector'
+cp collector ../bin
+make[3]: Leaving directory `/home/dhs.new/collector'
+installing in /pxf...
+make[3]: Entering directory `/home/dhs.new/pxf'
+make[3]: *** No rule to make target `install'.  Stop.
+make[3]: Leaving directory `/home/dhs.new/pxf'
+installing in /smcmgr...
+make[3]: Entering directory `/home/dhs.new/smcmgr'
+cp smcmgr ../bin
+make[3]: Leaving directory `/home/dhs.new/smcmgr'
+installing in /mosdca...
+make[3]: Entering directory `/home/dhs.new/mosdca'
+cp mosdca ..//bin/;
+make[3]: Leaving directory `/home/dhs.new/mosdca'
+make[2]: Leaving directory `/home/dhs.new'
+make -w mosdca     DHSDIR=$PWD install
+make[2]: Entering directory `/home/dhs.new'
+(cd mosdca ; echo "making all in mosdca ...";\
+	 	make -w 'CDEBUGFLAGS=-O2 -Wall -m32 -g' all);
+making all in mosdca ...
+make[3]: Entering directory `/home/dhs.new/mosdca'
+make[3]: Nothing to be done for `all'.
+make[3]: Leaving directory `/home/dhs.new/mosdca'
+installing in /lib/dcalib...
+make[3]: Entering directory `/home/dhs.new/lib/dcalib'
+cp libdcalib.a ../
+cp dcaDhs.h ../../include
+make[3]: Leaving directory `/home/dhs.new/lib/dcalib'
+installing in /lib/dhsCmds...
+make[3]: Entering directory `/home/dhs.new/lib/dhsCmds'
+cp libdhsCmds.a ../
+cp dhsCmds.h ../../include/
+make[3]: Leaving directory `/home/dhs.new/lib/dhsCmds'
+installing in /lib/dhslib...
+make[3]: Entering directory `/home/dhs.new/lib/dhslib'
+cp libdhslib.a ../
+cp dhsImplementationSpecifics.h ../../include
+make[3]: Leaving directory `/home/dhs.new/lib/dhslib'
+installing in /lib/mbus...
+make[3]: Entering directory `/home/dhs.new/lib/mbus'
+cp libmbus.a ../
+cp mbus.h ../../include
+cp kpvm ../../bin
+make[3]: Leaving directory `/home/dhs.new/lib/mbus'
+installing in /lib/smCache...
+make[3]: Entering directory `/home/dhs.new/lib/smCache'
+gcc -g -w -DLINUX -m32 -o smcop smcop.c -L. -lsmCache -lm -lc
+cp smCache.h ../../include
+cp libsmCache.a ../
+cp smcstat smcop ../../bin
+cp smclean ../../
+cp smclean ../../bin
+#mv zzdebug zzcollector zzdca zzrtd ../../bin
+make[3]: Leaving directory `/home/dhs.new/lib/smCache'
+installing in /super...
+make[3]: Entering directory `/home/dhs.new/super'
+cp super ../bin
+install in . done
+make[3]: Leaving directory `/home/dhs.new/super'
+installing in /collector...
+make[3]: Entering directory `/home/dhs.new/collector'
+cp collector ../bin
+make[3]: Leaving directory `/home/dhs.new/collector'
+installing in /pxf...
+make[3]: Entering directory `/home/dhs.new/pxf'
+make[3]: *** No rule to make target `install'.  Stop.
+make[3]: Leaving directory `/home/dhs.new/pxf'
+installing in /smcmgr...
+make[3]: Entering directory `/home/dhs.new/smcmgr'
+cp smcmgr ../bin
+make[3]: Leaving directory `/home/dhs.new/smcmgr'
+installing in /mosdca...
+make[3]: Entering directory `/home/dhs.new/mosdca'
+cp mosdca ..//bin/;
+make[3]: Leaving directory `/home/dhs.new/mosdca'
+make[2]: Leaving directory `/home/dhs.new'
+make[1]: Leaving directory `/home/dhs.new'
+make  install   DHSDIR=$PWD
+make[1]: Entering directory `/home/dhs.new'
+installing in /lib/dcalib...
+make[2]: Entering directory `/home/dhs.new/lib/dcalib'
+cp libdcalib.a ../
+cp dcaDhs.h ../../include
+make[2]: Leaving directory `/home/dhs.new/lib/dcalib'
+installing in /lib/dhsCmds...
+make[2]: Entering directory `/home/dhs.new/lib/dhsCmds'
+cp libdhsCmds.a ../
+cp dhsCmds.h ../../include/
+make[2]: Leaving directory `/home/dhs.new/lib/dhsCmds'
+installing in /lib/dhslib...
+make[2]: Entering directory `/home/dhs.new/lib/dhslib'
+cp libdhslib.a ../
+cp dhsImplementationSpecifics.h ../../include
+make[2]: Leaving directory `/home/dhs.new/lib/dhslib'
+installing in /lib/mbus...
+make[2]: Entering directory `/home/dhs.new/lib/mbus'
+cp libmbus.a ../
+cp mbus.h ../../include
+cp kpvm ../../bin
+make[2]: Leaving directory `/home/dhs.new/lib/mbus'
+installing in /lib/smCache...
+make[2]: Entering directory `/home/dhs.new/lib/smCache'
+gcc -g -w -DLINUX -m32 -o smcop smcop.c -L. -lsmCache -lm -lc
+cp smCache.h ../../include
+cp libsmCache.a ../
+cp smcstat smcop ../../bin
+cp smclean ../../
+cp smclean ../../bin
+#mv zzdebug zzcollector zzdca zzrtd ../../bin
+make[2]: Leaving directory `/home/dhs.new/lib/smCache'
+installing in /super...
+make[2]: Entering directory `/home/dhs.new/super'
+cp super ../bin
+install in . done
+make[2]: Leaving directory `/home/dhs.new/super'
+installing in /collector...
+make[2]: Entering directory `/home/dhs.new/collector'
+cp collector ../bin
+make[2]: Leaving directory `/home/dhs.new/collector'
+installing in /pxf...
+make[2]: Entering directory `/home/dhs.new/pxf'
+make[2]: *** No rule to make target `install'.  Stop.
+make[2]: Leaving directory `/home/dhs.new/pxf'
+installing in /smcmgr...
+make[2]: Entering directory `/home/dhs.new/smcmgr'
+cp smcmgr ../bin
+make[2]: Leaving directory `/home/dhs.new/smcmgr'
+installing in /mosdca...
+make[2]: Entering directory `/home/dhs.new/mosdca'
+cp mosdca ..//bin/;
+make[2]: Leaving directory `/home/dhs.new/mosdca'
+make[1]: Leaving directory `/home/dhs.new'
+
+Mon May 18 08:55:30 MST 2015
+
+Update Done.

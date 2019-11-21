@@ -1,0 +1,3 @@
+#!/bin/csh -f 
+
+/dhs/bin/collector -console -mbus -port 4576 -debug 60 -id PanA |& tee /tmp/collector.log

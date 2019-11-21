@@ -1,0 +1,15 @@
+#!/bin/sh
+# usage shmUNuke uid - given a uid this removes all shared memory belonging to that user
+
+IDS="`/bin/cat /proc/sysvipc/shm | /bin/awk '{print \$2}'`"
+
+for id in ${IDS}; do
+	key="`/bin/grep ${id} /proc/sysvipc/shm | /bin/awk '{print \$8}'`"
+ 	if [ $1 == ${key}  ]; then
+  		/bin/echo "Nuking ${id}"
+		/home/zarate/ndhs/util/shmNuke ${id}
+ 	fi
+done
+/bin/rm -f /tmp/.smc*
+
+exit

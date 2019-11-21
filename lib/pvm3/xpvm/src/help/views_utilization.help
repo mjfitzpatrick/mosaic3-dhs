@@ -1,0 +1,60 @@
+{ Views Help - Utilization View }
+{ The Utilization View summarizes the Space-Time View }
+{ at each time instant, showing the number of tasks }
+{ Computing, in Overhead, or Waiting for a message at }
+{ any given time. }
+{}
+{ This information is represented by three colored }
+{ rectangles, stacked vertically at each time instant, }
+{ with Computing on the bottom, Overhead in the middle, }
+{ and Waiting on top.  The default colors are green for }
+{ Computing, yellow for Overhead, and red for Waiting. }
+{}
+{ The overall utilization for tasks is seen by comparing }
+{ the relative height of the rectangles over time, such }
+{ that in cases of good utilization the Computing areas }
+{ are prominent, and for poor utilization the Overhead }
+{ and Waiting areas dominate. }
+{}
+{ The Utilization and Space-Time Views share the same }
+{ horizontal time scale, and entering either view area }
+{ with the mouse pointer creates a blue time line in }
+{ both views.  This lines identifies the same time }
+{ instant in each view's display, to help correlate }
+{ the two representations. }
+{}
+{ Zooming }
+{ ------- }
+{}
+{ The Utilization View can be "zoomed" in or out to view }
+{ different perspectives on the same trace data.  To zoom }
+{ in on a particular area of the Utilization view, click }
+{ and hold on the main canvas with the Middle mouse button, }
+{ and sweep across the area that is to be blown up.  When }
+{ the mouse button is released, the swept area will be }
+{ enlarged horizontally to fill the canvas area. }
+{}
+{ To "unzoom" back to the previous zoom level, or out to some }
+{ lower magnification level if no zoom had been previously }
+{ applied, simply press the Right mouse button. }
+{}
+{ To summarize: }
+{}
+{	   Mouse Middle        Mouse Right }
+{}
+{	     Zoom IN             Zoom Out }
+{}
+{ Like the time lines above, the Space-Time View is }
+{ automagically zoomed in or out to match the Utilization }
+{ View's time scale. }
+{}
+{ It should be noted that the Utilization View has been }
+{ significantly optimized in XPVM 1.1.  A task's status }
+{ is not added to the utilization task counts until that }
+{ task's state is known for a particular time range.  This }
+{ results in a "trailing edge" as tasks gradually fill in }
+{ their events from left to right.  The overall result is }
+{ a more correct depiction of the true task utilization }
+{ that is significantly more efficient, by several orders }
+{ of magnitude. }
+{}

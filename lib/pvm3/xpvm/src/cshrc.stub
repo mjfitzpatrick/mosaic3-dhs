@@ -1,0 +1,24 @@
+# Original file: /xpvm/src/cshrc.stub
+#
+# append this file to your .cshrc to set path according to machine type.
+# you may wish to use this for your own programs (edit the last part to
+# point to a different directory f.e. ~/bin/_$PVM_ARCH.
+#
+
+if ( ! $?XPVM_ROOT ) then
+        if ( -d ~/xpvm ) then
+                setenv XPVM_ROOT ~/xpvm
+        else
+                echo "XPVM_ROOT not defined"
+                echo "To use XPVM, define XPVM_ROOT in your .cshrc"
+        endif
+endif
+
+#
+# Add the XPVM executable directory to your path
+#
+
+if ( $?XPVM_ROOT ) then
+  set path=( $path $XPVM_ROOT/src/$PVM_ARCH )
+endif
+

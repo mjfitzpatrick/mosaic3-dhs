@@ -1,0 +1,4 @@
+#!/bin/csh -f
+setenv MONSOON_DHS "127.0.0.1:4150"
+ /dhs/test/pan  -sim -debug 0 -host nfpan-a -A >& pan.log &
+/dhs/test/nocs -sim -debug 0 -host newfirm -interactive >& noc.log &

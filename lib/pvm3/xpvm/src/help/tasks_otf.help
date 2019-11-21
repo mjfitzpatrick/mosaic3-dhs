@@ -1,0 +1,26 @@
+{ Tasks Help - On-The-Fly Task Control }
+{ XPVM 1.1 supports the adjustment of Task trace settings }
+{ "ON-THE-FLY" using a special dialog which can be selected }
+{ from the "Tasks" menu. }
+{}
+{ To adjust the tracing for a task, first select the desired }
+{ settings using the "On" or "Off" button, setting the Trace }
+{ Mask as desired for tracing "On," and then choose which }
+{ task(s) to adjust.  A single task is adjusted by clicking }
+{ on one of the tasks in the scrolling task list on the left }
+{ side of the dialog.  Or, all of the currently executing }
+{ tasks can be adjusted using the "Adjust All Tasks" button. }
+{ In either case, the task(s) are adjusted as soon as the }
+{ mouse click occurs. }
+{}
+{ Note that the same Trace Mask is used for Spawning as for }
+{ On-The-Fly trace adjustments, so changes made to the Trace }
+{ Mask using either the Spawn dialog or the On-The-Fly dialog }
+{ will remain in effect for the next use. }
+{}
+{ Because XPVM avoids the overhead of continuously polling }
+{ PVM tasks while the On-The-Fly dialog is up, the tasks }
+{ listed may not completely accurately reflect the existence }
+{ of all currently executing tasks.  To update the task list, }
+{ press the "Refresh Tasks" button. }
+{}

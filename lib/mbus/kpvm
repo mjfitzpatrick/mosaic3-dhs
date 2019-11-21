@@ -1,0 +1,16 @@
+#!/bin/csh -f
+
+if (`uname -s` == "Darwin") then
+    set pflags = "-augxww"
+    set pfiles = "/tmp/pvm*501*"
+else
+    set pflags = "-efw"
+    set pfiles = "/tmp/pvm*359*"
+endif
+
+echo halt | pvm >& /dev/null
+foreach p (`ps $pflags | grep pvmd3 | awk '{print($2)}'`)
+    kill -9 $p >& /dev/null
+end
+
+/bin/rm -f $pfiles

@@ -1,0 +1,35 @@
+#!/bin/env /ndhs/bin/cl
+#
+
+string	ktmfile = "nfdca!/home/data/.ktm.dat"
+string	trigdir = "nfpipe-01!MarioData/NEWFIRM/NEWFIRM_MTD/input"
+string	trigfile
+string	queue, dataset
+int	gid, seqno
+
+cd /home/data
+
+if (access(ktmfile)==NO)
+    logout
+;
+
+concat (ktmfile) | scan (queue, dataset, gid, seqno)
+
+
+# Log execution.
+set (home = envget("HOME"))
+printf ("Sending pipeline an end-of-sequence message...\n") |
+   tee ("home$/postproc.log", append+)
+printf ("%s/%s_%s_%04d.mtdend\n", trigdir, queue, dataset, gid) |
+    scan (trigfile)
+printf ("    Trigger file = %s\n", trigfile, >> "home$/postproc.log")
+touch (trigfile)
+
+printf ("    %s %s %d %d", queue, dataset, gid, seqno, >> "home$/postproc.log")
+gid += 1
+seqno = 0
+printf ("-> %s %s %d %d\n", queue, dataset, gid, seqno, >> "home$/postproc.log")
+delete (ktmfile)
+printf ("%s %s %d %d\n", queue, dataset, gid, seqno, > ktmfile)
+
+logout

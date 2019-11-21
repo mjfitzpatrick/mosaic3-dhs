@@ -1,0 +1,9 @@
+#!/bin/csh -f
+
+setenv PVM_ROOT	/usr/share/pvm3/
+setenv PVM_ARCH	LINUXI386
+setenv FLAGS 	"-w -I$PVM_ROOT/include -L$PVM_ROOT/lib/$PVM_ARCH"
+
+
+cc $FLAGS zzsup.c    mbus.c mbClient.c -o zzsup    -lpvm3
+cc $FLAGS zzclient.c mbus.c mbClient.c -o zzclient -lpvm3

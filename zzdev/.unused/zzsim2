@@ -1,0 +1,95 @@
+#!/bin/csh -f 
+
+# Set the location of the system to help in configuring the machine names.
+# The location is simply a 2-character code stored in the '_location' file
+# in the top directory, values may be:
+#
+#	"CR"		=> Tucson Clean Room
+#	"FR"		=> Tucson Flex Rig
+#	"KP"		=> KPNO 4-meter
+#	"CT"		=> CTIO 4-meter
+#
+
+setenv USER_DISPLAY 	$DISPLAY
+setenv RTD		fast:inet:3200
+
+#-------------------------------------------------------------------------------
+
+
+
+echo "Cleaning up...."
+echo ""
+
+    if (`uname -s` == "Darwin") then
+        set pflags = "-augxww"
+    else
+        set pflags = "-efw"
+    endif
+    set pfiles = "/tmp/pvm*50*"
+
+    echo halt | pvm 						>& /dev/null
+    /bin/rm -f $pfiles 						>& /dev/null
+    /bin/rm -f /home/data/*
+
+    echo conf | pvm 
+    echo ""
+
+    /dhs/smclean
+	  
+
+echo "Re-Starting VNC for DHS...."
+echo ""
+    vncserver -kill :1						>& /dev/null
+    vncserver -geometry 1280x1024 -depth 8 -cc 3		>& /dev/null
+
+    echo "Starting VNC viewer...."
+    (vncviewer -passwd ~/.vnc/passwd -display $USER_DISPLAY :1	>& /dev/null &)
+
+
+echo "Starting DHS...."
+echo ""
+
+setenv DISPLAY :1
+set    XTERM	= "xterm -fn fixed"
+
+#setenv LD_PRELOAD	libefence.so.0.0
+
+#--------------
+# Collectors
+#--------------
+(sleep  4; $XTERM -iconic -geometry 80x20+100+350 -e /dhs/bin/collector -console -mbus -host nfdhs-01 -port 4575 -debug 60 -id NOCS ; ) &
+
+(sleep  6; $XTERM -iconic -geometry 80x20+200+400 -e /dhs/bin/collector -console -mbus -host nfdhs-01 -port 4576 -debug 60 -id PanA ; ) &
+
+
+#--------------
+# SMC Managers
+#--------------
+#(sleep 10; $XTERM -iconic -geometry 80x20+200+450 -e /dhs/bin/smcmgr -console -host nfdhs-01 -mbus -dev $RTD -debug 60 -proc PanA,NOCS ; ) &
+
+
+#--------------
+# PXF
+#--------------
+#(sleep 14; $XTERM -iconic -geometry 80x20+200+500 -e /dhs/bin/pxf -console -host nfdhs-01 -mbus -debug 60 -proc PanA,NOCS ; ) &
+
+
+#--------------
+# DCA
+#--------------
+(sleep 20; $XTERM -geometry 80x20+645+360 -e /dhs/mosdca/mosdca -host nfdca -debug 2 -reqlevel 2 -vminit cachesize=312m -maxgkw 512 -maxikw 2048 -dir /home/data -ktm /dhs/lib/newfirm.tcl ; ) &
+
+
+#--------------
+# NOCS/Pan Clients
+#--------------
+(sleep 22; $XTERM -geometry 80x12+300+720 -e /dhs/test/pan  -debug 0 -host nfpan-a -A ) &
+(sleep 23; $XTERM -geometry 80x12+100+720 -e /dhs/test/nocs -debug 0 -host newfirm -interactive )  &
+
+#(sleep 22; $XTERM -geometry 80x12+300+720 -e /dhs/test/pan  -debug 0 -host nfpan-a -A -sim ) &
+#(sleep 23; $XTERM -geometry 80x12+100+720 -e /dhs/test/nocs -debug 0 -host newfirm -interactive -sim )  &
+
+#--------------
+# Supervisor
+#--------------
+exec $XTERM -geometry 80x22+645+40 -e /dhs/dhssup/super -port 4150 -host newfirm -console -config /dhs/lib/config.sim -nclients 5 -geometry 640x640+0+40 

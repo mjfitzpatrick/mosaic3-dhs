@@ -1,0 +1,38 @@
+Mon Mar 2 11:33:56 EST 2015 Starting
+nocs: Start mbusConnect
+nocs: Done  mbusConnect
+nocs: Start dhsSysOpen
+Opening Supervisor: name='PAN' mach='127.0.0.1' port='4150'
+isdigit(host_str) = '127.0.0.1'
+dcaSupOpenSocket: '127.0.0.1' 4150 -> '127.0.0.1'
+
+
+supOpenConn:  host='newfirm'  domain=''
+	use_sim: 1  act='cameradev'  sim='newfirm'  dom=''
+
+localhost gethostbyname(host_str) = 'localhost'
+dcaSupOpenSocket: 'cameradev:4153' -1 -> '127.0.0.1'
+nocs: Done  dhsSysOpen
+nocs: Start dhsOpenConnect
+initChannel:  dev='127.0.0.1:4575'  node='127.0.0.1' port=4575
+nocs: Done  dhsOpenConnect
+nocs: Start mbusRecv loop 
+nocs: Done  mbusRecv loop 
+	20150302T113425- -- Got a START message
+nocs : Start dhsOpenExp expID = 2450000.100000  obsID = TestID
+dhsOpenExp : dcaValidateChannel ok 
+dhsOpenExp : dcaSendMsg to collector
+dhsOpenExp : Done dcaSendMsg to collector
+dhsOpenExp : dcaSendMsg to super
+dhsOpenExp : Done dcaSendMsg to super
+dhsOpenExp : dcaSendfpConfig
+dhsOpenExp : Done dcaSendfpConfig
+dhsOpenExp : dcaSendMsg to collector with expID and obsSetId
+dhsOpenExp : Done dcaSendMsg to collector with expID and obsSetId
+dcaSend error 14: Bad address
+nocs : Done dhsOpenExp
+nocs: Done  mbusRecv loop 
+	20150302T113425- -- Got a FINISH message
+nocs : Start dhsCloseExp
+nocs : Done  dhsCloseExp
+nocs : Waiting for MSF commands

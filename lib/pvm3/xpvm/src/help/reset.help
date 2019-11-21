@@ -1,0 +1,38 @@
+{ Resetting PVM & XPVM }
+{ There are several reset functions provided by XPVM, to allow }
+{ precise control over different portions of the system.  The }
+{ functions are as follows: }
+{}
+{ Reset PVM: }
+{ ---------- }
+{ Same as the "reset" command in the PVM console.  Resets the }
+{ Virtual Machine, kills off all tasks (except XPVM and any }
+{ consoles) and kills the PVM Group Server(s).  Note that any }
+{ trace events already enroute at the time of the reset will }
+{ continue to arrive, and XPVM will display their information. }
+{}
+{ Reset Views: }
+{ ------------ }
+{ Clears all XPVM views and resets them to their initial state. }
+{ Note that any PVM tasks running at the time of the view reset }
+{ will no longer be shown in the views, only new tasks created }
+{ after the view reset. }
+{}
+{ Reset Trace: }
+{ ------------ }
+{ Initializes the current trace file for re-use, depending on }
+{ the current tracing mode.  In PlayBack mode, the current trace }
+{ file is rewound to the beginning to be played again, without }
+{ resetting the views.  In OverWrite mode, the current trace file }
+{ is closed, and the user is prompted on whether the file can be }
+{ overwritten.  If so (i.e. the user selects "Yes", to overwrite }
+{ the trace file), then the file is cleared and re-opened to save }
+{ a new trace. }
+{}
+{ Reset All: }
+{ ---------- }
+{ This all-encompassing reset option applies all of the above }
+{ resets in an appropriate order to bring XPVM back to its }
+{ initial start-up state.  All of PVM, the views and the }
+{ trace file are reset or initialized. }
+{}

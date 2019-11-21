@@ -1,0 +1,144 @@
+smUtilAttach:  id=0x13565962 key=0xc000010 size=3196060
+attached  cache_addr=0xb749c000  addr=smc=0xb7461000
+Waiting for input...
+BCAST:  from:262146  subj:8 msg='dca_tid 262154'
+SET on PXF: dca_tid 262154
+BCAST:  from:262146  subj:8 msg='nbin 1'
+SET on PXF: nbin 1
+BCAST:  from:262146  subj:8 msg='nbin 1'
+SET on PXF: nbin 1
+BCAST:  from:262146  subj:8 msg='nbin 1'
+SET on PXF: nbin 1
+BCAST:  from:262146  subj:8 msg='nbin 1'
+SET on PXF: nbin 1
+BCAST:  from:262146  subj:8 msg='nbin 1'
+SET on PXF: nbin 1
+BCAST:  from:262146  subj:8 msg='nbin 1'
+SET on PXF: nbin 1
+BCAST:  from:262146  subj:8 msg='nbin 1'
+SET on PXF: nbin 1
+BCAST:  from:262146  subj:8 msg='nbin 1'
+SET on PXF: nbin 1
+BCAST:  from:262146  subj:8 msg='seqno 1'
+SET on PXF: seqno 1
+BCAST:  from:262146  subj:8 msg='seqno 1'
+SET on PXF: seqno 1
+BCAST:  from:262146  subj:4 msg='dca_tid 262154'
+START on PXF: dca_tid 262154
+BCAST:  from:262146  subj:4 msg='process 2450000.100000'
+START on PXF: process 2450000.100000
+PXF processing ExpID 2450000.100000
+Opening file ''
+smUtilAttach:  id=0x13598731 key=0xe000076 size=290816
+Processing page 0, 2450000.100000 (2450000.100000) Proc META : 0xb741a000 size=256256 nkeyw=2002
+          : ExpID=2450000.100000 ObsID= typ=3
+          : mdCfg: type=2  nfields=3
+          : fpCfg: Start: -1077897760,11037360  Size: 0,11034564
+          : page: colID='PanA'  expPageNum=0
+          : seqno: 1  dca_tid: 262154  kwdb: 'PanA_Pre'
+
+DONE Processing META : sent=2002
+smUtilAttach:  id=0x13631500 key=0xe000077 size=35229696
+Processing page 1, 2450000.100000 (2450000.100000) smUtilAttach:  id=0x13664269 key=0xe00007f size=35229696
+Processing page 2, 2450000.100000 (2450000.100000) smUtilAttach:  id=0x13697038 key=0xe000080 size=35229696
+Processing page 3, 2450000.100000 (2450000.100000) smUtilAttach:  id=0x13729807 key=0xe000081 size=35229696
+Processing page 4, 2450000.100000 (2450000.100000) smUtilAttach:  id=0x13762576 key=0xe000082 size=35229696
+Processing page 5, 2450000.100000 (2450000.100000) smUtilAttach:  id=0x13795345 key=0xe000083 size=35229696
+Processing page 6, 2450000.100000 (2450000.100000) smUtilAttach:  id=0x13828114 key=0xe000090 size=35229696
+Processing page 7, 2450000.100000 (2450000.100000) smUtilAttach:  id=0x13860883 key=0xe000091 size=35229696
+Processing page 8, 2450000.100000 (2450000.100000) smUtilAttach:  id=0x13893652 key=0xe000092 size=290816
+Processing page 9, 2450000.100000 (2450000.100000) Proc META : 0xb741a000 size=256256 nkeyw=2002
+          : ExpID=2450000.100000 ObsID= typ=3
+          : mdCfg: type=2  nfields=3
+          : fpCfg: Start: 0,4097  Size: 2148,4096
+          : page: colID='PanA'  expPageNum=9
+          : seqno: 1  dca_tid: 262154  kwdb: 'PanA_Post'
+
+DONE Processing META : sent=2002
+smUtilAttach:  id=0x13598731 key=0xe000076 size=290816
+Processing page 0, 2450000.100000 (2450000.100000) smUtilAttach:  id=0x13631500 key=0xe000077 size=35229696
+Processing page 1, 2450000.100000 (2450000.100000) Proc DATA : 0xb52c8000 size=35192832
+          : ExpID=2450000.100000 ObsID= seqno=1
+          : mdCfg: type=0  nfields=0
+          : fpCfg: Start: 6444,0  Size: 2148,4096
+          : page: colID='PanA'  expPageNum=1
+          : seqno: 1 dca_tid; 262154
+          : ccd_w: 2148 ccd_h: 4096 [2148,4096] nbin: 1
+nx: 1074  ny: 4096  datalen: 137472 nbin:1
+: nchunks=128  35192832 bytes  8798208 pixels
+smUtilAttach:  id=0x13664269 key=0xe00007f size=35229696
+Processing page 2, 2450000.100000 (2450000.100000) Proc DATA : 0xb52c8000 size=35192832
+          : ExpID=2450000.100000 ObsID= seqno=1
+          : mdCfg: type=0  nfields=0
+          : fpCfg: Start: 4296,0  Size: 2148,4096
+          : page: colID='PanA'  expPageNum=2
+          : seqno: 1 dca_tid; 262154
+          : ccd_w: 2148 ccd_h: 4096 [2148,4096] nbin: 1
+nx: 1074  ny: 4096  datalen: 137472 nbin:1
+: nchunks=128  35192832 bytes  8798208 pixels
+smUtilAttach:  id=0x13697038 key=0xe000080 size=35229696
+Processing page 3, 2450000.100000 (2450000.100000) Proc DATA : 0xb52c8000 size=35192832
+          : ExpID=2450000.100000 ObsID= seqno=1
+          : mdCfg: type=0  nfields=0
+          : fpCfg: Start: 2148,0  Size: 2148,4096
+          : page: colID='PanA'  expPageNum=3
+          : seqno: 1 dca_tid; 262154
+          : ccd_w: 2148 ccd_h: 4096 [2148,4096] nbin: 1
+nx: 1074  ny: 4096  datalen: 137472 nbin:1
+: nchunks=128  35192832 bytes  8798208 pixels
+smUtilAttach:  id=0x13729807 key=0xe000081 size=35229696
+Processing page 4, 2450000.100000 (2450000.100000) Proc DATA : 0xb52c8000 size=35192832
+          : ExpID=2450000.100000 ObsID= seqno=1
+          : mdCfg: type=0  nfields=0
+          : fpCfg: Start: 0,0  Size: 2148,4096
+          : page: colID='PanA'  expPageNum=4
+          : seqno: 1 dca_tid; 262154
+          : ccd_w: 2148 ccd_h: 4096 [2148,4096] nbin: 1
+nx: 1074  ny: 4096  datalen: 137472 nbin:1
+: nchunks=128  35192832 bytes  8798208 pixels
+smUtilAttach:  id=0x13762576 key=0xe000082 size=35229696
+Processing page 5, 2450000.100000 (2450000.100000) Proc DATA : 0xb52c8000 size=35192832
+          : ExpID=2450000.100000 ObsID= seqno=1
+          : mdCfg: type=0  nfields=0
+          : fpCfg: Start: 6444,4097  Size: 2148,4096
+          : page: colID='PanA'  expPageNum=5
+          : seqno: 1 dca_tid; 262154
+          : ccd_w: 2148 ccd_h: 4096 [2148,4096] nbin: 1
+nx: 1074  ny: 4096  datalen: 137472 nbin:1
+: nchunks=128  35192832 bytes  8798208 pixels
+smUtilAttach:  id=0x13795345 key=0xe000083 size=35229696
+Processing page 6, 2450000.100000 (2450000.100000) Proc DATA : 0xb52c8000 size=35192832
+          : ExpID=2450000.100000 ObsID= seqno=1
+          : mdCfg: type=0  nfields=0
+          : fpCfg: Start: 4296,4097  Size: 2148,4096
+          : page: colID='PanA'  expPageNum=6
+          : seqno: 1 dca_tid; 262154
+          : ccd_w: 2148 ccd_h: 4096 [2148,4096] nbin: 1
+nx: 1074  ny: 4096  datalen: 137472 nbin:1
+: nchunks=128  35192832 bytes  8798208 pixels
+smUtilAttach:  id=0x13828114 key=0xe000090 size=35229696
+Processing page 7, 2450000.100000 (2450000.100000) Proc DATA : 0xb52c8000 size=35192832
+          : ExpID=2450000.100000 ObsID= seqno=1
+          : mdCfg: type=0  nfields=0
+          : fpCfg: Start: 2148,4097  Size: 2148,4096
+          : page: colID='PanA'  expPageNum=7
+          : seqno: 1 dca_tid; 262154
+          : ccd_w: 2148 ccd_h: 4096 [2148,4096] nbin: 1
+nx: 1074  ny: 4096  datalen: 137472 nbin:1
+: nchunks=128  35192832 bytes  8798208 pixels
+smUtilAttach:  id=0x13860883 key=0xe000091 size=35229696
+Processing page 8, 2450000.100000 (2450000.100000) Proc DATA : 0xb52c8000 size=35192832
+          : ExpID=2450000.100000 ObsID= seqno=1
+          : mdCfg: type=0  nfields=0
+          : fpCfg: Start: 0,4097  Size: 2148,4096
+          : page: colID='PanA'  expPageNum=8
+          : seqno: 1 dca_tid; 262154
+          : ccd_w: 2148 ccd_h: 4096 [2148,4096] nbin: 1
+nx: 1074  ny: 4096  datalen: 137472 nbin:1
+: nchunks=128  35192832 bytes  8798208 pixels
+smUtilAttach:  id=0x13893652 key=0xe000092 size=290816
+Processing page 9, 2450000.100000 (2450000.100000) 
+**************************************
+PXF processing Done: ExpID 2450000.100000
+**************************************
+

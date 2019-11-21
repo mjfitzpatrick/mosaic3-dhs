@@ -1,0 +1,89 @@
+Using mos3-dhs ...
+Cleaning up earlier DHS.... via /dhs/bin/pvmclean
+
+cat: /tmp/mosdca.log: No such file or directory
+cat: /tmp/dhssup.log: No such file or directory
+Cleaning:  key=201326652  shmid=40599562  size=3196060 ...      status = 0
+
+------ Shared Memory Segments --------
+key        shmid      owner      perms      bytes      nattch     status      
+
+
+Re-Starting VNC for DHS....
+
+Starting VNC viewer....
+Starting DHS....
+
+init rawDir =  /home/data/
+MONSOON_DHS environment variable =  mos3-dhs:4150
+super host =  mosaic1
+pan_host =  mosaic1pan-a
+pam delay =  10
+NOC_DELAY =  8
+Starting Pan Client....
+
+[1] 20835
+Starting NOC Clients....
+
+PAN_DELAY: Undefined variable.
+[2] 20836
+[1]    Exit 1                        ( sleep $PAN_DELAY; $XTERM -e "echo `date` Starting >! $PAN_LOG ; /dhs/test/pan -verbose -sim $DEBUG_0 -host $pan_host -A  |& tee -a $PAN_LOG ; echo `date` Exitting >> $PAN_LOG ; sleep 30 " )
+All done
+
+[1] 20838
+[2] 20840
+[1]    Done                          ( ( sleep $COLLECTOR1_DELAY; ssh $DHS_CPU_HOST $XTERM -iconic -display $DISPLAY -fn fixed -geometry 80x20+0+400 -e $DHS_HOME/bin/collector -console -mbus -port 4575 -debug 60 -id NOCS -host $COLLECTOR1_HOST );  )
+[3] 20841
+[4] 20846
+[3]    Done                          ( ( sleep $SMCMGR1_DELAY; ssh $DHS_CPU_HOST $XTERM -iconic -display $DISPLAY -fn fixed -geometry 80x20+0+450 -e $DHS_HOME/bin/smcmgr -console -trim -mbus -dev $RTD -debug 60 -host $SMCMGR1_HOST );  )
+[2]  + Done                          ( ( sleep $COLLECTOR2_DELAY; ssh $DHS_CPU_HOST $XTERM -iconic -display $DISPLAY -fn fixed -geometry 80x20+0+350 -e $DHS_HOME/bin/collector -console -mbus -port 4576 -debug 60 -id PanA -host $COLLECTOR2_HOST );  )
+[5] 20848
+--------------: Command not found.
+[6] 20851
+[4]    Done                          ( ( sleep $PXF1_DELAY; ssh $DHS_CPU_HOST $XTERM -iconic -display $DISPLAY -fn fixed -geometry 80x20+0+500 -e $DHS_HOME/bin/pxf -console -mbus -debug 60 -host $PXF1_HOST );  )
+[5]    Done                          ( ( sleep $MOSDCA_DELAY; ssh $NFDCA_HOST $XTERM -display $DISPLAY -fn fixed -geometry 80x20+645+360 -e $DHS_HOME/bin/mosdca -host $MOSDCA_HOST -reqlevel 2 -vminit cachesize=312m -imformat %N -maxgkw 2048 -maxikw 2048 -dir /home/data -ktm /dhs/lib/mosaic1.tcl );  )
+Warning: Cannot allocate colormap entry for "gray77"
+Warning: Cannot convert string "-adobe-times-bold-i-normal-*-12-*-*-*-*-*-iso8859-1" to type FontStruct
+Warning: Cannot convert string "*times-bold-r*12*" to type FontStruct
+Warning: Cannot convert string "-adobe-times-medium-r-normal-*-12-*-*-*-*-*-iso8859-1" to type FontStruct
+Warning: Cannot allocate colormap entry for "#7c8498"
+Warning: Cannot allocate colormap entry for "SteelBlue"
+Warning: Cannot convert string "*lucida-bold-r*10*" to type FontStruct
+Warning: Cannot allocate colormap entry for "gray68"
+Warning: Cannot convert string "-*-helvetica-medium-r-normal-*-12-*-iso8859-1" to type FontStruct
+Warning: Cannot allocate colormap entry for "royalBlue3"
+Warning: Cannot allocate colormap entry for "mediumVioletRed"
+Warning: Cannot convert string "-adobe-times-medium-r-normal-*-12-*-iso8859-1" to type FontStruct
+Warning: Cannot allocate colormap entry for "gray"
+Warning: Cannot allocate colormap entry for "yellow4"
+Warning: Cannot convert string "-*-helvetica-medium-r-normal-*-10-*" to type FontStruct
+Warning: Cannot allocate colormap entry for "blue2"
+Warning: Cannot allocate colormap entry for "purple4"
+Warning: Cannot convert string "-adobe-times-medium-r-normal-*-14-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-times-medium-i-normal-*-14-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-times-bold-r-normal-*-14-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-courier-medium-r-normal-*-14-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-courier-bold-r-normal-*-14-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-courier-medium-o-normal-*-14-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-times-bold-r-normal-*-24-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-times-bold-r-normal-*-18-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-times-bold-r-normal-*-17-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-times-bold-r-normal-*-12-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-times-bold-r-normal-*-10-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-courier-medium-r-normal-*-12-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-courier-bold-r-normal-*-12-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-adobe-courier-medium-o-normal-*-12-*-*-*-*-*-*-*" to type FontStruct
+Warning: Cannot convert string "-*-helvetica-medium-r-normal-*-12-*-*-*" to type FontStruct
+Warning: Cannot convert string "-*-helvetica-medium-r-normal-*-10-*-*-*" to type FontStruct
+Warning: Cannot allocate colormap entry for "gray90"
+Warning: Cannot convert string "-adobe-times-bold-r-normal-*-12-*-*-*-*-*-iso8859-1" to type FontStruct
+Warning: Cannot allocate colormap entry for "Gold"
+Warning: Cannot allocate colormap entry for "gray61"
+Warning: Cannot allocate colormap entry for "gray91"
+Warning: cannot open /dev/imt1o
+sh: ism_wcspix.e: command not found
+ximtool: fatal IO error 11 (Resource temporarily unavailable) or KillClient on X server "mos3-dhs:1.0"
+xterm:  fatal IO error 11 (Resource temporarily unavailable) or KillClient on X server "mos3-dhs:1.0"
+xterm:  fatal IO error 11 (Resource temporarily unavailable) or KillClient on X server "mos3-dhs:1.0"
+xterm:  fatal IO error 11 (Resource temporarily unavailable) or KillClient on X server "mos3-dhs:1.0"
+xterm:  fatal IO error 11 (Resource temporarily unavailable) or KillClient on X server "mos3-dhs:1.0"

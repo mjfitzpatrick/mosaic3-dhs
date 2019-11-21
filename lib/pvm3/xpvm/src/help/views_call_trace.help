@@ -1,0 +1,18 @@
+{ Views Help - Call Trace View }
+{ The Call Trace View provides a textual record of the }
+{ instantaneous activity in each task.  For each task, }
+{ a line of text is displayed that represents the last }
+{ PVM system call made by the task, including any call }
+{ parameters or results. }
+{}
+{ As the tasks execute, the lines change to reflect the }
+{ most recent activity.  This view is especially useful }
+{ in identifying points where a PVM program's execution }
+{ "hangs" in one or more tasks, say, due to an incorrect }
+{ message code on a pvm_recv() call. }
+{}
+{ Clicking on a task in the the scrolling task list of }
+{ the Call Trace View will produce the full name of the }
+{ task (if not fully visible) as well as the TID of the }
+{ task. }
+{}

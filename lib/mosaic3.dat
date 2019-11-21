@@ -1,0 +1,222 @@
+# Extensions Names
+
+set extname(ccd2,B) im1
+set extname(ccd2,A) im2
+set extname(ccd2,D) im3
+set extname(ccd2,C) im4 
+set extname(ccd1,B) im5
+set extname(ccd1,A) im6
+set extname(ccd1,D) im7
+set extname(ccd1,C) im8
+set extname(ccd4,C) im9
+set extname(ccd4,D) im10
+set extname(ccd4,A) im11
+set extname(ccd4,B) im12
+set extname(ccd3,C) im13
+set extname(ccd3,D) im14
+set extname(ccd3,A) im15
+set extname(ccd3,B) im16 
+
+# Detectors
+
+set detname(mos)  "Mosaic3"
+set detname(ccd1) "LBL-01"
+set detname(ccd2) "LBL-02"
+set detname(ccd3) "LBL-03"
+set detname(ccd4) "LBL-04"
+
+set detval(saturate,tbd) 45000
+
+set detval(rdnoise,ccd2,B) 10.55
+set detval(rdnoise,ccd2,A) 10.83
+set detval(rdnoise,ccd2,D) 9.95
+set detval(rdnoise,ccd2,C) 10.09
+set detval(rdnoise,ccd1,B) 8.54
+set detval(rdnoise,ccd1,A) 10.35
+set detval(rdnoise,ccd1,D) 8.93
+set detval(rdnoise,ccd1,C) 8.55
+set detval(rdnoise,ccd4,C) 9.54
+set detval(rdnoise,ccd4,D) 10.08
+set detval(rdnoise,ccd4,A) 8.99
+set detval(rdnoise,ccd4,B) 10.08
+set detval(rdnoise,ccd3,C) 8.55
+set detval(rdnoise,ccd3,D) 13.84
+set detval(rdnoise,ccd3,A) 8.13
+set detval(rdnoise,ccd3,B) 8.22
+
+set detval(gain,ccd2,B) 2.46
+set detval(gain,ccd2,A) 2.27
+set detval(gain,ccd2,D) 2.31
+set detval(gain,ccd2,C) 2.28
+set detval(gain,ccd1,B) 2.66
+set detval(gain,ccd1,A) 2.10
+set detval(gain,ccd1,D) 2.47
+set detval(gain,ccd1,C) 2.57
+set detval(gain,ccd4,C) 2.57
+set detval(gain,ccd4,D) 2.37
+set detval(gain,ccd4,A) 2.44
+set detval(gain,ccd4,B) 2.57
+set detval(gain,ccd3,C) 2.57
+set detval(gain,ccd3,D) 1.84
+set detval(gain,ccd3,A) 2.57
+set detval(gain,ccd3,B) 2.55
+
+# Geometry.
+# This is unbinned.  The KTM will adjust these based only on binning factors.
+# Account only for active pixels
+
+set detsize(mos,1) 8224; set detsize(mos,2) 8192
+set detsize(ccd,1) 4112; set detsize(ccd,2) 4096
+set detsize(amp,1) 2056; set detsize(amp,2) 2048
+set detsize(bias,1) 47; set detsize(bias,2) 0
+set detsize(extra,1) 9; set detsize(extra,2) 64
+
+# CCD to Image transformation (IRAF logical).
+set ltm(1) 1; set ltm(2) 1
+set ltv(A,1)     8; set ltv(A,2)    17
+set ltv(B,1) -2054; set ltv(B,2)    17
+set ltv(C,1)     8; set ltv(C,2) -2001
+set ltv(D,1) -2054; set ltv(D,2) -2001
+
+# CCD to Amplifier transformation.
+set atv(A,1)    0; set atv(A,2)    0; set atm(A,1)  1; set atm(A,2)  1
+set atv(B,1) 6169; set atv(B,2)    0; set atm(B,1) -1; set atm(B,2)  1
+set atv(C,1)    0; set atv(C,2) 6145; set atm(C,1)  1; set atm(C,2) -1
+set atv(D,1) 6169; set atv(D,2) 6145; set atm(D,1) -1; set atm(D,2) -1
+
+# CCD to Detector transformation.
+set dtv(ccd1,1)    0; set dtv(ccd1,2)    0; set dtm(ccd1,1) 1; set dtm(ccd1,2) 1
+set dtv(ccd2,1) 4130; set dtv(ccd2,2)    0; set dtm(ccd2,1) 1; set dtm(ccd2,2) 1
+set dtv(ccd3,1)    0; set dtv(ccd3,2) 4130; set dtm(ccd3,1) 1; set dtm(ccd3,2) 1
+set dtv(ccd4,1) 4130; set dtv(ccd4,2) 4130; set dtm(ccd4,1) 1; set dtm(ccd4,2) 1
+
+# WCS
+
+set WCSASTRM(ccd2) \
+          {kp4m.20151027T113418 (first light i SDSS k1019) by Valdes 2015-11-04}
+set CTYPE1(ccd2) RA---ZPX
+set CTYPE2(ccd2) DEC--ZPX
+set CRPIX1(ccd2) 200.253296602219
+set CRPIX2(ccd2) 4170.67496074631
+set CD1_1(ccd2) 2.33697950974448E-7
+set CD2_2(ccd2) -9.2599001020099E-8
+set CD1_2(ccd2) 7.26413145856548E-5
+set CD2_1(ccd2) 7.24913107335437E-5
+set WAT01(ccd2) {system=image}
+set WAT11(ccd2) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(ccd2) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.3024567526434375 -0.15}
+set WAT13(ccd2) \
+          {32797323973498 0.1347945598103469 0.2839537535228674 -3.235112164118}
+set WAT14(ccd2) \
+          {681E-5 6.599282720248941E-4 5.361191563839264E-4 9.954277624362351E-}
+set WAT15(ccd2) \
+          {4 -0.001944660840426356 -0.003282996730750189 "                     }
+set WAT21(ccd2) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(ccd2) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.3024567526434375 -0.1}
+set WAT23(ccd2) \
+          {532797323973498 0.1347945598103469 0.2839537535228674 -9.86383022308}
+set WAT24(ccd2) \
+          {9761E-4 -0.003802097140509565 -0.006697835813485402 0.00517475468370}
+set WAT25(ccd2) \
+          {9527 0.003211756874130048 -0.0100218481205339 "                     }
+
+set WCSASTRM(ccd1) \
+          {kp4m.20151027T113418 (first light i SDSS k1019) by Valdes 2015-11-04}
+set CTYPE1(ccd1) RA---ZPX
+set CTYPE2(ccd1) DEC--ZPX
+set CRPIX1(ccd1) 4518.05251741238
+set CRPIX2(ccd1) 4169.04818691612
+set CD1_1(ccd1) 2.22136028815775E-7
+set CD2_2(ccd1) -1.7623636011818E-8
+set CD1_2(ccd1) 7.27475578383209E-5
+set CD2_1(ccd1) 7.28244405589666E-5
+set WAT01(ccd1) {system=image}
+set WAT11(ccd1) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(ccd1) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. -0.3037620149835138 -0.15}
+set WAT13(ccd1) \
+          {43912745492546 -0.1791873921855832 -0.02949709125399049 -2.921441248}
+set WAT14(ccd1) \
+          {369859E-4 -0.001271907937153736 -3.008145584627254E-4 -0.00289452834}
+set WAT15(ccd1) \
+          {2291873 -0.01109822714840383 -0.001761449784155444 "                }
+set WAT21(ccd1) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(ccd1) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. -0.3037620149835138 -0.1}
+set WAT23(ccd1) \
+          {543912745492546 -0.1791873921855832 -0.02949709125399049 -3.90088253}
+set WAT24(ccd1) \
+          {0725191E-4 -0.002863220418574848 -0.005921664980835479 -0.0015563929}
+set WAT25(ccd1) \
+          {86888286 -0.001322406347146174 -0.006313237947603339 "              }
+
+set WCSASTRM(ccd4) \
+          {kp4m.20151027T113418 (first light i SDSS k1019) by Valdes 2015-11-04}
+set CTYPE1(ccd4) RA---ZPX
+set CTYPE2(ccd4) DEC--ZPX
+set CRPIX1(ccd4) 213.874592491855
+set CRPIX2(ccd4) -131.037343006707
+set CD1_1(ccd4) -1.9964391143121E-8
+set CD2_2(ccd4) -1.2354236600434E-7
+set CD1_2(ccd4) 7.27584106798972E-5
+set CD2_1(ccd4) 7.26619292772448E-5
+set WAT01(ccd4) {system=image}
+set WAT11(ccd4) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(ccd4) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.1585792753878236 0.3075}
+set WAT13(ccd4) \
+          {567688733721 -0.01599009677910921 0.1335830591088398 1.5890341544907}
+set WAT14(ccd4) \
+          {91E-4 -0.001575662722505964 0.00323479728754337 5.887998806214035E-4}
+set WAT15(ccd4) \
+          { 0.001555324137232619 -0.006609672830945523 "                       }
+set WAT21(ccd4) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(ccd4) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.1585792753878236 0.307}
+set WAT23(ccd4) \
+          {5567688733721 -0.01599009677910921 0.1335830591088398 1.147923202063}
+set WAT24(ccd4) \
+          {408E-5 -1.577144678584461E-4 4.608832445874922E-4 1.490729214676713E}
+set WAT25(ccd4) \
+          {-4 -7.357469824395592E-4 1.515578971333162E-4 "                     }
+
+set WCSASTRM(ccd3) \
+          {kp4m.20151027T113418 (first light i SDSS k1019) by Valdes 2015-11-04}
+set CTYPE1(ccd3) RA---ZPX
+set CTYPE2(ccd3) DEC--ZPX
+set CRPIX1(ccd3) 4518.29711973865
+set CRPIX2(ccd3) -117.129614525622
+set CD1_1(ccd3) 1.95932770096828E-8
+set CD2_2(ccd3) -2.0829784492090E-7
+set CD1_2(ccd3) 7.28933485214353E-5
+set CD2_1(ccd3) 7.30612672970257E-5
+set WAT01(ccd3) {system=image}
+set WAT11(ccd3) \
+          {wtype=zpx axtype=ra projp0=0. projp1=1. projp2=0. projp3=337.74 proj}
+set WAT12(ccd3) \
+          {p4=0. projp5=632052. lngcor = "3. 3. 3. 2. 0.1578079322804164 0.3070}
+set WAT13(ccd3) \
+          {608808880492 -0.3309170381443882 -0.1803497481604472 5.7813220828218}
+set WAT14(ccd3) \
+          {83E-4 -0.002513028336322517 0.001070705311829861 0.00237541261983512}
+set WAT15(ccd3) \
+          { -0.008187956851553446 0.00104313301814078 "                        }
+set WAT21(ccd3) \
+          {wtype=zpx axtype=dec projp0=0. projp1=1. projp2=0. projp3=337.74 pro}
+set WAT22(ccd3) \
+          {jp4=0. projp5=632052. latcor = "3. 3. 3. 2. 0.1578079322804164 0.307}
+set WAT23(ccd3) \
+          {0608808880492 -0.3309170381443882 -0.1803497481604472 -0.00113360645}
+set WAT24(ccd3) \
+          {116273 0.002147820125485842 8.732154396091495E-4 -0.0072677494782105}
+set WAT25(ccd3) \
+          {11 0.01031087914564896 -0.009909667883340839 "                      }
+

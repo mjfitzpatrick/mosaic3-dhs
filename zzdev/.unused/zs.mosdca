@@ -1,0 +1,15 @@
+#!/bin/csh -fx
+
+#if (! (-e $1)) then
+#    echo "Creating directory: ${1} ......"
+#    mkdir ${1}
+#    chmod 777 ${1}
+#else
+#    echo "Directory exists: ${1} ......"
+#endif
+
+exec /dhs/bin/mosdca -debug 2 -reqlevel 2 -vminit cachesize=312m -imformat %N%05I.fits -maxgkw 150 -maxikw 150 -dir /home/data -ktm /dhs/lib/${1}.tcl |& tee /tmp/mosdca.log
+
+#  NOTE:  This must be changed once the Mosaic1.1 KTM is in place...
+#exec /dhs/bin/mosdca -debug 2 -reqlevel 2 -vminit cachesize=312m -imformat %N%05I.fits -maxgkw 150 -maxikw 150 -dir ${1} -ktm /dhs/lib/generic.tcl |& tee /tmp/mosdca.log
+
